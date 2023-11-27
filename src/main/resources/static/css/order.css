@@ -1,0 +1,253 @@
+.orderWrap {
+    display: flex;
+    gap: 2rem;
+}
+
+.orderWrap > * {
+    margin: 0;
+}
+
+.orderDetails {
+    width: 45rem;
+    height: 10rem;
+}
+
+.order {
+    width: 30rem;
+}
+.box {
+    margin-bottom: 1rem;
+}
+.box h2 {
+    margin-bottom: 1.5rem;
+}
+
+.field {
+    margin-bottom: 1rem;
+}
+
+.fieldTitle {
+    font-size: 1.4rem;
+    font-family: 'Pretendard-Bold';
+    margin-bottom: 0.3rem;
+}
+a.fieldAddress {
+    display: initial;
+    /* text-decoration: underline; */
+    border-bottom: 1px solid black;
+    padding: 0.1rem;
+}
+.time {
+    display: inline-block;
+    font-size: 1.2rem;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.detailBox > h2 {
+    margin: 0;
+}
+.detailBox * {
+    margin: 0;
+}
+
+.detailBox {
+    border-left: 0.3rem solid var(--main-color);
+    padding-left: 0.5rem;
+    line-height: 2rem;
+    font-size: 1.1rem;
+}
+.detailBox > * {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#couponBtn {
+    border: none;
+    background-color: white;
+    font-size: 1rem;
+    border-bottom: 1px solid black;
+    padding: 0;
+    cursor: pointer;
+}
+.useCash {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0.5rem 0 0.5rem;
+}
+.useCash > * {
+    margin: 0;
+}
+.useCash > span {
+    flex: 0 0 auto;
+    font-size: 1.2rem;
+}
+
+.inputBtn {
+    width: 100%;
+    height: 2.5rem;
+    border-radius: var(--border-radius);
+    border: 0.1rem solid var(--border-color);
+    display: flex;
+    gap: 0.3rem;
+}
+.inputBtn > * {
+    margin: 0;
+}
+.inputTable {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    font-size: 1.1rem;
+}
+.inputTable > * {
+    margin: 0;
+    color: var(--main-color);
+
+}
+.inputTable #useCash {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+    height: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: right;
+    font-size: 1.1rem;
+}
+.inputTable span {
+    margin: 0 0.5rem 0 0.2rem;
+}
+
+
+#allUseCash {
+    width: 100px;
+    height: 100%;
+    border: none;
+    border-left: 0.1rem solid var(--border-color);
+    background-color: rgb(250, 250, 250);
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    margin-left: 0.5rem;
+}
+#allUseCash:hover {
+    background-color: rgb(239, 239, 239);
+}
+
+.order .detailBox {
+    font-size: 1rem;
+}
+.expectedPrice, .finalPrice {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.expectedPrice {
+    font-size: 1.1rem;
+}
+.finalPrice {
+    font-size: 1.2rem;
+}
+.expectedPrice > *, .finalPrice > * {
+    margin: 0;
+}
+
+.order h2 {
+    margin-bottom: 2rem;
+}
+#orderBtn {
+    margin-top: 1rem;
+    width: 100%;
+    height: 5rem;
+    border-radius: 1rem;
+    border: none;
+    background-color: var(--main-color);
+    color: white;
+    font-size: 1.3rem;
+}
+#orderBtn:hover {
+    background-color: var(--main-color-hover);
+}
+
+.charge {
+    margin-left: 0.5rem;
+    border: 0.1rem solid var(--gray);
+    border-radius: 1rem;
+    color: var(--gray);
+    padding: 0.1rem 0.5rem;
+    font-size: 0.9rem;
+}
+
+.policy hr {
+    margin: 0;
+}
+
+.policySubject {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+
+    width: 100%;
+    border: none;
+    background-color: white;
+    font-size: 1.05rem;
+    padding: 0;
+
+    cursor: pointer;
+}
+.policyItem > pre {
+    overflow: hidden;
+    transition: all 0.3s ease-out;
+    max-height: 0;
+}
+pre.show {
+    transition: all 0.4s ease-in;
+    max-height: 100vh;
+}
+.policySubject > * {
+    margin: 0;
+}
+
+.checkbox {
+    margin-top: 2rem;
+    display: flex;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.checkbox > * {
+    margin: 0;
+}
+
+#policy {
+    opacity: 0;
+    width: initial;
+    position: absolute;
+    top: -1rem;
+}
+
+.check {
+    width: 22px;
+    height: 22px;
+    background: #E6ECF1;
+    border-radius: 6px;
+    border: 1px solid #D9E0E6;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.check.confirm {
+    background-color: var(--main-color);
+}
+.check svg {
+    fill: #E6ECF1;
+}
+
+.rotate{
+    rotate: 90deg;
+}

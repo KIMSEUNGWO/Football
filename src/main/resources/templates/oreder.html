@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/order.css">
+    <script src="/js/order.js"></script>
+    <title>구장예약 :: 프로젝트</title>
+</head>
+<body>
+    <header>
+        <div class="flexL">
+            <a href="#" class="logo">
+                <img src="/" alt="로고이미지">
+            </a>
+            <ul class="menu">
+                <li class="menuTitle">메뉴1</li>
+                <li class="menuTitle">메뉴2</li>
+                <li class="menuTitle">메뉴3</li>
+                <li class="menuTitle">메뉴4</li>
+            </ul>
+        </div>
+        <div class="flexR">
+            <a href="/mypage" class="info_user">
+                <img src="https://phinf.pstatic.net/contact/20220724_153/1658672074422w1wxl_JPEG/IMG_8012.JPG?type=f130_130" width="64" height="64" alt="김승우">
+            </a>
+        </div>
+    </header>
+    <div class="container">
+        <form action="#" method="get">
+            <div class="orderWrap">
+                <div class="orderDetails">
+                    <div class="box">
+                        <h2>구장 정보</h2>
+                        <div class="field">
+                            <div class="fieldTitle">부산 준타스 풋살 아레나 화이트</div>
+                            <a href="#" class="fieldAddress">부산 부산진구 신천대로 241</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h2>경기 시간</h2>
+                        <span class="time">11월 23일 목요일 18:00 ~ 20:00</d>
+                    </div>
+                    <div class="box">
+                        <h2>캐시</h2>
+                        <div class="detailBox">
+                            <div class="coupon">
+                                <span>쿠폰</span>
+                                <button type="button" id="couponBtn">1개 보유 ></button>
+                                <input type="text" name="coupon" id="coupon" value="" hidden>
+                            </div>
+                            <div class="cash">
+                                <span>머니</span>
+                                <div>
+                                    <span>9,000원</span>
+                                    <a href="#" class="charge">충전</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="useCash">
+                            <span>사용</span>
+                            <div class="inputBtn">
+                                <div class="inputTable">
+                                    <input type="text" title="캐시 사용금액" maxlength="6" inputmode="numeric" name="useCash" id="useCash" value="0">
+                                    <span>원</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="" width="18" height="18" viewBox="0 0 16 16"><g fill="none" fill-rule="evenodd"><circle cx="8" cy="8" r="8" fill="#929294"></circle><path fill="#FFF" d="M5.235 4.606l2.828 2.83 2.829-2.83.628.629-2.83 2.828 2.83 2.829-.628.628-2.83-2.828-2.827 2.828-.629-.628 2.828-2.828-2.828-2.83.629-.628z"></path></g></svg>
+                                </div>
+                                <button type="button" id="allUseCash">전액사용</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="policy box">
+                        <h2>약관</h2>
+                        <div class="policyItem">
+                            <button type="button" class="policySubject" id="policyBtn1">
+                                <span>이것만은 꼭!</span>
+                                <svg class="policy1svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                            </button>
+                            <pre id="pText1">
+                                플랩 매치는 10명 이상 모여서 진행해요. 매치 시작 90분 전까지 팀 구성이 어려우면, 취소 안내 드립니다. 출발 전에 카카오톡 알림을 꼭 확인해 주세요.
+
+                                참여가 어려울 경우, 마이 플랩에서 미리 취소를 해주세요. 무단 불참하거나 매치 시작 90분 이내에 취소하면 패널티를 받을 수 있습니다. 갑작스러운 인원 부족으로 경기 진행에 문제가 생길 수 있기 때문에 플랩에서는 시간 약속을 중요한 매너로 보고 있습니다.
+
+                                반드시 풋살화(TF) 혹은 운동화를 신어 주세요. 축구화를 착용하면 다른 사람이 크게 다칠 수 있어 참여를 제한하고 있습니다. 매너 점수가 내려가는 점도 유의해 주세요.
+
+                                레벨 데이터로 팀을 나누면 막상막하로 더 재밌을 거예요. 레벨 차이가 크거나 늦는 친구가 있으면, 서로 다른 팀이 될 수 있습니다.
+
+                                이용자 부주의로 시설을 파손하면, 손해배상을 청구할 수 있어요. 이 점 주의 부탁 드립니다.
+
+                                안전상의 이유로 고등학생 이상 (만 16세) 참여 가능하며 만 16세 미만인 경우 현장에서 귀가 조치 될 수 있습니다.
+                            </pre>
+                        </div>
+                        <hr class="sideHr">
+                        <div class="policyItem">
+                            <button type="button" class="policySubject" id="policyBtn2">
+                                <span>부상의 위험</span>
+                                <svg class="policy2svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                            </button>
+                            <pre id="pText2">
+                                플랩은 상대를 배려하고, 나를 지키는 안전한 플레이를 권장합니다.
+
+                                거친 플레이를 하는 참가자에게 매너 카드를 발급하여 안전하고 즐거운 매치 문화를 만들어 나갑니다.
+                                
+                                다른 사람에게 피해를 끼치는 경우 이용이 정지될 수 있습니다.
+                                
+                                축구, 풋살 등 부상의 위험성이 내재된 경기 규칙 안에서 발생한 부상 대부분이 개인에게 책임이 있음을 판단하고 있습니다.
+                            </pre>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="policy" id="policy">
+                            <button type="button" class="check">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+                            </button>
+                            <label for="policy">약관에 동의합니다.</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="order box">
+                    <h2>결제 정보</h2>
+                    <div class="expectedPrice">
+                        <b>이용 금액</b>
+                        <b>10,000원</b>
+                    </div>
+                    <div class="detailBox">
+                        <div class="coupon">
+                            <span>쿠폰 사용</span>
+                            <span>-9,000원</span>
+                        </div>
+                        <div class="cash">
+                            <span>캐시 사용</span>
+                            <span>-1,000원</span>
+                        </div>
+                    </div>
+                    <hr class="sideHr">
+                    <div class="finalPrice">
+                        <b>결제 금액</b>
+                        <b>0원</b>
+                    </div>
+                    <input type="submit" value="신청하기" id="orderBtn">
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
