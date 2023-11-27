@@ -1,0 +1,155 @@
+.fieldImageWrap {
+    width: 100%;
+    height: 30rem;
+    background-color: antiquewhite;
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+.fieldImageWrap img {
+    width: 100%;
+    height: 100%;
+}
+
+.field {
+    display: flex;
+    gap: 2rem;
+}
+ /* 왼쪽 메뉴 */
+.fieldDetails {
+    margin: 0;
+    flex: 0 0 auto;
+    width: 48rem;
+}
+.fieldDetails > * {
+    margin-bottom: 1.5rem;
+}
+.playInfoDetails {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    gap: 1rem;
+}
+
+.playInfoDetails > * {
+    margin: 0;
+}
+
+.infoDetail {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.infoDetail > span {
+    margin: 0;
+}
+
+.infoDetail > svg {
+    margin: 0;
+    width: 1.3rem;
+    height: 1.3rem;
+}
+
+.matchRule > h4 {
+    margin: 1rem 0;
+}
+.matchRule ul {
+    list-style: initial;
+    padding-left: 1rem;
+    line-height: 2rem;
+}
+.matchRule li {
+    font-family: 'Pretendard-Light';
+
+}
+/* 오른쪽 메뉴 */
+
+.fieldMain {
+    margin: 0;
+    width: 25rem;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 1rem;
+    height: 17rem;
+}
+
+.matchDate {
+    display: inline-block;
+    font-size: 1.2rem;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.matchLocation {
+    margin-bottom : 1rem;
+}
+.matchLocation > * {
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+}
+
+.fieldTitle {
+    font-size: 1.4rem;
+    font-family: 'Pretendard-Bold';
+    margin-bottom: 0.3rem;
+}
+a.fieldAddress {
+    display: initial;
+    /* text-decoration: underline; */
+    border-bottom: 1px solid black;
+    padding: 0.1rem;
+}
+.view_count {
+    color: var(--gray);
+    fill: var(--gray);
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: left;
+}
+.view_count > * {
+    margin: 0;
+}
+
+.matchDecide {
+    display: flex;
+    justify-content: right;
+}
+
+.matchFriend {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+b.impact {
+    color: var(--main-color);
+    font-weight: 600;
+}
+b.notImpact {
+    font-size: 1rem;
+    font-weight: 100;
+    color: var(--gray);
+
+}
+.matchPrice {
+    font-size: 1.5rem;
+}
+
+.matchDecide a {
+    display: flex;
+    width: 12rem;
+    height: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+
+
+
+
+
+
