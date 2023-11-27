@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/loginCommon.css">
+    <link rel="stylesheet" href="/css/register.css">
+    <script src="/js/register.js"></script>
+    <script src="/js/fetch.js"></script>
+    <title>회원가입 :: 프로젝트</title>
+</head>
+<body>
+    <div class="container">
+        <form class='register_form' th:object="${registerDto}" method="post" action="/register" th:action>
+            <div class='logoBox'>
+                <img src="/images/main_logo.jpg" alt="로고이미지">
+            </div>
+            <div class='login_box email'>
+                <h5>이메일</h5>
+                <div class="phoneBox">
+                    <input type="text" th:field="*{email}" placeholder="email@gmail.com" th:errorclass="field-error" inputmode="email">
+                    <button type="button" class="registerButton distinctEmailBtn">중복확인</button>
+                </div>
+                <div class="errorMsg errorEmail"></div>
+                <div class="errorMsg errorEmail field-error" th:errors="*{email}">[[${errorMsg}]]</div>
+                <div class="confirmMsg confirmEmail disabled">사용가능한 아이디입니다.</div>
+            </div>
+            <div class='login_box password'>
+                <h5>비밀번호</h5>
+                <input type="password" maxlength='15' minlength="8" th:errorclass="field-error" th:field="*{password}" placeholder="대,소문자 특수문자 포함 8~15자"  onfocusout="validPassword()">
+
+                <div class="errorMsg errorPassword field-error " th:errors="*{password}">[[${errorMsg}]]</div>
+                <div class="confirmMsg confirmPassword disabled">비밀번호 검증됨</div>
+            </div>
+            <div class='login_box passwordCheck'>
+                <h5>비밀번호 확인</h5>
+                <input type="password" maxlength='15' minlength="8" th:errorclass="field-error" th:field="*{passwordCheck}" placeholder="대,소문자 특수문자 포함 8~15자" >
+                <div class="errorMsg errorPasswordCheck field-error" th:errors="*{passwordCheck}">[[${errorMsg}]]</div>
+                <div class="confirmMsg confirmPasswordCheck disabled">비밀번호 확인 검증됨</div>
+            </div>
+            <div class="login_box_grid-2">
+                <div class='login_box name'>
+                    <h5>이름</h5>
+                    <input type="text" th:field="*{name}" th:errorclass="field-error" onfocusout="validName()">
+                    <div class="errorMsg errorName field-error" th:errors="*{name}">[[${errorMsg}]]</div>
+                </div>
+                <div class='login_box gender'>
+                    <h5>성별</h5>
+                    <select name="gender" id="gender" th:errorclass="field-error" th:field="*{gender}">
+                        <option value="남자" selected>남자</option>
+                        <option value="여자">여자</option>
+                    </select>
+                    <div class="errorMsg errorGender field-error" th:errors="*{gender}">[[${errorMsg}]]</div>
+                </div>
+            </div>
+            <div class="login_box">
+                <h5>생년월일</h5>
+                <input type="text" maxlength='6' minlength="6" th:errorclass="field-error" th:field="*{birthday}" placeholder="990101"  onfocusout="validBirth()" inputmode="numeric">
+                <div class="errorMsg errorBirth field-error" th:errors="*{birthday}">[[${errorMsg}]]</div>
+            </div>
+            <div class='login_box phone'>
+                <h5>휴대폰 번호</h5>
+                <div class="phoneBox">
+                    <input type="text" maxlength='13' minlength="12" th:errorclass="field-error" th:field="*{phone}" inputmode="numeric">
+                    <button type="button" class="registerButton" id="phoneBtn">인증요청</button>
+                </div>
+                <div class="errorMsg errorPhone field-error" th:errors="*{phone}">[[${errorMsg}]]</div>
+                <div class="confirmMsg confirmPhone disabled">인증번호가 발송되었습니다.</div>
+            </div>
+            <div class='login_box phoneCheck'>
+                <h5>인증번호</h5>
+                <div class="phoneBox">
+                    <input type="text" maxlength='5' minlength="5" name="phoneCheck"  class="confirm" inputmode="numeric">
+                    <div class="btn">
+                        <span class="limitTime">05:00</span>
+                        <button type="button" class="registerButton" id="phoneCheck">인증확인</button>
+                    </div>
+                </div>
+                <div class="errorMsg errorPhoneCheck disabled">[[${errorMsg}]]</div>
+                <div class="confirmMsg confirmPhoneCheck disabled">인증이 완료되었습니다.</div>
+            </div>
+            <input type="submit" value="회원가입">
+        </form>
+    </div>
+</body>
+</html>

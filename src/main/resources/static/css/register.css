@@ -1,0 +1,60 @@
+:root {
+    --possible : #32d732;
+}
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.register_form{
+    width: 25rem;
+    margin: 0;
+}
+
+.phoneBox {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.registerButton {
+    width: 7rem;
+    border-radius: 0.7rem;
+    border: 0.1rem solid var(--main-color);
+    background-color: var(--main-color);
+    color: white;
+    height: 2.5rem;
+    font-size: 1.05rem;
+}
+
+.registerButton:hover {
+    background-color: var(--main-color-hover);
+}
+
+.limitTime {
+    font-size: 0.9rem;
+    color: var(--main-color);
+    margin: 0.5rem;
+}
+
+.register_form input:focus {
+    outline: 0.1rem solid var(--possible);
+    border: 0.2rem solid var(--possible);
+}
+
+input[type="submit"] {
+    height: 3.5rem;
+}
+
+.confirmMsg {
+    color: #2abc2a;
+    font-size: 0.9rem;
+}
+
