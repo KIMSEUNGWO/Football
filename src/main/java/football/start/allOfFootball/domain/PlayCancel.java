@@ -15,7 +15,6 @@ public class PlayCancel {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PLAY_CANCEL")
     private Long playCancelId;
-    private Long playId;
 
     private String playCancelReason;
 }

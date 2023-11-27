@@ -15,7 +15,10 @@ public class FieldImage {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FIELD_IMAGE")
     private Long fieldImageId;
-    private Long fieldId;
+
+    @ManyToOne
+    @JoinColumn(name = "fieldId")
+    private Field field;
     private String fieldImageName;
     private String fieldImageStoreName;
 }

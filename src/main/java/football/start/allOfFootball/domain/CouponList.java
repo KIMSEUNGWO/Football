@@ -17,8 +17,14 @@ public class CouponList extends BaseTimeEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COUPON_LIST")
     private Long couponListId;
-    private Long memberId;
-    private Long couponId;
+
+    @ManyToOne
+    @JoinColumn(name = "memberId")
+    private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "couponId")
+    private Coupon coupon;
     private LocalDateTime couponListExpireDate;
     private char couponListStatus;
 }

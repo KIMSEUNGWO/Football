@@ -7,7 +7,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "COUPON")
 @SequenceGenerator(name = "SEQ_COUPON", sequenceName = "SEQ_COUPON_ID", allocationSize = 1)
