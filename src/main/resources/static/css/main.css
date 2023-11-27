@@ -1,0 +1,375 @@
+.banner {
+    width: 100%;
+    height: 20rem;
+    background-color: antiquewhite;
+    margin-bottom: 3.5rem;
+}
+
+.container {
+    display: flex;
+    gap: 2rem;
+}
+
+.main, .side {
+    margin: 0;
+}
+
+.main {
+    flex: 1 1 auto;
+    width: calc(65rem - 2rem - 21rem);
+}
+
+.side {
+    flex: 0 0 auto;
+    border: 0.1rem solid var(--border-color);
+    border-radius: 1rem;
+    width: 21rem;
+    padding: 1rem;
+    position: relative;
+    min-height: 30rem;
+    background-color: white;
+}
+
+/* 검색조건 설정 */
+.searchBox {
+    margin-bottom: 3rem;
+}
+/* 검색어 */
+.searchForm {
+    width: 100%;
+    height: 3rem;
+    position: relative;
+    margin: 0.5rem 0;
+}
+
+#keyword {
+    width: 100%;
+    height: 100%;
+}
+.searchButton {
+    top: 0;
+    right: 0.5rem;
+    width: 2.2rem;
+    height: 100%;
+    position: absolute;
+}
+.searchButton svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--gray)
+}
+#keyword {
+    cursor: text;
+}
+#keyword::placeholder {
+    color: rgb(217, 217, 217);
+}
+/* input:search x 버튼 삭제 */
+/* IE의 경우 */
+input::-ms-clear,
+input::-ms-reveal{
+    display:none;
+}
+/* 크롬의 경우 */
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration{
+    display:none;
+}
+
+/* 검색조건 */
+
+.option {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.option button {
+    margin: 0;
+    width: 100%;
+    height: 3rem;
+}
+
+.option .btnBox span {
+    margin: 0;
+}
+
+.subOption {
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    background-color: white;
+    border: 0.1rem solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem 1.5rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    cursor: default;
+}
+.subOption li {
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    cursor:pointer;
+}
+.subOption li > * {
+    margin: 0;
+}
+
+/* 캘린더 */
+.calendarBox {
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+}
+.calendarBox button {
+    width: 2rem;
+    height: 2rem;
+    float: 0 0 auto;
+    padding: 0;
+}
+
+.previous svg, .next svg {
+    width: 1.3rem;
+    height: 1.3rem;
+}
+
+.displayCalendar {
+    flex: 0 1 auto;
+    overflow: hidden;
+    width: 100%;
+}
+
+.calendar {
+    display: flex;
+    gap: 1rem;
+}
+
+.calendarBox > * {
+    margin: 0 0.5rem;
+}
+
+.calendar .day {
+    display: flex;
+    align-items: end;
+    gap: 0.3rem;
+    flex: 0 0 auto;
+    width: calc(100% / 7 - 0.3rem * 6);
+    height: 100%;
+    border-radius: 0.7rem;
+    background-color: antiquewhite;
+    justify-content: center;
+}
+
+.day p {
+    font-size: 1.3rem;
+}
+.day p, .day span {
+    margin: 0;
+}
+
+.isDay {
+    color: black;
+}
+
+.isSun {
+    color: red;
+}
+
+.isSat {
+    color: blue;
+}
+
+
+/* 검색건수 */
+.searchCount {
+    width: 100%;
+    display: block;
+    font-size: 1.2rem;
+    font-family: 'Pretendard-Bold';
+    margin: 2rem 0 1.5rem 0;
+}
+
+.result{
+    height: 4rem;
+    padding: 0.5rem;
+    /* margin-bottom: 0.5rem; */
+    border-radius: 0;
+    border-bottom: none;
+}
+
+.result:first-child {
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+
+}
+.result:last-child {
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    border-bottom: 0.1rem solid var(--border-color);
+}
+
+.resultTime {
+    margin: 0 1.5rem 0 0.5rem;
+    font-size: 1.2rem;
+}
+.resultRegion {
+    margin: 0 1.5rem 0 0.5rem;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+.resultContent {
+    display: grid;
+    margin-left: 1rem;
+    justify-content: left;
+    min-width: 15rem;
+    grid-template-rows: 70% 30%;
+}
+.resultTitle {
+    margin: 0;
+    font-size: 1.1rem;
+    max-width: 33rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.subTitle {
+    display: flex;
+    font-size: 0.8rem;
+    margin: 0;
+    gap: 0.5rem;
+}
+
+.subTitle > * {
+    margin: 0;
+    color: var(--gray);
+}
+
+.notFound {
+    color: var(--gray);
+}
+
+
+/* 사이드메뉴 */
+
+
+.noneId {
+    text-align: center;
+    margin-top: 1rem;
+}
+.noneId a {
+    margin: 0 0 0.5rem 0;
+}
+
+.readMe {
+    width: 100%;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+    margin-bottom: 1rem;
+}
+
+.readMe .me {
+    padding: 1rem 0;
+    font-size: 1.5rem;
+    color: var(--main-color);
+}
+
+.me > * {
+    margin: 0;
+}
+
+.readMe table {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+.readMe table > tr {
+    background-color: aqua;
+}
+
+.button {
+    width: 100%;
+    height: 4rem;
+    border: 2px solid var(--border-color);
+    background: none;
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.2rem;
+    box-shadow: 2px 2px 5px #b2b2b2;
+    margin-top: 1.5rem;
+    color: var(--main-color);
+}
+.button svg {
+    margin: 0;
+    width: 2rem;
+    height: 2rem;
+    fill: var(--main-color);
+}
+.button span {
+    margin: 0;
+}
+
+/* 부가기능 */
+
+.subFunc {
+    margin: 1rem 0 0.5rem 0;
+}
+
+.subFuncSubject {
+    display: inline-block;
+    font-size: 1.1rem;
+    color: var(--main-color);
+}
+
+.dateSep {
+    display: inline-block;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.subFuncBlock {
+    width: 100%;
+    height: 3rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.7rem;
+    border: 2px solid var(--border-color);
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.subFuncBlock > * {
+    display: inline-block;
+    margin: 0;
+}
+
+.subFuncTime {
+    font-size: 1.1rem;
+}
+.subFuncRegion {
+    white-space: nowrap;
+}
+.subFuncTitle {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.empty {
+    width: 100%;
+    height: 3rem;
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--gray);
+}
+
+
+
+
