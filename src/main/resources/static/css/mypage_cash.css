@@ -1,0 +1,52 @@
+:root {
+    --charge: red;
+    --use: blue;
+}
+
+.charge {
+    color: var(--charge);
+}
+.use {
+    color: var(--use);
+}
+
+.myCash {
+    background-color: var(--main-font-color);
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    border: none;
+    margin-bottom: 1rem;
+    box-shadow: 2px 2px 3px var(--main-color);
+}
+.myCash > * {
+    margin: 0;
+}
+.money {
+    font-size: 1.5rem;
+}
+
+.cashBtn {
+    border: none;
+    background-color: var(--main-color);
+    color: white;
+    border-radius: var(--border-radius);
+    width: 6rem;
+    height: 3rem;
+    font-size: 1.2rem;
+}
+.cashBtn:hover {
+    background-color: var(--main-color-hover);
+}
+
+.cashList {
+    border: 0.1rem solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+.cashBox {
+    height: 2rem;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 20% 10% 5% 10% 10%
+}

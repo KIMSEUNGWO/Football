@@ -1,0 +1,41 @@
+:root {
+    --win: red;
+    --lose: blue;
+}
+
+.matchList {
+    border: 0.1rem solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+.matchBox:last-child {
+    border-bottom: none;
+}
+.matchBox {
+    border-bottom: 0.1rem solid var(--border-color);
+    width: 100%;
+    height: 3rem;
+    display: grid;
+    grid-template-columns: 20% 12% 7% 7% 48% 6%;
+    align-items: center;
+    cursor: default;
+}
+.matchBox .title {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.matchBox .title:hover {
+    text-decoration: underline;
+}
+
+.result {
+    font-size: 1.1rem;
+}
+
+.win{
+    color: var(--win);
+}
+.lose {
+    color: var(--lose);
+}
