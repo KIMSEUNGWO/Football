@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface JpaCouponListRepository extends JpaRepository<CouponList, Long> {
 
-    void deleteByCouponId(Long couponId);
 }
