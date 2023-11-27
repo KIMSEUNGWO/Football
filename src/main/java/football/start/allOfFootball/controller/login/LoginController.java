@@ -7,10 +7,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
@@ -20,42 +18,39 @@ import static football.start.allOfFootball.SessionConst.*;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/login")
 public class LoginController {
 
     public final LoginService loginService;
 
 
-    @GetMapping
-    public String startLogin(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId) {
+    @GetMapping("/login")
+    public String startLogin(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, @ModelAttribute LoginDto loginDto) {
         if (memberId != null) return "redirect:/";
         return "login";
     }
 
 
-    @PostMapping
+    @PostMapping("/login")
     public String loginAction(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
-                              LoginDto loginDto,
-                              RedirectAttributes redirectAttributes,
+                              @ModelAttribute LoginDto loginDto,
                               HttpSession session,
-                              HttpServletRequest request) {
-
+                              HttpServletRequest request,
+                              Model model) {
         if (memberId != null) return "redirect:/";
         if (loginDto == null || loginDto.getEmail() == null || loginDto.getPassword() == null) return "redirect:/";
 
-
-
         Optional<Member> loginMember = loginService.login(loginDto.getEmail(), loginDto.getPassword());
         if (loginMember.isEmpty()) {
-            redirectAttributes.addFlashAttribute("loginEmail", loginDto.getEmail());
-            return "redirect:/login";
+            model.addAttribute("errorMsg", "이메일 또는 비밀번호가 일치하지 않습니다.");
+            return "login";
         }
         String redirectURL = request.getParameter(REDIRECT_URL);
-
+        Member findMember = loginMember.get();
+        System.out.println("findMember = " + findMember.getMemberId());
         // 세션 생성
-        session.setAttribute(LOGIN_MEMBER, loginMember.get().getMemberId());
-
-        return "redirect:" + redirectURL;
+        session.setAttribute(LOGIN_MEMBER, findMember.getMemberId());
+        System.out.println("성공");
+        return "redirect:/";
     }
 
 

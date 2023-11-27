@@ -15,20 +15,19 @@ import java.util.Optional;
 public class LoginServiceImpl implements LoginService{
 
     private final LoginRepository loginRepository;
-    private final BCrypt bc;
 
     @Override
     public Optional<Member> login(String email, String password) {
         Optional<Member> loginMember = loginRepository.findByMember(email);
         if (loginMember.isEmpty()) return Optional.empty();
 
-        Member member = loginMember.get();
-        boolean isLogin = bc.matchBCrypt(password + member.getMemberSalt(), member.getMemberPassword());
+        Member findMember = loginMember.get();
+        boolean isLogin = BCrypt.matchBCrypt(findMember.combineSalt(password), findMember.getMemberPassword());
         if (!isLogin) {
             return Optional.empty();
         }
         // 최근 로그인 시간 갱신
-        loginRepository.renewLoginTime(loginMember.get());
+        loginRepository.renewLoginTime(findMember);
 
         return loginMember;
     }

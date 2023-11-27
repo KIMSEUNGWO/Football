@@ -30,8 +30,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         // 이후 처리
         String memberIdStr = (String) session.getAttribute(LOGIN_MEMBER);
-        if (memberIdStr == null || memberIdStr.matches("[^0-9]")) {
-            log.info("잘못된 로그인 세션값 :" + memberIdStr);
+        if (memberIdStr == null) {
+            log.info("로그인 세션값 : null");
             return false;
         }
         Long memberId = Long.parseLong(memberIdStr);

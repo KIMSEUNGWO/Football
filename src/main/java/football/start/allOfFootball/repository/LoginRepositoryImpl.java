@@ -4,18 +4,17 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Slf4j
 @Repository
 @Transactional
-@RequiredArgsConstructor
 public class LoginRepositoryImpl implements LoginRepository {
 
     private final JpaMemberRepository jpaMemberRepository;
@@ -34,12 +33,12 @@ public class LoginRepositoryImpl implements LoginRepository {
 
     @Override
     public Optional<Member> findByMember(String email) {
-        return jpaMemberRepository.findByEmail(email);
+        return jpaMemberRepository.findByMemberEmail(email);
     }
 
     @Override
     public void renewLoginTime(Member member) {
-        member.setMemberRecentlyDate(LocalDateTime.now());
+        member.setMemberRecentlyDate(LocalDate.now());
     }
 
 }
