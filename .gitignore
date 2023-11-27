@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### spa Q 객체 제외 ###
+**/src/main/generated/**
