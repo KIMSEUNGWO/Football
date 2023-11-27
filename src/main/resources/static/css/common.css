@@ -1,0 +1,161 @@
+@font-face {
+    font-family: 'Pretendard-Medium';
+    src: url(/font/Pretendard-Medium.otf);
+}
+
+@font-face {
+    font-family: 'Pretendard-Light';
+    src: url(/font/Pretendard-Light.otf);
+}
+
+@font-face {
+    font-family: 'Pretendard-Bold';
+    src: url(/font/Pretendard-Bold.otf);
+}
+@font-face {
+    font-family: 'Pretendard-SemiBold';
+    src: url(/font/Pretendard-SemiBold.otf);
+}
+:root{
+    --main-color: #2f69dd;
+    --main-color-hover: #295dc4;
+    --main-font-color: #3d97d7;
+    --border-radius: 0.3rem;
+    --border-color: #d7d7d7;
+    --gray: #757575;
+    --container-color: #fafafa;
+    --on: #1d74ff;
+    --on-hover: #1a63d9;
+    --on-2: #ff2c2c;
+    --on-2-hover: #dd2828;
+    --off: #bbbbbb;
+}
+
+*{
+    font-family: 'Pretendard-Medium';
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+body{
+    background-color: var(--container-color);
+    min-height: 80rem;
+}
+
+.container{
+    width: 75rem;
+}
+
+h1, h2, h3 {
+    margin-bottom: 2rem;
+}
+h4, h5 {
+    margin-bottom: 1rem;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+}
+li{
+    cursor: pointer;
+}
+
+a, a *{
+    color: black;
+    text-decoration: none;
+}
+
+pre {
+    white-space: pre-line;
+    font-family: 'Pretendard-light';
+}
+
+.box {
+    border: 0.1rem solid var(--border-color);
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: 2px 2px 5px #e4e4e4;
+    padding: 1.5rem;
+}
+
+.btnBox {
+    border: 0.1rem solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 1.1rem;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.resultButton {
+    margin: 0 0.5rem 0 1rem;
+    width: 6.5rem;
+    height: 75%;
+    border: none;
+    border-radius: 0.7rem;
+    color: white;
+    box-shadow: 2px 2px 5px #b3b3b3;
+    font-size: 1.05rem;
+}
+
+.sideHr {
+    width: 100%;
+    left: 0;
+    background-color: var(--border-color);
+    height: 2px;
+    border: 0;
+    margin: 1.5rem 0;
+}
+
+.svgBox {
+    border: none;
+    background:none;
+}
+
+svg {
+    margin: 0;
+    width: 1rem;
+    height: 1rem;
+}
+
+.errorMsgBox {
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.errorMsg{
+    color: red;
+    font-size: 0.9rem;
+}
+
+.subOption.disabled {
+    display: none;
+}
+
+.disabled {
+    display: none;
+}
+
+
+/* 신청, 마감임박, 마감 버튼*/
+.on {
+    background-color: var(--on);
+}
+.on:hover {
+    background-color: var(--on-hover);
+}
+.on-2 {
+    background-color: var(--on-2);
+}
+.on-2:hover {
+    background-color: var(--on-2-hover);
+}
+.off {
+    background-color: var(--off);
+}

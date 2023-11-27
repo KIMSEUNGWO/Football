@@ -1,0 +1,36 @@
+header{
+    width: 75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .flexL, .flexR{
+    display: flex;
+    margin: 1rem 0.5rem;
+}
+
+header .logo {
+    width: 13rem;
+}
+
+header .menu {
+    display: flex;
+}
+
+header .menu .menuTitle {
+    margin: 0 1.5rem;
+    font-size: 1.05rem;
+}
+
+.info_user {
+    width: 45px;
+    height: 45px;
+    background-color: antiquewhite;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
