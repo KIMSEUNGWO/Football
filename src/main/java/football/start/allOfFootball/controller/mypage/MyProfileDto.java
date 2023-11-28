@@ -1,6 +1,6 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.start.allOfFootball.enums.Grade;
+import football.start.allOfFootball.enums.GradeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +15,6 @@ public class MyProfileDto {
 
     private String score;
     private String rank;
-    private Grade grade;
+    private GradeEnum grade;
     private MatchScore matchScore;
 }

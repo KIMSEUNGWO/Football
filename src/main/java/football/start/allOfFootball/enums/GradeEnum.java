@@ -1,6 +1,6 @@
 package football.start.allOfFootball.enums;
 
-public enum Grade {
+public enum GradeEnum {
 
     초보,
     아마추어,

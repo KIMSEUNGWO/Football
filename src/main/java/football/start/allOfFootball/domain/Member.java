@@ -1,7 +1,7 @@
 package football.start.allOfFootball.domain;
 
 import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.Grade;
+import football.start.allOfFootball.enums.GradeEnum;
 import football.start.allOfFootball.enums.SocialEnum;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -42,7 +42,7 @@ public class Member extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Nullable
-    private Grade grade;
+    private GradeEnum grade;
 
     private LocalDate memberRecentlyDate;
     private LocalDateTime memberExpireDate;

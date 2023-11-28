@@ -1,6 +1,6 @@
 package football.start.allOfFootball.enums;
 
-public enum Location {
+public enum LocationEnum {
 
     서울,
     경기,
