@@ -1,6 +1,3 @@
-const searchResult = document.querySelector('.searchResult');
-const total = document.querySelector('.total');
-
 window.addEventListener('load', ()=>{
   let searchWord = document.querySelector('input[name="searchWord"]');
   let searchBtn = document.querySelector('#searchBtn');
@@ -34,9 +31,13 @@ window.addEventListener('load', ()=>{
 })
 
 function groundSearch(list) {
+    const total = document.querySelector('.total');
+
     if (list == null || list.length < 1) {
+        total.innerHTML = '총 0건';
         searchEmpty();
     } else {
+        total.innerHTML = '총 ' + list.length + '건';
         createList(list);
     }
 }
@@ -45,13 +46,13 @@ function getList(node) {
     let array = new Array();
     for (var i = 0;i < node.length;i++) {
         if (node.item(i).id == 'regionAll') {
-            array.push(node.item(i).id);
+            array.push(node.item(i).value);
             return array;
         }
     }
 
     node.forEach(element => {
-        array.push(element.id);
+        array.push(element.value);
     });
     return array;
 }
@@ -64,24 +65,25 @@ function getJson(array, searchWord) {
 function search() {
     var region = document.querySelectorAll('input[name="region"]:checked');
     var searchWord = document.querySelector('input[name="searchWord"]');
-    console.log(searchWord);
     let condition = getJson(getList(region), searchWord.value);
-    console.log(condition);
     fetchPost('/admin/ground/get', condition, groundSearch);
 }
 
 function searchEmpty() {
-    total.innerHTML = '총 0건';
+    const searchResult = document.querySelector('.searchResult');
 
-    let temp = '<li class="none">검색 결과가 없습니다.</li>';
-    searchResult.innerHTML = temp;
+    searchResult.innerHTML = '<li class="none">검색 결과가 없습니다.</li>';
 }
 
 function createList(list) {
-    total.innerHTML = '총 ' + list.length + '건';
+    const searchResult = document.querySelector('.searchResult');
 
-    
+    let temp = ''
+    for (let i=0;i<list.length;i++) {
+        temp += resultForm(list[i]);
+    }
+    searchResult.innerHTML = temp;
 }
-function resultForm(groundId, region, title) {
-    return '<a href="/admin/ground/' + groundId + '" class="result"><span id="groundRegion">' + region + '</span><span id="groundTitle">' + title +'</span></a>';
+function resultForm(searchForm) {
+    return '<a href="/admin/ground/' + searchForm.groundId + '" class="result"><span id="groundRegion">' + searchForm.region + '</span><span id="groundTitle">' + searchForm.fieldName +'</span></a>';
 }

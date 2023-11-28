@@ -1,5 +1,6 @@
 package football.start.allOfFootball.controller.admin;
 
+import football.start.allOfFootball.enums.LocationEnum;
 import lombok.*;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @ToString
 public class SearchDto {
 
-    private List<String> region;
+    private List<LocationEnum> region;
     private String word;
 
 }

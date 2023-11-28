@@ -1,10 +1,10 @@
 package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.common.file.FileService;
-import football.start.allOfFootball.common.file.FileUploadDto;
 import football.start.allOfFootball.controller.admin.SaveGroundForm;
+import football.start.allOfFootball.controller.admin.SearchDto;
+import football.start.allOfFootball.controller.admin.SearchFieldForm;
 import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.FieldImage;
 import football.start.allOfFootball.enums.FileUploadType;
 import football.start.allOfFootball.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -37,5 +38,12 @@ public class AdminServiceImpl implements AdminService {
         List<MultipartFile> images = saveGroundForm.getImages();
         int res = fileService.saveFile(images, field.getFieldId(), FileUploadType.FIELD_IMAGE);
 
+    }
+
+    @Override
+    public List<SearchFieldForm> getSearchResult(SearchDto searchDto) {
+
+        List<Field> list = adminRepository.findByAllField(searchDto);
+        return list.stream().map(x -> SearchFieldForm.build(x)).collect(Collectors.toList());
     }
 }

@@ -1,5 +1,6 @@
 package football.start.allOfFootball.controller.admin;
 
+import football.start.allOfFootball.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +16,16 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminRestController {
 
+    private final AdminService adminService;
 
     @PostMapping("/ground/get")
-    public String groundGet(@RequestBody SearchDto searchDto) {
+    public List<SearchFieldForm> groundGet(@RequestBody SearchDto searchDto) {
         System.out.println("searchDto = " + searchDto);
-        return "ok";
+
+        List<SearchFieldForm> result = adminService.getSearchResult(searchDto);
+        for (SearchFieldForm searchFieldForm : result) {
+            System.out.println("searchFieldForm = " + searchFieldForm);
+        }
+        return result;
     }
 }

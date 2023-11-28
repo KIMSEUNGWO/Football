@@ -52,10 +52,10 @@
                         <span>지역</span>
                         <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
                         <ul class="subOption regionOption disabled">
-                            <li><input type="checkbox" name="region" id="regionAll" checked><label for="regionAll">전체</label></li>
-                            <li><input type="checkbox" name="region" id="seoul"><label for="seoul">서울</label></li>
-                            <li><input type="checkbox" name="region" id="incheon"><label for="incheon">인천</label></li>
-                            <li><input type="checkbox" name="region" id="gyeonggi"><label for="gyeonggi">경기도</label></li>
+                            <li><input type="checkbox" name="region" id="regionAll" value="전체" checked><label for="regionAll">전체</label></li>
+                            <li><input type="checkbox" name="region" id="seoul" value="서울"><label for="seoul">서울</label></li>
+                            <li><input type="checkbox" name="region" id="incheon" value="인천"><label for="incheon">인천</label></li>
+                            <li><input type="checkbox" name="region" id="gyeonggi" value="경기"><label for="gyeonggi">경기</label></li>
                         </ul>
                     </button>
                     <input type="text" name="searchWord" id="searchWord" placeholder="구장 이름을 입력해주세요.">
@@ -67,10 +67,6 @@
                 </div>
                 <ul class="searchResult">
                     <li class="none">검색 결과가 없습니다.</li>
-                    <a href="#" class="result">
-                        <span id="groundRegion">서울</span>
-                        <span id="groundTitle">무슨무슨구장</span>
-                    </a>
                 </ul>
             </div>
         </div>
