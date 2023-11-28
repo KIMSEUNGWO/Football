@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/common.css">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/admin_main.css">
-    <link rel="stylesheet" href="/css/admin_ground_add.css">
-    <script src="/js/admin_ground_add.js"></script>
-    <script src="/js/admin_ground_image_preview.js"></script>
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/admin_main.css">
+    <link rel="stylesheet" href="/static/css/admin_ground_add.css">
+    <script src="/static/js/admin_ground_add.js"></script>
+    <script src="/static/js/admin_ground_image_preview.js"></script>
     <title>구장등록 :: 프로젝트</title>
 </head>
 <body>
@@ -55,11 +55,17 @@
                             <span id="maxImage"></span>
                         </button>
                     </div>
-                    <input type="file" th:field="*{images}" accept="image/*" multiple>
+                    <input type="file" th:field="*{images}" accept="image/*" multiple th:errorclass="field-error">
+                    <div class="errorBox">
+                        <div class="errorMsg field-error" th:errors="*{images}">[[${errorMsg}]]</div>
+                    </div>
                     <table>
                         <tr>
                             <th>구장이름</th>
-                            <td><input type="text" th:field="*{fieldName}" class="inputForm"></td>
+                            <td>
+                                <input type="text" th:field="*{fieldName}" class="inputForm" th:errorclass="field-error">
+                                <div class="errorMsg field-error" th:errors="*{fieldName}">[[${errorMsg}]]</div>
+                            </td>
                         </tr>
                         <tr>
                             <th>구장위치</th>
@@ -74,16 +80,18 @@
                                         </li>
                                     </ul>
                                 </button>
-                                <input type="text" th:field="*{fieldAddress}" class="inputForm">
+                                <input type="text" th:field="*{fieldAddress}" class="inputForm" th:errorclass="field-error">
                                 <button type="button" class="addressBtn btn">주소검색</button>
+                                <div class="errorMsg field-error" th:errors="*{fieldAddress}">[[${errorMsg}]]</div>
                             </td>
                         </tr>
                         <tr>
                             <th>구장크기</th>
                             <td class="sizeBox">
-                                <input type="text" th:field="*{xSize}" placeholder="가로m" class="inputForm size">
+                                <input type="text" th:field="*{xSize}" placeholder="가로m" class="inputForm size" inputmode="numeric">
                                 <span>X</span>
-                                <input type="text" th:field="*{ySize}" placeholder="세로m" class="inputForm size">
+                                <input type="text" th:field="*{ySize}" placeholder="세로m" class="inputForm size" inputmode="numeric">
+                                <div class="errorMsg field-error" th:errors="*{images}">[[${errorMsg}]]</div>
                             </td>
                         </tr>
                         <tr>
@@ -93,36 +101,49 @@
                                     <div class="options">
                                         <h4>주차장</h4>
                                         <ul class="radioBox">
-                                            <li><input type="radio" th:field="*{parking}" id="free" value="무료"><label for="free">무료</label></li>
-                                            <li><input type="radio" th:field="*{parking}" id="notFree" value="유료"><label for="notFree">유료</label></li>
-                                            <li><input type="radio" th:field="*{parking}" id="not" value="불가"><label for="not">불가</label></li>
+                                            <li><input type="radio" th:field="*{parking}" id="free" value="무료" th:errorclass="field-error"><label for="free">무료</label></li>
+                                            <li><input type="radio" th:field="*{parking}" id="notFree" value="유료" th:errorclass="field-error"><label for="notFree">유료</label></li>
+                                            <li><input type="radio" th:field="*{parking}" id="not" value="불가" th:errorclass="field-error"><label for="not">불가</label></li>
                                         </ul>
+                                        <div class="errorBox">
+                                            <div class="errorMsg field-error" th:errors="*{parking}">[[${errorMsg}]]</div>
+                                        </div>
                                     </div>
                                     <div class="options">
                                         <h4>화장실</h4>
                                         <ul class="radioBox">
-                                            <li><input type="radio" th:field="*{toilet}" id="oToilet" value="있음"><label for="oToilet">있음</label></li>
-                                            <li><input type="radio" th:field="*{toilet}" id="xToilet" value="없음"><label for="xToilet">없음</label></li>
+                                            <li><input type="radio" th:field="*{toilet}" id="oToilet" value="있음" th:errorclass="field-error"><label for="oToilet">있음</label></li>
+                                            <li><input type="radio" th:field="*{toilet}" id="xToilet" value="없음" th:errorclass="field-error"><label for="xToilet">없음</label></li>
                                         </ul>
+                                        <div class="errorBox">
+                                            <div class="errorMsg field-error" th:errors="*{toilet}">[[${errorMsg}]]</div>
+                                        </div>
                                     </div>
                                     <div class="options">
                                         <h4>샤워장</h4>
                                         <ul class="radioBox">
-                                            <li><input type="radio" th:field="*{shower}" id="oShower" value="있음"><label for="oShower">있음</label></li>
-                                            <li><input type="radio" th:field="*{shower}" id="xShower" value="없음"><label for="xShower">없음</label></li>
+                                            <li><input type="radio" th:field="*{shower}" id="oShower" value="있음" th:errorclass="field-error"><label for="oShower">있음</label></li>
+                                            <li><input type="radio" th:field="*{shower}" id="xShower" value="없음" th:errorclass="field-error"><label for="xShower">없음</label></li>
                                         </ul>
+                                        <div class="errorBox">
+                                            <div class="errorMsg field-error" th:errors="*{shower}">[[${errorMsg}]]</div>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <th>구장 특이사항</th>
-                            <td><textarea th:field="*{fieldDetails}" cols="30" rows="10" class="inputForm"></textarea></td>
+                            <td>
+                                <textarea th:field="*{fieldDetails}" cols="30" rows="10" class="inputForm" th:errorclass="field-error"></textarea>
+                                <div class="errorMsg field-error" th:errors="*{fieldDetails}">[[${errorMsg}]]</div>
+                            </td>
                         </tr>
                     </table>
                     <div class="submitBox">
                         <input type="submit" class="submitBtn btn" value="등록">
                     </div>
+                    
                 </form>
             </div>
         </div>
