@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/common.css">
-    <link rel="stylesheet" href="/static/css/header.css">
-    <link rel="stylesheet" href="/static/css/admin_main.css">
-    <link rel="stylesheet" href="/static/css/admin_ground_add.css">
-    <script src="/static/js/admin_ground_add.js"></script>
-    <script src="/static/js/admin_ground_image_preview.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/admin_ground_add.css">
+    <script src="/js/admin_ground_add.js"></script>
+    <script src="/js/admin_ground_image_preview.js"></script>
     <title>구장등록 :: 프로젝트</title>
 </head>
 <body>
@@ -57,6 +57,7 @@
                     </div>
                     <input type="file" th:field="*{images}" accept="image/*" multiple th:errorclass="field-error">
                     <div class="errorBox">
+                        <div class="errorMsg" id="errorImages"></div>
                         <div class="errorMsg field-error" th:errors="*{images}">[[${errorMsg}]]</div>
                     </div>
                     <table>
@@ -64,6 +65,7 @@
                             <th>구장이름</th>
                             <td>
                                 <input type="text" th:field="*{fieldName}" class="inputForm" th:errorclass="field-error">
+                                <div class="errorMsg" id="errorFileName"></div>
                                 <div class="errorMsg field-error" th:errors="*{fieldName}">[[${errorMsg}]]</div>
                             </td>
                         </tr>
@@ -75,13 +77,17 @@
                                     <svg viewBox="0 0 9 6" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
                                     <ul class="subOption regionOption disabled">
                                         <li th:each="loc : ${locations}">
-                                            <input type="radio" th:field="*{region}" th:id="${loc.regionId}" th:value="${loc}">
+                                            <input type="radio" th:field="*{region}" th:id="${loc.regionId}" th:value="${loc}" th:errorclass="field-error">
                                             <label th:for="${loc.regionId}" th:text="${loc}"></label>
                                         </li>
                                     </ul>
                                 </button>
+                                <div class="errorMsg" id="errorRegion"></div>
+                                <div class="errorMsg field-error" th:errors="*{region}">[[${errorMsg}]]</div>
+
                                 <input type="text" th:field="*{fieldAddress}" class="inputForm" th:errorclass="field-error">
                                 <button type="button" class="addressBtn btn">주소검색</button>
+                                <div class="errorMsg" id="errorFieldAddress"></div>
                                 <div class="errorMsg field-error" th:errors="*{fieldAddress}">[[${errorMsg}]]</div>
                             </td>
                         </tr>
@@ -91,6 +97,7 @@
                                 <input type="text" th:field="*{xSize}" placeholder="가로m" class="inputForm size" inputmode="numeric">
                                 <span>X</span>
                                 <input type="text" th:field="*{ySize}" placeholder="세로m" class="inputForm size" inputmode="numeric">
+                                <div class="errorMsg" id="errorSize"></div>
                                 <div class="errorMsg field-error" th:errors="*{images}">[[${errorMsg}]]</div>
                             </td>
                         </tr>
@@ -106,6 +113,7 @@
                                             <li><input type="radio" th:field="*{parking}" id="not" value="불가" th:errorclass="field-error"><label for="not">불가</label></li>
                                         </ul>
                                         <div class="errorBox">
+                                            <div class="errorMsg" id="errorParking"></div>
                                             <div class="errorMsg field-error" th:errors="*{parking}">[[${errorMsg}]]</div>
                                         </div>
                                     </div>
@@ -116,6 +124,7 @@
                                             <li><input type="radio" th:field="*{toilet}" id="xToilet" value="없음" th:errorclass="field-error"><label for="xToilet">없음</label></li>
                                         </ul>
                                         <div class="errorBox">
+                                            <div class="errorMsg" id="errorToilet"></div>
                                             <div class="errorMsg field-error" th:errors="*{toilet}">[[${errorMsg}]]</div>
                                         </div>
                                     </div>
@@ -126,6 +135,7 @@
                                             <li><input type="radio" th:field="*{shower}" id="xShower" value="없음" th:errorclass="field-error"><label for="xShower">없음</label></li>
                                         </ul>
                                         <div class="errorBox">
+                                            <div class="errorMsg" id="errorShower"></div>
                                             <div class="errorMsg field-error" th:errors="*{shower}">[[${errorMsg}]]</div>
                                         </div>
                                     </div>
@@ -136,6 +146,7 @@
                             <th>구장 특이사항</th>
                             <td>
                                 <textarea th:field="*{fieldDetails}" cols="30" rows="10" class="inputForm" th:errorclass="field-error"></textarea>
+                                <div class="errorMsg" id="errorDetails"></div>
                                 <div class="errorMsg field-error" th:errors="*{fieldDetails}">[[${errorMsg}]]</div>
                             </td>
                         </tr>

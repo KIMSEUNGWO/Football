@@ -32,15 +32,142 @@ window.addEventListener('load', () => {
                el.value = '';
                return;
             }
-            // 두자리수까지 허용
-            if (el.value > 2) {
-                el.value = el.value.slice(0, 2);
+            // 세자리수까지 허용
+            if (el.value > 3) {
+                el.value = el.value.slice(0, 3);
             }
         })
+    })
+
+    let form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+
+        let isImages = isFieldImages();
+        console.log('isImages');
+        let isTitle = isFieldTitle();
+        console.log('isTitle');
+        let isRegion = isFieldRegion();
+        console.log('isRegion');
+        let isAddress = isFieldAddress();
+        console.log('isAddress');
+        let isSize = isFieldSize();
+        console.log('isSize');
+        let isOption = isFieldOption();
+        console.log('isOption');
+        let isDetails = isFieldDetails();
+        console.log('isDetails');
+
+        if (isImages || isTitle || isRegion || isAddress || isSize || isOption || isDetails) {
+            return;
+        }
+        alert('?');
+
     })
 
 })
 
 function isNumber(value) {
     return !isNaN(value) && value != '';
+}
+
+
+function isFieldImages() {
+    let inputFile = document.querySelector('input[type="file"]');
+    let files = inputFile.files;
+    let errorTag =  document.querySelector('#errorImages');
+    if (files.length < 1) {
+        errorTag.innerHTML = '사진을 1장 이상 첨부해주세요';
+        return false;
+    }
+    if (files.length > maxImages) {
+        errorTag.innerHTML = '사진은 최대 ' + maxImages + '장까지 가능합니다.';
+        return false;
+    }
+
+    return true;
+}
+
+function isFieldTitle() {
+    let title = document.querySelector('input[name="fieldName"]');
+    let text = title.value.replaceAll(' ', '');
+    let errorTag = document.querySelector('#errorFileName');
+    if (text == null || text.length < 5) {
+        errorTag.innerHTML = '구장 이름을 정확히 적어주세요';
+        return false;
+    }
+    return true;
+}
+
+function isFieldRegion() {
+    let region = document.querySelector('input[name="region"]:checked');
+    let errorTag = document.querySelector('#errorRegion');
+    if (region == null) {
+        errorTag.innerHTML = '지역을 설정해주세요';
+        return false;
+    }
+    return true;
+}
+
+function isFieldAddress() {
+    let address = document.querySelector('input[name="fieldAddress"]');
+    let text = address.value.replaceAll(' ', '');
+    let errorTag = document.querySelector('#errorFieldAddress');
+    if (text == null || text.length < 10) {
+        errorTag.innerHTML = '주소를 정확하게 작성해주세요';
+        return false;
+    }
+    return true;
+}
+
+function isFieldSize() {
+    let xSize = document.querySelector('input[name="xSize"]');
+    let ySize = document.querySelector('input[name="ySize"]');
+    let errorTag = document.querySelector('#errorSize');
+
+    if (!isNumber(xSize.value) || !isNumber(ySize.value) || Number(xSize.value) < 10 || Number(xSize.value) > 200 || Number(ySize.value) < 10 || Number(ySize.value) > 200) {
+        errorTag.innerHTML = '숫자만 사용하여 크기를 다시 작성해주세요'
+        return false;
+    }
+    return true;
+}
+
+function isFieldOption() {
+    let parking = isParking();
+    let toilet = isToilet();
+    let shower = isShower();
+    return parking && toilet && shower;
+}
+
+function isFieldDetails() {
+    return true;
+}
+
+function isParking() {
+    let parking = document.querySelector('input[name="parking"]:checked');
+    let errorTag = document.querySelector('#errorParking');
+    if (parking == null) {
+        errorTag.innerHTML = '주차장 여부를 설정해주세요';
+        return false;
+    }
+    return true;
+}
+
+function isToilet() {
+    let toilet = document.querySelector('input[name="toilet"]:checked');
+    let errorTag = document.querySelector('#errorToilet');
+    if (toilet == null) {
+        errorTag.innerHTML = '화장실 여부를 설정해주세요';
+        return false;
+    }
+    return true;
+}
+
+function isShower() {
+    let shower = document.querySelector('input[name="shower"]:checked');
+    let errorTag = document.querySelector('#errorShower');
+    if (shower == null) {
+        errorTag.innerHTML = '샤워장 여부를 설정해주세요';
+        return false;
+    }
+    return true;
 }
