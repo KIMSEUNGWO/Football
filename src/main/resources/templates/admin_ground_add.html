@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/admin_ground_add.css">
+    <script src="/js/admin_ground_add.js"></script>
+    <script src="/js/admin_ground_image_preview.js"></script>
+    <title>구장등록 :: 프로젝트</title>
+</head>
+<body>
+    <body>
+        <header>
+            <div class="flexL">
+                <a href="#" class="logo">
+                    <img src="#" alt="로고이미지">
+                </a>
+                <ul class="menu">
+                    <li class="menuTitle">메뉴1</li>
+                    <li class="menuTitle">메뉴2</li>
+                    <li class="menuTitle">메뉴3</li>
+                    <li class="menuTitle">메뉴4</li>
+                </ul>
+            </div>
+            <div class="flexR">
+                <a href="/mypage" class="info_user">
+                    <img src="https://phinf.pstatic.net/contact/20220724_153/1658672074422w1wxl_JPEG/IMG_8012.JPG?type=f130_130" width="64" height="64" alt="김승우">
+                </a>
+            </div> 
+        </header>
+        <div class="container">
+            <aside class="side box">
+                <div class="profile">
+                    <span class="name">김승우 <small>관리자</small></span>
+                </div>
+                <hr class="sideHr">
+                <ul class="adMenu">
+                    <li><a href="#" class="adMenuList">전체통계</a></li>
+                    <li><a href="#" class="adMenuList">구장관리</a></li>
+                    <li><a href="#" class="adMenuList">경기관리</a></li>
+                    <li><a href="#" class="adMenuList">회원관리</a></li>
+                </ul>
+            </aside>
+            <div class="mainBox box">
+                <h2>구장등록</h2>
+                <form th:action action="/admin/ground/add" method="post" th:object="${saveGroundForm}" enctype="multipart/form-data">
+                <!-- <form action="#" method="get" th:object="${saveGroundForm}" enctype="multipart/form-data"> -->
+                    <h3>구장이미지</h3>
+                    <div class="preview">
+                        <button type="button" class='imgBox' id="addImage">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width='2rem'>
+                                <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                            <span id="maxImage"></span>
+                        </button>
+                    </div>
+                    <input type="file" th:field="*{images}" accept="image/*" multiple>
+                    <table>
+                        <tr>
+                            <th>구장이름</th>
+                            <td><input type="text" th:field="*{fieldName}" class="inputForm"></td>
+                        </tr>
+                        <tr>
+                            <th>구장위치</th>
+                            <td>
+                                <button type="button" class="regionBox">
+                                    <span id="regionName">지역</span>
+                                    <svg viewBox="0 0 9 6" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                                    <ul class="subOption regionOption disabled">
+                                        <li><input type="radio" th:field="*{region}" id="seoul" value="서울"><label for="seoul">서울</label></li>
+                                        <li><input type="radio" th:field="*{region}" id="incheon" value="인천"><label for="incheon">인천</label></li>
+                                        <li><input type="radio" th:field="*{region}" id="gyeonggi" value="경기"><label for="gyeonggi">경기도</label></li>
+                                    </ul>
+                                </button>
+                                <input type="text" th:field="*{fieldAddress}" class="inputForm">
+                                <button type="button" class="addressBtn btn">주소검색</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>구장크기</th>
+                            <td class="sizeBox">
+                                <input type="text" th:field="*{xSize}" placeholder="가로m" class="inputForm size">
+                                <span>X</span>
+                                <input type="text" th:field="*{ySize}" placeholder="세로m" class="inputForm size">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>구장옵션</th>
+                            <td>
+                                <div class="optionBox">
+                                    <div class="options">
+                                        <h4>주차장</h4>
+                                        <ul class="radioBox">
+                                            <li><input type="radio" th:field="*{parking}" id="free" value="무료"><label for="free">무료</label></li>
+                                            <li><input type="radio" th:field="*{parking}" id="notFree" value="유료"><label for="notFree">유료</label></li>
+                                            <li><input type="radio" th:field="*{parking}" id="not" value="불가"><label for="not">불가</label></li>
+                                        </ul>
+                                    </div>
+                                    <div class="options">
+                                        <h4>화장실</h4>
+                                        <ul class="radioBox">
+                                            <li><input type="radio" th:field="*{toilet}" id="oToilet" value="있음"><label for="oToilet">있음</label></li>
+                                            <li><input type="radio" th:field="*{toilet}" id="xToilet" value="없음"><label for="xToilet">없음</label></li>
+                                        </ul>
+                                    </div>
+                                    <div class="options">
+                                        <h4>샤워장</h4>
+                                        <ul class="radioBox">
+                                            <li><input type="radio" th:field="*{shower}" id="oShower" value="있음"><label for="oShower">있음</label></li>
+                                            <li><input type="radio" th:field="*{shower}" id="xShower" value="없음"><label for="xShower">없음</label></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>구장 특이사항</th>
+                            <td><textarea th:field="*{fieldDetails}" cols="30" rows="10" class="inputForm"></textarea></td>
+                        </tr>
+                    </table>
+                    <div class="submitBox">
+                        <input type="submit" class="submitBtn btn" value="등록">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</body>
+</html>
