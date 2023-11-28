@@ -62,8 +62,8 @@ form table {
     font-size: 1.1rem;
 }
 input[type="file"] {
-    display: block;
-    /* display: none; */
+    /* display: block; */
+    display: none;
 }
 
 /* 이미지 끝 */
