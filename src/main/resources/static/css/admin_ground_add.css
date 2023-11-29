@@ -57,14 +57,41 @@ form table {
 #addImage svg {
     width: 2rem;
     height: 2rem;
+    pointer-events: none;
 }
 #addImage span {
     font-size: 1.1rem;
 }
 input[type="file"] {
-    /* display: block; */
-    display: none;
+    display: block;
+    /* display: none; */
 }
+
+div.imgBox {
+    position: relative;
+}
+div.imgBox .xBox {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: rgb(60, 146, 252);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+div.imgBox .xBox:hover {
+    background-color: rgb(48, 117, 202);
+}
+div.imgBox svg {
+    width: 90%;
+    height: 90%;
+    fill: white;
+    pointer-events: none;
+}
+
 
 /* 이미지 끝 */
 

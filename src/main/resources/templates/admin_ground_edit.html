@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/admin_main.css">
     <link rel="stylesheet" href="/css/admin_ground_add.css">
+    <link rel="stylesheet" href="/css/admin_ground_edit.css">
     <script src="/js/admin_ground_add.js"></script>
     <script src="/js/admin_ground_image_preview.js"></script>
-    <title>구장등록 :: 프로젝트</title>
+    <title>구장정보 :: 프로젝트</title>
 </head>
 <body>
     <body>
@@ -45,8 +46,8 @@
                 </ul>
             </aside>
             <div class="mainBox box">
-                <h2>구장등록</h2>
-                <form th:action action="/admin/ground/add" method="post" th:object="${saveFieldForm}" enctype="multipart/form-data">
+                <h2>구장정보</h2>
+                <form th:action="@{/admin/ground/} + ${fieldId} + @{/edit}" method="post" th:object="${editFieldForm}" enctype="multipart/form-data">
                     <h3>구장이미지</h3>
                     <div class="preview">
                         <button type="button" class='imgBox' id="addImage">
@@ -54,7 +55,15 @@
                                 <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
                             <span id="maxImage"></span>
                         </button>
+                        <div class="imgBox" th:each="image : *{savedImages}">
+                            <img th:src="@{/images/fieldImage/} + ${image.fieldImageStoreName}" th:alt="${image.fieldImageName}"/>
+                            <div class="xBox" th:id="${image.fieldImageName}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="rotate: 45deg">
+                                <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                            </div>
+                        </div>
                     </div>
+                    <input type="text" th:field="*{deleteImages}">
                     <input type="file" th:field="*{images}" accept="image/*" multiple th:errorclass="field-error">
                     <div class="errorBox">
                         <div class="errorMsg" id="errorImages"></div>
@@ -73,7 +82,7 @@
                             <th>구장위치</th>
                             <td>
                                 <button type="button" class="regionBox">
-                                    <span id="regionName">지역</span>
+                                    <span id="regionName" th:text="*{region}">지역</span>
                                     <svg viewBox="0 0 9 6" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
                                     <ul class="subOption regionOption disabled">
                                         <li th:each="loc : ${locations}" th:unless="${loc.regionId == 'regionAll'}">

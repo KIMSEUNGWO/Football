@@ -42,26 +42,19 @@ window.addEventListener('load', () => {
     let form = document.querySelector('form');
     form.addEventListener('submit', (e) => {
 
+        e.preventDefault();
+
         let isImages = isFieldImages();
-        console.log('isImages');
         let isTitle = isFieldTitle();
-        console.log('isTitle');
         let isRegion = isFieldRegion();
-        console.log('isRegion');
         let isAddress = isFieldAddress();
-        console.log('isAddress');
         let isSize = isFieldSize();
-        console.log('isSize');
         let isOption = isFieldOption();
-        console.log('isOption');
         let isDetails = isFieldDetails();
-        console.log('isDetails');
 
-        if (isImages || isTitle || isRegion || isAddress || isSize || isOption || isDetails) {
-            return;
+        if (isImages && isTitle && isRegion && isAddress && isSize && isOption && isDetails) {
+            form.submit();
         }
-        alert('?');
-
     })
 
 })
@@ -83,7 +76,7 @@ function isFieldImages() {
         errorTag.innerHTML = '사진은 최대 ' + maxImages + '장까지 가능합니다.';
         return false;
     }
-
+    errorTag.innerHTML = '';
     return true;
 }
 
@@ -95,6 +88,7 @@ function isFieldTitle() {
         errorTag.innerHTML = '구장 이름을 정확히 적어주세요';
         return false;
     }
+    errorTag.innerHTML = '';
     return true;
 }
 
@@ -105,6 +99,7 @@ function isFieldRegion() {
         errorTag.innerHTML = '지역을 설정해주세요';
         return false;
     }
+    errorTag.innerHTML = '';
     return true;
 }
 
@@ -116,6 +111,7 @@ function isFieldAddress() {
         errorTag.innerHTML = '주소를 정확하게 작성해주세요';
         return false;
     }
+    errorTag.innerHTML = '';
     return true;
 }
 
@@ -128,6 +124,7 @@ function isFieldSize() {
         errorTag.innerHTML = '숫자만 사용하여 크기를 다시 작성해주세요'
         return false;
     }
+    errorTag.innerHTML = '';
     return true;
 }
 
@@ -139,6 +136,15 @@ function isFieldOption() {
 }
 
 function isFieldDetails() {
+    let details = document.querySelector('textarea[name="fieldDetails"]');
+    let text = details.value.replaceAll(' ', '');
+    let errorTag = document.querySelector('#errorDetails');
+
+    if (text.length == 0) {
+        errorTag.innerHTML = '구장 특이사항을 작성해주세요';
+        return false;
+    }
+    errorTag.innerHTML = '';
     return true;
 }
 
@@ -149,6 +155,7 @@ function isParking() {
         errorTag.innerHTML = '주차장 여부를 설정해주세요';
         return false;
     }
+    errorTag.innerHTML = '';
     return true;
 }
 
@@ -159,6 +166,7 @@ function isToilet() {
         errorTag.innerHTML = '화장실 여부를 설정해주세요';
         return false;
     }
+    errorTag.innerHTML = '';
     return true;
 }
 
@@ -169,5 +177,6 @@ function isShower() {
         errorTag.innerHTML = '샤워장 여부를 설정해주세요';
         return false;
     }
+    errorTag.innerHTML = '';
     return true;
 }

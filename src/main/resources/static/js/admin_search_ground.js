@@ -85,5 +85,5 @@ function createList(list) {
     searchResult.innerHTML = temp;
 }
 function resultForm(searchForm) {
-    return '<a href="/admin/ground/' + searchForm.groundId + '" class="result"><span id="groundRegion">' + searchForm.region + '</span><span id="groundTitle">' + searchForm.fieldName +'</span></a>';
+    return '<a href="/admin/ground/' + searchForm.fieldId + '" class="result"><span id="groundRegion">' + searchForm.region + '</span><span id="groundTitle">' + searchForm.fieldName +'</span></a>';
 }

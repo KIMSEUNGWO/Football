@@ -2,16 +2,13 @@
 const maxImages = 4;
 
 window.addEventListener('load', () => {
-
     let maxImage = document.querySelector('#maxImage');
     maxImage.innerHTML = '사진추가 (최대 ' + maxImages + '장)';
-    
 
     let inputFile = document.querySelector('input[type="file"]');
     inputFile.addEventListener('change', (e) => {
 
         let files = inputFile.files;
-
         if (!isImage(files)) {
             inputFile.value = '';
             return;
@@ -23,16 +20,46 @@ window.addEventListener('load', () => {
         if (!isMaxLen(files)) {
             inputFile.files = newFileList(imageFiles);
         }
-
         printPreview(imageFiles);
+
     })
 
-    let addImageBtn = document.querySelector('#addImage');
-    addImageBtn.addEventListener('click', e => {
-        inputFile.click();
+    document.addEventListener('click', e => {
+        if (e.target.id == 'addImage') {
+            console.log('?;')
+            inputFile.click();
+        }
+        if (e.target.classList.contains('xBox')) {
+            let deleteImages = document.querySelector('input[name="deleteImages"]');
+            let id = e.target.id;
+            if (isNumber(id)) {
+                deleteImages.innerHTML += id + ',';
+            } else {
+                removeFile(id);
+            }
+            e.target.parentElement.remove();
+        }
     })
+
+    // let addImageBtn = document.querySelector('#addImage');
+    // addImageBtn.addEventListener('click', e => {
+    //     inputFile.click();
+    // })
 
 })
+
+function removeFile(id) {
+    let inputFile = document.querySelector('input[type="file"]');
+    let files = inputFile.files;
+
+    let array = [];
+    for (let i=0;i<files.length;i++){
+        if (files[i].name != id) {
+            array.push(files[i]);
+        }
+    }
+    inputFile.files = newFileList(array);
+}
 
 function newFileList(imageFiles) {
     // 새로운 DataTransfer 객체를 생성하고 파일을 추가
@@ -55,14 +82,22 @@ function printPreview(imageFiles) {
     clearPreview();
     let preview = document.querySelector('.preview');
 
+    let temp = '';
     for (let i=0;i<imageFiles.length;i++){
-        preview.innerHTML += createImgBox(imageFiles[i]);
+        temp += createImgBox(imageFiles[i]);
     }
-
+    preview.innerHTML += temp;
 }
 
 function createImgBox(file) {
-    return '<div class="imgBox"><img src="' + URL.createObjectURL(file) + '" alt="' + file.name +'"/></div>'
+    return '<div class="imgBox">' + 
+                '<img src="' + URL.createObjectURL(file) + '" alt="' + file.name +'"/>' +
+                '<div class="xBox" id="' + file.name + '">' +
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="rotate: 45deg">' +
+                    '<path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>' +
+                '</div>' +
+            '</div>';
+    
 }
 
 function clearPreview() {
