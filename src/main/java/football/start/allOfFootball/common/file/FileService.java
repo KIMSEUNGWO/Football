@@ -78,7 +78,7 @@ public class FileService {
         }
     }
 
-    private String getFullPath(String fileName, FileUploadType type) {
+    public String getFullPath(String fileName, FileUploadType type) {
         StringBuffer sb = new StringBuffer(fileDir);
         String folderName = type.getDir();
 
