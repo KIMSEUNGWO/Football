@@ -2,13 +2,19 @@ package football.start.allOfFootball.common.file;
 
 import football.start.allOfFootball.enums.FileUploadType;
 import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +27,7 @@ public class FileService {
     private String fileDir;
 
     private final TypeConvert typeConvert;
+    private final StandardServletMultipartResolver multipartResolver;
 
     public int saveFile(List<MultipartFile> files, Long id, FileUploadType type) {
 
@@ -57,6 +64,8 @@ public class FileService {
 
         return res;
     }
+
+
 
     @Nullable
     private static byte[] getBytes(MultipartFile file) {

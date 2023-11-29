@@ -30,4 +30,6 @@ public enum LocationEnum {
     public String getRegionId() {
         return regionId;
     }
+
+
 }

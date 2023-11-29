@@ -5,8 +5,10 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.controller.admin.SearchDto;
 import football.start.allOfFootball.domain.Field;
+import football.start.allOfFootball.domain.FieldImage;
 import football.start.allOfFootball.domain.QField;
 import football.start.allOfFootball.enums.LocationEnum;
+import football.start.allOfFootball.jpaRepository.JpaFieldImageRepository;
 import football.start.allOfFootball.jpaRepository.JpaFieldRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static football.start.allOfFootball.domain.QField.field;
 import static football.start.allOfFootball.enums.LocationEnum.전체;
@@ -22,10 +25,12 @@ import static football.start.allOfFootball.enums.LocationEnum.전체;
 @Repository
 public class AdminRepositoryImpl implements AdminRepository{
 
+    private final JpaFieldImageRepository jpaFieldImageRepository;
     private final JpaFieldRepository jpaFieldRepository;
     private final JPAQueryFactory query;
 
-    public AdminRepositoryImpl(JpaFieldRepository jpaFieldRepository, EntityManager em) {
+    public AdminRepositoryImpl(JpaFieldImageRepository jpaFieldImageRepository, JpaFieldRepository jpaFieldRepository, EntityManager em) {
+        this.jpaFieldImageRepository = jpaFieldImageRepository;
         this.jpaFieldRepository = jpaFieldRepository;
         this.query = new JPAQueryFactory(em);
     }
@@ -43,6 +48,16 @@ public class AdminRepositoryImpl implements AdminRepository{
             .orderBy(field.fieldLocation.asc())
             .orderBy(field.fieldTitle.asc())
             .fetch();
+    }
+
+    @Override
+    public Optional<Field> findByField(Long fieldId) {
+        return jpaFieldRepository.findById(fieldId);
+    }
+
+    @Override
+    public List<FieldImage> findByAllFieldImage(Field field) {
+        return jpaFieldImageRepository.findAllByField(field);
     }
 
     private BooleanExpression word(SearchDto searchDto) {

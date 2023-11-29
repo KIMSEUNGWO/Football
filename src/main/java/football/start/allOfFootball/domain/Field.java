@@ -1,6 +1,6 @@
 package football.start.allOfFootball.domain;
 
-import football.start.allOfFootball.controller.admin.SaveGroundForm;
+import football.start.allOfFootball.controller.admin.SaveFieldForm;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.enums.groundEnums.ParkingEnum;
 import football.start.allOfFootball.enums.groundEnums.ShowerEnum;
@@ -26,6 +26,8 @@ public class Field {
     private LocationEnum fieldLocation;
     private String fieldAddress;
 
+    private String fieldSize;
+
     @Lob
     @Column(columnDefinition = "CLOB")
     private String fieldInformation;
@@ -39,16 +41,21 @@ public class Field {
     @Enumerated(EnumType.STRING)
     private ShowerEnum fieldShower;
 
-    public static Field build(SaveGroundForm form) {
+    public static Field build(SaveFieldForm form) {
         return new Field().builder()
             .fieldTitle(form.getFieldName())
             .fieldLocation(form.getRegion())
             .fieldAddress(form.getFieldAddress())
+            .fieldSize(getSize(form.getXSize(), form.getYSize()))
             .fieldParking(form.getParking())
             .fieldToilet(form.getToilet())
             .fieldShower(form.getShower())
             .fieldInformation(form.getFieldDetails())
             .build();
+    }
+
+    private static String getSize(String xSize, String ySize) {
+        return xSize + "x" + ySize;
     }
 
 }
