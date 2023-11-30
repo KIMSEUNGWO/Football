@@ -1,3 +1,5 @@
+
+
 .date_picker_wrapper {
     display: flex;
     position: relative;
@@ -29,9 +31,10 @@
     cursor: pointer;
 }
 
-button[aria-pressed="true"] {
+.date_picker_buttons button[aria-pressed="true"] {
     border-color: black;
     color: black;
+    transition: 0.3s ease-in-out;
 }
 
 /* YYYY/MM/DD - YYYY/MM/DD */
@@ -72,9 +75,12 @@ button[aria-pressed="true"] {
     background-color: white;
     box-shadow: 0 0 1px #00000040, 0 8px 12px #0000000f;
     
-    display: flex;
+    display: none;
     flex-direction: column;
     padding: 2rem 2rem 1rem 2rem
+}
+#date_range_calendar.display {
+    display: flex;
 }
 
 #calendar_header {
@@ -121,7 +127,6 @@ button[aria-pressed="true"] {
 }
 .week {
     display: flex;
-    gap: 1rem;
     margin-bottom: 0.5rem;   
 }
 
@@ -132,6 +137,9 @@ button[aria-pressed="true"] {
     justify-content: flex-start;;
 }
 
+.cell button[data-is-today="true"] {
+    text-decoration: underline;
+}
 
 .cell {
     width: 24px;
@@ -139,18 +147,49 @@ button[aria-pressed="true"] {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 1rem;
 }
+
 
 .cell button {
     border: none;
-    background-color: white;
+    background-color: #ffffff00;
     font-size: 1.05rem;
     cursor: pointer;
     padding: 0;
-    width: 100%;
-    height: 100%;
+    margin: 0;
+    width: 24px;
+    height: 24px;
     border-radius: var(--border-radius);
+    
 }
+.cell[data-is-within-range='true'] {
+    background-color: #eaeaea;
+    margin-left: 0;
+    padding-left: 1rem;
+    width: calc(24px + 1rem);
+}
+.cell[data-is-within-range='false'] {
+    margin-left: 1rem;
+    padding-left: 0;
+}
+.cell:first-child {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+    margin-left: 0;
+    padding-left: 0;
+    width: 24px;
+}
+.cell:last-child {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+.cell button[aria-pressed="true"] {
+    background-color: black;
+    color: white;
+}
+
 
 /* 일 - 토 글씨*/
 .cell > div {
