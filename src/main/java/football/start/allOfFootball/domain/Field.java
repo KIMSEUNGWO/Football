@@ -1,5 +1,6 @@
 package football.start.allOfFootball.domain;
 
+import football.start.allOfFootball.controller.admin.EditFieldForm;
 import football.start.allOfFootball.controller.admin.SaveFieldForm;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.enums.groundEnums.ParkingEnum;
@@ -52,6 +53,17 @@ public class Field {
             .fieldShower(form.getShower())
             .fieldInformation(form.getFieldDetails())
             .build();
+    }
+
+    public void setEditField(EditFieldForm form) {
+        fieldTitle = form.getFieldName();
+        fieldLocation = form.getRegion();
+        fieldAddress = form.getFieldAddress();
+        fieldSize = getSize(form.getXSize(), form.getYSize());
+        fieldParking = form.getParking();
+        fieldToilet = form.getToilet();
+        fieldShower = form.getShower();
+        fieldInformation = form.getFieldDetails();
     }
 
     private static String getSize(String xSize, String ySize) {
