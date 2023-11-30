@@ -46,7 +46,7 @@ public class FileService {
 
             String fullPath = getFullPath(storeFileName, type);
             try {
-                file.transferTo(new java.io.File(fullPath));
+                file.transferTo(new File(fullPath));
             } catch (IOException e) {
                 log.error("saveFile transferTo error = {}", file.getName());
                 continue;
@@ -66,6 +66,12 @@ public class FileService {
     }
 
 
+    public boolean removeFile(String fileStoreName, FileUploadType type) {
+        String fullPath = getFullPath(fileStoreName, type);
+        File file = new File(fullPath);
+        log.info("removeFile fullPath = {}", fullPath);
+        return file.delete();
+    }
 
     @Nullable
     private static byte[] getBytes(MultipartFile file) {
