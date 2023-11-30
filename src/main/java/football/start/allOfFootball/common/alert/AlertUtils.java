@@ -6,13 +6,16 @@ public class AlertUtils {
 
     private static final AlertTemplate template = new AlertTemplate();
 
-    public static void alert(HttpServletResponse response, String text) {
+    public static String alert(HttpServletResponse response, String text) {
         template.execute(response, text, "");
+        return null;
     }
-    public static void alertAndBack(HttpServletResponse response, String text) {
+    public static String alertAndBack(HttpServletResponse response, String text) {
         template.execute(response, text, "history.go(-1);");
+        return null;
     }
-    public static void alertAndMove(HttpServletResponse response, String text, String nextPage) {
+    public static String alertAndMove(HttpServletResponse response, String text, String nextPage) {
         template.execute(response, text, "location.href ='" + nextPage + "';");
+        return null;
     }
 }
