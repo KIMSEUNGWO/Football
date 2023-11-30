@@ -7,15 +7,12 @@ public class AlertUtils {
     private static final AlertTemplate template = new AlertTemplate();
 
     public static String alert(HttpServletResponse response, String text) {
-        template.execute(response, text, "");
-        return null;
+        return template.execute(response, text, "");
     }
     public static String alertAndBack(HttpServletResponse response, String text) {
-        template.execute(response, text, "history.go(-1);");
-        return null;
+        return template.execute(response, text, "history.go(-1);");
     }
     public static String alertAndMove(HttpServletResponse response, String text, String nextPage) {
-        template.execute(response, text, "location.href ='" + nextPage + "';");
-        return null;
+        return template.execute(response, text, "location.href ='" + nextPage + "';");
     }
 }

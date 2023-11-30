@@ -14,7 +14,7 @@ public class AlertTemplate {
         response.setCharacterEncoding("utf-8");
     }
 
-    public void execute(HttpServletResponse response, String text, String moveTo) {
+    public String execute(HttpServletResponse response, String text, String moveTo) {
         init(response);
 
         String command = getCommand(text, moveTo);
@@ -24,7 +24,7 @@ public class AlertTemplate {
         } catch (IOException e) {
             log.error("Alert IOException 발생! = {}", AlertTemplate.class);
         }
-
+        return null;
     }
 
     private String getCommand(String text, String option) {
