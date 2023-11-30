@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/admin_main.css">
+    <link rel="stylesheet" href="/static/css/admin_ground.css">
+    <script src="/static/js/admin_match.js"></script>
+    <script src="/js/fetch.js"></script>
+    <title>경기관리 :: 프로젝트</title>
+</head>
+<body>
+    <body>
+        <header>
+            <div class="flexL">
+                <a href="#" class="logo">
+                    <img src="#" alt="로고이미지">
+                </a>
+                <ul class="menu">
+                    <li class="menuTitle">메뉴1</li>
+                    <li class="menuTitle">메뉴2</li>
+                    <li class="menuTitle">메뉴3</li>
+                    <li class="menuTitle">메뉴4</li>
+                </ul>
+            </div>
+            <div class="flexR">
+                <a href="/mypage" class="info_user">
+                    <img src="https://phinf.pstatic.net/contact/20220724_153/1658672074422w1wxl_JPEG/IMG_8012.JPG?type=f130_130" width="64" height="64" alt="김승우">
+                </a>
+            </div> 
+        </header>
+        <div class="container">
+            <aside class="side box">
+                <div class="profile">
+                    <span class="name">김승우 <small>관리자</small></span>
+                </div>
+                <hr class="sideHr">
+                <ul class="adMenu">
+                    <li><a href="#" class="adMenuList">전체통계</a></li>
+                    <li><a href="#" class="adMenuList">구장관리</a></li>
+                    <li><a href="#" class="adMenuList">경기관리</a></li>
+                    <li><a href="#" class="adMenuList">회원관리</a></li>
+                </ul>
+            </aside>
+            <div class="mainBox box">
+                <h2>경기관리</h2>
+                <div class="date_picker_wrapper">
+                    <div class="date_picker_buttons">
+                        <button type="button" id="date_picker_6months" aria-selected="false">6개월</button>
+                        <button type="button" id="date_picker_1months" aria-selected="false">1개월</button>
+                        <button type="button" id="date_picker_1weeks" aria-selected="false">1주</button>
+                    </div>
+                    <div class="date_picker_calendar">
+                        <summary id="date_range">
+                            <div id="start_date_wrap">
+                                <input type="text" name="startDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false">
+                            </div>
+                            <span>-</span>
+                            <div id="end_date_wrap">
+                                <input type="text" name="endDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false">
+                            </div>
+                        </summary>
+                        <div id="date_range_calendar">
+                            <div id="calendar_header">
+                                <button type="button" id="preButton">
+                                    <svg transform='rotate(180)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                        <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                </button>
+                                <div class="months">
+                                    <div id="leftMonth">2023.10</div>
+                                    <div id="rightMonth">2023.11</div>
+                                </div>
+                                <button type="button" id="nextButton">
+                                    <svg transform='rotate(180)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                        <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                </button>
+                            </div>
+                            <div id="calendar_body">
+                                <div id="leftBody"></div>
+                                <div class="rightBody"></div>
+                            </div>
+                            <div id="calendar_bottom">
+                                <button type="button" id="confirmButton">완료</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="option">
+                    <button class="region btnBox">
+                        <span>지역</span>
+                        <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                        <ul class="subOption regionOption disabled">
+                            <li><input type="checkbox" name="region" id="regionAll" value="전체" checked><label for="regionAll">전체</label></li>
+                            <li><input type="checkbox" name="region" id="seoul" value="서울"><label for="seoul">서울</label></li>
+                            <li><input type="checkbox" name="region" id="incheon" value="인천"><label for="incheon">인천</label></li>
+                            <li><input type="checkbox" name="region" id="gyeonggi" value="경기"><label for="gyeonggi">경기</label></li>
+                        </ul>
+                    </button>
+                    <button class="gender btnBox">
+                        <span>성별</span>
+                        <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                        <ul class="subOption genderOption disabled">
+                            <li><input type="checkbox" name="gender" id="genderAll"><label for="genderAll">전체</label></li>
+                            <li><input type="checkbox" name="gender" id="male"><label for="male">남자만</label></li>
+                            <li><input type="checkbox" name="gender" id="female"><label for="female">여자만</label></li>
+                        </ul>
+                    </button>
+                    <input type="text" name="searchWord" id="searchWord" placeholder="구장 이름을 입력해주세요.">
+                    <button type="button" class="btn" id="searchBtn">검색</button>
+                </div>
+                <div class="group">
+                    <span class="total">총 3건</span>
+                    <a href="/admin/ground/add" class="btn" id="groundAdd">등록</a>
+                </div>
+                <ul class="searchResult">
+                    <li class="none">검색 결과가 없습니다.</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</body>
+</html>

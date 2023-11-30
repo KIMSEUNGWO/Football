@@ -92,6 +92,9 @@ pre {
     cursor: pointer;
     position: relative;
 }
+.btnBox * {
+    pointer-events: none;
+}
 
 .resultButton {
     margin: 0 0.5rem 0 1rem;
