@@ -1,6 +1,7 @@
 package football.start.allOfFootball.controller.admin;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
+import football.start.allOfFootball.domain.Field;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -47,10 +50,9 @@ public class AdminController {
 
         EditFieldForm form = adminService.findByFieldId(fieldId);
         if (form == null) {
-            AlertUtils.alertAndBack(response, "존재하지 않는 구장입니다.");
-            return null;
+            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
         }
-        model.addAttribute("fieldForm", form);
+        model.addAttribute("editFieldForm", form);
 
         return "admin_ground_view";
     }
@@ -61,13 +63,42 @@ public class AdminController {
         EditFieldForm form = adminService.findByFieldId(fieldId);
 
         if (form == null) {
-            AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
-            return null;
+            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
         }
         LocationEnum[] locations = LocationEnum.values();
         model.addAttribute("locations", locations);
         model.addAttribute("fieldId", fieldId);
         model.addAttribute("editFieldForm", form);
         return "admin_ground_edit";
+    }
+
+    @PostMapping("/ground/{fieldId}/edit")
+    public String groundEditPost(@PathVariable Long fieldId, HttpServletRequest request, HttpServletResponse response, @ModelAttribute EditFieldForm editFieldForm) {
+
+        System.out.println("editFieldForm = " + editFieldForm);
+        Long requestURIFieldId = getFieldId(request.getRequestURI());
+        if (requestURIFieldId == null || fieldId != requestURIFieldId) {
+            return AlertUtils.alertAndMove(response, "잘못된 경로입니다.", "/admin/ground");
+        }
+
+        Optional<Field> findField = adminService.findByField(fieldId);
+        if (findField.isEmpty()) {
+            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
+        }
+        Field field = findField.get();
+        adminService.editField(field, editFieldForm);
+
+        return "redirect:/admin/ground/" + fieldId;
+    }
+
+    private Long getFieldId(String requestURI) {
+        // /ground/{fieldId}/edit 형식 -> {fieldId} Long 타입으로 변환
+        String numStr = requestURI.replaceAll("[^0-9]", "");
+        try {
+            Long fieldId = Long.parseLong(numStr);
+            return fieldId;
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }

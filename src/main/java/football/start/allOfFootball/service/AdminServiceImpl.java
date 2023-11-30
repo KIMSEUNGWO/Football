@@ -64,4 +64,30 @@ public class AdminServiceImpl implements AdminService {
         return EditFieldForm.build(field, findFieldImage);
 
     }
+
+    @Override
+    public Optional<Field> findByField(Long fieldId) {
+        return adminRepository.findByField(fieldId);
+    }
+
+    @Override
+    public void editField(Field field, EditFieldForm form) {
+        // field 수정된 내용 저장
+        field.setEditField(form);
+
+        String deleteImagesStr = form.getDeleteImages();
+        String[] deleteImages = deleteImagesStr.split(",");
+        for (String deleteImage : deleteImages) {
+            // FieldImage DB에서 삭제
+            adminRepository.deleteByFieldImage(deleteImage);
+            // 파일 삭제
+            fileService.removeFile(deleteImage, FileUploadType.FIELD_IMAGE);
+        }
+
+        // 새로 추가될 사진 저장
+        List<MultipartFile> saveImages = form.getImages();
+        fileService.saveFile(saveImages, field.getFieldId(), FileUploadType.FIELD_IMAGE);
+
+    }
+
 }

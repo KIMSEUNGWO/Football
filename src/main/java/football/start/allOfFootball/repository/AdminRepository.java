@@ -15,4 +15,6 @@ public interface AdminRepository {
     Optional<Field> findByField(Long fieldId);
 
     List<FieldImage> findByAllFieldImage(Field field);
+
+    void deleteByFieldImage(String deleteImage);
 }

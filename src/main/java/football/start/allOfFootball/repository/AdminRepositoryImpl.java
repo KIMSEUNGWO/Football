@@ -60,6 +60,11 @@ public class AdminRepositoryImpl implements AdminRepository{
         return jpaFieldImageRepository.findAllByField(field);
     }
 
+    @Override
+    public void deleteByFieldImage(String deleteImage) {
+        jpaFieldImageRepository.deleteByFieldImageStoreName(deleteImage);
+    }
+
     private BooleanExpression word(SearchDto searchDto) {
         String word = searchDto.getWord();
         if (word == null || word.equals("") || word.equals(" ")) {
