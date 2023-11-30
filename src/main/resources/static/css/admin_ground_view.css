@@ -1,0 +1,33 @@
+/* view 전용 */
+.mainBox th {
+    font-size: 1.15rem;
+    text-align: left;
+    padding-right: 1.5rem;
+}
+.mainBox td {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.mainBox td > * {
+    margin: 0;
+}
+.mainBox h4 {
+    margin: 0.5rem 0;
+}
+.mainBox table {
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0 1rem;
+}
+
+.regionBox {
+    cursor: default;
+}
+
+.submitBox a {
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

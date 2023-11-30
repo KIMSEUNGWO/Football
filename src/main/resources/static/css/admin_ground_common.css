@@ -22,6 +22,8 @@ form table {
 }
 
 
+
+
 /* 이미지 */
 .preview {
     display: flex;
@@ -62,9 +64,9 @@ form table {
 #addImage span {
     font-size: 1.1rem;
 }
-input[type="file"] {
-    display: block;
-    /* display: none; */
+input[type="file"], input[name="deleteImages"] {
+    /* display: block; */
+    display: none;
 }
 
 div.imgBox {

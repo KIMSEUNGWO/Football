@@ -121,7 +121,7 @@ function isFieldSize() {
     let errorTag = document.querySelector('#errorSize');
 
     if (!isNumber(xSize.value) || !isNumber(ySize.value) || Number(xSize.value) < 10 || Number(xSize.value) > 200 || Number(ySize.value) < 10 || Number(ySize.value) > 200) {
-        errorTag.innerHTML = '숫자만 사용하여 크기를 다시 작성해주세요'
+        errorTag.innerHTML = '200 이하의 숫자를 입력해주세요'
         return false;
     }
     errorTag.innerHTML = '';
@@ -179,4 +179,16 @@ function isShower() {
     }
     errorTag.innerHTML = '';
     return true;
+}
+
+// 이미지 Preview 관리
+function printPreview(imageFiles) {
+    clearPreview();
+    let preview = document.querySelector('.preview');
+
+    let temp = '';
+    for (let i=0;i<imageFiles.length;i++){
+        temp += createImgBox(imageFiles[i]);
+    }
+    preview.innerHTML += temp;
 }

@@ -26,14 +26,13 @@ window.addEventListener('load', () => {
 
     document.addEventListener('click', e => {
         if (e.target.id == 'addImage') {
-            console.log('?;')
             inputFile.click();
         }
         if (e.target.classList.contains('xBox')) {
             let deleteImages = document.querySelector('input[name="deleteImages"]');
             let id = e.target.id;
-            if (isNumber(id)) {
-                deleteImages.innerHTML += id + ',';
+            if (!containsFile(id)) {
+                deleteImages.value += id + ',';
             } else {
                 removeFile(id);
             }
@@ -41,12 +40,20 @@ window.addEventListener('load', () => {
         }
     })
 
-    // let addImageBtn = document.querySelector('#addImage');
-    // addImageBtn.addEventListener('click', e => {
-    //     inputFile.click();
-    // })
 
 })
+
+function containsFile(id) {
+    let inputFile = document.querySelector('input[type="file"]');
+    let files = inputFile.files;
+
+    for (let i=0;i<files.length;i++){
+        if (files[i].name == id) {
+            return true;
+        }
+    }
+    return false;
+}
 
 function removeFile(id) {
     let inputFile = document.querySelector('input[type="file"]');
@@ -78,16 +85,7 @@ function getFileArray(files) {
     return array;
 }
 
-function printPreview(imageFiles) {
-    clearPreview();
-    let preview = document.querySelector('.preview');
 
-    let temp = '';
-    for (let i=0;i<imageFiles.length;i++){
-        temp += createImgBox(imageFiles[i]);
-    }
-    preview.innerHTML += temp;
-}
 
 function createImgBox(file) {
     return '<div class="imgBox">' + 
