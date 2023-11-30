@@ -2,9 +2,11 @@ package football.start.allOfFootball.controller.login;
 
 import football.start.allOfFootball.SessionConst;
 import football.start.allOfFootball.common.ResultMessage;
+import football.start.allOfFootball.common.alert.AlertUtils;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.service.RegisterService;
 import football.start.allOfFootball.validator.RegisterValidator;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,10 +48,10 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String registerAction(@Validated @ModelAttribute RegisterDto registerDto, BindingResult bindingResult, HttpSession httpSession) {
+    public String registerAction(@Validated @ModelAttribute RegisterDto registerDto, BindingResult bindingResult, HttpSession httpSession, HttpServletResponse response) {
         Object session = httpSession.getAttribute(REGISTER); // 회원가입 세션 get
         if (session == null) {
-            System.out.println("회원가입 세션이 만료되었습니다.");
+            AlertUtils.alert(response, "회원가입 세션이 만료되었습니다.");
             return "redirect:/";
         }
         System.out.println("registerDto = " + registerDto);

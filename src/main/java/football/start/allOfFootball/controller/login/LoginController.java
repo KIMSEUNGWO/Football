@@ -32,9 +32,9 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginAction(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
+                              @SessionAttribute(name = REDIRECT_URL, required = false) String redirectURI,
                               @ModelAttribute LoginDto loginDto,
                               HttpSession session,
-                              HttpServletRequest request,
                               Model model) {
         if (memberId != null) return "redirect:/";
         if (loginDto == null || loginDto.getEmail() == null || loginDto.getPassword() == null) return "redirect:/";
@@ -44,13 +44,14 @@ public class LoginController {
             model.addAttribute("errorMsg", "이메일 또는 비밀번호가 일치하지 않습니다.");
             return "login";
         }
-        String redirectURL = request.getParameter(REDIRECT_URL);
         Member findMember = loginMember.get();
-        System.out.println("findMember = " + findMember.getMemberId());
         // 세션 생성
         session.setAttribute(LOGIN_MEMBER, findMember.getMemberId());
-        System.out.println("성공");
-        return "redirect:/";
+        session.removeAttribute(REDIRECT_URL);
+        if (redirectURI == null) {
+            return "redirect:/";
+        }
+        return "redirect:" + redirectURI;
     }
 
 

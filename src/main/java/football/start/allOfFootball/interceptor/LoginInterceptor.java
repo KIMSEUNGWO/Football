@@ -12,6 +12,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import java.util.Optional;
 
 import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
+import static football.start.allOfFootball.SessionConst.REDIRECT_URL;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,26 +24,31 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
         log.info("인증 체크 인터셉터 실행 {}", requestURI);
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
         if (session == null || session.getAttribute(LOGIN_MEMBER) == null) {
+            log.info("인증되지않은 사용자 요청");
+            session.setAttribute(REDIRECT_URL, requestURI);
+            response.sendRedirect("/login");
             return false;
         }
 
         // 이후 처리
-        String memberIdStr = (String) session.getAttribute(LOGIN_MEMBER);
+        String memberIdStr = String.valueOf(session.getAttribute(LOGIN_MEMBER));
         if (memberIdStr == null) {
             log.info("로그인 세션값 : null");
+            session.setAttribute(REDIRECT_URL, requestURI);
+            response.sendRedirect("/login");
             return false;
         }
         Long memberId = Long.parseLong(memberIdStr);
         Optional<Member> byMemberId = loginRepository.findByMemberId(memberId);
         if (byMemberId.isEmpty()) {
             log.info("존재하지 않는 회원의 접근입니다.");
+            session.setAttribute(REDIRECT_URL, requestURI);
+            response.sendRedirect("/login");
             return false;
         }
 
-        log.info("인증되지않은 사용자 요청");
-        response.sendRedirect("/login?redirectURL=" + requestURI);
         log.info("인증된 사용자");
         return true;
     }
