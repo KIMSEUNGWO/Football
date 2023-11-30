@@ -1,0 +1,176 @@
+.date_picker_wrapper {
+    display: flex;
+    position: relative;
+    width: 100%;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+.date_picker_wrapper * {
+    margin: 0;
+}
+
+/* 기간 버튼 */
+
+.date_picker_buttons {
+    display: flex;
+    gap: 0.2rem;
+    align-items: center;
+}
+
+.date_picker_buttons button {
+    width: 5.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    border: 0.1rem solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: white;
+    font-family: 'Pretendard-Bold';
+    color: var(--gray);
+    cursor: pointer;
+}
+
+button[aria-pressed="true"] {
+    border-color: black;
+    color: black;
+}
+
+/* YYYY/MM/DD - YYYY/MM/DD */
+#date_range {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.date_wrap {
+    width: 10rem;
+    height: 2.5rem;
+    border: 0.1rem solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+.date_wrap input {
+    width: 100%;
+    height: 100%;
+    padding: 0 0.5rem;
+    text-align: center;
+    font-size: 1.0rem;
+    border: none;
+    outline-color: var(--main-color);
+}
+
+
+.date_picker_calendar {
+    position: relative;
+}
+#date_range_calendar {
+    left: 0;
+    top: 3.5rem;
+    position: absolute;
+    width: 40rem;
+
+    border: 0.1rem solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: white;
+    box-shadow: 0 0 1px #00000040, 0 8px 12px #0000000f;
+    
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 2rem 1rem 2rem
+}
+
+#calendar_header {
+    display: flex;
+    justify-content: space-between;
+    align-self: stretch;
+    margin-bottom: 2rem;
+}
+
+.months {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    font-size: 1.1rem;
+}
+
+#leftMonth, #rightMonth {
+    font-family: 'Pretendard-Bold';
+}
+
+#preButton *, #nextButton * {
+    pointer-events: none;
+}
+#preButton, #nextButton {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+#nextButton:disabled{
+    fill: rgb(215, 215, 215);
+    cursor: default;;
+}
+
+/* 캘린더 바디 */
+#calendar_body {
+    display: flex;
+    justify-content: space-around;
+    column-gap: 2rem;
+}
+
+.week:first-child {
+    margin-bottom: 1rem;
+}
+.week {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;   
+}
+
+.week:nth-child(2) {
+    justify-content: flex-end;
+}
+.week:last-child {
+    justify-content: flex-start;;
+}
+
+
+.cell {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell button {
+    border: none;
+    background-color: white;
+    font-size: 1.05rem;
+    cursor: pointer;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+}
+
+/* 일 - 토 글씨*/
+.cell > div {
+    font-size: 0.9rem;
+}
+
+#calendar_bottom {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+#confirmButton {
+    float: right;
+
+    width: 4rem;
+    height: 2rem;
+    background-color: black;
+    border-radius: var(--border-radius);
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+}
+
