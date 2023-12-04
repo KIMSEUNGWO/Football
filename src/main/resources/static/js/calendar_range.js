@@ -17,12 +17,17 @@ window.addEventListener('load', () => {
     let preBtn = document.querySelector('#preButton');
     let nextBtn = document.querySelector('#nextButton');
 
+    let startDate = document.querySelector('input[name="startDate"]');
+    let endDate = document.querySelector('input[name="endDate"]');
+    let calendar = document.querySelector('#date_range_calendar');
+
     select(week1);
 
     let buttons = document.querySelectorAll('.date_picker_buttons button');
     buttons.forEach(el => {
         el.addEventListener('click', (e) => {
             clearButtons();
+            calendar.classList.remove('display');
             select(el);
             renderCalendar();
             select(el);
@@ -30,10 +35,6 @@ window.addEventListener('load', () => {
             search();
         })
     })
-
-    let startDate = document.querySelector('input[name="startDate"]');
-    let endDate = document.querySelector('input[name="endDate"]');
-    let calendar = document.querySelector('#date_range_calendar');
 
     startDate.addEventListener('click', () => {
         calendar.classList.add('display');

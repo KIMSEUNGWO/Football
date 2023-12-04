@@ -189,11 +189,20 @@ div.imgBox svg {
 }
 
 .submitBox {
-    float: right;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    gap: 1rem;
 }
-.submitBtn {
+.submitBtn, .addBtn {
+    margin: 0;
     width: 7rem;
     height: 3rem;
     font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.submitBtn *, .addBtn * {
+    pointer-events: none;
 }
 

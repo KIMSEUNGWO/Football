@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/common.css">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/admin_main.css">
-    <link rel="stylesheet" href="/css/admin_ground_common.css">
-    <link rel="stylesheet" href="/css/admin_ground_view.css">
-    <script src="/js/admin_ground_edit.js"></script>
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/admin_main.css">
+    <link rel="stylesheet" href="/static/css/admin_ground_common.css">
+    <link rel="stylesheet" href="/static/css/admin_ground_view.css">
+    <script src="/static/js/admin_ground_edit.js"></script>
     <title>구장정보 :: 프로젝트</title>
 </head>
 <body>
@@ -113,6 +113,7 @@
                         </tr>
                     </table>
                     <div class="submitBox">
+                        <a th:href="|/admin/match/${fieldId}/add|" class="addBtn btn">경기등록</a>
                         <a th:href="|/admin/ground/${fieldId}/edit|" class="submitBtn btn">수정</a>
                     </div>
             </div>
