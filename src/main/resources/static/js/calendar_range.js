@@ -1,4 +1,5 @@
 const date = new Date();
+
 const fixYear = date.getFullYear();
 const fixMonth = date.getMonth() + 1;
 const fixDay = date.getDate();
@@ -20,12 +21,13 @@ window.addEventListener('load', () => {
 
     let buttons = document.querySelectorAll('.date_picker_buttons button');
     buttons.forEach(el => {
-        el.addEventListener('click', () => {
+        el.addEventListener('click', (e) => {
             clearButtons();
             select(el);
             renderCalendar();
-            // TODO
-            // 검색 Fetch 적용시킬예정
+            select(el);
+            // 검색 Fetch
+            search();
         })
     })
 
@@ -90,8 +92,8 @@ window.addEventListener('load', () => {
 
 
     this.document.addEventListener('click', (e) => {
-        console.log(e.target);
         if (e.target.hasAttribute('aria-pressed') && e.target.hasAttribute('data-is-today')) {
+
             let clickDate = clickAndGetDate(e.target);
 
             let start = document.querySelector('input[name="startDate"]');
@@ -99,16 +101,61 @@ window.addEventListener('load', () => {
             let end = document.querySelector('input[name="endDate"]')
             let endDateForm = getDateForm(end);
 
-            if (clickDate.getTime() < startDateForm.getTime()) {
-                start.value = dateForm(clickDate.getFullYear(), clickDate.getMonth()+1, clickDate.getDate());
-                flag = false;
-            }
+            let innerDate = dateForm(clickDate.getFullYear(), clickDate.getMonth()+1, clickDate.getDate());
 
+            selectDateForm(innerDate, clickDate.getTime(), start, startDateForm.getTime(), end, endDateForm.getTime());
+            focusInputDate(start, end);
             drawRange();
         }
     })
 
+    let cal_confirmBtn = document.querySelector('#confirmButton');
+    cal_confirmBtn.addEventListener('click', () => {
+        calendar.classList.remove('display');
+
+        // fetch
+
+    })
+
 })
+
+function focusInputDate(start, end) {
+    if (flag) {
+        start.focus();
+    }
+    if (!flag) {
+        end.focus();
+    }
+}
+
+function selectDateForm(innerDate, clickDate, start, startDateForm, end, endDateForm) {
+    if (clickDate < startDateForm) {
+        start.value = innerDate;
+        flag = false;
+        return;
+    }
+    if (clickDate > startDateForm && clickDate < endDateForm) {
+        if (flag) {
+            start.value = innerDate;
+            flag = !flag;
+        } else {
+            end.value = innerDate;
+            flag = !flag;
+        }
+        return;
+    }
+    if (clickDate > endDateForm) {
+        if (flag) {
+            start.value = innerDate;
+            end.value = innerDate;
+            flag = !flag;
+        } else {
+            end.value = innerDate;
+            flag = !flag;
+        }
+        return;
+    }
+}
 
 function clickAndGetDate(target) {
     let parentId = target.parentElement.parentElement.parentElement.id;
@@ -231,7 +278,6 @@ function drawRigtRange(start, end) {
     for (let i=0;i<cell.length;i++) {
         let temp = new Date(Number(right[0]), Number(right[1]) - 1, i + 1);
         if (start <= temp && end >= temp) {
-            console.log(temp);
             cell[i].setAttribute('data-is-within-range', 'true');
         }
     }
@@ -312,7 +358,6 @@ function select(button) {
     // 현재 상태를 반전시킴
     button.setAttribute('aria-pressed', !currentState);    
     inputDate(button);
-
 }
 
 function inputDate(button) {

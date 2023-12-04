@@ -17,26 +17,26 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/admin/ground")
+public class AdminGroundController {
 
     private final AdminService adminService;
 
-    @GetMapping("/ground")
+    @GetMapping
     public String ground(Model model) {
         LocationEnum[] locations = LocationEnum.values();
         model.addAttribute("locations", locations);
         return "admin_ground";
     }
 
-    @GetMapping("/ground/add")
+    @GetMapping("/add")
     public String groundAdd(@ModelAttribute SaveFieldForm saveFieldForm, Model model) {
         LocationEnum[] locations = LocationEnum.values();
         model.addAttribute("locations", locations);
         return "admin_ground_add";
     }
 
-    @PostMapping("/ground/add")
+    @PostMapping("/add")
     public String groundAddPost(@ModelAttribute SaveFieldForm saveFieldForm) {
         System.out.println("saveGroundForm = " + saveFieldForm);
 
@@ -45,7 +45,7 @@ public class AdminController {
         return "redirect:/admin/ground";
     }
 
-    @GetMapping("/ground/{fieldId}")
+    @GetMapping("/{fieldId}")
     public String groundView(@PathVariable Long fieldId, HttpServletResponse response, Model model) {
 
         EditFieldForm form = adminService.findByFieldId(fieldId);
@@ -57,7 +57,7 @@ public class AdminController {
         return "admin_ground_view";
     }
 
-    @GetMapping("/ground/{fieldId}/edit")
+    @GetMapping("/{fieldId}/edit")
     public String groundEdit(@PathVariable Long fieldId, HttpServletResponse response, Model model) {
 
         EditFieldForm form = adminService.findByFieldId(fieldId);
@@ -72,7 +72,7 @@ public class AdminController {
         return "admin_ground_edit";
     }
 
-    @PostMapping("/ground/{fieldId}/edit")
+    @PostMapping("/{fieldId}/edit")
     public String groundEditPost(@PathVariable Long fieldId, HttpServletRequest request, HttpServletResponse response, @ModelAttribute EditFieldForm editFieldForm) {
 
         System.out.println("editFieldForm = " + editFieldForm);

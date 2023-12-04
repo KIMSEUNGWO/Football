@@ -1,12 +1,10 @@
 package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.common.file.FileService;
-import football.start.allOfFootball.controller.admin.EditFieldForm;
-import football.start.allOfFootball.controller.admin.SaveFieldForm;
-import football.start.allOfFootball.controller.admin.SearchDto;
-import football.start.allOfFootball.controller.admin.SearchFieldForm;
+import football.start.allOfFootball.controller.admin.*;
 import football.start.allOfFootball.domain.Field;
 import football.start.allOfFootball.domain.FieldImage;
+import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.enums.FileUploadType;
 import football.start.allOfFootball.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,13 +39,6 @@ public class AdminServiceImpl implements AdminService {
         List<MultipartFile> images = saveGroundForm.getImages();
         int res = fileService.saveFile(images, field.getFieldId(), FileUploadType.FIELD_IMAGE);
 
-    }
-
-    @Override
-    public List<SearchFieldForm> getSearchResult(SearchDto searchDto) {
-
-        List<Field> list = adminRepository.findByAllField(searchDto);
-        return list.stream().map(x -> SearchFieldForm.build(x)).collect(Collectors.toList());
     }
 
     @Override
@@ -88,6 +79,24 @@ public class AdminServiceImpl implements AdminService {
         List<MultipartFile> saveImages = form.getImages();
         fileService.saveFile(saveImages, field.getFieldId(), FileUploadType.FIELD_IMAGE);
 
+    }
+
+    @Override
+    public List<SearchFieldForm> getSearchFieldResult(SearchFieldDto searchDto) {
+
+        List<Field> list = adminRepository.findByAllField(searchDto);
+        return list.stream().map(x -> SearchFieldForm.build(x)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SearchMatchForm> getSearchMatchResult(SearchMatchDto searchDto) {
+        List<Match> list = adminRepository.findByAllMatch(searchDto);
+        return list.stream().map( x -> SearchMatchForm.build(x, adminRepository.findByMatchCount(x))).collect(Collectors.toList());
+    }
+
+    @Override
+    public void matchTest(Match match) {
+        adminRepository.matchTest(match);
     }
 
 }

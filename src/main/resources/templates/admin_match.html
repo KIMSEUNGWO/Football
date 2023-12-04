@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/common.css">
-    <link rel="stylesheet" href="/static/css/header.css">
-    <link rel="stylesheet" href="/static/css/admin_main.css">
-    <link rel="stylesheet" href="/static/css/admin_ground.css">
-    <link rel="stylesheet" href="/static/css/calendar_range.css">
-    <script src="/static/js/calendar_range.js"></script>
-    <script src="/static/js/admin_match.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/admin_ground.css">
+    <link rel="stylesheet" href="/css/calendar_range.css">
+    <script src="/js/calendar_range.js"></script>
+    <script src="/js/admin_match.js"></script>
     <script src="/js/fetch.js"></script>
     <title>경기관리 :: 프로젝트</title>
 </head>
@@ -64,15 +64,15 @@
                                 <input type="text" name="endDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
                             </div>
                         </summary>
-                        <div id="date_range_calendar" class="display">
+                        <div id="date_range_calendar" class="">
                             <div id="calendar_header">
                                 <button type="button" id="preButton">
                                     <svg transform='rotate(180)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                         <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
                                 </button>
                                 <div class="months">
-                                    <div id="leftMonth">2023.10</div>
-                                    <div id="rightMonth">2023.11</div>
+                                    <div id="leftMonth"></div>
+                                    <div id="rightMonth"></div>
                                 </div>
                                 <button type="button" id="nextButton">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -120,24 +120,16 @@
                             <li><input type="checkbox" name="region" id="gyeonggi" value="경기"><label for="gyeonggi">경기</label></li>
                         </ul>
                     </button>
-                    <button class="gender btnBox">
-                        <span>성별</span>
-                        <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
-                        <ul class="subOption genderOption disabled">
-                            <li><input type="checkbox" name="gender" id="genderAll"><label for="genderAll">전체</label></li>
-                            <li><input type="checkbox" name="gender" id="male"><label for="male">남자만</label></li>
-                            <li><input type="checkbox" name="gender" id="female"><label for="female">여자만</label></li>
-                        </ul>
-                    </button>
                     <input type="text" name="searchWord" id="searchWord" placeholder="구장 이름을 입력해주세요.">
                     <button type="button" class="btn" id="searchBtn">검색</button>
                 </div>
                 <div class="group">
                     <span class="total">총 3건</span>
-                    <a href="/admin/ground/add" class="btn" id="groundAdd">등록</a>
+                    <a href="/admin/match/add" class="btn" id="matchAdd">등록</a>
                 </div>
+                
                 <ul class="searchResult">
-                    <li class="none">검색 결과가 없습니다.</li>
+
                 </ul>
             </div>
         </div>

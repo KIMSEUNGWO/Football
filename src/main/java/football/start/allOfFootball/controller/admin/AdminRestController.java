@@ -19,13 +19,25 @@ public class AdminRestController {
     private final AdminService adminService;
 
     @PostMapping("/ground/get")
-    public List<SearchFieldForm> groundGet(@RequestBody SearchDto searchDto) {
+    public List<SearchFieldForm> groundGet(@RequestBody SearchFieldDto searchDto) {
         System.out.println("searchDto = " + searchDto);
 
-        List<SearchFieldForm> result = adminService.getSearchResult(searchDto);
+        List<SearchFieldForm> result = adminService.getSearchFieldResult(searchDto);
         for (SearchFieldForm searchFieldForm : result) {
             System.out.println("searchFieldForm = " + searchFieldForm);
         }
+        return result;
+    }
+
+    @PostMapping("/match/get")
+    public List<SearchMatchForm> matchGet(@RequestBody SearchMatchDto searchDto) {
+        System.out.println("searchDto = " + searchDto);
+
+        List<SearchMatchForm> result = adminService.getSearchMatchResult(searchDto);
+        for (SearchMatchForm searchMatchForm : result) {
+            System.out.println("searchMatchForm = " + searchMatchForm);
+        }
+
         return result;
     }
 }
