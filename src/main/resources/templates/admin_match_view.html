@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/admin_ground_common.css">
+    <link rel="stylesheet" href="/css/admin_match.css">
+    <link rel="stylesheet" href="/css/calendar_one.css">
+    <link rel="stylesheet" href="/css/slider.css">
+    <script src="/js/slider_view.js"></script>
+    <title>경기정보 :: 프로젝트</title>
+</head>
+<body>
+    <body>
+        <header th:replace="~{/common/header :: header}"></header>
+        <div class="container">
+            <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
+            <div class="mainBox box">
+                <h2>경기등록</h2>
+                <a th:href="|/admin/ground/${fieldId}|" class="fieldInfo box">
+                    <h3>구장정보</h3>
+                    <div class="fieldInfoFlex">
+                        <div class="fieldImage">
+                            <img th:src="|/images/fieldImage/${fieldInfo.fieldImage.fieldImageStoreName}|" th:alt="${fieldInfo.fieldImage.fieldImageName}">
+                        </div>
+                        <table>
+                            <tr>
+                                <th>구장지역</th>
+                                <td th:text="${fieldInfo.fieldRegion}">서울</td>
+                            </tr>
+                            <tr>
+                                <th>구장이름</th>
+                                <td th:text="${fieldInfo.fieldTitle}">무슨무슨 구장</td>
+                            </tr>
+                            <tr>
+                                <th>구장위치</th>
+                                <td th:text="${fieldInfo.fieldAddress}">서울 어디어디 어디로 몇다시몇</td>
+                            </tr>
+                        </table>
+                    </div>
+                </a>
+                <div class="view">
+                    <table>
+                        <tr>
+                            <th>경기날짜</th>
+                            <td>
+                                <div class="date_picker_wrapper">
+                                    <input type="text" th:field="${editMatchForm.matchDate}" class="inputForm" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" disabled>
+                                    <div class="time">
+                                        <input type="text" class="inputForm" th:field="${editMatchForm.matchHour}" disabled style="width: 3rem; margin-right: 0.5rem;">
+                                        시
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>경기인원</th>
+                            <td>
+                                <input type="text" class="inputForm" th:value="${editMatchForm.matchMaxPerson} + ' vs ' + ${editMatchForm.matchMaxPerson}" disabled style="width: 4rem; text-align: center;">
+                                <input type="text" class="inputForm" th:field="${editMatchForm.matchCount}" disabled style="width: 2.5rem; text-align: center;">
+                                <div>파전</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>경기옵션</th>
+                            <td>
+                                <div class="optionBox">
+                                    <div class="options">
+                                        <h4>성별</h4>
+                                        <ul class="radioBox">
+                                            <li><input type="radio" th:field="${editMatchForm.gender}" id="genderAll" value="전체" disabled><label for="genderAll">남여모두</label></li>
+                                            <li><input type="radio" th:field="${editMatchForm.gender}" id="male" value="남자" disabled><label for="male">남자</label></li>
+                                            <li><input type="radio" th:field="${editMatchForm.gender}" id="female" value="여자" disabled><label for="female">여자</label></li>
+                                        </ul>
+                                    </div>
+                                    <div class="options" style="width: 30rem">
+                                        <h4>등급</h4>
+                                        <div class="multi-slider">
+                                            <div class="inputSlider">
+                                                <input type="range" name="gradeLeft" id="gradeLeft"  min="0" max="5" th:value="${editMatchForm.gradeLeft}">
+                                                <input type="range" name="gradeRight" id="gradeRight" min="0" max="5" th:value="${editMatchForm.gradeRight}">
+                                            </div>
+                                            <div class="slider">
+                                                <div class="track">
+                                                    <div class="range slideView"></div>
+                                                    <div class="thumb left slideView">
+                                                        <span class="thumbLeftTitle tTitle"></span>
+                                                    </div>
+                                                    <div class="thumb right slideView">
+                                                        <span class="thumbRightTitle tTitle"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="sliderTitle">
+                                                    <span>루키</span>
+                                                    <span>프로</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="submitBox">
+                        <a th:href="|/admin/match/${matchId}/edit|" class="submitBtn btn">수정</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </body>
+</body>
+</html>

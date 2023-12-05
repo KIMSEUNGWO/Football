@@ -20,8 +20,8 @@ public class Orders {
     private Long ordersId;
 
     @ManyToOne
-    @JoinColumn(name = "playId")
-    private Play play;
+    @JoinColumn(name = "matchId")
+    private Match match;
 
     @ManyToOne
     @JoinColumn(name = "memberId")

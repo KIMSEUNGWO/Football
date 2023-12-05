@@ -1,9 +1,11 @@
 package football.start.allOfFootball.domain;
 
+import football.start.allOfFootball.controller.admin.EditMatchForm;
+import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.enums.GenderEnum;
+import football.start.allOfFootball.enums.GradeEnum;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,22 +15,61 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "MATCH")
 @SequenceGenerator(name = "SEQ_MATCH", sequenceName = "SEQ_MATCH_ID", allocationSize = 1)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Match {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MATCH")
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MATCH")
     private Long matchId;
 
     @ManyToOne
     @JoinColumn(name = "fieldID")
     private Field field;
 
-    private LocalDate matchDate;
-    private Integer matchTime;
+    private LocalDate matchDate; // 경기날짜
+    private Integer matchHour; // 경기시작시간
+
+    private Integer matchCount; // 3파전 또는 2파전
 
     @Enumerated(EnumType.STRING)
     private GenderEnum matchGender;
 
     private Integer maxPerson; // 6 vs 6 일때 maxPerson = 6
 
+    @Enumerated(EnumType.STRING)
+    private GradeEnum minGrade;
+    @Enumerated(EnumType.STRING)
+    private GradeEnum maxGrade;
+
     private Character matchEndStatus;
+
+    public static Match build(Field field, SaveMatchForm form) {
+        return Match.builder()
+            .field(field)
+            .matchDate(form.getMatchDate())
+            .matchHour(form.getMatchHour())
+            .matchCount(form.getMatchCount())
+            .matchGender(form.getGender())
+            .maxPerson(form.getMatchMaxPerson())
+            .minGrade(GradeEnum.getEnum(form.getGradeLeft()))
+            .maxGrade(GradeEnum.getEnum(form.getGradeRight()))
+            .build();
+    }
+
+    public void setEditMatch(EditMatchForm editMatchForm) {
+        matchDate = getLocalDate(editMatchForm.getMatchDate());
+        matchHour = editMatchForm.getMatchHour();
+        matchCount = editMatchForm.getMatchCount();
+        matchGender = editMatchForm.getGender();
+        maxPerson = editMatchForm.getMatchMaxPerson();
+        minGrade = GradeEnum.getEnum(editMatchForm.getGradeLeft());
+        maxGrade = GradeEnum.getEnum(editMatchForm.getGradeRight());
+    }
+
+    private LocalDate getLocalDate(String matchDate) {
+        String[] split = matchDate.split("/");
+        return LocalDate.of(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+    }
 }

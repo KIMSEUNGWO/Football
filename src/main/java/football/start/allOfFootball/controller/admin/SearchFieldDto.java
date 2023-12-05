@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class SearchDto {
+public class SearchFieldDto {
 
     private List<LocationEnum> region;
     private String word;

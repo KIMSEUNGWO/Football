@@ -27,7 +27,7 @@ public class SearchMatchForm {
         return SearchMatchForm.builder()
             .matchId(match.getMatchId())
             .matchDate(getDateForm(match.getMatchDate()))
-            .matchTime(getTimeForm(match.getMatchTime()))
+            .matchTime(getTimeForm(match.getMatchHour()))
             .matchRegion(match.getField().getFieldLocation())
             .matchTitle(match.getField().getFieldTitle())
             .matchPerson(orderPerson + " / " + match.getMaxPerson())

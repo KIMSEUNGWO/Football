@@ -59,3 +59,21 @@ input[type="range"]::-webkit-slider-thumb {
 .sliderTitle > * {
     margin: 0;
 }
+
+.tTitle {
+    color: var(--main-color-hover) ;
+}
+
+/* view 컨텐츠에 사용 */
+.slideView {
+    background-color: var(--gray);
+    cursor: default;
+}
+
+.thumb.slideView:hover {
+    background-color: var(--gray);
+}
+
+.slideView > .tTitle {
+    color: var(--gray);
+}
