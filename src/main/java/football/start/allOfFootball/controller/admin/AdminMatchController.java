@@ -34,66 +34,81 @@ public class AdminMatchController {
         return "admin_match";
     }
 
-    @GetMapping("/add")
-    public String matchAdd(@ModelAttribute SaveFieldForm saveFieldForm, Model model) {
-        LocationEnum[] locations = LocationEnum.values();
-        model.addAttribute("locations", locations);
+    @GetMapping("/{fieldId}/add")
+    public String matchAdd(@PathVariable Long fieldId, @ModelAttribute SaveMatchForm saveMatchForm, Model model, HttpServletResponse response) {
+        Optional<Field> findField = adminService.findByField(fieldId);
+        if (findField.isEmpty()) {
+            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
+        }
+        Field field = findField.get();
+        ViewMatchFieldForm fieldForm = ViewMatchFieldForm.build(field);
+        model.addAttribute("fieldInfo", fieldForm);
+        model.addAttribute("fieldId", fieldId);
         return "admin_match_add";
     }
 
-    @PostMapping("/add")
-    public String matchAddPost(@ModelAttribute SaveFieldForm saveFieldForm) {
-        System.out.println("savematchForm = " + saveFieldForm);
-
-        adminService.saveField(saveFieldForm);
+    @PostMapping("/{fieldId}/add")
+    public String matchAddPost(@PathVariable Long fieldId, @ModelAttribute SaveMatchForm saveMatchForm, HttpServletResponse response) {
+        System.out.println("saveMatchForm = " + saveMatchForm);
+        Optional<Field> findField = adminService.findByField(fieldId);
+        if (findField.isEmpty()) {
+            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
+        }
+        Field field = findField.get();
+        adminService.saveMatch(field, saveMatchForm);
 
         return "redirect:/admin/match";
     }
 
-    @GetMapping("/{fieldId}")
-    public String matchView(@PathVariable Long fieldId, HttpServletResponse response, Model model) {
-
-        EditFieldForm form = adminService.findByFieldId(fieldId);
-        if (form == null) {
-            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/match");
+    @GetMapping("/{matchId}")
+    public String matchView(@PathVariable Long matchId, HttpServletResponse response, Model model) {
+        Optional<Match> findMatch = adminService.findByMatch(matchId);
+        if (findMatch.isEmpty()) {
+            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
         }
-        model.addAttribute("editFieldForm", form);
+        Match match = findMatch.get();
+        Field field = match.getField();
+        ViewMatchFieldForm fieldForm = ViewMatchFieldForm.build(field);
+        EditMatchForm editMatchForm = EditMatchForm.build(match);
 
+        model.addAttribute("fieldId", field.getFieldId());
+        model.addAttribute("matchId", match.getMatchId());
+        model.addAttribute("fieldInfo", fieldForm);
+        model.addAttribute("editMatchForm", editMatchForm);
         return "admin_match_view";
     }
 
-    @GetMapping("/{fieldId}/edit")
-    public String matchEdit(@PathVariable Long fieldId, HttpServletResponse response, Model model) {
 
-        EditFieldForm form = adminService.findByFieldId(fieldId);
-
-        if (form == null) {
-            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/match");
+    @GetMapping("/{matchId}/edit")
+    public String matchEdit(@PathVariable Long matchId, HttpServletResponse response, Model model) {
+        Optional<Match> findMatch = adminService.findByMatch(matchId);
+        if (findMatch.isEmpty()) {
+            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
         }
-        LocationEnum[] locations = LocationEnum.values();
-        model.addAttribute("locations", locations);
-        model.addAttribute("fieldId", fieldId);
-        model.addAttribute("editFieldForm", form);
+        Match match = findMatch.get();
+        Field field = match.getField();
+        ViewMatchFieldForm fieldForm = ViewMatchFieldForm.build(field);
+        EditMatchForm editMatchForm = EditMatchForm.build(match);
+
+        model.addAttribute("fieldId", field.getFieldId());
+        model.addAttribute("matchId", match.getMatchId());
+        model.addAttribute("fieldInfo", fieldForm);
+        model.addAttribute("editMatchForm", editMatchForm);
+
         return "admin_match_edit";
     }
 
-    @PostMapping("/{fieldId}/edit")
-    public String matchEditPost(@PathVariable Long fieldId, HttpServletRequest request, HttpServletResponse response, @ModelAttribute EditFieldForm editFieldForm) {
-
-        System.out.println("editFieldForm = " + editFieldForm);
-        Long requestURIFieldId = getFieldId(request.getRequestURI());
-        if (requestURIFieldId == null || fieldId != requestURIFieldId) {
-            return AlertUtils.alertAndMove(response, "잘못된 경로입니다.", "/admin/match");
+    @PostMapping("/{matchId}/edit")
+    public String matchEditPost(@PathVariable Long matchId, @ModelAttribute EditMatchForm editMatchForm, HttpServletResponse response) {
+        System.out.println("editMatchForm = " + editMatchForm);
+        Optional<Match> findMatch = adminService.findByMatch(matchId);
+        if (findMatch.isEmpty()) {
+            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
         }
+        Match match = findMatch.get();
+        adminService.editMatch(match, editMatchForm);
 
-        Optional<Field> findField = adminService.findByField(fieldId);
-        if (findField.isEmpty()) {
-            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/match");
-        }
-        Field field = findField.get();
-        adminService.editField(field, editFieldForm);
-
-        return "redirect:/admin/match/" + fieldId;
+        return "redirect:/admin/match/" + matchId;
     }
 
     private Long getFieldId(String requestURI) {
@@ -107,18 +122,4 @@ public class AdminMatchController {
         }
     }
 
-    // Match Test 파일
-    @GetMapping("/test")
-    public String test() {
-        Match match = new Match();
-        match.setField(adminService.findByField(1L).get());
-        match.setMatchDate(LocalDate.now());
-        match.setMatchTime(2);
-        match.setMatchGender(GenderEnum.남자);
-        match.setMaxPerson(5);
-        match.setMatchEndStatus('N');
-        adminService.matchTest(match);
-
-        return "redirect:/admin/match";
-    }
 }

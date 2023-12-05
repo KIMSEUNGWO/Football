@@ -85,14 +85,19 @@ public class AdminRepositoryImpl implements AdminRepository{
                 .where(match.matchDate.between(searchDto.getStartDate(), searchDto.getEndDate())
                     ,joinWord(searchDto.getWord())
                     ,joinRegion(searchDto.getRegion()))
-                .orderBy(match.matchDate.desc())
-                .orderBy(match.matchTime.asc())
+                .orderBy(match.matchDate.desc(), match.matchHour.asc())
                 .fetch();
     }
 
+
     @Override
-    public void matchTest(Match match) {
-        jpaMatchRepository.save(match);
+    public void saveMatch(Match saveMatch) {
+        jpaMatchRepository.save(saveMatch);
+    }
+
+    @Override
+    public Optional<Match> findByMatch(Long matchId) {
+        return jpaMatchRepository.findById(matchId);
     }
 
     private BooleanExpression word(String word) {

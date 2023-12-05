@@ -45,6 +45,7 @@ small {
     display: flex;
     gap: 0.5rem;
     margin-bottom: 2rem;
+    position: relative;
 }
 
 .option button {
@@ -63,6 +64,10 @@ small {
 .region  * {
     pointer-events: initial;
 }
+.region > :not(.subOption) {
+    pointer-events: none;
+}
+
 
 .subOption {
     position: absolute;

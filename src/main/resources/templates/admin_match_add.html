@@ -12,74 +12,46 @@
     <link rel="stylesheet" href="/css/slider.css">
     <script src="/js/calendar_one.js"></script>
     <script src="/js/slider.js"></script>
-    <title>경기드록 :: 프로젝트</title>
+    <title>경기등록 :: 프로젝트</title>
 </head>
 <body>
     <body>
-        <header>
-            <div class="flexL">
-                <a href="#" class="logo">
-                    <img src="#" alt="로고이미지">
-                </a>
-                <ul class="menu">
-                    <li class="menuTitle">메뉴1</li>
-                    <li class="menuTitle">메뉴2</li>
-                    <li class="menuTitle">메뉴3</li>
-                    <li class="menuTitle">메뉴4</li>
-                </ul>
-            </div>
-            <div class="flexR">
-                <a href="/mypage" class="info_user">
-                    <img src="https://phinf.pstatic.net/contact/20220724_153/1658672074422w1wxl_JPEG/IMG_8012.JPG?type=f130_130" width="64" height="64" alt="김승우">
-                </a>
-            </div> 
-        </header>
+        <header th:replace="~{/common/header :: header}"></header>
         <div class="container">
-            <aside class="side box">
-                <div class="profile">
-                    <span class="name">김승우 <small>관리자</small></span>
-                </div>
-                <hr class="sideHr">
-                <ul class="adMenu">
-                    <li><a href="#" class="adMenuList">전체통계</a></li>
-                    <li><a href="#" class="adMenuList">구장관리</a></li>
-                    <li><a href="#" class="adMenuList">경기관리</a></li>
-                    <li><a href="#" class="adMenuList">회원관리</a></li>
-                </ul>
-            </aside>
+            <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
             <div class="mainBox box">
                 <h2>경기등록</h2>
-                <a href="#" class="fieldInfo box">
+                <a th:href="|/admin/ground/${fieldId}|" class="fieldInfo box">
                     <h3>구장정보</h3>
                     <div class="fieldInfoFlex">
                         <div class="fieldImage">
-                            <img src="#" alt="sadfasdf">
+                            <img th:src="|/images/fieldImage/${fieldInfo.fieldImage.fieldImageStoreName}|" th:alt="${fieldInfo.fieldImage.fieldImageName}">
                         </div>
                         <table>
                             <tr>
                                 <th>구장지역</th>
-                                <td>서울</td>
+                                <td th:text="${fieldInfo.fieldRegion}">서울</td>
                             </tr>
                             <tr>
                                 <th>구장이름</th>
-                                <td>무슨무슨 구장</td>
+                                <td th:text="${fieldInfo.fieldTitle}">무슨무슨 구장</td>
                             </tr>
                             <tr>
                                 <th>구장위치</th>
-                                <td>서울 어디어디 어디로 몇다시몇</td>
+                                <td th:text="${fieldInfo.fieldAddress}">서울 어디어디 어디로 몇다시몇</td>
                             </tr>
                         </table>
                     </div>
                 </a>
-                <form th:action="@{/admin/match/} + ${fieldId} + @{/add}" method="post" th:object="${saveFieldForm}">
+                <form th:action="@{/admin/match/} + ${fieldId} + @{/add}" method="post" th:object="${saveMatchForm}">
                     <table>
                         <tr>
                             <th>경기날짜</th>
                             <td>
                                 <div class="date_picker_wrapper">
-                                    <input type="text" name="matchDate" class="inputForm" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" th:errorclass="field-error" readonly>
+                                    <input type="text" th:field="*{matchDate}" class="inputForm" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" th:errorclass="field-error" readonly>
                                     <div class="time">
-                                        <select name="hour" id="hourSelect" class="inputForm">
+                                        <select th:field="*{matchHour}" class="inputForm">
                                             <option value="00">00</option>
                                             <option value="01">01</option>
                                             <option value="02">02</option>
@@ -108,7 +80,7 @@
                                         시
                                     </div>
                                     <div class="errorMsg" id="errorFileName"></div>
-                                    <div class="errorMsg field-error" th:errors="*{fieldName}">[[${errorMsg}]]</div>
+                                    <div class="errorMsg field-error" th:errors="*{matchHour}">[[${errorMsg}]]</div>
 
                                     <div id="date_range_calendar" class="">
                                         <div id="calendar_header">
@@ -135,11 +107,11 @@
                         <tr>
                             <th>경기인원</th>
                             <td>
-                                <select name="maxPerson" id="maxPerson" class="inputForm">
+                                <select th:field="*{matchMaxPerson}" class="inputForm">
                                     <option value="6" selected>6 vs 6</option>
                                     <option value="5">5 vs 5</option>
                                 </select>
-                                <select name="matchCount" id="matchCount" class="inputForm">
+                                <select th:field="*{matchCount}" class="inputForm">
                                     <option value="3" selected>3</option>
                                     <option value="2">2</option>
                                 </select>
@@ -153,7 +125,7 @@
                                     <div class="options">
                                         <h4>성별</h4>
                                         <ul class="radioBox">
-                                            <li><input type="radio" th:field="*{gender}" id="genderAll" value="남녀모두" th:errorclass="field-error" checked><label for="genderAll">남여모두</label></li>
+                                            <li><input type="radio" th:field="*{gender}" id="genderAll" value="전체" th:errorclass="field-error" checked><label for="genderAll">남여모두</label></li>
                                             <li><input type="radio" th:field="*{gender}" id="male" value="남자" th:errorclass="field-error"><label for="male">남자</label></li>
                                             <li><input type="radio" th:field="*{gender}" id="female" value="여자" th:errorclass="field-error"><label for="female">여자</label></li>
                                         </ul>
@@ -166,8 +138,8 @@
                                         <h4>등급</h4>
                                         <div class="multi-slider">
                                             <div class="inputSlider">
-                                                <input type="range" name="gradeLeft" id="gradeLeft" min="0" max="5" value="0">
-                                                <input type="range" name="gradeRight" id="gradeRight" min="0" max="5" value="5">
+                                                <input type="range" th:field="*{gradeLeft}" min="0" max="5" value="0">
+                                                <input type="range" th:field="*{gradeRight}" min="0" max="5" value="5">
                                             </div>
                                             <div class="slider">
                                                 <div class="track">
@@ -192,7 +164,7 @@
                                         </ul> -->
                                         <div class="errorBox">
                                             <div class="errorMsg" id="errorGrade"></div>
-                                            <div class="errorMsg field-error" th:errors="*{grade}">[[${errorMsg}]]</div>
+<!--                                            <div class="errorMsg field-error" th:errors="*{grade}">[[${errorMsg}]]</div>-->
                                         </div>
                                     </div>
                                 </div>

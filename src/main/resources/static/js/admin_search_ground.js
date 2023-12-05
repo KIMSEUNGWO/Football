@@ -1,34 +1,58 @@
 window.addEventListener('load', ()=>{
-  let searchWord = document.querySelector('input[name="searchWord"]');
-  let searchBtn = document.querySelector('#searchBtn');
+    var region = document.querySelector('.region');
+    var regionOption = document.querySelector('.regionOption');
 
-  let region = document.querySelectorAll('input[name="region"]:checked');
-
-//   최초검색
-  search();
-
-  searchWord.addEventListener('keyup', (e)=>{
-    if (searchWord.isEqualNode(e.target)) {
-        if (e.key == 'Enter') {
+    region.addEventListener('click', function(e){
+        addDisabled(regionOption);
+        regionOption.classList.toggle('disabled');
+        if (regionOption.classList.contains('disabled')) {
             search();
         }
-    }
-  })
+    });
+    let searchWord = document.querySelector('input[name="searchWord"]');
+    let searchBtn = document.querySelector('#searchBtn');
 
-  searchBtn.addEventListener('click', (e)=>{
-    if (searchBtn.isEqualNode(e.target)) {
+    //   최초검색
+    search();
+  
+    searchWord.addEventListener('keyup', (e)=>{
+        if (searchWord.isEqualNode(e.target)) {
+            if (e.key == 'Enter') {
+                search();
+            }
+        }
+    })
+
+    searchBtn.addEventListener('click', ()=>{
         search();
-    }
-  })
-  var regionBox = document.querySelector('.region');
-  var regionOption = document.querySelector('.regionOption');
-  this.document.addEventListener('mouseup', function(e){
-    if (!regionBox.contains(e.target)) {
-        regionOption.classList.add('disabled');
-        search();
-    }
+    })
+
+    var inputRegion = document.querySelectorAll('input[name="region"]');
+
+    inputRegion.forEach((el) => {
+        el.addEventListener('change', (e) => {
+            let all = document.querySelector('#regionAll');
+            if (all.isEqualNode(e.target)) {
+                if (all.checked == true) {
+                    let checkRegion = document.querySelectorAll('input[name="region"]:checked');
+                    noneChecked(checkRegion, all);
+                }
+            } else {
+                all.checked = false;
+            }
+        })
+    })
+
+    
 })
-})
+
+function noneChecked(list, exceptionNode) {
+    list.forEach((el) => {
+        if (!el.isEqualNode(exceptionNode)) {
+            el.checked = false;
+        }
+    })
+}
 
 function groundSearch(list) {
     const total = document.querySelector('.total');
@@ -86,4 +110,13 @@ function createList(list) {
 }
 function resultForm(searchForm) {
     return '<a href="/admin/ground/' + searchForm.fieldId + '" class="result"><span id="groundRegion">' + searchForm.region + '</span><span id="groundTitle">' + searchForm.fieldName +'</span></a>';
+}
+
+function addDisabled(e) {
+    var optionList = document.querySelectorAll('.subOption');
+    for (let i=0;i<optionList.length;i++){
+        if (!optionList[i].isEqualNode(e)) {
+            optionList[i].classList.add('disabled');
+        }
+    }
 }

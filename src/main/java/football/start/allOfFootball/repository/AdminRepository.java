@@ -24,5 +24,7 @@ public interface AdminRepository {
 
     List<Match> findByAllMatch(SearchMatchDto searchDto);
 
-    void matchTest(Match match);
+    void saveMatch(Match saveMatch);
+
+    Optional<Match> findByMatch(Long matchId);
 }

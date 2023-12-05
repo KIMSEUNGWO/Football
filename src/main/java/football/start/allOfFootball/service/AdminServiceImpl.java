@@ -94,9 +94,23 @@ public class AdminServiceImpl implements AdminService {
         return list.stream().map( x -> SearchMatchForm.build(x, adminRepository.findByMatchCount(x))).collect(Collectors.toList());
     }
 
+
     @Override
-    public void matchTest(Match match) {
-        adminRepository.matchTest(match);
+    public void saveMatch(Field field, SaveMatchForm saveMatchForm) {
+        Match saveMatch = Match.build(field, saveMatchForm);
+
+        adminRepository.saveMatch(saveMatch);
     }
+
+    @Override
+    public Optional<Match> findByMatch(Long matchId) {
+        return adminRepository.findByMatch(matchId);
+    }
+
+    @Override
+    public void editMatch(Match match, EditMatchForm editMatchForm) {
+        match.setEditMatch(editMatchForm);
+    }
+
 
 }

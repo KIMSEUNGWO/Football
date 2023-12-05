@@ -23,6 +23,11 @@ window.addEventListener('load', () => {
 
     select(week1);
 
+    let confirmBtn = document.querySelector('div#calendar_bottom #confirmButton');
+    confirmBtn.addEventListener('click', () => {
+        search();
+    })
+
     let buttons = document.querySelectorAll('.date_picker_buttons button');
     buttons.forEach(el => {
         el.addEventListener('click', (e) => {

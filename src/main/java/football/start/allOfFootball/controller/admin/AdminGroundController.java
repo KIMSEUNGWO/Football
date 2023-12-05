@@ -26,6 +26,7 @@ public class AdminGroundController {
     public String ground(Model model) {
         LocationEnum[] locations = LocationEnum.values();
         model.addAttribute("locations", locations);
+        model.addAttribute("myName", "김승우");
         return "admin_ground";
     }
 

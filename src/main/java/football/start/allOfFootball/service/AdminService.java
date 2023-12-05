@@ -20,5 +20,9 @@ public interface AdminService {
 
     List<SearchMatchForm> getSearchMatchResult(SearchMatchDto searchDto);
 
-    void matchTest(Match match);
+    void saveMatch(Field field, SaveMatchForm saveMatchForm);
+
+    Optional<Match> findByMatch(Long matchId);
+
+    void editMatch(Match match, EditMatchForm editMatchForm);
 }

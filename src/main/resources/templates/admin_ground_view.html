@@ -3,47 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/common.css">
-    <link rel="stylesheet" href="/static/css/header.css">
-    <link rel="stylesheet" href="/static/css/admin_main.css">
-    <link rel="stylesheet" href="/static/css/admin_ground_common.css">
-    <link rel="stylesheet" href="/static/css/admin_ground_view.css">
-    <script src="/static/js/admin_ground_edit.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/admin_ground_common.css">
+    <link rel="stylesheet" href="/css/admin_ground_view.css">
+    <script src="/js/admin_ground_edit.js"></script>
     <title>구장정보 :: 프로젝트</title>
 </head>
 <body>
     <body>
-        <header>
-            <div class="flexL">
-                <a href="#" class="logo">
-                    <img src="#" alt="로고이미지">
-                </a>
-                <ul class="menu">
-                    <li class="menuTitle">메뉴1</li>
-                    <li class="menuTitle">메뉴2</li>
-                    <li class="menuTitle">메뉴3</li>
-                    <li class="menuTitle">메뉴4</li>
-                </ul>
-            </div>
-            <div class="flexR">
-                <a href="/mypage" class="info_user">
-                    <img src="https://phinf.pstatic.net/contact/20220724_153/1658672074422w1wxl_JPEG/IMG_8012.JPG?type=f130_130" width="64" height="64" alt="김승우">
-                </a>
-            </div> 
-        </header>
+        <header th:replace="~{/common/header :: header}"></header>
         <div class="container">
-            <aside class="side box">
-                <div class="profile">
-                    <span class="name">김승우 <small>관리자</small></span>
-                </div>
-                <hr class="sideHr">
-                <ul class="adMenu">
-                    <li><a href="#" class="adMenuList">전체통계</a></li>
-                    <li><a href="#" class="adMenuList">구장관리</a></li>
-                    <li><a href="#" class="adMenuList">경기관리</a></li>
-                    <li><a href="#" class="adMenuList">회원관리</a></li>
-                </ul>
-            </aside>
+            <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
             <div class="mainBox box">
                 <h2>구장정보</h2>
                     <h3>구장이미지</h3>

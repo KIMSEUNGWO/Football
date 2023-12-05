@@ -28,11 +28,6 @@ window.addEventListener('load', function(){
         }
     })
 
-    this.document.addEventListener('mouseup', function(e){
-        if (!region.contains(e.target)) {
-            regionOption.classList.add('disabled');
-        }
-    })
 })
 
 function noneChecked(list, exceptionNode) {

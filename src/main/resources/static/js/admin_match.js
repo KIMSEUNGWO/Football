@@ -3,20 +3,12 @@ window.addEventListener('load', function(){
     var regionOption = document.querySelector('.regionOption');
 
     region.addEventListener('click', function(e){
-        if (e.target.isEqualNode(region)) {
-            var regionOption = document.querySelector('.regionOption');
-            addDisabled(regionOption);
-            regionOption.classList.toggle('disabled');
+        addDisabled(regionOption);
+        regionOption.classList.toggle('disabled');
+        if (regionOption.classList.contains('disabled')) {
+            search();
         }
-    })
-
-    document.addEventListener('mouseup', function(e){
-        if (!region.contains(e.target)) {
-            regionOption.classList.add('disabled');
-        }
-    })
-
-
+    });
     let searchWord = document.querySelector('input[name="searchWord"]');
     let searchBtn = document.querySelector('#searchBtn');
 
@@ -31,20 +23,35 @@ window.addEventListener('load', function(){
         }
     })
 
-    searchBtn.addEventListener('click', (e)=>{
-        if (searchBtn.isEqualNode(e.target)) {
-            search();
-        }
+    searchBtn.addEventListener('click', ()=>{
+        search();
     })
-    var regionBox = document.querySelector('.region');
-    var regionOption = document.querySelector('.regionOption');
-    this.document.addEventListener('mouseup', function(e){
-        if (!regionBox.contains(e.target)) {
-            regionOption.classList.add('disabled');
-            search();
-        }
+
+    var inputRegion = document.querySelectorAll('input[name="region"]');
+
+    inputRegion.forEach((el) => {
+        el.addEventListener('change', (e) => {
+            let all = document.querySelector('#regionAll');
+            if (all.isEqualNode(e.target)) {
+                if (all.checked == true) {
+                    let checkRegion = document.querySelectorAll('input[name="region"]:checked');
+                    noneChecked(checkRegion, all);
+                }
+            } else {
+                all.checked = false;
+            }
+        })
     })
+
 })
+
+function noneChecked(list, exceptionNode) {
+    list.forEach((el) => {
+        if (!el.isEqualNode(exceptionNode)) {
+            el.checked = false;
+        }
+    })
+}
 
 function addDisabled(e) {
     var optionList = document.querySelectorAll('.subOption');

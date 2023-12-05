@@ -9,6 +9,9 @@ import football.start.allOfFootball.enums.groundEnums.ToiletEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -41,6 +44,9 @@ public class Field {
 
     @Enumerated(EnumType.STRING)
     private ShowerEnum fieldShower;
+
+    @OneToMany(mappedBy = "field")
+    private List<FieldImage> fieldImages = new ArrayList<>();
 
     public static Field build(SaveFieldForm form) {
         return new Field().builder()

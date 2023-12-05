@@ -77,7 +77,8 @@
     
     display: none;
     flex-direction: column;
-    padding: 2rem 2rem 1rem 2rem
+    padding: 2rem 2rem 1rem 2rem;
+    z-index: 5;
 }
 #date_range_calendar.display {
     display: flex;

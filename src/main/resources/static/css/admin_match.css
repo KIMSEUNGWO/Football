@@ -37,6 +37,10 @@ input[name="matchDate"] {
     border-radius: var(--border-radius);
     overflow: hidden;
 }
+.fieldImage img {
+    width: 100%;
+    height: 100%;
+}
 
 
 .fieldInfo th {
@@ -50,4 +54,10 @@ input[name="matchDate"] {
     margin: 0;
     border-collapse: separate;
     border-spacing: 0 1rem;
+}
+
+.submitBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

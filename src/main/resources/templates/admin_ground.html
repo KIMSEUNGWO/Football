@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,57 +7,28 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/admin_main.css">
     <link rel="stylesheet" href="/css/admin_ground.css">
-    <script src="/js/admin_search_common.js"></script>
     <script src="/js/admin_search_ground.js"></script>
     <script src="/js/fetch.js"></script>
     <title>구장관리 :: 프로젝트</title>
 </head>
 <body>
     <body>
-        <header>
-            <div class="flexL">
-                <a href="#" class="logo">
-                    <img src="#" alt="로고이미지">
-                </a>
-                <ul class="menu">
-                    <li class="menuTitle">메뉴1</li>
-                    <li class="menuTitle">메뉴2</li>
-                    <li class="menuTitle">메뉴3</li>
-                    <li class="menuTitle">메뉴4</li>
-                </ul>
-            </div>
-            <div class="flexR">
-                <a href="/mypage" class="info_user">
-                    <img src="https://phinf.pstatic.net/contact/20220724_153/1658672074422w1wxl_JPEG/IMG_8012.JPG?type=f130_130" width="64" height="64" alt="김승우">
-                </a>
-            </div> 
-        </header>
+        <header th:replace="~{/common/header :: header}"></header>
         <div class="container">
-            <aside class="side box">
-                <div class="profile">
-                    <span class="name">김승우 <small>관리자</small></span>
-                </div>
-                <hr class="sideHr">
-                <ul class="adMenu">
-                    <li><a href="#" class="adMenuList">전체통계</a></li>
-                    <li><a href="#" class="adMenuList">구장관리</a></li>
-                    <li><a href="#" class="adMenuList">경기관리</a></li>
-                    <li><a href="#" class="adMenuList">회원관리</a></li>
-                </ul>
-            </aside>
+            <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
             <div class="mainBox box">
                 <h2>구장관리</h2>
                 <div class="option">
                     <button class="region btnBox">
                         <span>지역</span>
                         <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
-                        <ul class="subOption regionOption disabled">
-                            <li><input type="checkbox" name="region" id="regionAll" value="전체" checked><label for="regionAll">전체</label></li>
-                            <li><input type="checkbox" name="region" id="seoul" value="서울"><label for="seoul">서울</label></li>
-                            <li><input type="checkbox" name="region" id="incheon" value="인천"><label for="incheon">인천</label></li>
-                            <li><input type="checkbox" name="region" id="gyeonggi" value="경기"><label for="gyeonggi">경기</label></li>
-                        </ul>
                     </button>
+                    <ul class="subOption regionOption disabled">
+                        <li th:each="loc : ${locations}">
+                            <input type="checkbox" name="region" th:id="${loc.regionId}" th:value="${loc}" th:checked="${loc.regionId == 'regionAll'}">
+                            <label th:for="${loc.regionId}" th:text="${loc}"></label>
+                        </li>
+                    </ul>
                     <input type="text" name="searchWord" id="searchWord" placeholder="구장 이름을 입력해주세요.">
                     <button type="button" class="btn" id="searchBtn">검색</button>
                 </div>

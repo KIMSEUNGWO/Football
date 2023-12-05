@@ -1,21 +1,21 @@
 
-form th {
+form th, .view th {
     font-size: 1.15rem;
     text-align: left;
     padding-right: 1.5rem;
 }
-form td {
+form td, .view td {
     display: flex;
     gap: 0.5rem;
     align-items: center;
 }
-form td > * {
+form td > *, .view td > * {
     margin: 0;
 }
-form h4 {
+form h4, .view h4 {
     margin: 0.5rem 0;
 }
-form table {
+form table, .view table {
     margin: 0;
     border-collapse: separate;
     border-spacing: 0 1rem;
