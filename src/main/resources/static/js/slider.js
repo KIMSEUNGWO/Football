@@ -48,6 +48,7 @@ window.addEventListener('load', () => {
     });
 
     document.addEventListener('mouseup', () => {
+        console.log(thumbRight.style.zIndex);
         isDraggingLeft = false;
         isDraggingRight = false;
     });
@@ -58,14 +59,13 @@ function percentCalculatorRight(input, range, thumbRight) {
     changeTitle(after, input);
 
     let max = input.max;
-    console.log(input.value)
     let cal = (100 / max * input.value);
     if (cal >= 100) {
         thumbRight.style.left = null;
 
         range.style.right = '0%';
         thumbRight.style.right = '0%';
-        thumbRight.style.zIndex = '10';
+        thumbRight.style.zIndex = '0';
         return;
     }
 
@@ -73,7 +73,7 @@ function percentCalculatorRight(input, range, thumbRight) {
 
     range.style.right = 100 - cal - 5 + '%';
     thumbRight.style.left = cal + '%';
-    thumbRight.style.zIndex = '1';
+    thumbRight.style.zIndex = '10';
 }
 
 function percentCalculatorLeft(input, range, thumbLeft) {
@@ -88,12 +88,14 @@ function percentCalculatorLeft(input, range, thumbLeft) {
 
         range.style.right = '0%';
         thumbLeft.style.right = '0%';
+        thumbLeft.style.zIndex = '10';
         return;
     }
     thumbLeft.style.right = null;
 
     range.style.left = cal + '%';
     thumbLeft.style.left = cal + '%';
+    thumbLeft.style.zIndex = '0';
 }
 
 function handleDrag(event, input, setValueFunction) {

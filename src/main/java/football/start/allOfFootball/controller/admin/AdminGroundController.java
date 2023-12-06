@@ -4,6 +4,7 @@ import football.start.allOfFootball.common.alert.AlertUtils;
 import football.start.allOfFootball.domain.Field;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.service.AdminService;
+import football.start.allOfFootball.service.domainService.FieldService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.Optional;
 @RequestMapping("/admin/ground")
 public class AdminGroundController {
 
-    private final AdminService adminService;
+    private final FieldService fieldService;
 
     @GetMapping
     public String ground(Model model) {
@@ -41,7 +42,7 @@ public class AdminGroundController {
     public String groundAddPost(@ModelAttribute SaveFieldForm saveFieldForm) {
         System.out.println("saveGroundForm = " + saveFieldForm);
 
-        adminService.saveField(saveFieldForm);
+        fieldService.saveField(saveFieldForm);
 
         return "redirect:/admin/ground";
     }
@@ -49,7 +50,7 @@ public class AdminGroundController {
     @GetMapping("/{fieldId}")
     public String groundView(@PathVariable Long fieldId, HttpServletResponse response, Model model) {
 
-        EditFieldForm form = adminService.findByFieldId(fieldId);
+        EditFieldForm form = fieldService.findByFieldId(fieldId);
         if (form == null) {
             return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
         }
@@ -61,7 +62,7 @@ public class AdminGroundController {
     @GetMapping("/{fieldId}/edit")
     public String groundEdit(@PathVariable Long fieldId, HttpServletResponse response, Model model) {
 
-        EditFieldForm form = adminService.findByFieldId(fieldId);
+        EditFieldForm form = fieldService.findByFieldId(fieldId);
 
         if (form == null) {
             return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
@@ -82,12 +83,12 @@ public class AdminGroundController {
             return AlertUtils.alertAndMove(response, "잘못된 경로입니다.", "/admin/ground");
         }
 
-        Optional<Field> findField = adminService.findByField(fieldId);
+        Optional<Field> findField = fieldService.findByField(fieldId);
         if (findField.isEmpty()) {
             return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
         }
         Field field = findField.get();
-        adminService.editField(field, editFieldForm);
+        fieldService.editField(field, editFieldForm);
 
         return "redirect:/admin/ground/" + fieldId;
     }

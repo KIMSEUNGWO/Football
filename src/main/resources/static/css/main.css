@@ -1,3 +1,18 @@
+.btnBox *{
+    pointer-events: initial;
+}
+.btnBox > *:not(.subOption) {
+    pointer-events: none;
+}
+.subOption * {
+    pointer-events: all;
+}
+.region, .gender, .grade {
+    position: relative;
+    text-wrap: nowrap;
+}
+
+
 .banner {
     width: 100%;
     height: 20rem;
@@ -31,20 +46,29 @@
 }
 
 /* 검색조건 설정 */
+.search {
+    width: 100%;
+}
 .searchBox {
-    margin-bottom: 3rem;
+    display: flex;
+    margin-bottom: 2rem;
+    gap: 2rem;
+}
+.searchBox > * {
+    margin: 0;
 }
 /* 검색어 */
 .searchForm {
     width: 100%;
     height: 3rem;
     position: relative;
-    margin: 0.5rem 0;
+    margin-bottom: 0.5rem;
 }
 
-#keyword {
+#searchWord {
     width: 100%;
     height: 100%;
+    cursor: text;
 }
 .searchButton {
     top: 0;
@@ -52,6 +76,7 @@
     width: 2.2rem;
     height: 100%;
     position: absolute;
+    cursor: pointer;
 }
 .searchButton svg {
     width: 100%;
@@ -104,7 +129,7 @@ input::-webkit-search-results-decoration{
     border: 0.1rem solid var(--border-color);
     border-radius: var(--border-radius);
     padding: 1rem 1.5rem;
-    z-index: 4;
+    z-index: 11;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -119,80 +144,24 @@ input::-webkit-search-results-decoration{
 .subOption li > * {
     margin: 0;
 }
-
-/* 캘린더 */
-.calendarBox {
-    width: 100%;
-    height: 5rem;
-    display: flex;
-    align-items: center;
-}
-.calendarBox button {
-    width: 2rem;
-    height: 2rem;
-    float: 0 0 auto;
-    padding: 0;
-}
-
-.previous svg, .next svg {
-    width: 1.3rem;
-    height: 1.3rem;
-}
-
-.displayCalendar {
-    flex: 0 1 auto;
-    overflow: hidden;
-    width: 100%;
-}
-
-.calendar {
-    display: flex;
-    gap: 1rem;
-}
-
-.calendarBox > * {
-    margin: 0 0.5rem;
-}
-
-.calendar .day {
-    display: flex;
-    align-items: end;
-    gap: 0.3rem;
-    flex: 0 0 auto;
-    width: calc(100% / 7 - 0.3rem * 6);
-    height: 100%;
-    border-radius: 0.7rem;
-    background-color: antiquewhite;
-    justify-content: center;
-}
-
-.day p {
-    font-size: 1.3rem;
-}
-.day p, .day span {
-    margin: 0;
-}
-
-.isDay {
-    color: black;
-}
-
-.isSun {
-    color: red;
-}
-
-.isSat {
-    color: blue;
+.subOption label {
+    text-wrap:nowrap;
 }
 
 
 /* 검색건수 */
-.searchCount {
-    width: 100%;
+.searchCountBox {
     display: block;
+    margin: 2rem 0 1.5rem 0;
+}
+.searchDate {
+    font-size: 1.1rem;
+    color: var(--gray);
+}
+.searchCount {
     font-size: 1.2rem;
     font-family: 'Pretendard-Bold';
-    margin: 2rem 0 1.5rem 0;
+    margin: 0 1rem 0 0.5rem;
 }
 
 .result{
@@ -214,7 +183,7 @@ input::-webkit-search-results-decoration{
     border-bottom: 0.1rem solid var(--border-color);
 }
 
-.resultTime {
+.resultHour {
     margin: 0 1.5rem 0 0.5rem;
     font-size: 1.2rem;
 }
@@ -369,7 +338,3 @@ input::-webkit-search-results-decoration{
     margin-top: 1rem;
     color: var(--gray);
 }
-
-
-
-

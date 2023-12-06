@@ -1,6 +1,7 @@
 package football.start.allOfFootball.controller.admin;
 
 import football.start.allOfFootball.enums.GenderEnum;
+import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
@@ -26,7 +27,6 @@ public class SaveMatchForm {
 
     private GenderEnum gender;
 
-    private Integer gradeLeft;
-    private Integer gradeRight;
+    private MatchEnum matchGrade;
 
 }

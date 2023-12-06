@@ -10,21 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdminRepository {
-    void saveField(Field field);
 
     List<Field> findByAllField(SearchFieldDto searchDto);
-
-    Optional<Field> findByField(Long fieldId);
-
-    List<FieldImage> findByAllFieldImage(Field field);
-
-    void deleteByFieldImage(String deleteImage);
 
     Integer findByMatchCount(Match match);
 
     List<Match> findByAllMatch(SearchMatchDto searchDto);
 
-    void saveMatch(Match saveMatch);
-
-    Optional<Match> findByMatch(Long matchId);
 }

@@ -28,24 +28,12 @@ import static football.start.allOfFootball.enums.LocationEnum.전체;
 @Repository
 public class AdminRepositoryImpl implements AdminRepository{
 
-    private final JpaFieldImageRepository jpaFieldImageRepository;
-    private final JpaFieldRepository jpaFieldRepository;
-
-    private final JpaMatchRepository jpaMatchRepository;
     private final JpaOrderRepository jpaOrderRepository;
     private final JPAQueryFactory query;
 
-    public AdminRepositoryImpl(JpaFieldImageRepository jpaFieldImageRepository, JpaFieldRepository jpaFieldRepository, JpaMatchRepository jpaMatchRepository, JpaOrderRepository jpaOrderRepository, EntityManager em) {
-        this.jpaFieldImageRepository = jpaFieldImageRepository;
-        this.jpaFieldRepository = jpaFieldRepository;
-        this.jpaMatchRepository = jpaMatchRepository;
+    public AdminRepositoryImpl(JpaOrderRepository jpaOrderRepository, EntityManager em) {
         this.jpaOrderRepository = jpaOrderRepository;
-        this.query = new JPAQueryFactory(em);;
-    }
-
-    @Override
-    public void saveField(Field field) {
-        jpaFieldRepository.save(field);
+        this.query = new JPAQueryFactory(em);
     }
 
     @Override
@@ -58,20 +46,6 @@ public class AdminRepositoryImpl implements AdminRepository{
             .fetch();
     }
 
-    @Override
-    public Optional<Field> findByField(Long fieldId) {
-        return jpaFieldRepository.findById(fieldId);
-    }
-
-    @Override
-    public List<FieldImage> findByAllFieldImage(Field field) {
-        return jpaFieldImageRepository.findAllByField(field);
-    }
-
-    @Override
-    public void deleteByFieldImage(String deleteImage) {
-        jpaFieldImageRepository.deleteByFieldImageStoreName(deleteImage);
-    }
 
     @Override
     public Integer findByMatchCount(Match match) {
@@ -89,16 +63,6 @@ public class AdminRepositoryImpl implements AdminRepository{
                 .fetch();
     }
 
-
-    @Override
-    public void saveMatch(Match saveMatch) {
-        jpaMatchRepository.save(saveMatch);
-    }
-
-    @Override
-    public Optional<Match> findByMatch(Long matchId) {
-        return jpaMatchRepository.findById(matchId);
-    }
 
     private BooleanExpression word(String word) {
         if (word == null || word.equals("") || word.equals(" ")) {

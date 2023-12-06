@@ -3,12 +3,12 @@ package football.start.allOfFootball.domain;
 import football.start.allOfFootball.controller.admin.EditMatchForm;
 import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.GradeEnum;
+import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -39,9 +39,7 @@ public class Match {
     private Integer maxPerson; // 6 vs 6 일때 maxPerson = 6
 
     @Enumerated(EnumType.STRING)
-    private GradeEnum minGrade;
-    @Enumerated(EnumType.STRING)
-    private GradeEnum maxGrade;
+    private MatchEnum matchGrade;
 
     private Character matchEndStatus;
 
@@ -53,8 +51,7 @@ public class Match {
             .matchCount(form.getMatchCount())
             .matchGender(form.getGender())
             .maxPerson(form.getMatchMaxPerson())
-            .minGrade(GradeEnum.getEnum(form.getGradeLeft()))
-            .maxGrade(GradeEnum.getEnum(form.getGradeRight()))
+            .matchGrade(form.getMatchGrade())
             .build();
     }
 
@@ -64,8 +61,6 @@ public class Match {
         matchCount = editMatchForm.getMatchCount();
         matchGender = editMatchForm.getGender();
         maxPerson = editMatchForm.getMatchMaxPerson();
-        minGrade = GradeEnum.getEnum(editMatchForm.getGradeLeft());
-        maxGrade = GradeEnum.getEnum(editMatchForm.getGradeRight());
     }
 
     private LocalDate getLocalDate(String matchDate) {

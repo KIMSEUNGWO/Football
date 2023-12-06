@@ -2,10 +2,9 @@ package football.start.allOfFootball.controller.admin;
 
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.GradeEnum;
-import jakarta.validation.constraints.NegativeOrZero;
+import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -25,8 +24,7 @@ public class EditMatchForm {
 
     private GenderEnum gender;
 
-    private Integer gradeLeft;
-    private Integer gradeRight;
+    private MatchEnum matchGrade;
 
     public static EditMatchForm build(Match form) {
         return EditMatchForm.builder()
@@ -35,8 +33,7 @@ public class EditMatchForm {
             .matchMaxPerson(form.getMaxPerson())
             .matchCount(form.getMatchCount())
             .gender(form.getMatchGender())
-            .gradeLeft(GradeEnum.getNumber(form.getMinGrade()))
-            .gradeRight(GradeEnum.getNumber(form.getMaxGrade()))
+            .matchGrade(form.getMatchGrade())
             .build();
     }
 

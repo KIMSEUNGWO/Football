@@ -1,0 +1,24 @@
+package football.start.allOfFootball.enums.gradeEnums;
+
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static football.start.allOfFootball.enums.gradeEnums.GradeEnum.*;
+
+public enum MatchEnum {
+
+    전체(Arrays.asList(루키, 스타터, 비기너, 아마추어, 세미프로, 프로)),
+
+    초급(Arrays.asList(루키, 스타터, 비기너)),
+    중급(Arrays.asList(비기너, 아마추어, 세미프로)),
+    전문가(Arrays.asList(아마추어, 세미프로, 프로));
+
+    private List<GradeEnum> gradeList;
+
+    MatchEnum(List<GradeEnum> gradeList) {
+        this.gradeList = gradeList;
+    }
+}

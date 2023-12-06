@@ -7,128 +7,91 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/call.css">
-    <script src="/js/calendar.js"></script>
+    <link rel="stylesheet" href="/css/calendar_one_main.css">
+    <script src="/js/calendar_one_main.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/fetch.js"></script>
     <title>풋볼 :: 프로젝트</title>
 </head>
 <body>
     <header th:replace="~{/common/header :: header}"></header>
-    <div class="banner" th:text="${session.memberId}">
+    <div class="banner">
 
     </div>
     <div class="container">
         <div class="main">
-            <div class="searchBox">
-                <div class="calendarBox">
-                    <button class="previous svgBox">
-                        <svg xmlns="http://www.w3.org/2000/svg" style="rotate:180deg" viewBox="0 0 512 512"><path d="M0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM281 385c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l71-71L136 280c-13.3 0-24-10.7-24-24s10.7-24 24-24l182.1 0-71-71c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L393 239c9.4 9.4 9.4 24.6 0 33.9L281 385z"/></svg>
-                    </button>
-                    <div class="displayCalendar"> 
-                        <ul class="calendar">
-                            <li class="day">
-                                <p>1</p>
-                                <span>월</span>
-                            </li>
-                            <li class="day">
-                                <p>2</p>
-                                <span>화</span>
-                            </li>
-                            <li class="day">
-                                <p>3</p>
-                                <span>수</span>
-                            </li>
-                            <li class="day">
-                                <p>4</p>
-                                <span>목</span>
-                            </li>
-                            <li class="day">
-                                <p>5</p>
-                                <span>금</span>
-                            </li>
-                            <li class="day isSat">
-                                <p>6</p>
-                                <span>토</span>
-                            </li>
-                            <li class="day isSun">
-                                <p>7</p>
-                                <span>일</span>
-                            </li>
-                            <li class="day">
-                                <p>8</p>
-                                <span>월</span>
-                            </li>
-                            <li class="day">
-                                <p>9</p>
-                                <span>화</span>
-                            </li>
-                            <li class="day">
-                                <p>10</p>
-                                <span>수</span>
-                            </li>
-                            <li class="day">
-                                <p>11</p>
-                                <span>목</span>
-                            </li>
-                            <li class="day">
-                                <p>12</p>
-                                <span>금</span>
-                            </li>
-                            <li class="day isSat">
-                                <p>13</p>
-                                <span>토</span>
-                            </li>
-                            <li class="day isSun">
-                                <p>14</p>
-                                <span>일</span>
-                            </li>
-                            <li class="day">
-                                <p>15</p>
-                                <span>월</span>
-                            </li>
-                            
-                        </ul>
+            <div class="searchBox box">
+                <div class="date_picker_wrapper">
+                    <input type="text" name="matchDate" class="inputForm" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
+
+                    <div id="date_range_calendar">
+                        <div id="calendar_header">
+                            <button type="button" id="preButton">
+                                <svg transform='rotate(180)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                    <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                            </button>
+                            <div class="months">
+                                <div id="mainMonth"></div>
+                            </div>
+                            <button type="button" id="nextButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                    <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                            </button>
+                        </div>
+                        <div id="calendar_body">
+                            <div id="mainBody">
+                            </div>
+                        </div>
                     </div>
-                    <button class="next svgBox">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM281 385c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l71-71L136 280c-13.3 0-24-10.7-24-24s10.7-24 24-24l182.1 0-71-71c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L393 239c9.4 9.4 9.4 24.6 0 33.9L281 385z"/></svg>
-                    </button>
                 </div>
-                <form class="searchForm">
-                    <input type="search" name="keyword" id="keyword" class="btnBox" placeholder="지역 또는 구장명 검색">
-                    <button class="searchButton svgBox">
-                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-                    </button>
-                </form>
-                <div class="option">
-                    <button class="region btnBox">
-                        <span>지역</span>
-                        <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
-                        <ul class="subOption regionOption disabled">
-                            <li><input type="checkbox" name="region" id="regionAll"><label for="regionAll">전체</label></li>
-                            <li><input type="checkbox" name="region" id="seoul"><label for="seoul">서울</label></li>
-                            <li><input type="checkbox" name="region" id="incheon"><label for="incheon">인천</label></li>
-                            <li><input type="checkbox" name="region" id="gyeonggi"><label for="gyeonggi">경기도</label></li>
-                        </ul>
-                    </button>
-                    
-                    <button class="gender btnBox">
-                        <span>성별</span>
-                        <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
-                        <ul class="subOption genderOption disabled">
-                            <li><input type="checkbox" name="gender" id="genderAll"><label for="genderAll">전체</label></li>
-                            <li><input type="checkbox" name="gender" id="male"><label for="male">남자만</label></li>
-                            <li><input type="checkbox" name="gender" id="female"><label for="female">여자만</label></li>
-                        </ul>
-                    </button>
-                    <button class="grade btnBox">
-                        <span>등급</span>
-                        <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
-                    </button>
+                <div class="search">
+                    <div>
+                        <div class="searchForm">
+                            <input type="search" name="searchWord" id="searchWord" class="btnBox" placeholder="지역 또는 구장명 검색">
+                            <button class="searchButton svgBox">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+                            </button>
+                        </div>
+                        <div class="option">
+                            <button class="region btnBox">
+                                <span>지역</span>
+                                <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                                <ul class="subOption regionOption disabled">
+                                    <li><input type="radio" name="region" id="regionAll" value="전체" checked><label for="regionAll">전체</label></li>
+                                    <li><input type="radio" name="region" id="seoul" value="서울"><label for="seoul">서울</label></li>
+                                    <li><input type="radio" name="region" id="incheon" value="인천"><label for="incheon">인천</label></li>
+                                    <li><input type="radio" name="region" id="gyeonggi" value="경기도"><label for="gyeonggi">경기도</label></li>
+                                </ul>
+                            </button>
+                            <button class="grade btnBox">
+                                <span>등급</span>
+                                <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                                <ul class="subOption gradeOption disabled">
+                                    <li><input type="radio" name="grade" id="gradeAll" value="전체" checked><label for="gradeAll">등급무관</label></li>
+                                    <li><input type="radio" name="grade" id="beginner" value="초급"><label for="beginner">초보</label></li>
+                                    <li><input type="radio" name="grade" id="amateur" value="중급"><label for="amateur">중급</label></li>
+                                    <li><input type="radio" name="grade" id="expert" value="전문가"><label for="expert">전문가</label></li>
+                                </ul>
+                            </button>
+                            <button class="gender btnBox">
+                                <span>성별</span>
+                                <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                                <ul class="subOption genderOption disabled">
+                                    <li><input type="radio" name="gender" id="genderAll" value="전체" checked><label for="genderAll">전체</label></li>
+                                    <li><input type="radio" name="gender" id="male" value="남자"><label for="male">남자만</label></li>
+                                    <li><input type="radio" name="gender" id="female" value="여자"><label for="female">여자만</label></li>
+                                </ul>
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
             <div class="searchListBox">
                 <div class="searchCountBox">
                     <span class="searchCount">3건</span>
+                    <span class="searchDate">2023년 12월 5일</span>
                 </div>
 
                 <ul class="searchResult">
@@ -139,6 +102,7 @@
                             <div class="resultTitle">모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장모모구장</div>
                             <ul class="subTitle">
                                 <li class="resultGender">남녀모두</li>
+                                <li class="resultGrade">초보</li>
                                 <li class="resultPlayer">6 vs 6</li>
                             </ul>
                         </div>
@@ -194,7 +158,7 @@
                     <tr>
                         <td class="ranking">100,000위</td>
                         <td class="">1,000점</td>
-                        <th class="grade">아마추어1</th>
+                        <td class="grade">아마추어1</td>
                     </tr>
                 </table>
             </div>
