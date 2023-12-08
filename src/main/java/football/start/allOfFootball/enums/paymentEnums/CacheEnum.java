@@ -1,4 +1,4 @@
-package football.start.allOfFootball.enums;
+package football.start.allOfFootball.enums.paymentEnums;
 
 public enum CacheEnum {
 

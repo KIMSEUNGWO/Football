@@ -1,12 +1,10 @@
 package football.start.allOfFootball.domain;
 
-import football.start.allOfFootball.enums.CacheEnum;
+import football.start.allOfFootball.enums.paymentEnums.CacheEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

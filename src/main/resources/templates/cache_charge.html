@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/cache_charge.css">
+    <script src="/js/cache_charge.js"></script>
+    <script src="/js/fetch.js"></script>
+    <title>충전 :: 프로젝트</title>
+</head>
+<body>
+    <header th:fragment="header">
+        <div class="flexL">
+            <a href="#" class="logo">
+                <img src="#" alt="로고이미지">
+            </a>
+            <ul class="menu">
+                <li class="menuTitle">메뉴1</li>
+                <li class="menuTitle">메뉴2</li>
+                <li class="menuTitle">메뉴3</li>
+                <li class="menuTitle">메뉴4</li>
+            </ul>
+        </div>
+        <div class="flexR">
+            <a href="/mypage" class="info_user">
+                <img src="https://phinf.pstatic.net/contact/20220724_153/1658672074422w1wxl_JPEG/IMG_8012.JPG?type=f130_130" width="64" height="64" alt="김승우">
+            </a>
+        </div> 
+    </header>
+    <div class="container">
+        <form class="popup" action="#" method="get">
+            <div class="currCashBox">
+                <div>캐시</div>
+                <div class="money">1,000원</div>
+            </div>
+            <h4>충전할 금액</h4>
+            <div class="cashOption">
+                <label class="cashBtn select" for="cash-opt-0">
+                    <span>100원</span>
+                    <input type="radio" name="cash" id="cash-opt-0" value="100" checked>
+                </label>
+                <label class="cashBtn" for="cash-opt-1">
+                    <span>5,000원</span>
+                    <input type="radio" name="cash" id="cash-opt-1" value="5000">
+                </label>
+                <label class="cashBtn" for="cash-opt-2">
+                    <span>10,000원</span>
+                    <input type="radio" name="cash" id="cash-opt-2" value="10000">
+                </label>
+                <label class="cashBtn" for="cash-opt-3">
+                    <span>20,000원</span>
+                    <input type="radio" name="cash" id="cash-opt-3" value="20000">
+                </label>
+                <label class="cashBtn" for="cash-opt-4">
+                    <span>30,000원</span>
+                    <input type="radio" name="cash" id="cash-opt-4" value="30000">
+                </label>
+                <label class="cashBtn" for="cash-opt-5">
+                    <span>40,000원</span>
+                    <input type="radio" name="cash" id="cash-opt-5" value="40000">
+                </label>
+                <label class="cashBtn" for="cash-opt-6">
+                    <span>50,000원</span>
+                    <input type="radio" name="cash" id="cash-opt-6" value="50000">
+                </label>
+            </div>
+
+            <h4>결제방식</h4>
+            <div class="chargeOption">
+                <label for="charge-opt-0" class="chargeBtn select">
+                    <span>카카오페이</span>
+                    <input type="radio" name="charge" id="charge-opt-0" value="KAKAO" checked>
+                </label>
+                <label for="charge-opt-1" class="chargeBtn">
+                    <span>무통장 입금</span>
+                    <input type="radio" name="charge" id="charge-opt-1">
+                </label>
+            </div>
+            <div class="policy">
+                <div class="checkbox">
+                    <button type="button" class="check" id="check-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+                    </button>
+                    <label for="policy-0">
+                        <input type="checkbox" name="policy-0" id="policy-0">
+                        <span>[필수] 서비스 이용약관</span>
+                        <div class="detail" id="policy-0-detail">자세히</div>
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <button type="button" class="check" id="check-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+                    </button>
+                    <label for="policy-1">
+                        <input type="checkbox" name="policy-1" id="policy-1">
+                        <span>[필수] 개인(신용)정보 수집 및 이용 동의</span>
+                        <div class="detail" id="policy-1-detail">자세히</div>
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <button type="button" class="check" id="check-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+                    </button>
+                    <label for="policy-2">
+                        <input type="checkbox" name="policy-2" id="policy-2">
+                        <span>[필수] 개인(신용)정보 제3자 제공 동의</span>
+                        <div class="detail" id="policy-2-detail">자세히</div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="confirmBox">
+                <button type="button" id="confirmBtn" data-is-allowed="false">충전</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
