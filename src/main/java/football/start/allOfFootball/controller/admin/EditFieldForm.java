@@ -37,7 +37,8 @@ public class EditFieldForm {
 
     public static EditFieldForm build(Field field, List<FieldImage> savedImages) {
         String fieldSize = field.getFieldSize();
-        String[] split = fieldSize.split("x");
+        String replace = fieldSize.replaceAll("m", "");
+        String[] split = replace.split("x");
         String x = split[0];
         String y = split[1];
 

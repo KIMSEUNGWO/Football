@@ -7,6 +7,7 @@ import football.start.allOfFootball.jpaRepository.JpaFieldRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class FieldRepository {
 
     private final JpaFieldRepository jpaFieldRepository;

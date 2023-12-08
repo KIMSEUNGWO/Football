@@ -1,0 +1,186 @@
+input[name="matchDate"] {
+    display: none;
+}
+
+.date_picker_wrapper {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.date_picker_wrapper * {
+    margin: 0;
+}
+
+#date_range_calendar {
+    width: 21rem;    
+    display: flex;
+    flex-direction: column;
+    padding: 0rem 1rem 0rem 0rem;
+    z-index: 5;
+    min-height: 18rem;
+    border-right: 0.1rem solid rgb(238, 238, 238);
+}
+
+#calendar_header {
+    display: flex;
+    justify-content: space-between;
+    align-self: stretch;
+    margin-bottom: 2rem;
+}
+
+.months {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    font-size: 1.1rem;
+}
+
+#leftMonth, #rightMonth {
+    font-family: 'Pretendard-Bold';
+}
+
+#preButton *, #nextButton * {
+    pointer-events: none;
+}
+#preButton, #nextButton {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+#nextButton:disabled, #preButton:disabled{
+    fill: rgb(215, 215, 215);
+    cursor: default;;
+}
+
+/* 캘린더 바디 */
+#calendar_body {
+    display: flex;
+    justify-content: space-around;
+    column-gap: 2rem;
+}
+
+.week:first-child {
+    margin-bottom: 1rem;
+}
+.week {
+    display: flex;
+    margin-bottom: 0.5rem;   
+}
+
+.week:nth-child(2) {
+    justify-content: flex-end;
+}
+.week:last-child {
+    justify-content: flex-start;;
+}
+
+.cell button[data-is-today="true"] {
+    text-decoration: underline;
+}
+
+.cell {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+}
+
+
+.cell button {
+    border: none;
+    background-color: #ffffff00;
+    font-size: 1.05rem;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius);
+    
+}
+.cell[data-is-within-range='true'] {
+    background-color: #eaeaea;
+    margin-left: 0;
+    padding-left: 1rem;
+    width: calc(24px + 1rem);
+}
+.cell[data-is-within-range='false'] {
+    margin-left: 1rem;
+    padding-left: 0;
+}
+.cell:first-child {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+    margin-left: 0;
+    padding-left: 0;
+    width: 24px;
+}
+.cell:last-child {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+
+.cell button:hover {
+    background-color: #5584e1;
+    color: white;
+}
+
+
+.cell button[aria-pressed="true"] {
+    background-color: var(--main-color);
+    color: white;
+}
+.cell button[aria-pressed="true"]:hover {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.cell button.SUN[aria-pressed="true"] {
+    background-color: red;
+    color: white;
+}
+.cell button.SUN[aria-pressed="true"]:hover {
+    background-color: red;
+    color: white;
+}
+.cell button.SAT[aria-pressed="true"] {
+    background-color: blue;
+    color: white;
+}
+.cell button.SAT[aria-pressed="true"]:hover {
+    background-color: blue;
+    color: white;
+}
+
+/* 일 - 토 글씨*/
+.cell > div {
+    font-size: 0.9rem;
+}
+
+
+.SAT {
+    color: blue;
+}
+
+.SUN {
+    color: red;
+}
+
+
+
+/* 오늘 이전 날짜는 선택 x */
+
+button[data-is-before="true"], button[data-is-disabled="true"] {
+    background-color: rgb(138, 138, 138);
+    color: white;
+    cursor: default;
+}
+button[data-is-before="true"]:hover, button[data-is-disabled="true"]:hover {
+    background-color: rgb(138, 138, 138);
+    color: white;
+    cursor: default;
+}

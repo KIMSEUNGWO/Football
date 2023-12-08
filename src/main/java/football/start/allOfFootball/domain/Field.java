@@ -73,7 +73,7 @@ public class Field {
     }
 
     private static String getSize(String xSize, String ySize) {
-        return xSize + "x" + ySize;
+        return String.format("%sm x %sm", xSize, ySize);
     }
 
 }

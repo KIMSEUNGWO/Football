@@ -15,8 +15,8 @@ public class PlayResult {
     private Long playResultId;
 
     @OneToOne
-    @JoinColumn(name = "playId")
-    private Play play;
+    @JoinColumn(name = "matchId")
+    private Match match;
 
     @OneToOne
     @JoinColumn(name = "playCancelId")

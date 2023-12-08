@@ -1,7 +1,7 @@
 package football.start.allOfFootball.domain;
 
 import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.GradeEnum;
+import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.enums.SocialEnum;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -63,6 +63,10 @@ public class Member extends BaseTimeEntity {
         return uuid.toString().substring(0, 4);
     }
 
+
+    public void setMemberCache(int memberCache) {
+        this.memberCache = memberCache;
+    }
 
     public void setMemberEmail(String memberEmail) {
         this.memberEmail = memberEmail;
