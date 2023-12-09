@@ -1,5 +1,6 @@
 package football.start.allOfFootball.controller.api.kakaoPay;
 
+import football.start.allOfFootball.SessionConst;
 import football.start.allOfFootball.common.alert.AlertUtils;
 import football.start.allOfFootball.controller.api.kakaoPay.dto.ApproveResponse;
 import football.start.allOfFootball.controller.api.kakaoPay.dto.ReadyResponse;
@@ -11,6 +12,7 @@ import football.start.allOfFootball.service.domainService.MemberService;
 import football.start.allOfFootball.service.domainService.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
@@ -80,9 +82,11 @@ public class KakaoPayController {
             .build();
         paymentService.save(payment);
 
-        kakaoPayService.deleteSessionId(request);
+        HttpSession session = request.getSession();
+        String requestURL = (String) session.getAttribute(REDIRECT_URL);
+        kakaoPayService.deleteSessionId(session);
 
-        return "redirect:/";
+        return "redirect:" + requestURL;
     }
 
     @GetMapping("/cancel")

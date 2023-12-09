@@ -6,7 +6,6 @@ import football.start.allOfFootball.controller.api.kakaoPay.dto.ReadyResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
@@ -48,10 +47,10 @@ public class KakaoPayService {
         return kakaoPayRepository.getRequestApprovePost(headers, body, approveURL);
     }
 
-    public void deleteSessionId(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public void deleteSessionId(HttpSession session) {
         session.removeAttribute(SessionConst.TID);
         session.removeAttribute(SessionConst.KAKAO_MEMBER_ID);
         session.removeAttribute(SessionConst.KAKAO_ORDER_ID);
+        session.removeAttribute(SessionConst.REDIRECT_URL);
     }
 }
