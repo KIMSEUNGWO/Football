@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/match.css">
     <link rel="stylesheet" href="/css/graph.css">
+    <script src="/js/match_imageSlide.js"></script>
     <script src="/js/graph.js"></script>
     <script src="/js/match.js"></script>
     <title>구장정보 :: 프로젝트</title>
@@ -14,8 +15,19 @@
 <body>
     <header th:replace="~{/common/header :: header}"></header>
     <div class="container">
-        <div class="fieldImageWrap">
-            <img src="https://d31wz4d3hgve8q.cloudfront.net/media/IMG_9264.jpeg" alt="">
+        <div class="fieldImageContainer">
+            <div class="arrow">
+                <button type="button" id="left">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="rotate: 180deg;" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                </button>
+                <button type="button" id="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                </button>
+            </div>
+            <div class="slider">
+                <img th:each="image : ${matchForm.fieldImages}" th:src="|/images/fieldImage/${image.fieldImageStoreName}|" th:alt="${image.fieldImageName}">
+            </div>
+            <ul class="slide_pagination"></ul>
         </div>
         <div class="field">
             <div class="fieldDetails">
@@ -24,15 +36,15 @@
                     <div class="playInfoDetails">
                         <div class="infoDetail playGrade">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z"/></svg>
-                            <span>제한 없음</span>
+                            <span th:text="${matchForm.matchGrade.matchInfo}">제한 없음</span>
                         </div>
                         <div class="infoDetail playGender">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M176 288a112 112 0 1 0 0-224 112 112 0 1 0 0 224zM352 176c0 86.3-62.1 158.1-144 173.1V384h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H208v32c0 17.7-14.3 32-32 32s-32-14.3-32-32V448H112c-17.7 0-32-14.3-32-32s14.3-32 32-32h32V349.1C62.1 334.1 0 262.3 0 176C0 78.8 78.8 0 176 0s176 78.8 176 176zM271.9 360.6c19.3-10.1 36.9-23.1 52.1-38.4c20 18.5 46.7 29.8 76.1 29.8c61.9 0 112-50.1 112-112s-50.1-112-112-112c-7.2 0-14.3 .7-21.1 2c-4.9-21.5-13-41.7-24-60.2C369.3 66 384.4 64 400 64c37 0 71.4 11.4 99.8 31l20.6-20.6L487 41c-6.9-6.9-8.9-17.2-5.2-26.2S494.3 0 504 0H616c13.3 0 24 10.7 24 24V136c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-33.4-33.4L545 140.2c19.5 28.4 31 62.7 31 99.8c0 97.2-78.8 176-176 176c-50.5 0-96-21.3-128.1-55.4z"/></svg>
-                            <span>남녀 모두</span>
+                            <span th:text="${matchForm.matchGender.matchInfo}">남녀 모두</span>
                         </div>
                         <div class="infoDetail playMatch">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M64 128c0-17.7 14.3-32 32-32H544c17.7 0 32 14.3 32 32V448c0 17.7 14.3 32 32 32s32-14.3 32-32V128c0-53-43-96-96-96H96C43 32 0 75 0 128V448c0 17.7 14.3 32 32 32s32-14.3 32-32V128zm112 0c-8.8 0-16 7.2-16 16v48H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V320h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V224h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H384V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H288V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H192V144c0-8.8-7.2-16-16-16zm80 256H192V320h64v64zm96 0H288V320h64v64zm96 0H384V320h64v64zm0-96H384V224h64v64zm-96 0H288V224h64v64zm-96 0H192V224h64v64z"/></svg>
-                            <span>6 vs 6 3경기</span>
+                            <span th:text="${matchForm.maxPersonAndMatchCount}">6 vs 6 3파전</span>
                         </div>
                     </div>
                 </div>
@@ -46,17 +58,25 @@
                     <div class="playInfoDetails">
                         <div class="infoDetail">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M64 128c0-17.7 14.3-32 32-32H544c17.7 0 32 14.3 32 32V448c0 17.7 14.3 32 32 32s32-14.3 32-32V128c0-53-43-96-96-96H96C43 32 0 75 0 128V448c0 17.7 14.3 32 32 32s32-14.3 32-32V128zm112 0c-8.8 0-16 7.2-16 16v48H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V320h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V224h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H384V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H288V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H192V144c0-8.8-7.2-16-16-16zm80 256H192V320h64v64zm96 0H288V320h64v64zm96 0H384V320h64v64zm0-96H384V224h64v64zm-96 0H288V224h64v64zm-96 0H192V224h64v64z"/></svg>
-                            <span>40m x 19m</span>
+                            <span th:text="${matchForm.fieldSize}">40m x 19m</span>
                         </div>
                         <div class="infoDetail">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M135.2 117.4L109.1 192H402.9l-26.1-74.6C372.3 104.6 360.2 96 346.6 96H165.4c-13.6 0-25.7 8.6-30.2 21.4zM39.6 196.8L74.8 96.3C88.3 57.8 124.6 32 165.4 32H346.6c40.8 0 77.1 25.8 90.6 64.3l35.2 100.5c23.2 9.6 39.6 32.5 39.6 59.2V400v48c0 17.7-14.3 32-32 32H448c-17.7 0-32-14.3-32-32V400H96v48c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V400 256c0-26.7 16.4-49.6 39.6-59.2zM128 288a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm288 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg>
-                            <span>무료주차</span>
+                            <span th:text="${matchForm.fieldParking.matchInfo}">무료주차</span>
+                        </div>
+                        <div class="infoDetail">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 131.9C64 112.1 80.1 96 99.9 96c9.5 0 18.6 3.8 25.4 10.5l16.2 16.2c-21 38.9-17.4 87.5 10.9 123L151 247c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0L345 121c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-1.3 1.3c-35.5-28.3-84.2-31.9-123-10.9L170.5 61.3C151.8 42.5 126.4 32 99.9 32C44.7 32 0 76.7 0 131.9V448c0 17.7 14.3 32 32 32s32-14.3 32-32V131.9zM256 352a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm64 64a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm0-128a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm64 64a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm0-128a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm64 64a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm32-32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg>
+                            <span th:text="${matchForm.fieldShower.matchInfo}">샤워장 있음</span>
+                        </div>
+                        <div class="infoDetail">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M192 64A64 64 0 1 0 64 64a64 64 0 1 0 128 0zM25.9 233.4l-4.1 49.3c-2.5 29.8 15.7 56.1 42.2 65.6V464c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V348.3c26.5-9.5 44.7-35.8 42.2-65.6l-4.1-49.3C226.7 191.9 192 160 150.4 160H105.6c-41.6 0-76.3 31.9-79.7 73.4zM320 0c-13.3 0-24 10.7-24 24V488c0 13.3 10.7 24 24 24s24-10.7 24-24V24c0-13.3-10.7-24-24-24zM512 128A64 64 0 1 0 512 0a64 64 0 1 0 0 128zm-15.7 32c-28.6 0-53.7 18.9-61.5 46.4L395.7 343.2c-5.8 20.4 9.5 40.8 30.8 40.8H448v80c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V384h21.6c21.3 0 36.6-20.3 30.8-40.8L589.3 206.4c-7.8-27.5-33-46.4-61.5-46.4H496.3z"/></svg>
+                            <span th:text="${matchForm.fieldToilet.matchInfo}">화장실 있음</span>
                         </div>
                     </div>
                     <hr class="sideHr">
                     <div class="fieldRule">
                         <h4>구장 특이사항</h4>
-                        <pre>
+                        <pre th:text="${matchForm.fieldInfo}">
                             ■주차: 사무실 등록 시 3시간 무료 주차 (마트에서 물건 구매 혹은 카운터에서 30분 당 1,000원에 기존 3시간 무료 주차 + 최대 2시간까지 추가 주차 등록 가능) 
 
                             ■흡연: 흡연장 이용
@@ -93,14 +113,14 @@
                 </div>
             </div>
             <div class="fieldMain box">
-                <span class="matchDate">11월 23일 목요일 18:00</span>
+                <span class="matchDate" th:text="${matchForm.matchDate}">11월 23일 목요일 18:00</span>
                 <div class="matchLocation">
-                    <span class="fieldTitle">부산 준타스 풋살 아레나 화이트</span>
-                    <a href="#" class="fieldAddress">부산 부산진구 신천대로 241</a>
-                    <div class="view_count">
+                    <span class="fieldTitle" th:text="${matchForm.fieldTitle}">부산 준타스 풋살 아레나 화이트</span>
+                    <a href="#" class="fieldAddress" th:text="${matchForm.fieldAddress}">부산 부산진구 신천대로 241</a>
+                    <!-- <div class="view_count">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>
                         <span>100</span>
-                    </div>
+                    </div> -->
                 </div>
                 <hr class="sideHr">
                 <div class="matchDecide">
@@ -108,7 +128,7 @@
                         <span class="matchFriend">참가하는 친구가 <b class="impact">0명</b> 있어요</span>
                         <span class="matchPrice">10,000원<b class="notImpact"> / 2시간</b></span>
                     </div>
-                    <a href="#" class="resultButton on">신청하기</a>
+                    <a th:href="|/order/${matchForm.matchId}|" class="resultButton on">신청하기</a>
                 </div>
             </div>
         </div>

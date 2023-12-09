@@ -398,9 +398,10 @@ function addDate(addMonth, addDay) {
     let endDate = document.querySelector('input[name="endDate"]');
     endDate.value = dateForm(year, month, day);
 
-    let newDate = new Date(year, month-addMonth, day-addDay);
+    let newDate = new Date(year, month-addMonth-1, day-addDay);
+    console.log(newDate);
     let newYear = newDate.getFullYear();
-    let newMonth = newDate.getMonth();
+    let newMonth = newDate.getMonth() + 1;
     let newDay = newDate.getDate();
 
     let startDate = document.querySelector('input[name="startDate"]');
