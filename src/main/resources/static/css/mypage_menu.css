@@ -1,0 +1,116 @@
+/* 마이페이지 상단 */
+.myInfo {
+    height: 18rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-left: 3rem;
+    background-color: rgb(238, 247, 254);
+    margin-bottom: 2rem;
+}
+
+.myInfo > *{
+    margin: 0;
+}
+
+.imgBox {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    overflow: hidden;
+    flex: 0 0 auto;
+}
+.status {
+    width: 20rem;
+}
+
+.status .name {
+    color: var(--main-color);
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+}
+.email {
+    color: var(--gray);
+}
+
+.social {
+    font-size: 0.8rem;
+    border-radius: var(--border-radius);
+    border: 0.01rem solid var(--border-color);
+    padding: 0.23rem;
+    margin-right: 0.5rem;
+}
+.social.kakao {
+    color: black;
+    background-color: yellow;
+}
+.social.naver {
+    background-color: rgb(72, 214, 72);
+    color: rgb(255, 255, 255)
+}
+
+
+.totalStatus {
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 53rem;
+}
+
+
+.totalStatus .box {
+    margin: 0;
+    width: calc(33% - 1rem);
+    height: 7rem;
+}
+
+.totalStatus .box:hover {
+    background-color: rgb(250, 250, 250);
+}
+
+.totalStatus .box span {
+    font-size: 1.2rem;
+    float: right;
+}
+
+.totalStatus .box h3 {
+    margin-bottom: 1rem;
+}
+
+.content {
+    flex: 1 1 auto;
+}
+
+/* 메뉴, 컨텐츠 */
+.mypageMain {
+    display: flex;
+    gap: 2rem;
+}
+
+.mypageMain > * {
+    margin: 0;
+}
+
+.mypageMenu {
+    width: 13rem;
+    max-height: 21rem;
+}
+
+
+.menuList > li {
+    font-size: 1.1rem;
+    padding: 0.2rem 0.5rem;
+    line-height: 2rem;
+}
+.menuList > li[aria-pressed="true"] {
+    background-color: #e6f2ff;
+    font-weight: bold;
+    border-radius: 0.5rem;
+}
+.menuList > li[aria-pressed="true"] a {
+    color: var(--main-color);
+}
+.menuList > li:hover {
+    text-decoration: underline;
+}

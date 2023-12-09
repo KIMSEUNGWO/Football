@@ -1,106 +1,287 @@
-.myInfo {
-    height: 18rem;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    padding-left: 3rem;
-    background-color: rgb(238, 247, 254);
-    margin-bottom: 2rem;
+.content h3 {
+    margin: 2rem 0 1rem 0.5rem;
 }
-
-.myInfo > *{
-    margin: 0;
+.profile {
+    padding: 3rem 1.5rem 1rem 1.5rem;
 }
-
-.imgBox {
-    width: 8rem;
-    height: 8rem;
-    border-radius: 50%;
-    overflow: hidden;
-    flex: 0 0 auto;
-}
-.status {
-    width: 20rem;
-}
-
-.status .name {
-    color: var(--main-color);
-    font-size: 1.4rem;
-    margin-bottom: 0.3rem;
-}
-.email {
-    color: var(--gray);
-}
-
-.social {
-    font-size: 0.8rem;
-    border-radius: var(--border-radius);
-    border: 0.01rem solid var(--border-color);
-    padding: 0.23rem;
-    margin-right: 0.5rem;
-}
-.social.kakao {
-    color: black;
-    background-color: yellow;
-}
-.social.naver {
-    background-color: rgb(72, 214, 72);
-    color: rgb(255, 255, 255)
-}
-
-
-.totalStatus {
-    flex: 1 1 auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    width: 53rem;
-}
-
-
-.totalStatus .box {
-    margin: 0;
-    width: calc(33% - 1rem);
-    height: 7rem;
-}
-
-.totalStatus .box:hover {
-    background-color: rgb(250, 250, 250);
-}
-
-.totalStatus .box span {
-    font-size: 1.2rem;
-    float: right;
-}
-
-.totalStatus .box h3 {
+.profile > * {
+    text-align: center;
     margin-bottom: 1rem;
 }
 
-/* 메뉴, 컨텐츠 */
-.mypageMain {
-    display: flex;
-    gap: 2rem;
+.nameBox {
+    margin-top: 2rem;
+}
+.myName {
+    font-size: 1.3rem;
+    margin: 0.3rem;
+    font-weight: bold;
 }
 
-.mypageMain > * {
+.emailBox, .phoneBox {
+    color: rgb(124, 124, 124);
+}
+.editBox {
+    text-align: right;
+}
+.editBtn {
+    width: 6rem;
+    height: 3rem;
+    border: none;
+    border-radius: var(--border-radius);
+    color: white;
+    background-color: var(--main-color);
+    font-size: 1.2rem;
+}
+.editBtn:hover {
+    background-color: var(--main-color-hover);
+}
+.profilebox {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+button#img {
+    padding: 0;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+
+button#img img {
+    border-radius: 50%;
+}
+#editProfile {
+    display: none;
+}
+
+button#img svg {
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    bottom: 0;
+    right: 0%;
+}
+
+/* editBox */
+.inputBox {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+.inputBox span {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+.inputBox span .required {
+    color: red;
+    margin-left: 0.2rem;
+}
+
+.inputBox input {
+    width: 100%;
+    height: 3rem;
+    border: #e6eef5 solid 2px;
+    border-radius: 5px;
+    background-color: #fbfbfd;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.phoneBox {
+    display: flex;
+    gap: 1rem;
+}
+.phoneBox input[name="phone"] {
+    cursor: not-allowed;
+    color: var(--gray);
+}
+
+.phoneBox .formEditBtn {
+    width: 10rem;
+    border: none;
+    border-radius: var(--border-radius);
+    color: white;
+    background-color: var(--main-font-color);
+    font-size: 1.1rem;
+}
+
+.formEditBtn:hover {
+    background-color: var(--main-font-color-hover);
+}
+
+
+#submitBtn {
+    margin-top: 3rem;
+    width: 5rem;
+    height: 3rem;
+    border: none;
+    border-radius: var(--border-radius);
+    color: white;
+    background-color: var(--main-color);
+    font-size: 1.1rem;
+}
+#submitBtn:hover {
+    background-color: var(--main-color-hover);
+}
+
+/* password */
+.password {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.password > * {
+    margin: 0;
+}
+.pwdSpan div {
+    color: var(--gray);
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+.pwdSpan span {
+    font-size: 1.1rem;
+}
+.password #pwdBtn {
+    width: 8rem;
+    height: 3rem;
+    border: none;
+    color: white;
+    background-color: var(--main-color);
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+.password #pwdBtn:hover {
+    background-color: var(--main-color-hover);
+}
+
+.delete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete > * {
     margin: 0;
 }
 
-.mypageMenu {
-    width: 13rem;
+.delete span {
+    color: var(--gray);
 }
 
-.menuList > li {
-    font-size: 1.2rem;
-    margin: 0.5rem;
-    line-height: 2rem;
+
+#deleteBtn {
+    width: 5rem;
+    height: 3rem;
+    border: none;
+    color: white;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    background-color: rgb(255, 87, 87);
 }
-.menuList > li:hover {
-    text-decoration: underline;
+#deleteBtn:hover {
+    background-color: rgb(226, 75, 75);
 }
 
-.content {
-    flex: 1 1 auto;
+body {
+    position: relative;
 }
 
+.pop {
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.353);
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pop.disabled {
+    display: none;
+}
+.passwordPop {
+    width: 30rem;
+    border: 0.1rem solid var(--border-color);
+    border-radius: 1rem;
+    background-color: white;
+    padding: 1.5rem;
+}
+
+
+/* 팝업 */
+.popTop {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+.popTop > * {
+    margin: 0;
+}
+.title {
+    font-size: 1.1rem;
+}
+button.popCancel {
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    cursor: pointer;
+}
+button.popCancel * {
+    pointer-events: none;
+}
+
+.inputDetail {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+
+}
+
+.inputDetail span {
+    display: initial;
+    color: rgb(164, 164, 164);
+    font-size: 0.8rem;
+    margin-right: 0.2rem;
+}
+.inputDetail .findPassword {
+    color: var(--main-color);
+}
+
+.popMain .inputBox {
+    margin-bottom: 3rem;
+}
+
+.popBottom {
+    margin-top: 4rem;
+    text-align: right;
+}
+.popBottom > * {
+    width: 5rem;
+    height: 3rem;
+    border: none;
+    font-size: 1.1rem;
+    padding: 0;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+.popBottom .popCancel {
+    background-color: rgb(228, 228, 228);
+    margin-right: 1rem;
+}
+.popBottom .popCancel:hover {
+    background-color: rgb(211, 211, 211);
+    margin-right: 1rem;
+}
+.saveBtn {
+    background-color: var(--main-color);
+    color: white;
+}
+.saveBtn:hover {
+    background-color: var(--main-color-hover);
+}

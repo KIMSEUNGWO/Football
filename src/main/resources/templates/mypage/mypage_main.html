@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/mypage_menu.css">
+    <link rel="stylesheet" href="/static/css/mypage_main.css">
+    <script src="/static/js/mypage_main.js"></script>
+    <title>마이페이지 :: 프로젝트</title>
+</head>
+<body>
+    <header th:replace="~{/common/header :: header}"></header>
+    <div class="container">
+        <div class="myInfo box">
+            <div class="imgBox">
+                <img src="/static/images/구장예제사진3.jpg" width="100%" height="100%" alt="김승우">
+            </div>
+            <div class="status">
+                <div class="name">
+                    <span th:text="${profile.name}">김승우</span>
+                    <span class="social kakao" th:if="${profile.social == 'KAKAO'}">KAKAO</span>
+                    <span class="social naver" th:if="${profile.social == 'NAVER'}">NAVER</span>
+                </div>
+                <div class="email" th:text="${profile.email}">
+                    tmd8633@naver.com
+                </div>
+            </div>
+            <div class="totalStatus">
+                <a href="#" class="box">
+                    <h3>점수</h3>
+                    <span>1,015점</span>
+                </a>
+                <a href="#" class="box">
+                    <h3>순위</h3>
+                    <span>10,000등</span>
+                </a>
+                <a href="#" class="box">
+                    <h3>등급</h3>
+                    <span>아마추어1</span>
+                </a>
+                <a href="#" class="box">
+                    <h3>전적</h3>
+                    <span>10전 6승 4패</span>
+                </a>
+                <a href="#" class="box">
+                    <h3>매너점수</h3>
+                    <span>0점</span>
+                </a>
+                <a href="#" class="box">
+                    <h3>비매너점수</h3>
+                    <span>0점</span>
+                </a>
+
+            </div>
+        </div>
+        <div class="mypageMain">
+            <div class="mypageMenu box">
+                <h3>마이페이지</h3>
+                <ul class="menuList">
+                    <li aria-pressed="true"><a href="/mypage">계정 관리</a></li>
+                    <li aria-pressed="false"><a href="/mypage/order">경기내역</a></li>
+                    <li aria-pressed="false"><a href="/mypage/cash">충전내역</a></li>
+                    <li aria-pressed="false"><a href="/mypage/coupon">쿠폰</a></li>
+                    <li aria-pressed="false"><a href="/mypage/friend">친구</a></li>
+                    <li aria-pressed="false"><a href="/mypage/settings">설정</a></li>
+                </ul>
+            </div>
+            <div class="content">
+                <h2>계정 관리</h2>
+                <!-- <h3>기본 정보</h3>
+                <div class="profile box">
+                    <div class="imgBox">
+                        <img src="/static/images/구장예제사진3.jpg" width="100%" height="100%" alt="김승우">
+                    </div>
+                    <div class="nameBox">
+                        <span class="myName">김승우</span>
+                        <span class="social kakao" th:if="${profile.social == 'KAKAO'}">KAKAO</span>
+                        <span class="social naver" th:if="${profile.social == 'NAVER'}">NAVER</span>
+                    </div>
+                    <div class="emailBox">
+                        <span>tmd8633@naver.com</span>
+                    </div>
+                    <div class="phoneBox">
+                        <span>010-6603-8635</span>
+                    </div>
+                    <div class="editBox">
+                        <button type="button" class="editBtn">수정</button>
+                    </div>
+                </div> -->
+                <h3>기본 정보</h3>
+                <div class="editprofile box">
+                    <form action="#" method="post">
+                        <div class="profilebox">
+                            <button type="button" id="img">
+                                <img src="/static/images/구장예제사진3.jpg" width="100%" height="100%" alt="김승우" id="myProfile">
+                                <input type="file" name="profileImage" id="editProfile" accept="image/*">
+                                <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="g68VV5Ghc0ymGpbFWhEx"><circle cx="18" cy="18" r="18" fill="#000"></circle><path d="M11.375 22.658v2.969h2.969l8.756-8.756-2.97-2.969-8.755 8.756zm14.02-8.083a.788.788 0 000-1.116l-1.852-1.852a.788.788 0 00-1.116 0l-1.45 1.448 2.97 2.97 1.448-1.45z" fill="#fff"></path></svg>
+                            </button>
+                        </div>
+                        <div class="inputBox">
+                            <span>이름<b class="required">*</b></span>
+                            <input type="text" name="name" id="name" value="김승우">
+                        </div>
+                        <div class="inputBox">
+                            <span>휴대폰 번호<b class="required">*</b></span>
+                            <div class="phoneBox">
+                                <input type="text" name="phone" id="phone" value="01066038635" disabled>
+                                <button type="button" class="formEditBtn">휴대폰 인증</button>
+                            </div>
+                        </div>
+                        <div class="editBox">
+                            <input type="submit" value="저장" id="submitBtn">
+                        </div>
+                    </form>
+                </div>
+                <h3>비밀번호</h3>
+                <div class="password box">
+                    <div class="pwdSpan">
+                        <div>최근 변경일 : 2023-11-09</div>
+                        <span>비밀번호</span>
+                    </div>
+                    <button type="button" id="pwdBtn">비밀번호 변경</button>
+                </div>
+                <h3>계정 삭제</h3>
+                <div class="delete box">
+                    <span>계정 삭제 시 모든 정보가 삭제됩니다.</span>
+                    <button type="button" id="deleteBtn">삭제하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pop disabled">
+        <div class="passwordPop">
+            <div class="popTop">
+                <span class="title">비밀번호 변경</span>
+                <button type="button" class="popCancel" id="pwdPopCancel">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="width: 15px; height:15px"><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg>
+                </button>
+            </div>
+            <form action="#" method="post" class="popMain">
+                <div class="inputBox">
+                    <span>현재 비밀번호<b class="required">*</b></span>
+                    <input type="password" name="currPassword" id="currPassword" value="">
+                    <div class="inputDetail">
+                        <span>비밀번호를 잊으셨나요?</span>
+                        <a href="#" class="findPassword">비밀번호 재설정</a>
+                    </div>
+                </div>
+                <div class="inputBox">
+                    <span>비밀번호<b class="required">*</b></span>
+                    <input type="password" name="changePassword" id="changePassword" minlength="8" value="" placeholder="대,소문자, 숫자, 특수문자 포함 최소 8자 이상">
+                </div>
+                <div class="inputBox">
+                    <span>비밀번호 확인<b class="required">*</b></span>
+                    <input type="password" name="checkPassword" id="checkPassword" value="">
+                </div>
+            </form>
+            <div class="popBottom">
+                <button type="button" class="popCancel" id="pwdPopCancelBtn">취소</button>
+                <input type="submit" value="저장" class="saveBtn">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

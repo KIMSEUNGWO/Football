@@ -19,7 +19,8 @@
 :root{
     --main-color: #2f69dd;
     --main-color-hover: #295dc4;
-    --main-font-color: #3d97d7;
+    --main-font-color: #3f9de0;
+    --main-font-color-hover: #3992d1;
     --border-radius: 0.3rem;
     --border-color: #d7d7d7;
     --gray: #757575;
