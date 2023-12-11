@@ -32,7 +32,26 @@ public class MypageController {
         Member findMember = optionalMember.get();
         MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
         model.addAttribute("profile", myProfileDto);
-        return "mypage_main";
+        return "/mypage/mypage_main";
+    }
+
+    @GetMapping("/order")
+    public String orderList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId) {
+
+
+        return "/mypage/mypage_order";
+    }
+    @GetMapping("/cash")
+    public String cashList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId) {
+
+
+        return "/mypage/mypage_cash";
+    }
+    @GetMapping("/coupon")
+    public String couponList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId) {
+
+
+        return "/mypage/mypage_coupon";
     }
 
 }

@@ -54,7 +54,7 @@ public class KakaoPayRepository {
     public MultiValueMap<String, String> getPayApproveBody(String tid, String pgToken, String partnerOrderId, Long memberId) {
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-        parameters.add("cid", "TC0ONETIME");
+        parameters.add("cid", CidCode.TEST);
         parameters.add("tid", tid);
         parameters.add("partner_order_id", partnerOrderId); // 주문명
         parameters.add("partner_user_id", String.valueOf(memberId));

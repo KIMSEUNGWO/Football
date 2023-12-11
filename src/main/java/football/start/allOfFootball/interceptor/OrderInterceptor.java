@@ -1,6 +1,5 @@
 package football.start.allOfFootball.interceptor;
 
-import football.start.allOfFootball.SessionConst;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.service.domainService.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,7 +8,6 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
@@ -47,7 +45,7 @@ public class OrderInterceptor implements HandlerInterceptor {
         }
 
         Member member = findMember.get();
-        int cache = member.getMemberCache();
+        int cache = member.getMemberCash();
 
         if (cache < 10000) {
             log.info("잔액 부족");

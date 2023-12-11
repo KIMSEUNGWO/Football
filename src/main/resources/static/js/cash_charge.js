@@ -84,7 +84,7 @@ window.addEventListener('load', () => {
         if (chargeOption == 'KAKAO') {
             let jsonForm = {price : Number(priceValue)};
 
-            fetchPost("/cache/charge/kakao", jsonForm, result);
+            fetchPost("/cash/charge/kakao", jsonForm, result);
         }
     })
     

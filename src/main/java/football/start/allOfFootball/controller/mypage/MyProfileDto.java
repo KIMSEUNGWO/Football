@@ -1,6 +1,6 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.start.allOfFootball.enums.GradeEnum;
+import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import lombok.Getter;
 import lombok.Setter;
 

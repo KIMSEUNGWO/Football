@@ -32,7 +32,7 @@ public class Member extends BaseTimeEntity {
     private String memberPhone;
 
     @ColumnDefault("0")
-    private int memberCache;
+    private int memberCash;
     @ColumnDefault("1000")
     private int memberScore;
 
@@ -64,8 +64,8 @@ public class Member extends BaseTimeEntity {
     }
 
 
-    public void setMemberCache(int memberCache) {
-        this.memberCache = memberCache;
+    public void setMemberCash(int memberCash) {
+        this.memberCash = memberCash;
     }
 
     public void setMemberEmail(String memberEmail) {

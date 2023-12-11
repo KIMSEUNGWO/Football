@@ -26,7 +26,7 @@ public class LoginController {
     @GetMapping("/login")
     public String startLogin(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, @ModelAttribute LoginDto loginDto) {
         if (memberId != null) return "redirect:/";
-        return "login";
+        return "/login/login";
     }
 
 
@@ -42,7 +42,7 @@ public class LoginController {
         Optional<Member> loginMember = loginService.login(loginDto.getEmail(), loginDto.getPassword());
         if (loginMember.isEmpty()) {
             model.addAttribute("errorMsg", "이메일 또는 비밀번호가 일치하지 않습니다.");
-            return "login";
+            return "/login/login";
         }
         Member findMember = loginMember.get();
         // 세션 생성

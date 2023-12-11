@@ -22,15 +22,16 @@ public class CouponController {
     private final CouponService couponService;
 
     @PostMapping("/coupon/create")
-    public @ResponseBody ResponseEntity<Map<String, String>> createCoupon(Coupon coupon) {
+    public ResponseEntity<Map<String, String>> createCoupon(Coupon coupon) {
         Map<String, String> result = new HashMap<>();
-        couponService.createCoupon(coupon, result);
+//        couponService.createCoupon(coupon, result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("/coupon/remove")
-    public @ResponseBody ResponseEntity<Map<String, String>> removeCoupon(Long couponId) {
+    public ResponseEntity<Map<String, String>> removeCoupon(Long couponId) {
         Map<String, String> result = new HashMap<>();
-        couponService.removeCoupon(couponId);
+//        couponService.removeCoupon(couponId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

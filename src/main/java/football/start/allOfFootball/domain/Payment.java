@@ -1,6 +1,6 @@
 package football.start.allOfFootball.domain;
 
-import football.start.allOfFootball.enums.paymentEnums.CacheEnum;
+import football.start.allOfFootball.enums.paymentEnums.CashEnum;
 import football.start.allOfFootball.enums.paymentEnums.PaymentType;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -26,7 +26,7 @@ public class Payment extends BaseTimeEntity{
     private Integer resultCash;
 
     @Enumerated(EnumType.STRING)
-    private CacheEnum cacheType; // 용도
+    private CashEnum cashType; // 용도
 
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType; // 충전방식

@@ -1,12 +1,11 @@
 package football.start.allOfFootball.controller.api.kakaoPay;
 
-import football.start.allOfFootball.SessionConst;
 import football.start.allOfFootball.common.alert.AlertUtils;
 import football.start.allOfFootball.controller.api.kakaoPay.dto.ApproveResponse;
 import football.start.allOfFootball.controller.api.kakaoPay.dto.ReadyResponse;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Payment;
-import football.start.allOfFootball.enums.paymentEnums.CacheEnum;
+import football.start.allOfFootball.enums.paymentEnums.CashEnum;
 import football.start.allOfFootball.enums.paymentEnums.PaymentType;
 import football.start.allOfFootball.service.domainService.MemberService;
 import football.start.allOfFootball.service.domainService.PaymentService;
@@ -15,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -29,7 +27,7 @@ import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/cache/charge/kakao")
+@RequestMapping("/cash/charge/kakao")
 public class KakaoPayController {
 
     private final KakaoPayService kakaoPayService;
@@ -38,7 +36,7 @@ public class KakaoPayController {
 
     @PostMapping
     public @ResponseBody ReadyResponse requestPay(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, @RequestBody KakaoPayDto kakaoPayDto, HttpServletRequest request) {
-        String partner_order_id = memberId + "cache";
+        String partner_order_id = memberId + "cash";
 
         ReadyResponse response = kakaoPayService.payReady(memberId, kakaoPayDto, partner_order_id);
 
@@ -76,8 +74,8 @@ public class KakaoPayController {
         Payment payment = Payment.builder()
             .member(member)
             .charge(approve.getAmount().getTotal())
-            .resultCash(member.getMemberCache() + approve.getAmount().getTotal())
-            .cacheType(CacheEnum.충전)
+            .resultCash(member.getMemberCash() + approve.getAmount().getTotal())
+            .cashType(CashEnum.충전)
             .paymentType(PaymentType.카카오페이)
             .build();
         paymentService.save(payment);

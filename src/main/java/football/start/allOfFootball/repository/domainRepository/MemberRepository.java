@@ -22,6 +22,6 @@ public class MemberRepository {
     }
 
     public void refreshMemberCache(Member member, Integer resultCash) {
-        member.setMemberCache(resultCash);
+        member.setMemberCash(resultCash);
     }
 }
