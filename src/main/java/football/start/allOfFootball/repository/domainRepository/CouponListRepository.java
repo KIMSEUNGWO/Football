@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static football.start.allOfFootball.domain.QCouponList.couponList;
 
@@ -32,5 +33,9 @@ public class CouponListRepository {
             .where(couponList.member.eq(member).and(couponList.couponListExpireDate.gt(LocalDateTime.now())).and(couponList.couponListStatus.eq('N')))
             .orderBy(couponList.couponListId.desc())
             .fetch();
+    }
+
+    public Optional<CouponList> findByCouponListId(Long couponNum) {
+        return couponListRepository.findById(couponNum);
     }
 }

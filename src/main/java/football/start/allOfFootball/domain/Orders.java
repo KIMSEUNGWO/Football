@@ -3,9 +3,7 @@ package football.start.allOfFootball.domain;
 import football.start.allOfFootball.enums.ResultEnum;
 import football.start.allOfFootball.enums.TeamEnum;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
@@ -13,6 +11,9 @@ import lombok.ToString;
 @Entity
 @Table(name = "ORDERS")
 @SequenceGenerator(name = "SEQ_ORDERS", sequenceName = "SEQ_ORDERS_ID", allocationSize = 1)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Orders {
 
     @Id
@@ -29,5 +30,12 @@ public class Orders {
 
     @Enumerated(EnumType.STRING)
     private TeamEnum team;
+
+    public static Orders build(Match match, Member member) {
+        return Orders.builder()
+            .match(match)
+            .member(member)
+            .build();
+    }
 
 }

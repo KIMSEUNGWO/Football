@@ -18,8 +18,8 @@ public class SearchResultForm {
     private String matchHour;
     private LocationEnum matchRegion;
     private String matchTitle;
-    private GenderEnum matchGender;
-    private MatchEnum matchGrade;
+    private String matchGender;
+    private String matchGrade;
     private String matchMaxPerson;
 
     public static SearchResultForm build(Match form) {
@@ -28,8 +28,8 @@ public class SearchResultForm {
             .matchHour(getTimeForm(form.getMatchHour()))
             .matchRegion(form.getField().getFieldLocation())
             .matchTitle(form.getField().getFieldTitle())
-            .matchGender(form.getMatchGender())
-            .matchGrade(form.getMatchGrade())
+            .matchGender(form.getMatchGender().getMatchInfo())
+            .matchGrade(form.getMatchGrade().getMatchInfo())
             .matchMaxPerson(getMaxPersonForm(form.getMaxPerson()))
             .build();
     }

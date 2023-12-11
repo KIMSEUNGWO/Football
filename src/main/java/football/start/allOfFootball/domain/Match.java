@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,6 +43,9 @@ public class Match {
     private MatchEnum matchGrade;
 
     private Character matchEndStatus;
+
+    @OneToMany(mappedBy = "match")
+    public List<Orders> ordersList;
 
     public static Match build(Field field, SaveMatchForm form) {
         return Match.builder()

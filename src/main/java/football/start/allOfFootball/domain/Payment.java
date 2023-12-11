@@ -2,6 +2,7 @@ package football.start.allOfFootball.domain;
 
 import football.start.allOfFootball.enums.paymentEnums.CashEnum;
 import football.start.allOfFootball.enums.paymentEnums.PaymentType;
+import football.start.allOfFootball.service.domainService.PaymentService;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
