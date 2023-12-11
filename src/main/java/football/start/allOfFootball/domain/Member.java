@@ -7,9 +7,11 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -49,6 +51,10 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private SocialEnum memberSocial;
 
+    // not columns
+    @OneToMany(mappedBy = "member")
+    private List<CouponList> couponList;
+
     public Member() {
 
     }
@@ -63,6 +69,10 @@ public class Member extends BaseTimeEntity {
         return uuid.toString().substring(0, 4);
     }
 
+
+    public void setCouponList(List<CouponList> couponList) {
+        this.couponList = couponList;
+    }
 
     public void setMemberCash(int memberCash) {
         this.memberCash = memberCash;
