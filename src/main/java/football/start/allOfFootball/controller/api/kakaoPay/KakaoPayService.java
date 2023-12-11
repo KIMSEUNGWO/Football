@@ -17,12 +17,13 @@ public class KakaoPayService {
 
     private final KakaoPayRepository kakaoPayRepository;
 
-    public void saveSessionTid(HttpServletRequest request, ReadyResponse response, String partner_order_id, Long memberId) {
+    public void saveSessionTid(HttpServletRequest request, ReadyResponse response, String partner_order_id, Long memberId, KakaoPayDto kakaoPayDto) {
         HttpSession session = request.getSession();
 
         session.setAttribute(SessionConst.TID, response.getTid());
         session.setAttribute(SessionConst.KAKAO_ORDER_ID, partner_order_id);
         session.setAttribute(SessionConst.KAKAO_MEMBER_ID, memberId);
+        session.setAttribute(SessionConst.REDIRECT_URL, kakaoPayDto.getRedirect());
     }
 
     public ReadyResponse payReady(Long memberId, KakaoPayDto kakaoPayDto, String partnerOrderId) {

@@ -38,9 +38,9 @@ public class KakaoPayRepository {
         parameters.add("quantity", String.valueOf(1));
         parameters.add("total_amount", String.valueOf(kakaoPayDto.getPrice()));
         parameters.add("tax_free_amount", "0");
-        parameters.add("approval_url", "http://localhost:8080/cache/charge/kakao/completed"); // 결제승인시 넘어갈 url
-        parameters.add("cancel_url", "http://localhost:8080/cache/charge/kakao/cancel"); // 결제취소시 넘어갈 url
-        parameters.add("fail_url", "http://localhost:8080/cache/charge/kakao/fail"); // 결제 실패시 넘어갈 url
+        parameters.add("approval_url", "http://localhost:8080/cash/charge/kakao/completed"); // 결제승인시 넘어갈 url
+        parameters.add("cancel_url", "http://localhost:8080/cash/charge/kakao/cancel"); // 결제취소시 넘어갈 url
+        parameters.add("fail_url", "http://localhost:8080/cash/charge/kakao/fail"); // 결제 실패시 넘어갈 url
         return parameters;
     }
 

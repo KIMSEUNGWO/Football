@@ -41,7 +41,7 @@ public class KakaoPayController {
         ReadyResponse response = kakaoPayService.payReady(memberId, kakaoPayDto, partner_order_id);
 
         // 검증을 위한 tid 값 저장
-        kakaoPayService.saveSessionTid(request, response, partner_order_id, memberId);
+        kakaoPayService.saveSessionTid(request, response, partner_order_id, memberId, kakaoPayDto);
 
         return response;
     }
@@ -84,6 +84,9 @@ public class KakaoPayController {
         String requestURL = (String) session.getAttribute(REDIRECT_URL);
         kakaoPayService.deleteSessionId(session);
 
+        if (requestURL == null) {
+            return "redirect:/";
+        }
         return "redirect:" + requestURL;
     }
 

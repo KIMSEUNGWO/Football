@@ -10,4 +10,5 @@ import lombok.ToString;
 public class KakaoPayDto {
 
     private Integer price;
+    private String redirect;
 }
