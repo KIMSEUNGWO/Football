@@ -44,7 +44,7 @@ public class RegisterController {
     public String registerPage(@ModelAttribute RegisterDto registerDto, HttpSession session) {
         // 회원가입 세션 생성
         session.setAttribute(REGISTER, REGISTER);
-        return "register";
+        return "/login/register";
     }
 
     @PostMapping
@@ -60,7 +60,7 @@ public class RegisterController {
         }
         if (bindingResult.hasErrors()) {
             System.out.println("bindingResult = " + bindingResult);
-            return "/register";
+            return "/login//register";
         }
         Member saveMember = registerDto.builder();
         registerService.save(saveMember);
