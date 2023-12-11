@@ -23,4 +23,12 @@ public enum MatchEnum {
         this.gradeList = gradeList;
         this.matchInfo = matchInfo;
     }
+
+    public List<GradeEnum> getGradeList() {
+        return gradeList;
+    }
+
+    public String getMatchInfo() {
+        return matchInfo;
+    }
 }

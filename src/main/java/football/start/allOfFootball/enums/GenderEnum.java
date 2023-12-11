@@ -11,4 +11,8 @@ public enum GenderEnum {
     GenderEnum(String matchInfo) {
         this.matchInfo = matchInfo;
     }
+
+    public String getMatchInfo() {
+        return matchInfo;
+    }
 }
