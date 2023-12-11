@@ -4,6 +4,7 @@ import football.start.allOfFootball.common.alert.AlertUtils;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.formatter.NumberFormatter;
 import football.start.allOfFootball.service.domainService.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ public class CashController {
     private final MemberService memberService;
 
     @GetMapping("/cash/charge")
-    public String cash(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpServletResponse response, Model model) {
+    public String cash(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpServletResponse response, Model model, HttpServletRequest request) {
         if (memberId == null) {
             return AlertUtils.alertAndMove(response, "로그인이 필요합니다.", "/login");
         }
@@ -35,6 +36,9 @@ public class CashController {
 
         Member member = findMember.get();
 
+        String redirectURL = request.getHeader("referer");
+
+        model.addAttribute("redirect", redirectURL);
         model.addAttribute("cash", NumberFormatter.format(member.getMemberCash()));
 
         return "cash_charge";

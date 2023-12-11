@@ -27,13 +27,7 @@ public class Orders {
     @JoinColumn(name = "memberId")
     private Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "playResultId")
-    private PlayResult playResult;
-
     @Enumerated(EnumType.STRING)
     private TeamEnum team;
 
-    @Enumerated(EnumType.STRING)
-    private ResultEnum result;
 }

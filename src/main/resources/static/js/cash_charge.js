@@ -71,6 +71,8 @@ window.addEventListener('load', () => {
         let charge = document.querySelector('input[name="charge"]:checked');
         let checked = document.querySelectorAll('.checkbox input[type="checkbox"]:checked');
 
+        let redirectInput = document.querySelector('input[name="redirectURL"]');
+
         if (checked.length != checkbox.length) {
             checkbox[0].focus();
             return;
@@ -82,7 +84,7 @@ window.addEventListener('load', () => {
         let priceValue = cash.value;
         let chargeOption = charge.value;
         if (chargeOption == 'KAKAO') {
-            let jsonForm = {price : Number(priceValue)};
+            let jsonForm = {price : Number(priceValue), redirect : redirectInput.value};
 
             fetchPost("/cash/charge/kakao", jsonForm, result);
         }
