@@ -28,14 +28,14 @@ public class AdminGroundController {
         LocationEnum[] locations = LocationEnum.values();
         model.addAttribute("locations", locations);
         model.addAttribute("myName", "김승우");
-        return "admin_ground";
+        return "/admin/admin_ground";
     }
 
     @GetMapping("/add")
     public String groundAdd(@ModelAttribute SaveFieldForm saveFieldForm, Model model) {
         LocationEnum[] locations = LocationEnum.values();
         model.addAttribute("locations", locations);
-        return "admin_ground_add";
+        return "/admin/admin_ground_add";
     }
 
     @PostMapping("/add")
@@ -56,7 +56,7 @@ public class AdminGroundController {
         }
         model.addAttribute("editFieldForm", form);
 
-        return "admin_ground_view";
+        return "/admin/admin_ground_view";
     }
 
     @GetMapping("/{fieldId}/edit")
@@ -71,7 +71,7 @@ public class AdminGroundController {
         model.addAttribute("locations", locations);
         model.addAttribute("fieldId", fieldId);
         model.addAttribute("editFieldForm", form);
-        return "admin_ground_edit";
+        return "/admin/admin_ground_edit";
     }
 
     @PostMapping("/{fieldId}/edit")

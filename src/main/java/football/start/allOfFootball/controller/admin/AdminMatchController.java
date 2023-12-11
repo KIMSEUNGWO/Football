@@ -33,7 +33,7 @@ public class AdminMatchController {
     public String match(Model model) {
         LocationEnum[] locations = LocationEnum.values();
         model.addAttribute("locations", locations);
-        return "admin_match";
+        return "/admin/admin_match";
     }
 
     @GetMapping("/{fieldId}/add")
@@ -46,7 +46,7 @@ public class AdminMatchController {
         ViewMatchFieldForm fieldForm = ViewMatchFieldForm.build(field);
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("fieldId", fieldId);
-        return "admin_match_add";
+        return "/admin/admin_match_add";
     }
 
     @PostMapping("/{fieldId}/add")
@@ -77,7 +77,7 @@ public class AdminMatchController {
         model.addAttribute("matchId", match.getMatchId());
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("editMatchForm", editMatchForm);
-        return "admin_match_view";
+        return "/admin/admin_match_view";
     }
 
 
@@ -97,7 +97,7 @@ public class AdminMatchController {
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("editMatchForm", editMatchForm);
 
-        return "admin_match_edit";
+        return "/admin/admin_match_edit";
     }
 
     @PostMapping("/{matchId}/edit")
@@ -108,6 +108,7 @@ public class AdminMatchController {
             return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
         }
         Match match = findMatch.get();
+
         matchService.editMatch(match, editMatchForm);
 
         return "redirect:/admin/match/" + matchId;
