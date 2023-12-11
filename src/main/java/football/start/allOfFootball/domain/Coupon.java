@@ -17,6 +17,5 @@ public class Coupon {
 
     private String couponName;
     private int couponDiscount;
-    private int couponAmount;
     private int couponLimitDay;
 }

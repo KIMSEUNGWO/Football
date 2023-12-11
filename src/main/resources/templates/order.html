@@ -12,45 +12,34 @@
 <body>
     <header th:replace="~{/common/header :: header}"></header>
     <div class="container">
-        <form action="#" method="get">
+        <form th:action="@{/order/} + ${orderForm.matchId}" method="post" id="orderForm">
             <div class="orderWrap">
                 <div class="orderDetails">
                     <div class="box">
                         <h2>구장 정보</h2>
                         <div class="field">
-                            <div class="fieldTitle">부산 준타스 풋살 아레나 화이트</div>
-                            <a href="#" class="fieldAddress">부산 부산진구 신천대로 241</a>
+                            <div class="fieldTitle" th:text="${orderForm.fieldTitle}">부산 준타스 풋살 아레나 화이트</div>
+                            <a href="#" class="fieldAddress" th:text="${orderForm.fieldAddress}">부산 부산진구 신천대로 241</a>
                         </div>
                     </div>
                     <div class="box">
                         <h2>경기 시간</h2>
-                        <span class="time">11월 23일 목요일 18:00 ~ 20:00</span>
+                        <span class="time" th:text="${orderForm.matchDate}">11월 23일 목요일 18:00 ~ 20:00</span>
                     </div>
                     <div class="box">
                         <h2>캐시</h2>
                         <div class="detailBox">
-                            <div class="coupon">
+                            <div class="coupons">
                                 <span>쿠폰</span>
                                 <button type="button" id="couponBtn">1개 보유 ></button>
-                                <input type="text" name="coupon" id="coupon" value="" hidden>
                             </div>
                             <div class="cash">
                                 <span>머니</span>
                                 <div>
-                                    <span>9,000원</span>
-                                    <a href="#" class="charge">충전</a>
+                                    <span th:if="${orderForm.cash < 1000}" th:text="${orderForm.cash} + '원'"></span>
+                                    <span th:unless="${orderForm.cash < 1000}" th:text="${#numbers.formatInteger(orderForm.cash, 3, 'COMMA')} + '원'">9,000원</span>
+                                    <a href="/cash/charge" class="charge">충전</a>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="useCash">
-                            <span>사용</span>
-                            <div class="inputBtn">
-                                <div class="inputTable">
-                                    <input type="text" title="캐시 사용금액" maxlength="6" inputmode="numeric" name="useCash" id="useCash" value="0">
-                                    <span>원</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="" width="18" height="18" viewBox="0 0 16 16"><g fill="none" fill-rule="evenodd"><circle cx="8" cy="8" r="8" fill="#929294"></circle><path fill="#FFF" d="M5.235 4.606l2.828 2.83 2.829-2.83.628.629-2.83 2.828 2.83 2.829-.628.628-2.83-2.828-2.827 2.828-.629-.628 2.828-2.828-2.828-2.83.629-.628z"></path></g></svg>
-                                </div>
-                                <button type="button" id="allUseCash">전액사용</button>
                             </div>
                         </div>
                     </div>
@@ -85,9 +74,9 @@
                                 플랩은 상대를 배려하고, 나를 지키는 안전한 플레이를 권장합니다.
 
                                 거친 플레이를 하는 참가자에게 매너 카드를 발급하여 안전하고 즐거운 매치 문화를 만들어 나갑니다.
-                                
+
                                 다른 사람에게 피해를 끼치는 경우 이용이 정지될 수 있습니다.
-                                
+
                                 축구, 풋살 등 부상의 위험성이 내재된 경기 규칙 안에서 발생한 부상 대부분이 개인에게 책임이 있음을 판단하고 있습니다.
                             </pre>
                         </div>
@@ -98,6 +87,9 @@
                             </button>
                             <label for="policy">약관에 동의합니다.</label>
                         </div>
+                        <div class="errorBox">
+                            <span class="errorMsg"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="order box">
@@ -107,21 +99,51 @@
                         <b>10,000원</b>
                     </div>
                     <div class="detailBox">
-                        <div class="coupon">
-                            <span>쿠폰 사용</span>
-                            <span>-9,000원</span>
-                        </div>
-                        <div class="cash">
-                            <span>캐시 사용</span>
-                            <span>-1,000원</span>
+                        <div class="calCoupon">
+
                         </div>
                     </div>
                     <hr class="sideHr">
                     <div class="finalPrice">
                         <b>결제 금액</b>
-                        <b>0원</b>
+                        <b id="totalPrice">10,000원</b>
                     </div>
                     <input type="submit" value="신청하기" id="orderBtn">
+                </div>
+            </div>
+            <div class="pop disabled">
+                <div class="box couponPop">
+                    <div class="popTop">
+                        <span class="title">쿠폰함</span>
+                        <button type="button" class="popCancel" id="popCancel">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="width: 15px; height:15px"><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg>
+                        </button>
+                    </div>
+                    <div class="popMain">
+                        <li class="notSelect">
+                            <label for="couponNumNone">선택안함</label>
+                            <input type="radio" name="couponNum" id="couponNumNone" value="">
+                        </li>
+                        <ul class='couponList'>
+                            <li class='coupon noncoupon' th:if="${orderForm.couponList == null || orderForm.couponList.size == 0}">
+                                <span>등록된 쿠폰이 없습니다.</span>
+                            </li>
+                            <li class='coupon' th:if="${orderForm.couponList.size != 0}" th:each="item : ${orderForm.couponList}">
+                                <div class='couponRadio'>
+                                    <span class='couponPrice' th:text="${#numbers.formatInteger(item.couponDiscount, 3, 'COMMA')} + '원 할인'">5,000원 할인</span>
+                                     <input type="radio" name="couponNum" th:id="couponNum + ${item.couponListId}" hidden th:value="${item.couponListId}">
+                                     <span class='custom-radio'></span>
+                                     <input type="text" name="couponPrice" th:id="couponPrice+ ${item.couponListId}" th:value="${item.couponDiscount}" disabled hidden>
+                                    <label th:for="couponNum + ${item.couponListId}"></label>
+                                </div>
+                                <span class='couponTitle' th:id="couponTitle + ${item.couponListId}" th:text="${item.couponName}">[신규회원] 5,000원 할인 쿠폰</span>
+                                <div class='couponDate'>
+                                    <span class='couponExpireCount' th:text="${item.remainingTime}">3일 남음</span>
+                                    <span class='couponExpireDate' th:text="${item.couponEndDate}">2023.08.31 23:59까지</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </form>

@@ -1,11 +1,14 @@
 package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.domain.Coupon;
+import football.start.allOfFootball.domain.CouponList;
+import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.repository.CouponRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,5 +29,15 @@ public class CouponServiceImpl implements CouponService{
     @Override
     public void removeCoupon(Long couponId) {
         couponRepository.deleteCouponList(couponId);
+    }
+
+    @Override
+    public Coupon getCoupon(Long couponId) {
+        return couponRepository.getCoupon(couponId);
+    }
+
+    @Override
+    public void saveCouponListTest(Member member, Coupon coupon) {
+        couponRepository.saveCouponListTest(member, coupon);
     }
 }
