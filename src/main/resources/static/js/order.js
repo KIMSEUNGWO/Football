@@ -87,14 +87,17 @@ window.addEventListener('load', function(){
 
     let form = document.querySelector('#orderForm');
     form.addEventListener('submit', (e) => {
-        e.preventDefault();
+        console.log('submit');
         let policy = document.querySelector('input[name="policy"]:checked');
-
+        
         if (policy == null) {
+            e.preventDefault();
             let error = document.querySelector('.errorMsg');
             error.innerHTML = '약관에 동의해주세요.';
+            error.scrollIntoView({behavior : 'smooth'});
             return;
         }
+        form.submit();
     })
     
 })
