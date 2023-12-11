@@ -3,70 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/common.css">
-    <link rel="stylesheet" href="/static/css/header.css">
-    <link rel="stylesheet" href="/static/css/mypage_menu.css">
-    <link rel="stylesheet" href="/static/css/mypage_coupon.css">
-    <script src="/static/js/mypage_main.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/mypage_menu.css">
+    <link rel="stylesheet" href="/css/mypage_coupon.css">
+    <script src="/js/mypage_main.js"></script>
     <title>쿠폰함 :: 프로젝트</title>
 </head>
 <body>
     <header th:replace="~{/common/header :: header}"></header>
     <div class="container">
-        <div class="myInfo box">
-            <div class="imgBox">
-                <img src="/static/images/구장예제사진3.jpg" width="100%" height="100%" alt="김승우">
-            </div>
-            <div class="status">
-                <div class="name">
-                    <span th:text="${profile.name}">김승우</span>
-                    <span class="social kakao" th:if="${profile.social == 'KAKAO'}">KAKAO</span>
-                    <span class="social naver" th:if="${profile.social == 'NAVER'}">NAVER</span>
-                </div>
-                <div class="email" th:text="${profile.email}">
-                    tmd8633@naver.com
-                </div>
-            </div>
-            <div class="totalStatus">
-                <a href="#" class="box">
-                    <h3>점수</h3>
-                    <span>1,015점</span>
-                </a>
-                <a href="#" class="box">
-                    <h3>순위</h3>
-                    <span>10,000등</span>
-                </a>
-                <a href="#" class="box">
-                    <h3>등급</h3>
-                    <span>아마추어1</span>
-                </a>
-                <a href="#" class="box">
-                    <h3>전적</h3>
-                    <span>10전 6승 4패</span>
-                </a>
-                <a href="#" class="box">
-                    <h3>매너점수</h3>
-                    <span>0점</span>
-                </a>
-                <a href="#" class="box">
-                    <h3>비매너점수</h3>
-                    <span>0점</span>
-                </a>
-
-            </div>
-        </div>
+        <div class="myInfo box" th:replace="~{/common/mypage_info_menu :: myinfo}"></div>
         <div class="mypageMain">
-            <div class="mypageMenu box">
-                <h3>마이페이지</h3>
-                <ul class="menuList">
-                    <li aria-pressed="false"><a href="/mypage">계정 관리</a></li>
-                    <li aria-pressed="false"><a href="/mypage/order">경기내역</a></li>
-                    <li aria-pressed="false"><a href="/mypage/cash">충전내역</a></li>
-                    <li aria-pressed="true"><a href="/mypage/coupon">쿠폰</a></li>
-                    <li aria-pressed="false"><a href="/mypage/friend">친구</a></li>
-                    <li aria-pressed="false"><a href="/mypage/settings">설정</a></li>
-                </ul>
-            </div>
+            <div class="mypageMenu box" th:replace="~{/common/mypage_info_menu :: mypage_menu}"></div>
             <div class="content">
                 <h2>쿠폰함</h2>
                 <div class='cupon'>

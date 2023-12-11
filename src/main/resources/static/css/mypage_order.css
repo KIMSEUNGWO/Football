@@ -3,10 +3,6 @@
     --lose: blue;
 }
 
-.matchList {
-    border: 0.1rem solid var(--border-color);
-    border-radius: var(--border-radius);
-}
 .matchBox:last-child {
     border-bottom: none;
 }

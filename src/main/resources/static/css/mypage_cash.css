@@ -40,13 +40,12 @@
 }
 
 .cashList {
-    border: 0.1rem solid var(--border-color);
-    border-radius: var(--border-radius);
+
 }
 
 .cashBox {
     height: 2rem;
     display: grid;
     align-items: center;
-    grid-template-columns: 20% 10% 5% 10% 10%
+    grid-template-columns: 20% 5% 10% 10% 10%;
 }
