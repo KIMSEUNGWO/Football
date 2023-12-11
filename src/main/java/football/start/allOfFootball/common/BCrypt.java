@@ -9,8 +9,9 @@ import java.util.UUID;
 @Component
 public class BCrypt {
 
+    @Autowired
+    private static final BCryptPasswordEncoder bc = new BCryptPasswordEncoder(10);;
 
-    private static final BCryptPasswordEncoder bc = new BCryptPasswordEncoder(10);
 
     public static String encodeBCrypt(String password) {
         return bc.encode(password);
