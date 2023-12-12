@@ -7,6 +7,7 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "MEMBER")
 @AllArgsConstructor
+@DynamicInsert
 @SequenceGenerator(name = "SEQ_MEMBER", sequenceName = "SEQ_MEMBER_ID", allocationSize = 1)
 public class Member extends BaseTimeEntity {
 
@@ -33,10 +35,11 @@ public class Member extends BaseTimeEntity {
     private LocalDate memberBirthday;
     private String memberPhone;
 
-    @ColumnDefault("0")
     private int memberCash;
+
+    @Column(nullable = false)
     @ColumnDefault("1000")
-    private int memberScore;
+    private Integer memberScore;
 
     @OneToOne
     @JoinColumn(name = "profileId")
