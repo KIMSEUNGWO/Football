@@ -137,15 +137,15 @@
 
             <div class="subFunc">
                 <a href="#" class="subFuncSubject">내 일정 ></a>
-                <div class="empty" th:if="${side.schedule == null}">
+                <div class="empty" th:if="${#maps.size(side.schedule) == 0}">
                     아직 일정이 없어요
                 </div>
-                <ul class="subFuncList" th:unless="${side.schedule == null}" th:each="form : ${side.schedule}">
-                    <span class="dateSep" th:text="${form.key}">2023년 11월 24일</span>
+                <ul class="subFuncList" th:unless="${#maps.size(side.schedule) == 0}" th:each="form : ${side.schedule}">
+                    <span class="dateSep" th:text="${form.key}"></span>
                     <a href="#" class="subFuncBlock" th:each="list : ${form.value}">
-                        <span class="subFuncTime" th:text="${list.hour}">23:00</span>
-                        <span class="subFuncRegion" th:text="${list.region}">서울</span>
-                        <span class="subFuncTitle" th:text="${list.fieldTitle}">어딘가의 kkkkkkkkkjkkk구장</span>
+                        <span class="subFuncTime" th:text="${list.hour}"></span>
+                        <span class="subFuncRegion" th:text="${list.region}"></span>
+                        <span class="subFuncTitle" th:text="${list.fieldTitle}"></span>
                     </a>
                 </ul>
             </div>

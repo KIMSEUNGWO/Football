@@ -177,6 +177,6 @@ function resultForm(searchForm) {
                         '<li class="resultPlayer">'+ searchForm.matchMaxPerson + '</li>' +
                     '</ul>' +
                 '</div>' +
-                '<button class="resultButton on">신청하기</button>' +
+                '<button class="resultButton ' + searchForm.matchStatus.className + '">' + searchForm.matchStatus.status + '</button>' +
             '</a>';
 }

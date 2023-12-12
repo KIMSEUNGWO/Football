@@ -128,7 +128,7 @@
                         <span class="matchFriend">참가하는 친구가 <b class="impact">0명</b> 있어요</span>
                         <span class="matchPrice">10,000원<b class="notImpact"> / 2시간</b></span>
                     </div>
-                    <a th:href="|/order/${matchForm.matchId}|" class="resultButton on">신청하기</a>
+                    <a th:href="|/order/${matchForm.matchId}|" th:class="'resultButton ' + ${matchForm.matchStatus.className}" th:text="${matchForm.matchStatus.status}"></a>
                 </div>
             </div>
         </div>
