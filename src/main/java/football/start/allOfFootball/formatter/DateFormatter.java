@@ -18,4 +18,12 @@ public class DateFormatter {
 
         return String.format("%d월 %d일 %s %s", month, day, week, hour);
     }
+
+    public static String sideMenuDateForm(LocalDate date) {
+        int year = date.getYear();
+        int month = date.getMonthValue();
+        int day = date.getDayOfMonth();
+
+        return String.format("%d년 %02d월 %02d일", year, month, day);
+    }
 }

@@ -57,6 +57,8 @@ public class Member extends BaseTimeEntity {
     // not columns
     @OneToMany(mappedBy = "member")
     private List<CouponList> couponList;
+    @OneToMany(mappedBy = "member")
+    private List<Orders> ordersList;
 
     public Member() {
 

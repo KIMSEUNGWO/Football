@@ -2,6 +2,7 @@ package football.start.allOfFootball.controller.login;
 
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.enums.GenderEnum;
+import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,6 +50,7 @@ public class RegisterDto{
             .memberEmail(email)
             .memberPassword(password)
             .memberName(name)
+            .grade(GradeEnum.루키)
             .memberGender(GenderEnum.valueOf(gender))
             .memberBirthday(getLocalDate(birthday))
             .memberPhone(phone)

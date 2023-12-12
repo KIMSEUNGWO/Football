@@ -104,13 +104,13 @@
         </div>
         <aside class="side" th:if="${session.memberId == null}">
             <div class="noneId">
-                <a href="/login" class="button">로그인하러 가기</a>
+                <a href="/login" class="cashBtn" style="color: white;">로그인하러 가기</a>
             </div>
         </aside>
         <aside class="side" th:if="${session.memberId != null}">
             <div class="readMe">
                 <div class="me">
-                    <span class="myName">김승우</span>
+                    <span class="myName" th:text="${side.name}">김승우</span>
                 </div>
                 <table class="rank">
                     <tr class="rankTitle">
@@ -119,52 +119,35 @@
                         <th>등급</th>
                     </tr>
                     <tr>
-                        <td class="ranking">100,000위</td>
-                        <td class="">1,000점</td>
-                        <td class="grade">아마추어1</td>
+                        <td class="ranking" th:text="${side.rank} + '위'">100,000위</td>
+                        <td class="" th:text="${side.score} + '점'">1,000점</td>
+                        <td class="grade" th:text="${side.grade}">아마추어1</td>
                     </tr>
                 </table>
             </div>
 
-            <button class="button">
-                <span class="">1,000원</span>
+            <a href="/cash/charge" class="cashBtn">
+                <span class="" th:text="${side.cash} + '원'">1,000원</span>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M464 160c8.8 0 16 7.2 16 16V336c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16H464zM80 96C35.8 96 0 131.8 0 176V336c0 44.2 35.8 80 80 80H464c44.2 0 80-35.8 80-80V320c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32V176c0-44.2-35.8-80-80-80H80zm368 96H96V320H448V192z"/></svg>
                 <!-- 충전이 필요한 경우 -->
                 <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7l-87.5-68.6C563.1 386 576 362.5 576 336V320c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32V176c0-44.2-35.8-80-80-80H154.8L38.8 5.1zM236.4 160H496c8.8 0 16 7.2 16 16V336c0 8.8-7.2 16-16 16H481.4l-245-192zm88.5 192H112c-8.8 0-16-7.2-16-16V176c0-1.4 .2-2.7 .5-4L45.4 131.7C36.9 144.4 32 159.6 32 176V336c0 44.2 35.8 80 80 80H406.2l-81.2-64z"/></svg> -->
-            </button>
+            </a>
 
             <hr class="sideHr">
 
             <div class="subFunc">
                 <a href="#" class="subFuncSubject">내 일정 ></a>
-                <ul class="subFuncList">
-                    <span class="dateSep">2023년 11월 24일</span>
-                    <a href="#" class="subFuncBlock">
-                        <span class="subFuncTime">23:00</span>
-                        <span class="subFuncRegion">서울</span>
-                        <span class="subFuncTitle">어딘가의 kkkkkkkkkjkkk구장</span>
-                    </a>
-                    <a href="#" class="subFuncBlock">
-                        <span class="subFuncTime">23:00</span>
-                        <span class="subFuncRegion">서울</span>
-                        <span class="subFuncTitle">어딘가의 구장</span>
-                    </a>
-                    <span class="dateSep">2023년 11월 25일</span>
-                    <a href="#" class="subFuncBlock">
-                        <span class="subFuncTime">23:00</span>
-                        <span class="subFuncRegion">서울</span>
-                        <span class="subFuncTitle">어딘가의 구장</span>
-                    </a>
-                </ul>
-            </div>
-
-            <hr class="sideHr">
-
-            <div class="subFunc">
-                <a href="#" class="subFuncSubject">내 일정 ></a>
-                <div class="empty">
+                <div class="empty" th:if="${side.schedule == null}">
                     아직 일정이 없어요
                 </div>
+                <ul class="subFuncList" th:unless="${side.schedule == null}" th:each="form : ${side.schedule}">
+                    <span class="dateSep" th:text="${form.key}">2023년 11월 24일</span>
+                    <a href="#" class="subFuncBlock" th:each="list : ${form.value}">
+                        <span class="subFuncTime" th:text="${list.hour}">23:00</span>
+                        <span class="subFuncRegion" th:text="${list.region}">서울</span>
+                        <span class="subFuncTitle" th:text="${list.fieldTitle}">어딘가의 kkkkkkkkkjkkk구장</span>
+                    </a>
+                </ul>
             </div>
         </aside>
     </div>

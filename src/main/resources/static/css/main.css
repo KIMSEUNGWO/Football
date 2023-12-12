@@ -285,27 +285,35 @@ input::-webkit-search-results-decoration{
     background-color: aqua;
 }
 
-.button {
+.cashBtn {
     width: 100%;
     height: 4rem;
-    border: 2px solid var(--border-color);
-    background: none;
-    border-radius: var(--border-radius);
     display: flex;
     justify-content: space-around;
     align-items: center;
     font-size: 1.2rem;
     box-shadow: 2px 2px 5px #b2b2b2;
     margin-top: 1.5rem;
-    color: var(--main-color);
+    cursor: pointer;
+    background-color: var(--main-font-color);
+    border-radius: 1rem;
 }
-.button svg {
+.cashBtn:hover {
+    background-color: var(--main-font-color-hover);
+}
+.cashBtn > * {
+    pointer-events: none;
+}
+.cashBtn svg {
     margin: 0;
     width: 2rem;
     height: 2rem;
-    fill: var(--main-color);
+    /* fill: var(--main-color); */
+    fill: white;
 }
-.button span {
+.cashBtn span {
+    /* color: var(--main-color); */
+    color: white;
     margin: 0;
 }
 
