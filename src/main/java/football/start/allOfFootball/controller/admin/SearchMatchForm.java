@@ -30,7 +30,7 @@ public class SearchMatchForm {
             .matchTime(getTimeForm(match.getMatchHour()))
             .matchRegion(match.getField().getFieldLocation())
             .matchTitle(match.getField().getFieldTitle())
-            .matchPerson(orderPerson + " / " + match.getMaxPerson())
+            .matchPerson(orderPerson + " / " + (match.getMaxPerson() * match.getMatchCount()))
             .build();
     }
 
