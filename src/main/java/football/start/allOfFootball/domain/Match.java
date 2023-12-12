@@ -65,6 +65,7 @@ public class Match {
         matchCount = editMatchForm.getMatchCount();
         matchGender = editMatchForm.getGender();
         maxPerson = editMatchForm.getMatchMaxPerson();
+        matchGrade = editMatchForm.getMatchGrade();
     }
 
     private LocalDate getLocalDate(String matchDate) {
