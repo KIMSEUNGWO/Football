@@ -209,6 +209,7 @@ input::-webkit-search-results-decoration{
 }
 .subTitle {
     display: flex;
+    align-items: center;
     font-size: 0.8rem;
     margin: 0;
     gap: 0.5rem;
@@ -221,6 +222,29 @@ input::-webkit-search-results-decoration{
 
 .notFound {
     color: var(--gray);
+}
+
+.resultGender {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.resultGender::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    display: inline-block;
+    border-radius: 100%;
+}
+.mix::before {
+    background-color: #ffc645;
+}
+.male::before {
+    background-color: #3534a5;;
+}
+.female::before {
+    background-color: #ff5d5d;;
 }
 
 

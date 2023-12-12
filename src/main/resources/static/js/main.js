@@ -118,7 +118,6 @@ function search() {
     let searchWord = document.querySelector('input[name="searchWord"]').value;
 
     let condition = getJson(matchDate, region, gender, grade, searchWord);
-    console.log(condition);
     fetchPost('/get', condition, mainSearch);
 }
 function getJson(matchDateValue, regionValue, genderValue, gradeValue, searchWord) {
@@ -173,7 +172,7 @@ function resultForm(searchForm) {
                 '<div class="resultContent">' +
                     '<div class="resultTitle">' + searchForm.matchTitle + '</div>' +
                     '<ul class="subTitle">' +
-                        '<li class="resultGender">' + searchForm.matchGender + '</li>' +
+                        '<li class="resultGender ' + searchForm.matchGender.className  + '">' + searchForm.matchGender.matchInfo + '</li>' +
                         '<li class="resultGrade">' + searchForm.matchGrade + '</li>' +
                         '<li class="resultPlayer">'+ searchForm.matchMaxPerson + '</li>' +
                     '</ul>' +
