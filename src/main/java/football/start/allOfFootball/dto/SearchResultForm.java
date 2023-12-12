@@ -4,6 +4,7 @@ import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import lombok.*;
 
 @Getter
@@ -21,6 +22,7 @@ public class SearchResultForm {
     private GenderEnum matchGender;
     private MatchEnum matchGrade;
     private String matchMaxPerson;
+    private MatchStatus matchStatus;
 
     public static SearchResultForm build(Match form) {
         return SearchResultForm.builder()
@@ -31,6 +33,7 @@ public class SearchResultForm {
             .matchGender(form.getMatchGender())
             .matchGrade(form.getMatchGrade())
             .matchMaxPerson(getMaxPersonForm(form.getMaxPerson()))
+            .matchStatus(form.getMatchStatus())
             .build();
     }
 

@@ -7,6 +7,7 @@ import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.domain.Field;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Orders;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,5 +45,29 @@ public class MatchService {
     public boolean distinctCheck(Match match, Long memberId) {
         List<Orders> ordersList = match.getOrdersList();
         return ordersList.stream().filter(x -> x.getMember().getMemberId() == memberId).findFirst().isPresent();
+    }
+
+    public void refreshMatchStatus(Match match) {
+        int max = match.getMaxPerson() * match.getMatchCount(); // 참여할 수 있는 최대 인원 수
+
+        int nowPerson = match.getOrdersList().size() + 1; // + 1 인거 주의해서 사용할 것
+
+        int line = (int) (max * 0.8);
+        if (max == nowPerson) {
+            match.setMatchStatus(MatchStatus.마감);
+            return;
+        }
+        if (nowPerson >= line) {
+            match.setMatchStatus(MatchStatus.임박);
+        }
+
+    }
+
+    public boolean maxCheck(Match match) {
+        int max = match.getMaxPerson() * match.getMatchCount(); // 참여할 수 있는 최대 인원 수
+
+        int nowPerson = match.getOrdersList().size();
+
+        return max <= nowPerson;
     }
 }

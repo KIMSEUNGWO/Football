@@ -7,6 +7,7 @@ import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.enums.groundEnums.ParkingEnum;
 import football.start.allOfFootball.enums.groundEnums.ShowerEnum;
 import football.start.allOfFootball.enums.groundEnums.ToiletEnum;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.formatter.DateFormatter;
 import lombok.*;
 
@@ -40,6 +41,8 @@ public class MatchViewForm {
     private String fieldTitle;
     private String fieldAddress;
 
+    private MatchStatus matchStatus;
+
     public static MatchViewForm build(Match match) {
         return MatchViewForm.builder()
             .matchId(match.getMatchId())
@@ -55,6 +58,7 @@ public class MatchViewForm {
             .matchDate(DateFormatter.dateFormat(match.getMatchDate(), match.getMatchHour()))
             .fieldTitle(match.getField().getFieldTitle())
             .fieldAddress(match.getField().getFieldAddress())
+            .matchStatus(match.getMatchStatus())
             .build();
     }
 

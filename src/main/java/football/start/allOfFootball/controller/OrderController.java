@@ -100,6 +100,10 @@ public class OrderController {
         if (distinctMember) {
             return AlertUtils.alertAndMove(response, "이미 신청된 경기입니다.", "/");
         }
+        boolean maxCheck = matchService.maxCheck(match);
+        if (maxCheck) {
+            return AlertUtils.alert(response, "경기가 마감되었습니다.");
+        }
         Optional<CouponList> couponList = couponListService.findByCouponListId(form.getCouponNum());
 
         int cash = member.getMemberCash();
@@ -110,7 +114,8 @@ public class OrderController {
         }
 
         Orders orders = Orders.build(match, member);
-        orderService.save(orders, member, couponList, price);
+        orderService.save(orders, member, couponList, price); // order 저장
+        matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
         log.info("Orders 정상 처리");
 
         return "redirect:/mypage/order";

@@ -5,6 +5,7 @@ import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,7 +43,8 @@ public class Match {
     @Enumerated(EnumType.STRING)
     private MatchEnum matchGrade;
 
-    private Character matchEndStatus;
+    @Enumerated(EnumType.STRING)
+    private MatchStatus matchStatus;
 
     @OneToMany(mappedBy = "match")
     public List<Orders> ordersList;
@@ -56,6 +58,7 @@ public class Match {
             .matchGender(form.getGender())
             .maxPerson(form.getMatchMaxPerson())
             .matchGrade(form.getMatchGrade())
+            .matchStatus(MatchStatus.모집)
             .build();
     }
 

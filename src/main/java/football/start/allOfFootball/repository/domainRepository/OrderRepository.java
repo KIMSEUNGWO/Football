@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.domain.QOrders;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.jpaRepository.JpaOrderRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static football.start.allOfFootball.domain.QOrders.orders;
+import static football.start.allOfFootball.enums.matchEnums.MatchStatus.*;
 
 @Repository
 @Slf4j
@@ -32,7 +34,7 @@ public class OrderRepository {
 
     public List<Orders> findByMember(Member member) {
         return query.selectFrom(orders)
-            .where(orders.member.eq(member).and(orders.match.matchEndStatus.eq('N')))
+            .where(orders.member.eq(member).and(orders.match.matchStatus.in(모집, 임박, 마감) ))
             .fetch();
     }
 }
