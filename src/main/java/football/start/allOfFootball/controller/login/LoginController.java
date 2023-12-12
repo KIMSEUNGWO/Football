@@ -49,7 +49,7 @@ public class LoginController {
         session.setAttribute(LOGIN_MEMBER, findMember.getMemberId());
         session.removeAttribute(REDIRECT_URL);
         if (redirectURI == null) {
-            return "redirect:/";
+            return "redirect:";
         }
         return "redirect:" + redirectURI;
     }
