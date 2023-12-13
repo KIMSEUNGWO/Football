@@ -16,6 +16,10 @@
     font-family: 'Pretendard-SemiBold';
     src: url(/font/Pretendard-SemiBold.otf);
 }
+@font-face {
+    font-family: 'Pretendard-ExtraBold';
+    src: url(/font/Pretendard-ExtraBold.otf);
+}
 :root{
     --main-color: #2f69dd;
     --main-color-hover: #295dc4;
@@ -30,6 +34,10 @@
     --on-2: #ff2c2c;
     --on-2-hover: #dd2828;
     --off: #bbbbbb;
+
+    --red-team: rgb(255, 80, 80);
+    --blue-team: rgb(80, 80, 255);
+    --yellow-team: rgb(255, 255, 80);
 }
 
 *{
@@ -105,6 +113,7 @@ pre {
     color: white;
     box-shadow: 2px 2px 5px #b3b3b3;
     font-size: 1.05rem;
+    cursor: pointer;
 }
 
 .sideHr {

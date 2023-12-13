@@ -3,6 +3,7 @@ package football.start.allOfFootball.formatter;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 public class DateFormatter {
@@ -26,6 +27,13 @@ public class DateFormatter {
         String week = dayOfWeek2[date.getDayOfWeek().getValue()-1];
 
         return String.format("%d년 %d월 %d일 (%s)", year, month, day, week);
+    }
+    public static String dateFormat(LocalDateTime date) {
+        int year = date.getYear();
+        int month = date.getMonthValue();
+        int day = date.getDayOfMonth();
+
+        return String.format("%d년 %d월 %d일", year, month, day);
     }
 
     public static String sideMenuDateForm(LocalDate date) {

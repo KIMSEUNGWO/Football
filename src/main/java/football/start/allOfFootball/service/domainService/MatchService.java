@@ -1,7 +1,5 @@
 package football.start.allOfFootball.service.domainService;
 
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.controller.admin.EditMatchForm;
 import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.domain.Field;
@@ -58,7 +56,7 @@ public class MatchService {
             return;
         }
         if (nowPerson >= line) {
-            match.setMatchStatus(MatchStatus.임박);
+            match.setMatchStatus(MatchStatus.마감임박);
         }
 
     }

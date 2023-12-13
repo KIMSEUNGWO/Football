@@ -58,6 +58,7 @@
     font-size: 1.0rem;
     border: none;
     outline-color: var(--main-color);
+    border-radius: var(--border-radius);
 }
 
 

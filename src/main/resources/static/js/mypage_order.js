@@ -27,7 +27,9 @@ window.addEventListener('load', () => {
 })
 
 function search() {
-    let condition = '';
+    let startDateinput = document.querySelector('input[name="startDate"]');
+    let endDateinput = document.querySelector('input[name="endDate"]');
+    let condition = {startDate : startDateinput.value, endDate : endDateinput.value};
     
     fetchPost('/mypage/order/get', condition, matchResult);
 }
@@ -49,7 +51,7 @@ function matchResult(list) {
 
 function searchEmpty() {
     let matchList = document.querySelector('.matchList');
-    matchList.innerHTML = '<li class="box empty"><span>경기 기록이 없어요.</span></li>';
+    matchList.innerHTML = '<li class="empty"><span>경기 기록이 없어요.</span></li>';
 }
 
 function createList(list) {
@@ -59,9 +61,17 @@ function createList(list) {
     for (let i=0;i<list.length;i++) {
         temp += resultForm(list[i]);
     }
-    searchResult.innerHTML = temp;
+    matchList.innerHTML = temp;
 }
 
 function resultForm(form) {
-    
+    return '<li class="matchBox">' +
+                '<span class="matchId">' + form.matchId + '</span>' +
+                '<span class="matchDate">' + form.matchDate + '</span>' +
+                '<span class="matchTime">' + form.matchHour + '</span>' +
+                '<span class="matchMax">' + form.maxPersonAndCount + '</span>' +
+                '<a href="/match/' + form.matchId + '" class="title">' + form.fieldTitle + '</a>' +
+                '<span>' + form.matchStatus + '</span>' +
+                '<div class="point win">+ 5</div>' +
+            '</li>'
 }

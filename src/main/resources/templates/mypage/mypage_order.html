@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/mypage_menu.css">
     <link rel="stylesheet" href="/css/mypage_order.css">
-    <link rel="stylesheet" href="/css/mypage_order_graph.css">
+    <link rel="stylesheet" href="/css/calendar_range.css">
+    <script src="/js/calendar_range.js"></script>
     <script src="/js/mypage_order.js"></script>
     <script src="/js/fetch.js"></script>
     <title>경기내역 :: 프로젝트</title>
@@ -30,219 +31,78 @@
             </div>
             <div class="content">
                 <h2>경기내역</h2>
-                <div class="searchBox">
+                <div class="date_picker_wrapper">
+                    <div class="date_picker_buttons">
+                        <button type="button" id="date_picker_6months" aria-selected="false">6개월</button>
+                        <button type="button" id="date_picker_1months" aria-selected="false">1개월</button>
+                        <button type="button" id="date_picker_1weeks" aria-selected="false">1주</button>
+                    </div>
+                    <div class="date_picker_calendar">
+                        <summary id="date_range">
+                            <div class="date_wrap">
+                                <input type="text" name="startDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
+                            </div>
+                            <span>-</span>
+                            <div class="date_wrap">
+                                <input type="text" name="endDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
+                            </div>
+                        </summary>
+                        <div id="date_range_calendar" class="">
+                            <div id="calendar_header">
+                                <button type="button" id="preButton">
+                                    <svg transform='rotate(180)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                        <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                </button>
+                                <div class="months">
+                                    <div id="leftMonth"></div>
+                                    <div id="rightMonth"></div>
+                                </div>
+                                <button type="button" id="nextButton">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                        <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                </button>
+                            </div>
+                            <div id="calendar_body">
+                                <div id="leftBody">
+                                    <div class="week">
+                                        <div class="cell"><div>일</div></div>
+                                        <div class="cell"><div>월</div></div>
+                                        <div class="cell"><div>화</div></div>
+                                        <div class="cell"><div>수</div></div>
+                                        <div class="cell"><div>목</div></div>
+                                        <div class="cell"><div>금</div></div>
+                                        <div class="cell"><div>토</div></div>
+                                    </div>
+                                </div>
+                                <div id="rightBody">
+                                    <div class="week">
+                                        <div class="cell"><div>일</div></div>
+                                        <div class="cell"><div>월</div></div>
+                                        <div class="cell"><div>화</div></div>
+                                        <div class="cell"><div>수</div></div>
+                                        <div class="cell"><div>목</div></div>
+                                        <div class="cell"><div>금</div></div>
+                                        <div class="cell"><div>토</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="calendar_bottom">
+                                <button type="button" id="confirmButton">완료</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="matchList">
-                    <li class="matchBox box">
-                        <div class="topbox">
-                            <span class="index">1</span>
+                <ul class="matchList box">
+                    <li class="matchBox">
+                            <span class="matchId">1</span>
                             <span class="matchDate">2023년 11월 26일(일)</span>
                             <span class="matchTime">18:00</span>
                             <span class="matchMax">6 vs 6 3파전</span>
                             <a href="#" class="title">부산 준타스 풋살 아레나 화이트</a>
                             <span>경기종료</span>
                             <div class="point win">+ 5</div>
-                            <button type="button" class="detailBtn" id="detail1">
-                                <svg class="detailSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
-                            </button>
-                        </div>
-                        <div class="detailBox">
-                            <div class="inner">
-                                <div class="matchData">
-                                    <h3>매치 데이터</h3>
-                                    <div class="innerBox">
-                                        <div class="graphBox">
-                                            <ul class="axis_x">
-                                                <li class="item">
-                                                    <button type="button" class="graph">
-                                                        <span class="data" style="height: 30%;">
-                                                            <span class="tooltip-text">등급1 : 30%</span>
-                                                        </span>
-                                                    </button>
-                                                    <div class="textBox">
-                                                        <span class="grade">등급1</span>
-                                                    </div>
-                                                </li>
-                                                <li class="item">
-                                                    <button type="button" class="graph">
-                                                        <span class="data" style="height: 10%;">
-                                                            <span class="tooltip-text">등급2 : 10%</span>
-                                                        </span>
-                                                    </button>
-                                                    <div class="textBox">
-                                                        <span class="grade">등급2</span>
-                                                    </div>
-                                                </li>
-                                                <li class="item">
-                                                    <button type="button" class="graph">
-                                                        <span class="data" style="height: 20%;">
-                                                            <span class="tooltip-text">등급2 : 20%</span>
-                                                        </span>
-                                                    </button>
-                                                    <div class="textBox">
-                                                        <span class="grade">등급2</span>
-                                                    </div>
-                                                </li>
-                                                <li class="item">
-                                                    <button type="button" class="graph">
-                                                        <span class="data" style="height: 40%;">
-                                                            <span class="tooltip-text">등급2 : 40%</span>
-                                                        </span>
-                                                    </button>
-                                                    <div class="textBox">
-                                                        <span class="grade">등급2</span>
-                                                    </div>
-                                                </li>
-                                                <li class="item">
-                                                    <button type="button" class="graph">
-                                                        <span class="data" style="height: 50%;">
-                                                            <span class="tooltip-text">등급2 : 50%</span>
-                                                        </span>
-                                                    </button>
-                                                    <div class="textBox">
-                                                        <span class="grade">등급2</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="matchScore">
-                                    <h3>내 결과</h3>
-                                    <ul class="scoreBox">
-                                        <li class="result">
-                                            <div class="matchResult">
-                                                <div class="team leftTeam">
-                                                    <div class="uniform"></div>
-                                                    <div class="teamScore">2</div>
-                                                </div>
-                                                <span class="myResult win">승</span>
-                                                <div class="team rightTeam">
-                                                    <div class="teamScore win">3</div>
-                                                    <div class="uniform"></div>
-                                                </div>
-                                            </div>
-                                            <span class="myScore win">+5</span>
-                                        </li>
-                                        <li class="result">
-                                            <div class="matchResult">
-                                                <div class="team leftTeam">
-                                                    <div class="uniform"></div>
-                                                    <div class="teamScore mix">0</div>
-                                                </div>
-                                                <span class="myResult mix">무</span>
-                                                <div class="team rightTeam">
-                                                    <div class="teamScore mix">0</div>
-                                                    <div class="uniform"></div>
-                                                </div>
-                                            </div>
-                                            <span class="myScore">0</span>
-                                        </li>
-                                        <li class="result">
-                                            <div class="matchResult">
-                                                <div class="team leftTeam">
-                                                    <div class="uniform"></div>
-                                                    <div class="teamScore lose">1</div>
-                                                </div>
-                                                <span class="myResult lose">패</span>
-                                                <div class="team rightTeam">
-                                                    <div class="teamScore">2</div>
-                                                    <div class="uniform"></div>
-                                                </div>
-                                            </div>
-                                            <span class="myScore lose">-5</span>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                     </li>
-                    <li class="matchBox box">
-                        <div class="topbox">
-                            <span class="index">1</span>
-                            <span class="matchDate">2023년 11월 26일(일)</span>
-                            <span class="matchTime">18:00</span>
-                            <span class="matchMax">6 vs 6 3파전</span>
-                            <a href="#" class="title">부산 준타스 풋살 아레나 화이트</a>
-                            <span>마감</span>
-                            <div class="point">-</div>
-                            <button type="button" class="detailBtn" id="detail1">
-                                <svg class="detailSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
-                            </button>
-                        </div>
-                        <div class="detailBox show">
-                            <div class="inner">
-                                <div class="matchData">
-                                    <h3>매치 데이터</h3>
-                                    <div class="innerBox">
-                                        <div class="graphBox">
-                                            <ul class="axis_x">
-                                                <li class="item">
-                                                    <button type="button" class="graph">
-                                                        <span class="data" style="height: 30%;">
-                                                            <span class="tooltip-text">등급1 : 30%</span>
-                                                        </span>
-                                                    </button>
-                                                    <div class="textBox">
-                                                        <span class="grade">등급1</span>
-                                                    </div>
-                                                </li>
-                                                <li class="item">
-                                                    <button type="button" class="graph">
-                                                        <span class="data" style="height: 10%;">
-                                                            <span class="tooltip-text">등급2 : 10%</span>
-                                                        </span>
-                                                    </button>
-                                                    <div class="textBox">
-                                                        <span class="grade">등급2</span>
-                                                    </div>
-                                                </li>
-                                                <li class="item">
-                                                    <button type="button" class="graph">
-                                                        <span class="data" style="height: 20%;">
-                                                            <span class="tooltip-text">등급2 : 20%</span>
-                                                        </span>
-                                                    </button>
-                                                    <div class="textBox">
-                                                        <span class="grade">등급2</span>
-                                                    </div>
-                                                </li>
-                                                <li class="item">
-                                                    <button type="button" class="graph">
-                                                        <span class="data" style="height: 40%;">
-                                                            <span class="tooltip-text">등급2 : 40%</span>
-                                                        </span>
-                                                    </button>
-                                                    <div class="textBox">
-                                                        <span class="grade">등급2</span>
-                                                    </div>
-                                                </li>
-                                                <li class="item">
-                                                    <button type="button" class="graph">
-                                                        <span class="data" style="height: 50%;">
-                                                            <span class="tooltip-text">등급2 : 50%</span>
-                                                        </span>
-                                                    </button>
-                                                    <div class="textBox">
-                                                        <span class="grade">등급2</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="matchScore">
-                                    <h3>내 결과</h3>
-                                    <ul class="scoreBox empty">
-                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 64c44.2 0 80 35.8 80 80v48H144V144c0-44.2 35.8-80 80-80zM80 144v48H64c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V256c0-35.3-28.7-64-64-64H368V144C368 64.5 303.5 0 224 0S80 64.5 80 144zM256 320v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32s32 14.3 32 32z"/></svg> -->
-                                        <span>경기가 끝나면 공개돼요.</span>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="box empty">
+                    <li class="empty">
                         <span>경기 기록이 없어요.</span>
                     </li>
                 </ul>

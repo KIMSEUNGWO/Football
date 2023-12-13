@@ -1,6 +1,9 @@
 package football.start.allOfFootball.service;
 
+import football.start.allOfFootball.controller.mypage.OrderDateForm;
+import football.start.allOfFootball.controller.mypage.OrderListForm;
 import football.start.allOfFootball.domain.*;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.enums.paymentEnums.CashEnum;
 import football.start.allOfFootball.repository.domainRepository.OrderRepository;
 import football.start.allOfFootball.service.domainService.PaymentService;
@@ -9,8 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +52,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Orders> findByMember(Member member) {
-        return orderRepository.findByMember(member);
+    public List<Orders> findByMatchBefore(Member member) {
+        return orderRepository.findByBefore(member);
+    }
+
+    @Override
+    public List<Orders> findByMatchAll(Member member, OrderDateForm form) {
+        return orderRepository.findByMatchAll(member, form);
+    }
+
+    @Override
+    public List<OrderListForm> getMatchResultForm(List<Orders> orderList) {
+        if (orderList.isEmpty()) return Collections.emptyList();
+        return orderList.stream().map(x -> OrderListForm.build(x.getMatch())).collect(Collectors.toList());
     }
 }
