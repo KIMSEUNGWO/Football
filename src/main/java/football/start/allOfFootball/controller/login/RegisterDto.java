@@ -53,7 +53,7 @@ public class RegisterDto{
             .grade(GradeEnum.루키)
             .memberGender(GenderEnum.valueOf(gender))
             .memberBirthday(getLocalDate(birthday))
-            .memberPhone(phone)
+            .memberPhone(phone.replace("-", ""))
             .build();
     }
 
