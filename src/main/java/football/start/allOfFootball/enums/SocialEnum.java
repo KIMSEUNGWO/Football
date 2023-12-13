@@ -1,7 +1,14 @@
 package football.start.allOfFootball.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum SocialEnum {
 
-    KAKAO,
-    NAVER;
+    KAKAO("kakao"),
+    NAVER("naver");
+
+    private String className;
 }
