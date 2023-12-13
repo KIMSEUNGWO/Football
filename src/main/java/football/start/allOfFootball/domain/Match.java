@@ -3,7 +3,6 @@ package football.start.allOfFootball.domain;
 import football.start.allOfFootball.controller.admin.EditMatchForm;
 import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import jakarta.persistence.*;
@@ -58,7 +57,7 @@ public class Match {
             .matchGender(form.getGender())
             .maxPerson(form.getMatchMaxPerson())
             .matchGrade(form.getMatchGrade())
-            .matchStatus(MatchStatus.모집)
+            .matchStatus(MatchStatus.모집중)
             .build();
     }
 

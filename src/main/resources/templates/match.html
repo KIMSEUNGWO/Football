@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/match.css">
     <link rel="stylesheet" href="/css/graph.css">
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=3ae9p1xnfk&submodules=geocoder"></script>
     <script src="/js/match_imageSlide.js"></script>
-    <script src="/js/graph.js"></script>
     <script src="/js/match.js"></script>
+    <script src="/js/match_maps.js"></script>
     <title>구장정보 :: 프로젝트</title>
 </head>
 <body>
@@ -28,9 +29,189 @@
                 <img th:each="image : ${matchForm.fieldImages}" th:src="|/images/fieldImage/${image.fieldImageStoreName}|" th:alt="${image.fieldImageName}">
             </div>
             <ul class="slide_pagination"></ul>
+            <div id="maps" class="disabled">
+                <div id="map" style="width: 100%; height: 100%;"></div>
+            </div>
         </div>
         <div class="field">
             <div class="fieldDetails">
+                <div class="matchResult box">
+                    <h2>경기 결과</h2>
+                    <div class="match-result-empty">
+                        <div class="lock-radius">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 64c44.2 0 80 35.8 80 80v48H144V144c0-44.2 35.8-80 80-80zM80 144v48H64c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V256c0-35.3-28.7-64-64-64H368V144C368 64.5 303.5 0 224 0S80 64.5 80 144zM256 320v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32s32 14.3 32 32z"/></svg>
+                        </div>
+                        <span>결과를 집계하고 있어요</span>
+                    </div>
+                    <div class="match-result-wrap">
+                        <div class="match-result">
+                            <div class="match-team left-team red lose">
+                                <span class="team-name">RED</span>
+                                <div class="team-detail left-team-detail">
+                                    <span class="match-score left-score">2</span>
+                                </div>
+                            </div>
+                            <div class="middle-box draw">
+                                <div class="myResult"></div>
+                                <div class="getScore">-</div>
+                            </div>
+                            <div class="match-team right-team blue">
+                                <span class="match-score right-score">3</span>
+                                <span class="team-name">BLUE</span>
+                            </div>
+                        </div>
+                        <div class="match-result-detail">
+                            <ul class="score-record left-score-record">
+                                <li class="goal left-goal">
+                                    <span class="goal-player">선수이름</span>
+                                    <b>10’</b>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M417.3 360.1l-71.6-4.8c-5.2-.3-10.3 1.1-14.5 4.2s-7.2 7.4-8.4 12.5l-17.6 69.6C289.5 445.8 273 448 256 448s-33.5-2.2-49.2-6.4L189.2 372c-1.3-5-4.3-9.4-8.4-12.5s-9.3-4.5-14.5-4.2l-71.6 4.8c-17.6-27.2-28.5-59.2-30.4-93.6L125 228.3c4.4-2.8 7.6-7 9.2-11.9s1.4-10.2-.5-15l-26.7-66.6C128 109.2 155.3 89 186.7 76.9l55.2 46c4 3.3 9 5.1 14.1 5.1s10.2-1.8 14.1-5.1l55.2-46c31.3 12.1 58.7 32.3 79.6 57.9l-26.7 66.6c-1.9 4.8-2.1 10.1-.5 15s4.9 9.1 9.2 11.9l60.7 38.2c-1.9 34.4-12.8 66.4-30.4 93.6zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm14.1-325.7c-8.4-6.1-19.8-6.1-28.2 0L194 221c-8.4 6.1-11.9 16.9-8.7 26.8l18.3 56.3c3.2 9.9 12.4 16.6 22.8 16.6h59.2c10.4 0 19.6-6.7 22.8-16.6l18.3-56.3c3.2-9.9-.3-20.7-8.7-26.8l-47.9-34.8z"/></svg>
+                                </li>
+                                <li class="goal left-goal">
+                                    <span class="goal-player">선수이름</span>
+                                    <b>17'</b>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M417.3 360.1l-71.6-4.8c-5.2-.3-10.3 1.1-14.5 4.2s-7.2 7.4-8.4 12.5l-17.6 69.6C289.5 445.8 273 448 256 448s-33.5-2.2-49.2-6.4L189.2 372c-1.3-5-4.3-9.4-8.4-12.5s-9.3-4.5-14.5-4.2l-71.6 4.8c-17.6-27.2-28.5-59.2-30.4-93.6L125 228.3c4.4-2.8 7.6-7 9.2-11.9s1.4-10.2-.5-15l-26.7-66.6C128 109.2 155.3 89 186.7 76.9l55.2 46c4 3.3 9 5.1 14.1 5.1s10.2-1.8 14.1-5.1l55.2-46c31.3 12.1 58.7 32.3 79.6 57.9l-26.7 66.6c-1.9 4.8-2.1 10.1-.5 15s4.9 9.1 9.2 11.9l60.7 38.2c-1.9 34.4-12.8 66.4-30.4 93.6zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm14.1-325.7c-8.4-6.1-19.8-6.1-28.2 0L194 221c-8.4 6.1-11.9 16.9-8.7 26.8l18.3 56.3c3.2 9.9 12.4 16.6 22.8 16.6h59.2c10.4 0 19.6-6.7 22.8-16.6l18.3-56.3c3.2-9.9-.3-20.7-8.7-26.8l-47.9-34.8z"/></svg>
+                                </li>
+                            </ul>
+                            <ul class="score-record right-score-record">
+                                <li class="goal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M417.3 360.1l-71.6-4.8c-5.2-.3-10.3 1.1-14.5 4.2s-7.2 7.4-8.4 12.5l-17.6 69.6C289.5 445.8 273 448 256 448s-33.5-2.2-49.2-6.4L189.2 372c-1.3-5-4.3-9.4-8.4-12.5s-9.3-4.5-14.5-4.2l-71.6 4.8c-17.6-27.2-28.5-59.2-30.4-93.6L125 228.3c4.4-2.8 7.6-7 9.2-11.9s1.4-10.2-.5-15l-26.7-66.6C128 109.2 155.3 89 186.7 76.9l55.2 46c4 3.3 9 5.1 14.1 5.1s10.2-1.8 14.1-5.1l55.2-46c31.3 12.1 58.7 32.3 79.6 57.9l-26.7 66.6c-1.9 4.8-2.1 10.1-.5 15s4.9 9.1 9.2 11.9l60.7 38.2c-1.9 34.4-12.8 66.4-30.4 93.6zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm14.1-325.7c-8.4-6.1-19.8-6.1-28.2 0L194 221c-8.4 6.1-11.9 16.9-8.7 26.8l18.3 56.3c3.2 9.9 12.4 16.6 22.8 16.6h59.2c10.4 0 19.6-6.7 22.8-16.6l18.3-56.3c3.2-9.9-.3-20.7-8.7-26.8l-47.9-34.8z"/></svg>
+                                    <b>5'</b>
+                                    <span class="goal-player">선수이름</span>
+                                </li>
+                                <li class="goal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M417.3 360.1l-71.6-4.8c-5.2-.3-10.3 1.1-14.5 4.2s-7.2 7.4-8.4 12.5l-17.6 69.6C289.5 445.8 273 448 256 448s-33.5-2.2-49.2-6.4L189.2 372c-1.3-5-4.3-9.4-8.4-12.5s-9.3-4.5-14.5-4.2l-71.6 4.8c-17.6-27.2-28.5-59.2-30.4-93.6L125 228.3c4.4-2.8 7.6-7 9.2-11.9s1.4-10.2-.5-15l-26.7-66.6C128 109.2 155.3 89 186.7 76.9l55.2 46c4 3.3 9 5.1 14.1 5.1s10.2-1.8 14.1-5.1l55.2-46c31.3 12.1 58.7 32.3 79.6 57.9l-26.7 66.6c-1.9 4.8-2.1 10.1-.5 15s4.9 9.1 9.2 11.9l60.7 38.2c-1.9 34.4-12.8 66.4-30.4 93.6zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm14.1-325.7c-8.4-6.1-19.8-6.1-28.2 0L194 221c-8.4 6.1-11.9 16.9-8.7 26.8l18.3 56.3c3.2 9.9 12.4 16.6 22.8 16.6h59.2c10.4 0 19.6-6.7 22.8-16.6l18.3-56.3c3.2-9.9-.3-20.7-8.7-26.8l-47.9-34.8z"/></svg>
+                                    <b>14'</b>
+                                    <span class="goal-player">선수이름</span>
+                                </li>
+                                <li class="goal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M417.3 360.1l-71.6-4.8c-5.2-.3-10.3 1.1-14.5 4.2s-7.2 7.4-8.4 12.5l-17.6 69.6C289.5 445.8 273 448 256 448s-33.5-2.2-49.2-6.4L189.2 372c-1.3-5-4.3-9.4-8.4-12.5s-9.3-4.5-14.5-4.2l-71.6 4.8c-17.6-27.2-28.5-59.2-30.4-93.6L125 228.3c4.4-2.8 7.6-7 9.2-11.9s1.4-10.2-.5-15l-26.7-66.6C128 109.2 155.3 89 186.7 76.9l55.2 46c4 3.3 9 5.1 14.1 5.1s10.2-1.8 14.1-5.1l55.2-46c31.3 12.1 58.7 32.3 79.6 57.9l-26.7 66.6c-1.9 4.8-2.1 10.1-.5 15s4.9 9.1 9.2 11.9l60.7 38.2c-1.9 34.4-12.8 66.4-30.4 93.6zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm14.1-325.7c-8.4-6.1-19.8-6.1-28.2 0L194 221c-8.4 6.1-11.9 16.9-8.7 26.8l18.3 56.3c3.2 9.9 12.4 16.6 22.8 16.6h59.2c10.4 0 19.6-6.7 22.8-16.6l18.3-56.3c3.2-9.9-.3-20.7-8.7-26.8l-47.9-34.8z"/></svg>
+                                    <b>20'</b>
+                                    <span class="goal-player">선수이름</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    <div class="match-result-wrap">
+                        <div class="match-result">
+                            <div class="match-team left-team blue lose">
+                                <span class="team-name">BLUE</span>
+                                <div class="team-detail left-team-detail">
+                                    <span class="match-score left-score">0</span>
+                                </div>
+                            </div>
+                            <div class="middle-box lose">
+                                <div class="myResult">LOSE</div>
+                                <div class="getScore">-5</div>
+                            </div>
+                            <div class="match-team right-team yellow">
+                                <span class="match-score right-score">1</span>
+                                <span class="team-name">YELLOW</span>
+                            </div>
+                        </div>
+                        <div class="match-result-detail">
+                            <ul class="score-record left-score-record">
+                            </ul>
+                            <ul class="score-record right-score-record">
+                                <li class="goal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M417.3 360.1l-71.6-4.8c-5.2-.3-10.3 1.1-14.5 4.2s-7.2 7.4-8.4 12.5l-17.6 69.6C289.5 445.8 273 448 256 448s-33.5-2.2-49.2-6.4L189.2 372c-1.3-5-4.3-9.4-8.4-12.5s-9.3-4.5-14.5-4.2l-71.6 4.8c-17.6-27.2-28.5-59.2-30.4-93.6L125 228.3c4.4-2.8 7.6-7 9.2-11.9s1.4-10.2-.5-15l-26.7-66.6C128 109.2 155.3 89 186.7 76.9l55.2 46c4 3.3 9 5.1 14.1 5.1s10.2-1.8 14.1-5.1l55.2-46c31.3 12.1 58.7 32.3 79.6 57.9l-26.7 66.6c-1.9 4.8-2.1 10.1-.5 15s4.9 9.1 9.2 11.9l60.7 38.2c-1.9 34.4-12.8 66.4-30.4 93.6zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm14.1-325.7c-8.4-6.1-19.8-6.1-28.2 0L194 221c-8.4 6.1-11.9 16.9-8.7 26.8l18.3 56.3c3.2 9.9 12.4 16.6 22.8 16.6h59.2c10.4 0 19.6-6.7 22.8-16.6l18.3-56.3c3.2-9.9-.3-20.7-8.7-26.8l-47.9-34.8z"/></svg>
+                                    <b>9'</b>
+                                    <span class="goal-player">선수이름</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    <div class="match-result-wrap">
+                        <div class="match-result">
+                            <div class="match-team left-team yellow draw">
+                                <span class="team-name">YELLOW</span>
+                                <div class="team-detail left-team-detail">
+                                    <span class="match-score left-score">0</span>
+                                </div>
+                            </div>
+                            <div class="middle-box draw">
+                                <div class="myResult">DRAW</div>
+                                <div class="getScore">-</div>
+                            </div>
+                            <div class="match-team right-team red">
+                                <span class="match-score right-score">0</span>
+                                <span class="team-name">RED</span>
+                            </div>
+                        </div>
+                        <div class="match-result-detail">
+                            <ul class="score-record left-score-record">
+                            </ul>
+                            <ul class="score-record right-score-record">
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="matchData box">
+                    <h2>매치 데이터</h2>
+                    <div class="innerBox">
+                        <div class="graphBox">
+                            <ul class="axis_x">
+                                <li class="item">
+                                    <button type="button" class="graph">
+                                        <span class="data" style="height: 30%;">
+                                            <span class="tooltip-text">등급1 : 30%</span>
+                                        </span>
+                                    </button>
+                                    <div class="textBox">
+                                        <span class="grade">등급1</span>
+                                    </div>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="graph">
+                                        <span class="data" style="height: 10%;">
+                                            <span class="tooltip-text">등급2 : 10%</span>
+                                        </span>
+                                    </button>
+                                    <div class="textBox">
+                                        <span class="grade">등급2</span>
+                                    </div>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="graph">
+                                        <span class="data" style="height: 20%;">
+                                            <span class="tooltip-text">등급2 : 20%</span>
+                                        </span>
+                                    </button>
+                                    <div class="textBox">
+                                        <span class="grade">등급2</span>
+                                    </div>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="graph">
+                                        <span class="data" style="height: 40%;">
+                                            <span class="tooltip-text">등급2 : 40%</span>
+                                        </span>
+                                    </button>
+                                    <div class="textBox">
+                                        <span class="grade">등급2</span>
+                                    </div>
+                                </li>
+                                <li class="item">
+                                    <button type="button" class="graph">
+                                        <span class="data" style="height: 50%;">
+                                            <span class="tooltip-text">등급2 : 50%</span>
+                                        </span>
+                                    </button>
+                                    <div class="textBox">
+                                        <span class="grade">등급2</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="teamInfo box">
+                    <h2>참가자 명단</h2>
+                    div.team-player
+                </div>
                 <div class="playInfo box">
                     <h2>경기정보</h2>
                     <div class="playInfoDetails">
@@ -46,11 +227,6 @@
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M64 128c0-17.7 14.3-32 32-32H544c17.7 0 32 14.3 32 32V448c0 17.7 14.3 32 32 32s32-14.3 32-32V128c0-53-43-96-96-96H96C43 32 0 75 0 128V448c0 17.7 14.3 32 32 32s32-14.3 32-32V128zm112 0c-8.8 0-16 7.2-16 16v48H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V320h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V224h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H384V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H288V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H192V144c0-8.8-7.2-16-16-16zm80 256H192V320h64v64zm96 0H288V320h64v64zm96 0H384V320h64v64zm0-96H384V224h64v64zm-96 0H288V224h64v64zm-96 0H192V224h64v64z"/></svg>
                             <span th:text="${matchForm.maxPersonAndMatchCount}">6 vs 6 3파전</span>
                         </div>
-                    </div>
-                </div>
-                <div class="matchData box">
-                    <h2>매치 데이터</h2>
-                    <div class="progress-bar">
                     </div>
                 </div>
                 <div class="fieldInfo box">
@@ -115,8 +291,8 @@
             <div class="fieldMain box">
                 <span class="matchDate" th:text="${matchForm.matchDate}">11월 23일 목요일 18:00</span>
                 <div class="matchLocation">
-                    <span class="fieldTitle" th:text="${matchForm.fieldTitle}">부산 준타스 풋살 아레나 화이트</span>
-                    <a href="#" class="fieldAddress" th:text="${matchForm.fieldAddress}">부산 부산진구 신천대로 241</a>
+                    <span class="fieldTitle" th:text="${matchForm.fieldTitle}">부산 준타스 풋살 아레나 화이트화이트화이트화이트</span>
+                    <a class="fieldAddress" th:text="${matchForm.fieldAddress}">부산 부산진구 신천대로 241</a>
                     <!-- <div class="view_count">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>
                         <span>100</span>
@@ -128,10 +304,13 @@
                         <span class="matchFriend">참가하는 친구가 <b class="impact">0명</b> 있어요</span>
                         <span class="matchPrice">10,000원<b class="notImpact"> / 2시간</b></span>
                     </div>
-                    <a th:href="|/order/${matchForm.matchId}|" th:class="'resultButton ' + ${matchForm.matchStatus.className}" th:text="${matchForm.matchStatus.status}"></a>
+                    <!-- <a th:href="|/order/${matchForm.matchId}|" th:class="'resultButton ' + ${matchForm.matchStatus.className}" th:text="${matchForm.matchStatus.status}"></a> -->
+                    <a th:href="|/order/${matchForm.matchId}|" class="resultButton on" th:text="${matchForm.matchStatus.status}">신청</a>
                 </div>
             </div>
         </div>
     </div>
+    
 </body>
+
 </html>
