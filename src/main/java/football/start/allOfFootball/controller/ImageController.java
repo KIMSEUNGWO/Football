@@ -4,7 +4,6 @@ import football.start.allOfFootball.common.file.FileService;
 import football.start.allOfFootball.enums.FileUploadType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
@@ -27,8 +26,9 @@ public class ImageController {
     private final FileService fileService;
 
     @ResponseBody
-    @GetMapping("/images/fieldImage/{filename}")
-    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
-        return new UrlResource("file:" + fileService.getFullPath(filename, FIELD_IMAGE));
+    @GetMapping("/images/{fileUploadType}/{filename}")
+    public Resource downloadImage(@PathVariable String fileUploadType, @PathVariable String filename) throws MalformedURLException {
+        FileUploadType type = FileUploadType.findDir(fileUploadType);
+        return new UrlResource("file:" + fileService.getFullPath(filename, type));
     }
 }
