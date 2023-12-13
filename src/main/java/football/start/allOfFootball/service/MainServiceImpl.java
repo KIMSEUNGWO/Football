@@ -7,7 +7,6 @@ import football.start.allOfFootball.dto.SearchDto;
 import football.start.allOfFootball.dto.SearchResultForm;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.repository.MainRepository;
-import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +42,7 @@ public class MainServiceImpl implements MainService{
         MainSideInfoForm form = new MainSideInfoForm();
         form.setMyInfo(member);
 
-        List<Orders> ordersList = orderService.findByMember(member);
+        List<Orders> ordersList = orderService.findByMatchBefore(member);
         if (ordersList.isEmpty()) return form;
 
         ordersList.forEach(x -> form.setMySchedule(x.getMatch()));
