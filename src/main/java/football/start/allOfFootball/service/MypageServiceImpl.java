@@ -1,11 +1,13 @@
 package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.controller.mypage.MyProfileDto;
+import football.start.allOfFootball.controller.mypage.MypageMainDto;
 import football.start.allOfFootball.domain.BeforePassword;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Profile;
 import football.start.allOfFootball.dto.ChangePasswordForm;
 import football.start.allOfFootball.enums.SocialEnum;
+import football.start.allOfFootball.formatter.DateFormatter;
 import football.start.allOfFootball.formatter.NumberFormatter;
 import football.start.allOfFootball.repository.MypageRepository;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
@@ -43,11 +45,13 @@ public class MypageServiceImpl implements MypageService{
         Profile profile = findMember.getProfile();
         if (profile != null) {
             myProfileDto.setProfileImage(profile.getProfileStoreName());
+        } else {
+            myProfileDto.setProfileImage("base.jpeg");
         }
         myProfileDto.setName(findMember.getMemberName());
         SocialEnum memberSocial = findMember.getMemberSocial();
         if (memberSocial != null) {
-            myProfileDto.setSocial(memberSocial.name());
+            myProfileDto.setSocial(memberSocial);
         }
         myProfileDto.setEmail(findMember.getMemberEmail());
         myProfileDto.setScore(format(findMember.getMemberScore()));
@@ -108,5 +112,27 @@ public class MypageServiceImpl implements MypageService{
         result.put("result", "ok");
         result.put("message", "비밀번호를 변경했습니다.");
         return result;
+    }
+
+    @Override
+    public MypageMainDto getMypageMain(Member findMember) {
+        String imgName = "base.jpeg";
+        Profile profile = findMember.getProfile();
+        if (profile != null) {
+            imgName = profile.getProfileStoreName();
+        }
+        String name = findMember.getMemberName();
+        String phone = findMember.getMemberPhone();
+        Optional<BeforePassword> findBeforePassword = memberRepository.findByBeforePassword(findMember);
+        String date = "변경된 기록 없음";
+        if (findBeforePassword.isPresent()) {
+            date = DateFormatter.dateFormat(findBeforePassword.get().getPasswordChangeDate());
+        }
+        return MypageMainDto.builder()
+            .profileImage(imgName)
+            .name(name)
+            .phone(phone)
+            .changePasswordDate(date)
+            .build();
     }
 }

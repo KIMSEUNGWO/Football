@@ -55,4 +55,8 @@ public class MemberRepository {
         String encode = bc.encodeBCrypt(newPassword);
         member.setMemberPassword(encode);
     }
+
+    public Optional<BeforePassword> findByBeforePassword(Member findMember) {
+        return jpaBeforePasswordRepository.findByMember(findMember);
+    }
 }

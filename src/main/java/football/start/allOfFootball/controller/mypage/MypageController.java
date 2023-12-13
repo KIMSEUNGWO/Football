@@ -31,25 +31,48 @@ public class MypageController {
         }
         Member findMember = optionalMember.get();
         MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
+        MypageMainDto mypageMainDto = mypageService.getMypageMain(findMember);
         model.addAttribute("profile", myProfileDto);
+        model.addAttribute("main", mypageMainDto);
         return "/mypage/mypage_main";
     }
 
     @GetMapping("/order")
-    public String orderList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId) {
-
+    public String orderList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
+        Optional<Member> optionalMember = mypageService.findById(memberId);
+        if (optionalMember.isEmpty()) {
+            log.info("사용자 정보가 없습니다");
+            return "redirect:/";
+        }
+        Member findMember = optionalMember.get();
+        MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
+        model.addAttribute("profile", myProfileDto);
 
         return "/mypage/mypage_order";
     }
     @GetMapping("/cash")
-    public String cashList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId) {
-
+    public String cashList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
+        Optional<Member> optionalMember = mypageService.findById(memberId);
+        if (optionalMember.isEmpty()) {
+            log.info("사용자 정보가 없습니다");
+            return "redirect:/";
+        }
+        Member findMember = optionalMember.get();
+        MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
+        model.addAttribute("profile", myProfileDto);
 
         return "/mypage/mypage_cash";
     }
     @GetMapping("/coupon")
-    public String couponList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId) {
-
+    public String couponList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
+        Optional<Member> optionalMember = mypageService.findById(memberId);
+        if (optionalMember.isEmpty()) {
+            log.info("사용자 정보가 없습니다");
+            return "redirect:/";
+        }
+        Member findMember = optionalMember.get();
+        MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
+        model.addAttribute("profile", myProfileDto);
 
         return "/mypage/mypage_coupon";
     }

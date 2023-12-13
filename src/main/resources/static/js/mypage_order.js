@@ -22,4 +22,46 @@ window.addEventListener('load', () => {
             }
         })
     })
+
+    search();
 })
+
+function search() {
+    let condition = '';
+    
+    fetchPost('/mypage/order/get', condition, matchResult);
+}
+
+function getJson(startDateValue, endDateValue) {
+    let json = {startDate : startDateValue, 
+                endDate : endDateValue};
+    return json;
+}
+
+function matchResult(list) {
+
+    if (list == null || list.length < 1) {
+        searchEmpty();
+    } else {
+        createList(list);
+    }
+}
+
+function searchEmpty() {
+    let matchList = document.querySelector('.matchList');
+    matchList.innerHTML = '<li class="box empty"><span>경기 기록이 없어요.</span></li>';
+}
+
+function createList(list) {
+    let matchList = document.querySelector('.matchList');
+
+    let temp = ''
+    for (let i=0;i<list.length;i++) {
+        temp += resultForm(list[i]);
+    }
+    searchResult.innerHTML = temp;
+}
+
+function resultForm(form) {
+    
+}
