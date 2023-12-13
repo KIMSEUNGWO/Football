@@ -3,6 +3,7 @@ package football.start.allOfFootball.service;
 import football.start.allOfFootball.common.BCrypt;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.repository.LoginRepository;
+import football.start.allOfFootball.repository.domainRepository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class LoginServiceImpl implements LoginService{
 
     private final LoginRepository loginRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public Optional<Member> login(String email, String password) {
@@ -22,7 +24,7 @@ public class LoginServiceImpl implements LoginService{
         if (loginMember.isEmpty()) return Optional.empty();
 
         Member findMember = loginMember.get();
-        boolean isLogin = BCrypt.matchBCrypt(findMember.combineSalt(password), findMember.getMemberPassword());
+        boolean isLogin = memberRepository.isExactPassword(findMember, password);
         if (!isLogin) {
             return Optional.empty();
         }

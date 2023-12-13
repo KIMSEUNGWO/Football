@@ -1,5 +1,6 @@
 package football.start.allOfFootball.common;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -7,17 +8,16 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class BCrypt {
 
-    @Autowired
-    private static final BCryptPasswordEncoder bc = new BCryptPasswordEncoder(10);;
+    private final BCryptPasswordEncoder bc;
 
-
-    public static String encodeBCrypt(String password) {
+    public String encodeBCrypt(String password) {
         return bc.encode(password);
     }
 
-    public static boolean matchBCrypt(String password, String encodedPassword) {
+    public boolean matchBCrypt(String password, String encodedPassword) {
         return bc.matches(password, encodedPassword);
     }
 

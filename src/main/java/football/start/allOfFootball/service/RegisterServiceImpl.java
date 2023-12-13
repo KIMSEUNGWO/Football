@@ -19,6 +19,7 @@ import java.util.Optional;
 public class RegisterServiceImpl implements RegisterService{
 
     private final RegisterRepository registerRepository;
+    private final BCrypt bc;
 
     @Override
     public Map<String, String> validEmail(EmailDto emailDto, Map<String, String> map) {
@@ -37,7 +38,7 @@ public class RegisterServiceImpl implements RegisterService{
         member.setMemberSalt();
 
         String memberPassword = member.combineSalt(member.getMemberPassword());
-        String encodePassword = BCrypt.encodeBCrypt(memberPassword);
+        String encodePassword = bc.encodeBCrypt(memberPassword);
         member.setMemberPassword(encodePassword);
 
 
