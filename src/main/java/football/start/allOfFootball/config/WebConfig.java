@@ -22,9 +22,9 @@ public class WebConfig implements WebMvcConfigurer {
 //                .order(1)
 //                .addPathPatterns("/mypage", "/mypage/**", "/admin", "/admin/**")
 //                .excludePathPatterns("/css/**", "/js/**", "/fonts/**", "/images/**");
-        registry.addInterceptor(new OrderInterceptor(memberService))
-            .order(2)
-            .addPathPatterns("/order/**");
+//        registry.addInterceptor(new OrderInterceptor(memberService))
+//            .order(2)
+//            .addPathPatterns("/order/**");
     }
 
 }

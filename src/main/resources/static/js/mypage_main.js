@@ -66,4 +66,37 @@ window.addEventListener('load', () => {
     deleteCancelBtn2.addEventListener('click', () => {
         deletePop.classList.add('disabled');
     });
+
+    // password
+    let pwSaveBtn = document.querySelector('.saveBtn');
+    pwSaveBtn.addEventListener('click', () => {
+        let currPw = document.querySelector('input[name="currPassword"]').value;
+        let changePw = document.querySelector('input[name="changePassword"]').value;
+        let checkPw = document.querySelector('input[name="checkPassword"]').value;
+
+        let json = {nowPassword : currPw, changePassword : changePw, checkPassword : checkPw};
+        fetchPost('/change/password', json, result);
+    })
 })
+
+function result(map) {
+    console.log(map);
+    if (map.result == 'fail') {
+        if (map.message == null) {
+            let currPwError = document.querySelector('#bfpw');
+            let changePwError = document.querySelector('#cpw');
+            let checkPwError = document.querySelector('#cpwc');
+            
+            currPwError.innerHTML = (map.nowPwError != null) ? map.nowPwError : '';
+            changePwError.innerHTML = (map.changePwError != null) ? map.changePwError : '';
+            checkPwError.innerHTML = (map.checkPwError != null) ? map.checkPwError : '';
+        } else {
+            alert(map.message);
+            location.href = '/';
+        }
+    }
+    if (map.result == 'ok') {
+        alert(map.message);
+        location.href = '/mypage';
+    }
+}

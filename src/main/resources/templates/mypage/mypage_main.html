@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/mypage_menu.css">
     <link rel="stylesheet" href="/css/mypage_main.css">
     <script src="/js/mypage_main.js"></script>
+    <script src="/js/fetch.js"></script>
     <title>마이페이지 :: 프로젝트</title>
 </head>
 <body>
@@ -43,7 +44,7 @@
                     <form action="#" method="post">
                         <div class="profilebox">
                             <button type="button" id="img">
-                                <img src="/images/구장예제사진3.jpg" width="100%" height="100%" alt="김승우" id="myProfile">
+                                <img src="/images/profile/구장예제사진3.jpg" width="100%" height="100%" alt="김승우" id="myProfile">
                                 <input type="file" name="profileImage" id="editProfile" accept="image/*">
                                 <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="g68VV5Ghc0ymGpbFWhEx"><circle cx="18" cy="18" r="18" fill="#000"></circle><path d="M11.375 22.658v2.969h2.969l8.756-8.756-2.97-2.969-8.755 8.756zm14.02-8.083a.788.788 0 000-1.116l-1.852-1.852a.788.788 0 00-1.116 0l-1.45 1.448 2.97 2.97 1.448-1.45z" fill="#fff"></path></svg>
                             </button>
@@ -96,14 +97,17 @@
                         <span>비밀번호를 잊으셨나요?</span>
                         <a href="/findPassword" class="findPassword">비밀번호 재설정</a>
                     </div>
+                    <div class="errorMsg" id="bfpw" style="margin-top: 0.3rem;"></div>
                 </div>
                 <div class="inputBox">
-                    <span>비밀번호<b class="required">*</b></span>
+                    <span>변경 비밀번호<b class="required">*</b></span>
                     <input type="password" name="changePassword" id="changePassword" minlength="8" value="" placeholder="대,소문자, 숫자, 특수문자 포함 최소 8자 이상">
+                    <div class="errorMsg" id="cpw" style="margin-top: 0.3rem;"></div>
                 </div>
                 <div class="inputBox">
-                    <span>비밀번호 확인<b class="required">*</b></span>
+                    <span>변경 비밀번호 확인<b class="required">*</b></span>
                     <input type="password" name="checkPassword" id="checkPassword" value="">
+                    <div class="errorMsg" id="cpwc" style="margin-top: 0.3rem;"></div>
                 </div>
             </form>
             <div class="popBottom">

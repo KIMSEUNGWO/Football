@@ -17,6 +17,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public Optional<Member> findByMemberId(Long memberId) {
+        if (memberId == null) return Optional.empty();
         return memberRepository.findByMemberId(memberId);
     }
 }
