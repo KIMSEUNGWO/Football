@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/css/admin_ground_common.css">
     <script src="/js/admin_ground_add.js"></script>
     <script src="/js/admin_ground_image_preview.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/js/admin_ground_add_address.js"></script>
     <title>구장등록 :: 프로젝트</title>
 </head>
 <body>
@@ -57,8 +59,8 @@
                                 <div class="errorMsg" id="errorRegion"></div>
                                 <div class="errorMsg field-error" th:errors="*{region}">[[${errorMsg}]]</div>
 
-                                <input type="text" th:field="*{fieldAddress}" class="inputForm" th:errorclass="field-error">
-                                <button type="button" class="addressBtn btn">주소검색</button>
+                                <input type="text" th:field="*{fieldAddress}" class="inputForm" th:errorclass="field-error" readonly placeholder="도로명 주소">
+                                <button type="button" class="addressBtn btn" onclick="searchAddress()">주소검색</button>
                                 <div class="errorMsg" id="errorFieldAddress"></div>
                                 <div class="errorMsg field-error" th:errors="*{fieldAddress}">[[${errorMsg}]]</div>
                             </td>

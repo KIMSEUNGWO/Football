@@ -162,6 +162,13 @@ div.imgBox svg {
     height: 2rem;
     width: 5rem;
     font-size: 1rem;
+    cursor: pointer;
+}
+input[name=fieldAddress] {
+    background-color: rgb(246, 246, 246);
+    cursor: default;
+    width: 15rem;
+    color: rgb(106, 106, 106);
 }
 
 .subOption {
