@@ -1,4 +1,4 @@
-가window.addEventListener('load', () => {
+window.addEventListener('load', () => {
     let mapsBtn = document.querySelector('.fieldAddress');
     let maps = document.querySelector('#maps');
     mapsBtn.addEventListener('click', () => {
@@ -29,8 +29,6 @@ function showMaps(address) {
             map: map
         });
         
-        console.log(response);
-        // 성공 시의 response 처리
     });
     
 }
