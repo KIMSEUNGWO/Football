@@ -1,4 +1,4 @@
-package football.start.allOfFootball.enums;
+package football.start.allOfFootball.enums.matchEnums;
 
 public enum ResultEnum {
 

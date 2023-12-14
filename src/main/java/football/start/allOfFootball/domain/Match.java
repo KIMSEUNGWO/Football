@@ -46,7 +46,7 @@ public class Match {
     private MatchStatus matchStatus;
 
     @OneToMany(mappedBy = "match")
-    public List<Orders> ordersList;
+    private List<Orders> ordersList;
 
     public static Match build(Field field, SaveMatchForm form) {
         return Match.builder()
