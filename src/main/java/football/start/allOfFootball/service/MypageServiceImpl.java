@@ -59,6 +59,7 @@ public class MypageServiceImpl implements MypageService{
         myProfileDto.setGrade(findMember.getGrade());
 //        myProfileDto.setMatchScore();
 
+        myProfileDto.setCash(format(findMember.getMemberCash()));
         return myProfileDto;
     }
 

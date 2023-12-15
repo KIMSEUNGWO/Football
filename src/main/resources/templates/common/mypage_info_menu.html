@@ -44,16 +44,27 @@
         </div>
     </div>
 
-    <div class="mypageMenu box" th:fragment="mypage_menu">
-        <h3>마이페이지</h3>
-        <ul class="menuList">
-            <li aria-pressed="false"><a href="/mypage">계정 관리</a></li>
-            <li aria-pressed="false"><a href="/mypage/order">경기내역</a></li>
-            <li aria-pressed="true"><a href="/mypage/cash">충전내역</a></li>
-            <li aria-pressed="false"><a href="/mypage/coupon">쿠폰</a></li>
-            <li aria-pressed="false"><a href="/mypage/friend">친구</a></li>
-            <li aria-pressed="false"><a href="/mypage/settings">설정</a></li>
-        </ul>
+    <div class="mypageMenu" th:fragment="mypage_menu">
+        <div class="myCash box">
+            <div class="nowCash">
+                <div class="flex">
+                    <span>캐시</span>
+                    <a href="/cash/charge" class="cashBtn">충전</a>
+                </div>
+                <div class="money" th:text="${profile.cash} + '원'"></div>
+            </div>
+        </div>
+        <div class="box">
+            <h3>마이페이지</h3>
+            <ul class="menuList">
+                <li th:aria-pressed="${menu  == 'main'} ? 'true' : 'false'"><a href="/mypage">계정 관리</a></li>
+                <li th:aria-pressed="${menu  == 'order'} ? 'true' : 'false'"><a href="/mypage/order">경기내역</a></li>
+                <li th:aria-pressed="${menu  == 'cash'} ? 'true' : 'false'"><a href="/mypage/cash">충전내역</a></li>
+                <li th:aria-pressed="${menu  == 'coupon'} ? 'true' : 'false'"><a href="/mypage/coupon">쿠폰</a></li>
+                <li th:aria-pressed="${menu  == 'friend'} ? 'true' : 'false'"><a href="/mypage/friend">친구</a></li>
+                <li th:aria-pressed="${menu  == 'setting'} ? 'true' : 'false'"><a href="/mypage/settings">설정</a></li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>

@@ -97,7 +97,10 @@
     max-height: 21rem;
 }
 
-
+.menuList a {
+    width: 100%;
+    display: inline-block;
+}
 .menuList > li {
     font-size: 1.1rem;
     padding: 0.2rem 0.5rem;
@@ -113,4 +116,42 @@
 }
 .menuList > li:hover {
     text-decoration: underline;
+}
+
+/* 캐시 박스 */
+.myCash {
+    width: 100%;
+    background-color: var(--main-font-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    border: none;
+    margin-bottom: 1rem;
+    box-shadow: 2px 2px 3px #e4e4e4;
+}
+.myCash > * {
+    margin: 0;
+}
+.money {
+    font-size: 1.3rem;
+}
+.nowCash {
+    width: 100%;
+}
+
+.cashBtn {
+    color: white;
+    text-decoration: underline;
+    font-size: 0.9rem;
+
+}
+.flex {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.3rem;
+}
+.flex > * {
+    margin: 0;
 }

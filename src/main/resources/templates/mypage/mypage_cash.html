@@ -14,16 +14,9 @@
     <div class="container">
         <div class="myInfo box" th:replace="~{/common/mypage_info_menu :: myinfo}"></div>
         <div class="mypageMain">
-            <div class="mypageMenu box" th:replace="~{/common/mypage_info_menu :: mypage_menu}"></div>
+            <div class="mypageMenu" th:replace="~{/common/mypage_info_menu :: mypage_menu}"></div>
             <div class="content">
                 <h2>충전내역</h2>
-                <div class="myCash box">
-                    <div class="nowCash">
-                        <div>캐시</div>
-                        <div class="money">10,000원</div>
-                    </div>
-                    <button type="button" class="cashBtn">충전</button>
-                </div>
                 <ul class="cashList box">
                     <li class="cashBox">
                         <span class="cashDate">2023년 11월 25일(토)</span>

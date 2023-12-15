@@ -34,6 +34,7 @@ public class MypageController {
         MypageMainDto mypageMainDto = mypageService.getMypageMain(findMember);
         model.addAttribute("profile", myProfileDto);
         model.addAttribute("main", mypageMainDto);
+        model.addAttribute("menu", "main");
         return "/mypage/mypage_main";
     }
 
@@ -47,7 +48,7 @@ public class MypageController {
         Member findMember = optionalMember.get();
         MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
         model.addAttribute("profile", myProfileDto);
-
+        model.addAttribute("menu", "order");
         return "/mypage/mypage_order";
     }
     @GetMapping("/cash")
@@ -60,7 +61,7 @@ public class MypageController {
         Member findMember = optionalMember.get();
         MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
         model.addAttribute("profile", myProfileDto);
-
+        model.addAttribute("menu", "cash");
         return "/mypage/mypage_cash";
     }
     @GetMapping("/coupon")
@@ -73,7 +74,7 @@ public class MypageController {
         Member findMember = optionalMember.get();
         MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
         model.addAttribute("profile", myProfileDto);
-
+        model.addAttribute("menu", "coupon");
         return "/mypage/mypage_coupon";
     }
 

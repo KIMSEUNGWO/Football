@@ -18,17 +18,7 @@
     <div class="container">
         <div class="myInfo box" th:replace="~{/common/mypage_info_menu :: myinfo}"></div>
         <div class="mypageMain">
-            <div class="mypageMenu box" th:fragment="mypage_menu">
-                <h3>마이페이지</h3>
-                <ul class="menuList">
-                    <li aria-pressed="false"><a href="/mypage">계정 관리</a></li>
-                    <li aria-pressed="false"><a href="/mypage/order">경기내역</a></li>
-                    <li aria-pressed="true"><a href="/mypage/cash">충전내역</a></li>
-                    <li aria-pressed="false"><a href="/mypage/coupon">쿠폰</a></li>
-                    <li aria-pressed="false"><a href="/mypage/friend">친구</a></li>
-                    <li aria-pressed="false"><a href="/mypage/settings">설정</a></li>
-                </ul>
-            </div>
+            <div class="mypageMenu box" th:replace="~{/common/mypage_info_menu :: mypage_menu}"></div>
             <div class="content">
                 <h2>경기내역</h2>
                 <div class="date_picker_wrapper">

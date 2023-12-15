@@ -20,4 +20,6 @@ public class MyProfileDto {
     private String rank;
     private GradeEnum grade;
     private MatchScore matchScore;
+
+    private String cash;
 }
