@@ -8,6 +8,11 @@ header{
 header .flexL, .flexR{
     display: flex;
     margin: 1rem 0.5rem;
+    align-items: center;
+    gap: 2rem;
+}
+.flexR .login:hover {
+    text-decoration: underline;
 }
 
 header .logo {
