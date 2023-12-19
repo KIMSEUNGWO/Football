@@ -54,5 +54,12 @@ public class LoginController {
         return "redirect:" + redirectURI;
     }
 
-
+    @GetMapping("/logout")
+    public String logout(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpServletRequest request) {
+        if (memberId != null) {
+            HttpSession session = request.getSession();
+            session.removeAttribute(LOGIN_MEMBER);
+        }
+        return "redirect:/";
+    }
 }
