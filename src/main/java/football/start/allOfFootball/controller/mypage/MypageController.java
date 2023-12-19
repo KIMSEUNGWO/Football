@@ -1,7 +1,9 @@
 package football.start.allOfFootball.controller.mypage;
 
 import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.service.MypageService;
+import football.start.allOfFootball.service.domainService.CouponListService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import java.util.List;
 import java.util.Optional;
 
 import static football.start.allOfFootball.SessionConst.*;
@@ -21,6 +24,7 @@ import static football.start.allOfFootball.SessionConst.*;
 public class MypageController {
 
     private final MypageService mypageService;
+    private final CouponListService couponListService;
 
     @GetMapping
     public String mainPage(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
@@ -73,7 +77,9 @@ public class MypageController {
         }
         Member findMember = optionalMember.get();
         MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
+        List<CouponListForm> couponList = couponListService.getCouponList(findMember);
         model.addAttribute("profile", myProfileDto);
+        model.addAttribute("couponList", couponList);
         model.addAttribute("menu", "coupon");
         return "/mypage/mypage_coupon";
     }
