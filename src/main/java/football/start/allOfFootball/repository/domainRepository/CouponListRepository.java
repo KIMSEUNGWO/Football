@@ -31,7 +31,7 @@ public class CouponListRepository {
     public List<CouponList> getCouponList(Member member) {
         return query.selectFrom(couponList)
             .where(couponList.member.eq(member).and(couponList.couponListExpireDate.gt(LocalDateTime.now())).and(couponList.couponListStatus.eq('N')))
-            .orderBy(couponList.couponListId.desc())
+            .orderBy(couponList.couponListExpireDate.asc())
             .fetch();
     }
 
