@@ -4,9 +4,7 @@ import football.start.allOfFootball.enums.paymentEnums.CashEnum;
 import football.start.allOfFootball.enums.paymentEnums.PaymentType;
 import football.start.allOfFootball.service.domainService.PaymentService;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Builder
@@ -14,9 +12,12 @@ import lombok.ToString;
 @Entity
 @Table(name = "PAYMENT")
 @SequenceGenerator(name = "SEQ_PAYMENT", sequenceName = "SEQ_PAYMENT_ID", allocationSize = 1)
-public class Payment extends BaseTimeEntity{
+@NoArgsConstructor
+@AllArgsConstructor
+public class Payment extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PAYMENT")
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PAYMENT")
     private Long paymentId;
 
     @ManyToOne
