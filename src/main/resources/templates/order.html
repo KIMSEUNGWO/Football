@@ -31,7 +31,7 @@
                         <div class="detailBox">
                             <div class="coupons">
                                 <span>쿠폰</span>
-                                <button type="button" id="couponBtn">1개 보유 ></button>
+                                <button type="button" id="couponBtn" th:text="${#lists.size(orderForm.couponList)} + '개 보유 >'">1개 보유 ></button>
                             </div>
                             <div class="cash">
                                 <span>머니</span>
