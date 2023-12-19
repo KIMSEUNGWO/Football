@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -77,7 +78,7 @@ public class MatchService {
     public List<MatchData> getMatchData(Long memberId, Match match) {
         List<Orders> ordersList = match.getOrdersList();
         boolean isPresent = matchRepository.isContainsMember(ordersList, memberId);
-        if (!isPresent) return null;
+        if (!isPresent) return Collections.emptyList();
 
         int person = ordersList.size();
         MatchDataCalculator cal = new MatchDataCalculator(person);

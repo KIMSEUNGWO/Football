@@ -7,6 +7,8 @@ import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -27,7 +29,7 @@ public class SearchResultForm {
     public static SearchResultForm build(Match form) {
         return SearchResultForm.builder()
             .matchId(form.getMatchId())
-            .matchHour(getTimeForm(form.getMatchHour()))
+            .matchHour(getTimeForm(form.getMatchDate()))
             .matchRegion(form.getField().getFieldLocation())
             .matchTitle(form.getField().getFieldTitle())
             .matchGender(form.getMatchGender())
@@ -41,7 +43,7 @@ public class SearchResultForm {
         return maxPerson + " vs " + maxPerson;
     }
 
-    private static String getTimeForm(Integer matchHour) {
-        return String.format("%02d:00", matchHour);
+    private static String getTimeForm(LocalDateTime date) {
+        return String.format("%02d:00", date.getHour());
     }
 }

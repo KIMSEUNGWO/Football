@@ -17,6 +17,8 @@ import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,15 +54,20 @@ public class AdminRepositoryImpl implements AdminRepository{
         return jpaOrderRepository.findByMatch(match).size();
     }
 
+
     @Override
     public List<Match> findByAllMatch(SearchMatchDto searchDto) {
+        LocalDate start = searchDto.getStartDate();
+        LocalDate end = searchDto.getEndDate();
         return query.selectFrom(match)
-                .join(match.field, field)
-                .where(match.matchDate.between(searchDto.getStartDate(), searchDto.getEndDate())
-                    ,joinWord(searchDto.getWord())
-                    ,joinRegion(searchDto.getRegion()))
-                .orderBy(match.matchDate.desc(), match.matchHour.asc())
-                .fetch();
+            .join(match.field, field)
+            .where(match.matchDate.between(
+                    LocalDateTime.of(start.getYear(), start.getMonthValue(), start.getDayOfMonth(), 0, 0),
+                    LocalDateTime.of(end.getYear(), end.getMonthValue(), end.getDayOfMonth(), 23, 59))
+                ,joinWord(searchDto.getWord())
+                ,joinRegion(searchDto.getRegion()))
+            .orderBy(match.matchDate.desc())
+            .fetch();
     }
 
 

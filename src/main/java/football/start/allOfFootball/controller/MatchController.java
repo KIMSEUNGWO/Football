@@ -41,10 +41,10 @@ public class MatchController {
         MatchViewForm matchForm = MatchViewForm.build(match); // 기본 데이터
 
         Optional<Member> byMemberId = memberService.findByMemberId(memberId);
-        model.addAttribute("participant", byMemberId.isPresent());
         if (byMemberId.isPresent()) {
             List<MatchData> data = matchService.getMatchData(memberId, match); // 매치 데이터
             model.addAttribute("matchData", data);
+            model.addAttribute("participant", !data.isEmpty());
         }
 
 

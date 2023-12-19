@@ -7,6 +7,7 @@ import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -29,7 +30,7 @@ public class EditMatchForm {
     public static EditMatchForm build(Match form) {
         return EditMatchForm.builder()
             .matchDate(getDateForm(form.getMatchDate()))
-            .matchHour(form.getMatchHour())
+            .matchHour(getHour(form.getMatchDate()))
             .matchMaxPerson(form.getMaxPerson())
             .matchCount(form.getMatchCount())
             .gender(form.getMatchGender())
@@ -37,7 +38,11 @@ public class EditMatchForm {
             .build();
     }
 
-    private static String getDateForm(LocalDate matchDate) {
+    private static Integer getHour(LocalDateTime matchDate) {
+        return matchDate.getHour();
+    }
+
+    private static String getDateForm(LocalDateTime matchDate) {
         return timeFormat(matchDate.getYear()) + "/" + timeFormat(matchDate.getMonthValue()) + "/" + timeFormat(matchDate.getDayOfMonth());
     }
 

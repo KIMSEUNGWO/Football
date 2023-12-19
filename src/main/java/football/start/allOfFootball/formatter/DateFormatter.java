@@ -11,16 +11,16 @@ public class DateFormatter {
     private static final String[] dayOfWeek = {"월요일", "화요일","수요일","목요일","금요일","토요일","일요일"};
     private static final String[] dayOfWeek2 = {"월", "화","수","목","금","토","일"};
 
-    public static String dateFormat(LocalDate date, int hourDate) {
+    public static String dateFormatAll(LocalDateTime date) {
         int year = date.getYear();
         int month = date.getMonthValue();
         int day = date.getDayOfMonth();
         String week = dayOfWeek[date.getDayOfWeek().getValue()-1];
-        String hour = String.format("%02d:00", hourDate);
+        String hour = String.format("%02d:00", date.getHour());
 
         return String.format("%d월 %d일 %s %s", month, day, week, hour);
     }
-    public static String dateFormat(LocalDate date) {
+    public static String dateFormatAndWeek(LocalDate date) {
         int year = date.getYear();
         int month = date.getMonthValue();
         int day = date.getDayOfMonth();
@@ -36,7 +36,7 @@ public class DateFormatter {
         return String.format("%d년 %d월 %d일", year, month, day);
     }
 
-    public static String sideMenuDateForm(LocalDate date) {
+    public static String sideMenuDateForm(LocalDateTime date) {
         int year = date.getYear();
         int month = date.getMonthValue();
         int day = date.getDayOfMonth();

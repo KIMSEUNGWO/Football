@@ -5,6 +5,7 @@ import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.formatter.DateFormatter;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -27,7 +28,7 @@ public class OrderListForm {
         return OrderListForm.builder()
             .matchId(match.getMatchId())
             .matchDate(DateFormatter.dateFormat(match.getMatchDate()))
-            .matchHour(getHourForm(match.getMatchHour()))
+            .matchHour(getHourForm(match.getMatchDate()))
             .maxPersonAndCount(getMix(match.getMaxPerson(), match.getMatchCount()))
             .fieldTitle(match.getField().getFieldTitle())
             .matchStatus(match.getMatchStatus().name())
@@ -38,7 +39,7 @@ public class OrderListForm {
         return maxPerson + " vs " + maxPerson + " " + matchCount + "파전";
     }
 
-    private static String getHourForm(Integer matchHour) {
-        return String.format("%02d:00", matchHour);
+    private static String getHourForm(LocalDateTime matchHour) {
+        return String.format("%02d:00", matchHour.getHour());
     }
 }

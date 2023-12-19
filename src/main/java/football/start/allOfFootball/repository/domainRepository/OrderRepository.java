@@ -9,9 +9,12 @@ import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+import static football.start.allOfFootball.domain.QMatch.match;
 import static football.start.allOfFootball.domain.QOrders.orders;
 import static football.start.allOfFootball.enums.matchEnums.MatchStatus.*;
 
@@ -40,8 +43,15 @@ public class OrderRepository {
     public List<Orders> findByMatchAll(Member member, OrderDateForm form) {
         if (form == null) return Collections.emptyList();
 
+        LocalDate start = form.getStartDate();
+        LocalDate end = form.getEndDate();
+
         return query.selectFrom(orders)
-            .where(orders.member.eq(member).and(orders.match.matchDate.between(form.getStartDate(), form.getEndDate())))
+            .where(orders.member.eq(member).and(
+                    match.matchDate.between(
+                        LocalDateTime.of(start.getYear(), start.getMonthValue(), start.getDayOfMonth(), 0, 0),
+                        LocalDateTime.of(end.getYear(), end.getMonthValue(), end.getDayOfMonth(), 23, 59))
+            ))
             .orderBy(orders.match.matchDate.asc())
             .fetch();
     }

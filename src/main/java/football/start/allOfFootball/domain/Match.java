@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -29,8 +30,7 @@ public class Match {
     @JoinColumn(name = "fieldID")
     private Field field;
 
-    private LocalDate matchDate; // 경기날짜
-    private Integer matchHour; // 경기시작시간
+    private LocalDateTime matchDate; // 경기날짜
 
     private Integer matchCount; // 3파전 또는 2파전
 
@@ -51,8 +51,7 @@ public class Match {
     public static Match build(Field field, SaveMatchForm form) {
         return Match.builder()
             .field(field)
-            .matchDate(form.getMatchDate())
-            .matchHour(form.getMatchHour())
+            .matchDate(getDate(form.getMatchDate(), form.getMatchHour()))
             .matchCount(form.getMatchCount())
             .matchGender(form.getGender())
             .maxPerson(form.getMatchMaxPerson())
@@ -61,17 +60,23 @@ public class Match {
             .build();
     }
 
+    private static LocalDateTime getDate(LocalDate matchDate, Integer matchHour) {
+        int year = matchDate.getYear();
+        int month = matchDate.getMonthValue();
+        int day = matchDate.getDayOfMonth();
+        return LocalDateTime.of(year, month, day, matchHour, 0);
+    }
+
     public void setEditMatch(EditMatchForm editMatchForm) {
-        matchDate = getLocalDate(editMatchForm.getMatchDate());
-        matchHour = editMatchForm.getMatchHour();
+        matchDate = getLocalDate(editMatchForm.getMatchDate(), editMatchForm.getMatchHour());
         matchCount = editMatchForm.getMatchCount();
         matchGender = editMatchForm.getGender();
         maxPerson = editMatchForm.getMatchMaxPerson();
         matchGrade = editMatchForm.getMatchGrade();
     }
 
-    private LocalDate getLocalDate(String matchDate) {
+    private LocalDateTime getLocalDate(String matchDate, int matchHour) {
         String[] split = matchDate.split("/");
-        return LocalDate.of(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+        return LocalDateTime.of(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]), matchHour, 0);
     }
 }

@@ -55,7 +55,7 @@ public class MatchViewForm {
             .fieldShower(match.getField().getFieldShower())
             .fieldToilet(match.getField().getFieldToilet())
             .fieldInfo(match.getField().getFieldInformation())
-            .matchDate(DateFormatter.dateFormat(match.getMatchDate(), match.getMatchHour()))
+            .matchDate(DateFormatter.dateFormatAll(match.getMatchDate()))
             .fieldTitle(match.getField().getFieldTitle())
             .fieldAddress(match.getField().getFieldAddress())
             .matchStatus(match.getMatchStatus())

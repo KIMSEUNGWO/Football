@@ -12,6 +12,8 @@ import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static football.start.allOfFootball.domain.QField.field;
@@ -31,15 +33,18 @@ public class MainRepositoryImpl implements MainRepository{
 
     @Override
     public List<Match> findByAllMatch(SearchDto searchDto) {
+        LocalDate date = searchDto.getMatchDate();
         return query.selectFrom(match)
             .join(match.field, field)
-            .where(match.matchDate.eq(searchDto.getMatchDate()) // 해당날짜만
+            .where(match.matchDate.between(
+                    LocalDateTime.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), 0, 0),
+                    LocalDateTime.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), 23, 59))
                 ,joinWord(searchDto.getWord()) // 구장명이 포함된것만
                 ,joinRegion(searchDto.getRegion()) // 그 지역만
                 ,getGender(searchDto.getGender())
                 ,getGrade(searchDto.getGrade())
             )
-            .orderBy(match.matchHour.asc())
+            .orderBy(match.matchDate.asc())
             .fetch();
     }
 

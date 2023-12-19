@@ -27,18 +27,18 @@ public class SearchMatchForm {
         return SearchMatchForm.builder()
             .matchId(match.getMatchId())
             .matchDate(getDateForm(match.getMatchDate()))
-            .matchTime(getTimeForm(match.getMatchHour()))
+            .matchTime(getTimeForm(match.getMatchDate()))
             .matchRegion(match.getField().getFieldLocation())
             .matchTitle(match.getField().getFieldTitle())
             .matchPerson(orderPerson + " / " + (match.getMaxPerson() * match.getMatchCount()))
             .build();
     }
 
-    private static String getTimeForm(Integer time) {
-        return timeFormat(time) + ":00";
+    private static String getTimeForm(LocalDateTime time) {
+        return timeFormat(time.getHour()) + ":00";
     }
 
-    private static String getDateForm(LocalDate matchDate) {
+    private static String getDateForm(LocalDateTime matchDate) {
         return timeFormat(matchDate.getYear()) + "-" + timeFormat(matchDate.getMonthValue()) + "-" + timeFormat(matchDate.getDayOfMonth());
     }
 

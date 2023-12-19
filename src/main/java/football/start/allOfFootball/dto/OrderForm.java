@@ -31,7 +31,7 @@ public class OrderForm {
             .matchId(match.getMatchId())
             .fieldTitle(match.getField().getFieldTitle())
             .fieldAddress(match.getField().getFieldAddress())
-            .matchDate(DateFormatter.dateFormat(match.getMatchDate(), match.getMatchHour()))
+            .matchDate(DateFormatter.dateFormatAll(match.getMatchDate()))
             .couponList(couponList)
             .cash(member.getMemberCash())
             .build();

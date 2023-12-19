@@ -5,6 +5,8 @@ import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.enums.LocationEnum;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -18,13 +20,13 @@ public class MyScheduleForm {
 
     public static MyScheduleForm build(Match match) {
         return MyScheduleForm.builder()
-            .hour(getHourForm(match.getMatchHour()))
+            .hour(getHourForm(match.getMatchDate()))
             .region(match.getField().getFieldLocation())
             .fieldTitle(match.getField().getFieldTitle())
             .build();
     }
 
-    private static String getHourForm(Integer matchHour) {
-        return String.format("%02d:00",matchHour);
+    private static String getHourForm(LocalDateTime matchDate) {
+        return String.format("%02d:00",matchDate.getHour());
     }
 }

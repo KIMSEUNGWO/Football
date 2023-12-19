@@ -96,6 +96,7 @@ public class AdminMatchController {
         model.addAttribute("matchId", match.getMatchId());
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("editMatchForm", editMatchForm);
+        System.out.println(editMatchForm);
 
         return "/admin/admin_match_edit";
     }
