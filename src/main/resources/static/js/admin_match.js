@@ -65,10 +65,10 @@ function addDisabled(e) {
 function matchSearch(list) {
     const total = document.querySelector('.total');
 
-    if (list == null || list.length < 1) {
-        total.innerHTML = '총 0건';
-        searchEmpty();
-    } else {
+    total.innerHTML = '총 0건';
+    searchEmpty();
+
+    if (list != null && list.length > 0) {
         total.innerHTML = '총 ' + list.length + '건';
         createList(list);
     }
