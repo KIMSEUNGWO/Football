@@ -7,6 +7,7 @@ import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.jpaRepository.JpaMatchRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +44,7 @@ public class MainRepositoryImpl implements MainRepository{
                 ,joinRegion(searchDto.getRegion()) // 그 지역만
                 ,getGender(searchDto.getGender())
                 ,getGrade(searchDto.getGrade())
+                ,match.matchStatus.in(MatchStatus.모집중, MatchStatus.마감임박, MatchStatus.마감)
             )
             .orderBy(match.matchDate.asc())
             .fetch();
