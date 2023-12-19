@@ -20,17 +20,13 @@
                 <h2>쿠폰함</h2>
                 <div class='cupon'>
                     <div>보유쿠폰</div>
-                    <div>0장</div>
+                    <div th:text="${couponList.size} + '장'">0장</div>
                 </div>
                 <div class="">
                     <ul class='couponList'>
-                        <li class='coupon' th:each="item : ${coupon}">
+                        <li class='coupon' th:if="${couponList != null && couponList.size != 0}"  th:each="item : ${couponList}">
                             <div class='couponRadio'>
-                                <span class='couponPrice' th:text="${#numbers.formatInteger(item.couponPrice, 3, 'COMMA')} + '원 할인'">5,000원 할인</span>
-                                <span hidden class="couponPriceValue" th:text="${item.couponPrice}"></span>
-                                <input type="radio" name="couponNum" th:id="couponNum + ${item.couponListId}" hidden th:value="${item.couponListId}">
-                                <span class='custom-radio'></span>
-                                <label th:for="couponNum + ${item.couponListId}"></label>
+                                <span class='couponPrice' th:text="${item.couponDiscount} + '원 할인'">5,000원 할인</span>
                             </div>
                             <span class='couponTitle' th:text="${item.couponName}">[신규회원] 5,000원 할인 쿠폰</span>
                             <div class='couponDate'>
@@ -38,7 +34,7 @@
                                 <span class='couponExpireDate' th:text="${item.couponEndDate}">2023.08.31 23:59까지</span>
                             </div>
                         </li>
-                        <li class='coupon noncoupon' th:if="${coupon == null || coupon == 0}">
+                        <li class='coupon noncoupon' th:if="${couponList == null || couponList.size == 0}">
                             <span>등록된 쿠폰이 없습니다.</span>
                         </li>
                     </ul>

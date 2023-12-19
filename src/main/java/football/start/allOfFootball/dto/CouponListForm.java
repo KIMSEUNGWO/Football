@@ -1,6 +1,7 @@
 package football.start.allOfFootball.dto;
 
 import football.start.allOfFootball.domain.CouponList;
+import football.start.allOfFootball.formatter.NumberFormatter;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class CouponListForm {
 
     private Long couponListId;
     private String couponName;
-    private int couponDiscount;
+    private String couponDiscount;
     private String remainingTime;
     private String couponEndDate;
 
@@ -26,7 +27,7 @@ public class CouponListForm {
         return CouponListForm.builder()
             .couponListId(couponList.getCouponListId())
             .couponName(couponList.getCoupon().getCouponName())
-            .couponDiscount(couponList.getCoupon().getCouponDiscount())
+            .couponDiscount(NumberFormatter.format(couponList.getCoupon().getCouponDiscount()))
             .remainingTime(getRemain(couponList.getCouponListExpireDate()))
             .couponEndDate(getEndDate(couponList.getCouponListExpireDate()))
             .build();
