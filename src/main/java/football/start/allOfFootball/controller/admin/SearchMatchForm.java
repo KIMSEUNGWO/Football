@@ -2,6 +2,8 @@ package football.start.allOfFootball.controller.admin;
 
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.enums.LocationEnum;
+import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -21,6 +23,7 @@ public class SearchMatchForm {
     private LocationEnum matchRegion;
     private String matchTitle;
     private String matchPerson;
+    private String matchStatus;
 
 
     public static SearchMatchForm build(Match match, Integer orderPerson) {
@@ -31,6 +34,7 @@ public class SearchMatchForm {
             .matchRegion(match.getField().getFieldLocation())
             .matchTitle(match.getField().getFieldTitle())
             .matchPerson(orderPerson + " / " + (match.getMaxPerson() * match.getMatchCount()))
+            .matchStatus(match.getMatchStatus().name())
             .build();
     }
 

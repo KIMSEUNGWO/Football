@@ -95,7 +95,7 @@ function resultForm(searchForm) {
                 '<span id="matchRegion">' + searchForm.matchRegion + '</span>' + 
                 '<span id="matchTitle">' + searchForm.matchTitle + '</span>' + 
                 '<span id="matchPerson">' + searchForm.matchPerson + '</span>' + 
-                '<span id="matchStatus">모집중</span>' + 
+                '<span id="matchStatus">' + searchForm.matchStatus + '</span>' + 
             '</a>';
 }
 
