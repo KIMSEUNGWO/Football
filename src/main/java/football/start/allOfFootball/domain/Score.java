@@ -19,8 +19,8 @@ public class Score {
     private Long scoreId;
 
     @ManyToOne
-    @JoinColumn(name = "matchResultId")
-    private MatchResult matchResult;
+    @JoinColumn(name = "matchId")
+    private Match match;
 
     @Enumerated(EnumType.STRING)
     private TeamEnum xTeam;
