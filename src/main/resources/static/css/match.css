@@ -406,6 +406,14 @@ b.notImpact {
     font-size: 1.2rem;
 }
 
+a.resultButton.already {
+    cursor: default;
+    background-color: gainsboro;
+    pointer-events: none;
+}
+.resultButton.already:hover{
+    background-color: gainsboro;
+}
 /* map */
 #maps {
     z-index: 50;

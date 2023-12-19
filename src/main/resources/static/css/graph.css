@@ -15,6 +15,7 @@
 }
 .graph {
     width: 100%;
+    min-width: 4rem;
     height: 100%;
     cursor: default;
     background-color: rgb(232, 232, 232);

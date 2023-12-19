@@ -5,6 +5,9 @@ import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.domain.Field;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Orders;
+import football.start.allOfFootball.dto.match.MatchData;
+import football.start.allOfFootball.dto.match.MatchDataCalculator;
+import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -67,5 +72,21 @@ public class MatchService {
         int nowPerson = match.getOrdersList().size();
 
         return max <= nowPerson;
+    }
+
+    public List<MatchData> getMatchData(Long memberId, Match match) {
+        List<Orders> ordersList = match.getOrdersList();
+        boolean isPresent = matchRepository.isContainsMember(ordersList, memberId);
+        if (!isPresent) return null;
+
+        int person = ordersList.size();
+        MatchDataCalculator cal = new MatchDataCalculator(person);
+
+        for (Orders orders : ordersList) {
+            GradeEnum memberGrade = orders.getMember().getGrade();
+            cal.put(memberGrade);
+        }
+        List<GradeEnum> gradeList = match.getMatchGrade().getGradeList();
+        return gradeList.stream().map(x -> MatchData.builder().grade(x).percent(cal.calculate(x)).build()).collect(Collectors.toList());
     }
 }
