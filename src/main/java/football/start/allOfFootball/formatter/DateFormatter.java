@@ -20,7 +20,7 @@ public class DateFormatter {
 
         return String.format("%d월 %d일 %s %s", month, day, week, hour);
     }
-    public static String dateFormatAndWeek(LocalDate date) {
+    public static String dateFormatAndWeek(LocalDateTime date) {
         int year = date.getYear();
         int month = date.getMonthValue();
         int day = date.getDayOfMonth();
