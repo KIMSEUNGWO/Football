@@ -57,6 +57,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
 	testImplementation 'org.springframework.batch:spring-batch-test'
 
+	// redis 순위매길때 사용
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 }
 
 //Querydsl 추가, 자동 생성된 Q클래스 gradle clean으로 제거
