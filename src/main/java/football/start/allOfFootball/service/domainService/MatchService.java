@@ -15,11 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static football.start.allOfFootball.enums.matchEnums.MatchStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +57,7 @@ public class MatchService {
 
         int line = (int) (max * 0.8);
         if (max == nowPerson) {
-            match.setMatchStatus(MatchStatus.마감);
+            match.setMatchStatus(마감);
             return;
         }
         if (nowPerson >= line) {
@@ -89,5 +88,33 @@ public class MatchService {
         }
         List<GradeEnum> gradeList = match.getMatchGrade().getGradeList();
         return gradeList.stream().map(x -> MatchData.builder().grade(x).percent(cal.calculate(x)).build()).collect(Collectors.toList());
+    }
+
+    public List<Match> getMatchDeadLine() {
+        return matchRepository.getMatchDeadLine();
+    }
+
+    public List<Match> understaffedList(List<Match> matchList) {
+        List<Match> refundMatchList = new ArrayList<>();
+        List<Match> removeList = new ArrayList<>();
+
+        for (Match match : matchList) {
+            MatchStatus status = match.getMatchStatus();
+            if (status != 모집중 && status != 마감임박) continue;
+
+            List<Orders> ordersList = match.getOrdersList();
+            int maxPerson = match.getMaxPerson();
+
+            if (ordersList.size() <= maxPerson) {
+                refundMatchList.add(match);
+                removeList.add(match);
+            }
+        }
+
+        for (Match match : removeList) {
+            matchList.remove(match);
+        }
+
+        return refundMatchList;
     }
 }

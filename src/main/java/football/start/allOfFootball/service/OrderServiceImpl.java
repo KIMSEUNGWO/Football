@@ -3,6 +3,7 @@ package football.start.allOfFootball.service;
 import football.start.allOfFootball.controller.mypage.OrderDateForm;
 import football.start.allOfFootball.controller.mypage.OrderListForm;
 import football.start.allOfFootball.domain.*;
+import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.enums.paymentEnums.CashEnum;
 import football.start.allOfFootball.repository.domainRepository.OrderRepository;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -67,4 +69,15 @@ public class OrderServiceImpl implements OrderService {
         if (orderList.isEmpty()) return Collections.emptyList();
         return orderList.stream().map(x -> OrderListForm.build(x.getMatch())).collect(Collectors.toList());
     }
+
+    @Override
+    public void setTeam(Map<TeamEnum, List<Orders>> result) {
+        for (TeamEnum teamEnum : result.keySet()) {
+            List<Orders> ordersList = result.get(teamEnum);
+            for (Orders orders : ordersList) {
+                orders.setTeam(teamEnum);
+            }
+        }
+    }
+
 }

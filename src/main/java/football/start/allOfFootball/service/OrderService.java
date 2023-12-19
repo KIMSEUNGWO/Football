@@ -5,8 +5,10 @@ import football.start.allOfFootball.controller.mypage.OrderListForm;
 import football.start.allOfFootball.domain.CouponList;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Orders;
+import football.start.allOfFootball.enums.TeamEnum;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface OrderService {
@@ -18,4 +20,6 @@ public interface OrderService {
     List<Orders> findByMatchAll(Member member, OrderDateForm form);
 
     List<OrderListForm> getMatchResultForm(List<Orders> orderList);
+
+    void setTeam(Map<TeamEnum, List<Orders>> result);
 }
