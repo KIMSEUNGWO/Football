@@ -46,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
         if (couponList.isPresent()) {
             CouponList couponList1 = couponList.get();
             couponList1.setCouponListStatus('Y');
+            couponList1.setOrders(orders);
         }
 
         orderRepository.save(orders);
