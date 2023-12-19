@@ -27,9 +27,5 @@ public class CouponList extends BaseTimeEntity{
     private Coupon coupon;
     private LocalDateTime couponListExpireDate;
 
-    @OneToOne
-    @JoinColumn(name = "ordersId")
-    private Orders orders;
-
     private char couponListStatus;
 }

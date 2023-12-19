@@ -30,6 +30,14 @@ public class Orders {
     @Enumerated(EnumType.STRING)
     private TeamEnum team;
 
+    @OneToOne
+    @JoinColumn(name = "matchCancelId")
+    private MatchCancel matchCancel;
+
+    @OneToOne
+    @JoinColumn(name = "couponListId")
+    private CouponList couponList;
+
     public static Orders build(Match match, Member member) {
         return Orders.builder()
             .match(match)
