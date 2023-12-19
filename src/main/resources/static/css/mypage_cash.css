@@ -16,3 +16,11 @@
     align-items: center;
     grid-template-columns: 20% 5% 10% 10% 10%;
 }
+.cashList > .empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+    padding: 1rem 0;
+    cursor: default;
+}
