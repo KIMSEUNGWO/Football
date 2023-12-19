@@ -16,9 +16,5 @@ public class MatchCancel {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MATCH_CANCEL")
     private Long matchCancelId;
 
-    @OneToOne
-    @JoinColumn(name = "matchResultId")
-    private MatchResult matchResult;
-
     private String playCancelReason;
 }
