@@ -4,6 +4,7 @@ import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.domainService.CouponListService;
+import football.start.allOfFootball.service.domainService.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ public class MypageController {
 
     private final MypageService mypageService;
     private final CouponListService couponListService;
+    private final PaymentService paymentService;
 
     @GetMapping
     public String mainPage(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
@@ -64,7 +66,10 @@ public class MypageController {
         }
         Member findMember = optionalMember.get();
         MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
+
+        List<CashListForm> cashList = paymentService.findByAllMemberCashList(findMember);
         model.addAttribute("profile", myProfileDto);
+        model.addAttribute("cashList", cashList);
         model.addAttribute("menu", "cash");
         return "/mypage/mypage_cash";
     }
