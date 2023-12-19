@@ -267,7 +267,7 @@
                         <span class="matchPrice">10,000원<b class="notImpact"> / 2시간</b></span>
                     </div>
                      <a th:href="|/order/${matchForm.matchId}|" th:unless="${participant}" th:class="'resultButton ' + ${matchForm.matchStatus.className}" th:text="${matchForm.matchStatus.status}"></a>
-                     <a th:if="${participant}" class="resultButton already">참가완료</a>
+                     <a th:if="${participant}" class="resultButton already" th:text="${matchForm.matchStatus.status}">참가완료</a>
                 </div>
             </div>
         </div>
