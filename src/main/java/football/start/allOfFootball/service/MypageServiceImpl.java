@@ -44,6 +44,7 @@ public class MypageServiceImpl implements MypageService{
     @Override
     public MyProfileDto getMyProfile(Member findMember) {
         MyProfileDto myProfileDto = MyProfileDto.builder()
+            .profileImage("base.jpeg")
             .name(findMember.getMemberName())
             .social(findMember.getMemberSocial())
             .email(findMember.getMemberEmail())
