@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 public class MyProfileDto {
 
-    private String profileImage;
+    private String profileImage = "base.jpeg";
     private String name;
     private SocialEnum social;
     private String email;
