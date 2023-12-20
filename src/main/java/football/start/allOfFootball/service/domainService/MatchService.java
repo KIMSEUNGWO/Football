@@ -5,8 +5,11 @@ import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.domain.Field;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Orders;
+import football.start.allOfFootball.dto.match.MatchCollection;
 import football.start.allOfFootball.dto.match.MatchData;
 import football.start.allOfFootball.dto.match.MatchDataCalculator;
+import football.start.allOfFootball.dto.match.TeamInfo;
+import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
@@ -74,21 +77,6 @@ public class MatchService {
         return max <= nowPerson;
     }
 
-    public List<MatchData> getMatchData(Long memberId, Match match) {
-        List<Orders> ordersList = match.getOrdersList();
-        boolean isPresent = matchRepository.isContainsMember(ordersList, memberId);
-        if (!isPresent) return Collections.emptyList();
-
-        int person = ordersList.size();
-        MatchDataCalculator cal = new MatchDataCalculator(person);
-
-        for (Orders orders : ordersList) {
-            GradeEnum memberGrade = orders.getMember().getGrade();
-            cal.put(memberGrade);
-        }
-        List<GradeEnum> gradeList = match.getMatchGrade().getGradeList();
-        return gradeList.stream().map(x -> MatchData.builder().grade(x).percent(cal.calculate(x)).build()).collect(Collectors.toList());
-    }
 
     public List<Match> getMatchDeadLine() {
         return matchRepository.getMatchDeadLine();
@@ -116,5 +104,19 @@ public class MatchService {
         }
 
         return refundMatchList;
+    }
+
+    public MatchCollection getMatchCollection(Match match, Long memberId) {
+        List<Orders> ordersList = match.getOrdersList();
+        boolean isPresent = matchRepository.isContainsMember(ordersList, memberId);
+        if (!isPresent) return null;
+
+        List<MatchData> data = matchRepository.getMatchData(match, ordersList); // 매치 데이터
+        Map<TeamEnum, List<TeamInfo>> teamInfo = matchRepository.getTeamInfo(match, ordersList); // 참가자
+
+        return MatchCollection.builder()
+            .matchData(data)
+            .teamInfo(teamInfo)
+            .build();
     }
 }

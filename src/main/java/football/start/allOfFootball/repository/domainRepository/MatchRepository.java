@@ -3,16 +3,21 @@ package football.start.allOfFootball.repository.domainRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.domain.QMatch;
+import football.start.allOfFootball.domain.Profile;
+import football.start.allOfFootball.dto.match.MatchData;
+import football.start.allOfFootball.dto.match.MatchDataCalculator;
+import football.start.allOfFootball.dto.match.TeamInfo;
+import football.start.allOfFootball.enums.TeamEnum;
+import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.jpaRepository.JpaMatchRepository;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import static football.start.allOfFootball.domain.QMatch.match;
 
@@ -53,5 +58,48 @@ public class MatchRepository {
         return query.selectFrom(match)
             .where(match.matchDate.between(now, after))
             .fetch();
+    }
+
+    public List<MatchData> getMatchData(Match match, List<Orders> ordersList) {
+
+        int person = ordersList.size();
+        MatchDataCalculator cal = new MatchDataCalculator(person);
+
+        for (Orders orders : ordersList) {
+            GradeEnum memberGrade = orders.getMember().getGrade();
+            cal.put(memberGrade);
+        }
+        List<GradeEnum> gradeList = match.getMatchGrade().getGradeList();
+        return gradeList.stream().map(x -> MatchData.builder().grade(x).percent(cal.calculate(x)).build()).collect(Collectors.toList());
+    }
+
+    public Map<TeamEnum, List<TeamInfo>> getTeamInfo(Match match, List<Orders> ordersList) {
+        for (Orders orders : ordersList) {
+            if (orders.getTeam() == null) return null;
+        }
+        int teamCount = match.getMatchCount();
+        List<TeamEnum> team = TeamEnum.getTeam(teamCount);
+        ordersList.sort((o1, o2) -> o2.getMember().getMemberScore() - o1.getMember().getMemberScore()); // 점수가 높은순
+
+        Map<TeamEnum, List<TeamInfo>> result = new ConcurrentHashMap<>();
+        for (TeamEnum teamEnum : team) {
+            result.put(teamEnum, new ArrayList<>());
+        }
+        for (Orders x : ordersList) {
+            Profile profile = x.getMember().getProfile();
+            String profileName = null;
+            if (profile == null) {
+                profileName = "base.jpeg";
+            }
+            TeamInfo teamInfo = TeamInfo.builder()
+                .profileImage(profileName)
+                .memberName(x.getMember().getMemberName())
+                .memberGrade(x.getMember().getGrade())
+                .build();
+
+            List<TeamInfo> teamInfoList = result.get(x.getTeam());
+            teamInfoList.add(teamInfo);
+        }
+        return result;
     }
 }

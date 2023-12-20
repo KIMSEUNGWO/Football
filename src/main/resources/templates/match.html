@@ -149,13 +149,13 @@
                         
                     </div>
                 </div>
-                <div class="matchData box" th:if="${matchData != null}">
+                <div class="matchData box" th:if="${collection != null && collection.matchData != null}">
                     <h2>매치 데이터</h2>
                     <div class="innerBox">
                         <div class="graphBox">
                             <ul class="axis_x">
 
-                                <li class="item" th:each="data : ${matchData}">
+                                <li class="item" th:each="data : ${collection.matchData}">
                                     <button type="button" class="graph">
                                         <span class="data" th:style="'height: ' + ${data.percent} + '%'">
                                             <span class="tooltip-text" th:text="${data.grade} + ' : ' + ${data.percent} + '%'"></span>
@@ -170,9 +170,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="teamInfo box">
+                <div class="teamInfo box" th:if="${collection != null && collection.teamInfo != null}">
                     <h2>참가자 명단</h2>
-                    div.team-player
+                    <ul class="teamList">
+                        <li class="team" th:each="team : ${collection.teamInfo}">
+                            <div th:class="'teamColor ' + ${team.key.className}" th:text="${team.key}">RED</div>
+                            <ul class="players">
+                                <li class="player" th:each="player : ${team.value}">
+                                    <div class="playerImg">
+                                        <img th:src="|/images/profile/${player.profileImage}|" th:alt="${player.memberName}">
+                                    </div>
+                                    <strong class="playerName" th:text="${player.memberName}">김승우</strong>
+                                    <div class="playerInfo">
+                                        <span class="playerGrade" th:text="${player.memberGrade}">아마추어</span>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
                 <div class="playInfo box">
                     <h2>경기정보</h2>

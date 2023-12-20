@@ -2,8 +2,11 @@ package football.start.allOfFootball.controller;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
 import football.start.allOfFootball.domain.*;
+import football.start.allOfFootball.dto.match.MatchCollection;
 import football.start.allOfFootball.dto.match.MatchData;
 import football.start.allOfFootball.dto.MatchViewForm;
+import football.start.allOfFootball.dto.match.TeamInfo;
+import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
@@ -39,16 +44,14 @@ public class MatchController {
         }
         Match match = findMatch.get();
         MatchViewForm matchForm = MatchViewForm.build(match); // 기본 데이터
+        model.addAttribute("matchForm", matchForm);
 
         Optional<Member> byMemberId = memberService.findByMemberId(memberId);
-        if (byMemberId.isPresent()) {
-            List<MatchData> data = matchService.getMatchData(memberId, match); // 매치 데이터
-            model.addAttribute("matchData", data);
-            model.addAttribute("participant", !data.isEmpty());
-        }
+        if (byMemberId.isEmpty()) return "match";
 
+        MatchCollection matchData = matchService.getMatchCollection(match, memberId);
+        model.addAttribute("collection", matchData);
 
-        model.addAttribute("matchForm", matchForm);
         return "match";
     }
 }
