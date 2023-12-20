@@ -18,14 +18,14 @@
             <div class="content">
                 <h2>충전내역</h2>
                 <ul class="cashList box">
-                    <li class="cashBox" th:if="${cashList != null || cashList.size > 0}" th:each="item : ${cashList}">
+                    <li class="cashBox" th:if="${cashList != null || #lists.size(cashList) > 0}" th:each="item : ${cashList}">
                         <span class="cashDate" th:text="${item.cashDate}">2023년 11월 25일(토)</span>
                         <span class="cashTime" th:text="${item.cashTime}">01:23</span>
                         <span th:text="${item.cashEnum}">사용</span>
                         <span th:class="${item.cash < 0} ? 'use' : 'charge'" th:text="${item.cashStr} + '원'">-10,000원</span>
                         <span th:text="${item.nowCash} + '원'">10,000원</span>
                     </li>
-                    <li class="empty" th:if="${cashList == null || cashList.size <= 0}"><span>충전 이 없어요.</span></li>
+                    <li class="empty" th:if="${cashList == null || #lists.size(cashList) <= 0}"><span>충전내역이 없어요.</span></li>
                 </ul>
             </div>
         </div>
