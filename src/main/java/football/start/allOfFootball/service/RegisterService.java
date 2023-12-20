@@ -10,4 +10,6 @@ public interface RegisterService {
     Map<String, String> validEmail(EmailDto emailDto, Map<String, String> map);
 
     void save(Member member);
+
+    boolean distinctEmail(String email);
 }

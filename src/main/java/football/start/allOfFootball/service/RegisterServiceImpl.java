@@ -3,8 +3,8 @@ package football.start.allOfFootball.service;
 import football.start.allOfFootball.common.BCrypt;
 import football.start.allOfFootball.common.ResultMessage;
 import football.start.allOfFootball.controller.login.EmailDto;
-import football.start.allOfFootball.controller.login.RegisterDto;
 import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.repository.LoginRepository;
 import football.start.allOfFootball.repository.RegisterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +19,7 @@ import java.util.Optional;
 public class RegisterServiceImpl implements RegisterService{
 
     private final RegisterRepository registerRepository;
+    private final LoginRepository loginRepository;
     private final BCrypt bc;
 
     @Override
@@ -43,5 +44,11 @@ public class RegisterServiceImpl implements RegisterService{
 
 
         registerRepository.save(member);
+    }
+
+    @Override
+    public boolean distinctEmail(String email) {
+        Optional<Member> byMember = loginRepository.findByMember(email);
+        return byMember.isPresent();
     }
 }

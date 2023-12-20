@@ -4,6 +4,7 @@ import football.start.allOfFootball.SessionConst;
 import football.start.allOfFootball.common.ResultMessage;
 import football.start.allOfFootball.common.alert.AlertUtils;
 import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.RegisterService;
 import football.start.allOfFootball.validator.RegisterValidator;
 import jakarta.servlet.http.HttpServletResponse;
@@ -60,7 +61,12 @@ public class RegisterController {
         }
         if (bindingResult.hasErrors()) {
             System.out.println("bindingResult = " + bindingResult);
-            return "/login//register";
+            return "/login/register";
+        }
+        boolean distinct = registerService.distinctEmail(registerDto.getEmail());
+        if (distinct) {
+            bindingResult.rejectValue("email", null, "중복된 이메일입니다.");
+            return "/login/register";
         }
         Member saveMember = registerDto.builder();
         registerService.save(saveMember);
