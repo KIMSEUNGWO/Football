@@ -52,7 +52,7 @@ public class OrderRepository {
                         LocalDateTime.of(start.getYear(), start.getMonthValue(), start.getDayOfMonth(), 0, 0),
                         LocalDateTime.of(end.getYear(), end.getMonthValue(), end.getDayOfMonth(), 23, 59))
             ))
-            .orderBy(orders.match.matchDate.asc())
+            .orderBy(orders.match.matchDate.desc())
             .fetch();
     }
 }
