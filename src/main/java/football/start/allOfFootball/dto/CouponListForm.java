@@ -18,7 +18,7 @@ public class CouponListForm {
 
     private Long couponListId;
     private String couponName;
-    private String couponDiscount;
+    private Integer couponDiscount;
     private String remainingTime;
     private String couponEndDate;
 
@@ -27,7 +27,7 @@ public class CouponListForm {
         return CouponListForm.builder()
             .couponListId(couponList.getCouponListId())
             .couponName(couponList.getCoupon().getCouponName())
-            .couponDiscount(NumberFormatter.format(couponList.getCoupon().getCouponDiscount()))
+            .couponDiscount(couponList.getCoupon().getCouponDiscount())
             .remainingTime(getRemain(couponList.getCouponListExpireDate()))
             .couponEndDate(getEndDate(couponList.getCouponListExpireDate()))
             .build();
