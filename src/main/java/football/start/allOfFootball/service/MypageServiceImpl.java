@@ -1,5 +1,6 @@
 package football.start.allOfFootball.service;
 
+import football.start.allOfFootball.common.redis.RankService;
 import football.start.allOfFootball.controller.mypage.MyProfileDto;
 import football.start.allOfFootball.controller.mypage.MypageMainDto;
 import football.start.allOfFootball.domain.BeforePassword;
@@ -33,6 +34,7 @@ public class MypageServiceImpl implements MypageService{
 
     private final MypageRepository mypageRepository;
     private final MemberRepository memberRepository;
+    private final RankService rankService;
 
     @Override
     public Optional<Member> findById(Long memberId) {
@@ -45,17 +47,14 @@ public class MypageServiceImpl implements MypageService{
         Profile profile = findMember.getProfile();
         if (profile != null) {
             myProfileDto.setProfileImage(profile.getProfileStoreName());
-        } else {
-            myProfileDto.setProfileImage("base.jpeg");
         }
         myProfileDto.setName(findMember.getMemberName());
-        SocialEnum memberSocial = findMember.getMemberSocial();
-        if (memberSocial != null) {
-            myProfileDto.setSocial(memberSocial);
-        }
+        myProfileDto.setSocial(findMember.getMemberSocial());
         myProfileDto.setEmail(findMember.getMemberEmail());
         myProfileDto.setScore(format(findMember.getMemberScore()));
-//        myProfileDto.setRank();
+
+        Long myRank = rankService.getRank(findMember.getMemberId());
+        myProfileDto.setRank(NumberFormatter.format(myRank));
         myProfileDto.setGrade(findMember.getGrade());
 //        myProfileDto.setMatchScore();
 

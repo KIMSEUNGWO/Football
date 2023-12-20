@@ -2,14 +2,12 @@ package football.start.allOfFootball.dto;
 
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.formatter.DateFormatter;
 import football.start.allOfFootball.formatter.NumberFormatter;
 import lombok.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,9 +29,9 @@ public class MainSideInfoForm {
         schedule = new ConcurrentHashMap<>();
     }
 
-    public void setMyInfo(Member member) {
+    public void setMyInfo(Member member, Long myRank) {
         name = member.getMemberName();
-        rank = "구현중";
+        rank = NumberFormatter.format(myRank);
         score = NumberFormatter.format(member.getMemberScore());
         grade = member.getGrade();
         cash = NumberFormatter.format(member.getMemberCash());

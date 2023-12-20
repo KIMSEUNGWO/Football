@@ -1,5 +1,6 @@
 package football.start.allOfFootball.service;
 
+import football.start.allOfFootball.common.redis.RankService;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.dto.MainSideInfoForm;
@@ -26,6 +27,7 @@ public class MainServiceImpl implements MainService{
     private final MainRepository mainRepository;
     private final MemberService memberService;
     private final OrderService orderService;
+    private final RankService rankService;
     @Override
     public List<SearchResultForm> getSearchResult(SearchDto searchDto) {
         List<Match> matchList = mainRepository.findByAllMatch(searchDto);
@@ -39,8 +41,9 @@ public class MainServiceImpl implements MainService{
         if (byMemberId.isEmpty()) return null;
 
         Member member = byMemberId.get();
+        Long myRank = rankService.getRank(memberId);
         MainSideInfoForm form = new MainSideInfoForm();
-        form.setMyInfo(member);
+        form.setMyInfo(member, myRank);
 
         List<Orders> ordersList = orderService.findByMatchBefore(member);
         if (ordersList.isEmpty()) return form;

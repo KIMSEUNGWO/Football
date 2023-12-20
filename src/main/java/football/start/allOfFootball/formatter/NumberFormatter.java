@@ -15,4 +15,7 @@ public class NumberFormatter {
     public static String format(int number) {
         return df.format(number);
     }
+    public static String format(Long number) {
+        return df.format(number);
+    }
 }
