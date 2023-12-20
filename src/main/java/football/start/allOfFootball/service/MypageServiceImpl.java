@@ -43,22 +43,20 @@ public class MypageServiceImpl implements MypageService{
 
     @Override
     public MyProfileDto getMyProfile(Member findMember) {
-        MyProfileDto myProfileDto = new MyProfileDto();
+        MyProfileDto myProfileDto = MyProfileDto.builder()
+            .name(findMember.getMemberName())
+            .social(findMember.getMemberSocial())
+            .email(findMember.getMemberEmail())
+            .score(format(findMember.getMemberScore()))
+            .rank(format(rankService.getRank(findMember)))
+            .grade(findMember.getGrade())
+            .cash(format(findMember.getMemberCash()))
+            .build();
         Profile profile = findMember.getProfile();
         if (profile != null) {
             myProfileDto.setProfileImage(profile.getProfileStoreName());
         }
-        myProfileDto.setName(findMember.getMemberName());
-        myProfileDto.setSocial(findMember.getMemberSocial());
-        myProfileDto.setEmail(findMember.getMemberEmail());
-        myProfileDto.setScore(format(findMember.getMemberScore()));
-
-        Long myRank = rankService.getRank(findMember.getMemberId());
-        myProfileDto.setRank(NumberFormatter.format(myRank));
-        myProfileDto.setGrade(findMember.getGrade());
 //        myProfileDto.setMatchScore();
-
-        myProfileDto.setCash(format(findMember.getMemberCash()));
         return myProfileDto;
     }
 
