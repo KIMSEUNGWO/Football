@@ -21,6 +21,14 @@ public class RankService {
     }
 
     public void updateRank(Long memberId, int score) {
+        Double rank = setOperations.score("rank", memberId);
+
+        // 스코어에 변동이 없을경우 업데이트를 하지 않음
+        if (rank != null && rank == (double) score) {
+            System.out.println("memberId = " + memberId + " : 순위 변동없음");
+            return;
+        }
+
         setOperations.add("rank", memberId, score);
     }
 
