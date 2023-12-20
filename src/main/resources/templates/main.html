@@ -119,7 +119,7 @@
                         <th>등급</th>
                     </tr>
                     <tr>
-                        <td class="ranking" th:text="${side.rank} + '위'">100,000위</td>
+                        <td class="ranking" th:text="${side.rank == null} ? '집계중' : ${side.rank} + '위'">100,000위</td>
                         <td class="" th:text="${side.score} + '점'">1,000점</td>
                         <td class="grade" th:text="${side.grade}">아마추어1</td>
                     </tr>
