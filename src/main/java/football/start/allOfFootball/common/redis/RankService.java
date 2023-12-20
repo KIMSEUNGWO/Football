@@ -1,5 +1,6 @@
 package football.start.allOfFootball.common.redis;
 
+import football.start.allOfFootball.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -26,9 +27,13 @@ public class RankService {
     public Set<ZSetOperations.TypedTuple<Long>> getGlobalRank() {
         return setOperations.reverseRangeWithScores("rank", 0, -1);
     }
-    public Long getRank(Long memberId) {
+    public Long getRank(Member member) {
         Long rankTemp = 0L;
-        Double rank = setOperations.score("rank", memberId);
+        Double rank = setOperations.score("rank", member.getMemberId());
+        if (rank == null) {
+            updateRank(member.getMemberId(), member.getMemberScore());
+            rank = setOperations.score("rank", member.getMemberId());
+        }
         Set<Long> rank1 = setOperations.reverseRangeByScore("rank", rank, rank, 0, 1);
         for (Long l : rank1) {
             rankTemp = setOperations.reverseRank("rank", l);
