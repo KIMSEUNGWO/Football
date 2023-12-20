@@ -41,7 +41,7 @@ public class MainServiceImpl implements MainService{
         if (byMemberId.isEmpty()) return null;
 
         Member member = byMemberId.get();
-        Long myRank = rankService.getRank(memberId);
+        Long myRank = rankService.getRank(member);
         MainSideInfoForm form = new MainSideInfoForm();
         form.setMyInfo(member, myRank);
 
