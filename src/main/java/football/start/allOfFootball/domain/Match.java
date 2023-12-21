@@ -7,6 +7,7 @@ import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.ibatis.annotations.One;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,6 +30,10 @@ public class Match {
     @ManyToOne
     @JoinColumn(name = "fieldID")
     private Field field;
+
+    @ManyToOne
+    @JoinColumn(name = "managerId")
+    private Manager manager;
 
     private LocalDateTime matchDate; // 경기날짜
 
