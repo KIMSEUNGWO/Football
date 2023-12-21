@@ -22,8 +22,11 @@ public class CouponListService {
 
     public List<CouponListForm> getCouponList(Member member) {
         List<CouponList> couponList = couponListRepository.getCouponList(member);
-        if (couponList.isEmpty()) Collections.emptyList();
-        return couponList.stream().map(x -> CouponListForm.build(x)).collect(Collectors.toList());
+        if (couponList.isEmpty()) return Collections.emptyList();
+
+        // 만료일이 지난 쿠폰 삭제
+        List<CouponList> renewCouponList = couponListRepository.deleteByExpireDate(couponList);
+        return renewCouponList.stream().map(CouponListForm::build).collect(Collectors.toList());
     }
 
     public Optional<CouponList> findByCouponListId(Long couponNum) {
