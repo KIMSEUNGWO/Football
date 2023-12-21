@@ -36,7 +36,7 @@ public class OrderRepository {
 
     public List<Orders> findByBefore(Member member) {
         return query.selectFrom(orders)
-            .where(orders.member.eq(member).and(orders.match.matchStatus.in(모집중, 마감임박, 마감) ))
+            .where(orders.member.eq(member).and(orders.match.matchStatus.in(모집중, 마감임박, 마감)).and(orders.match.matchDate.after(LocalDateTime.now())))
             .fetch();
     }
 
