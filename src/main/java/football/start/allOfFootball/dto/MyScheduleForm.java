@@ -14,12 +14,14 @@ import java.time.LocalDateTime;
 @Builder
 public class MyScheduleForm {
 
+    private Long matchId;
     private String hour;
     private LocationEnum region;
     private String fieldTitle;
 
     public static MyScheduleForm build(Match match) {
         return MyScheduleForm.builder()
+            .matchId(match.getMatchId())
             .hour(getHourForm(match.getMatchDate()))
             .region(match.getField().getFieldLocation())
             .fieldTitle(match.getField().getFieldTitle())

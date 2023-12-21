@@ -142,7 +142,7 @@
                 </div>
                 <ul class="subFuncList" th:unless="${#maps.size(side.schedule) == 0}" th:each="form : ${side.schedule}">
                     <span class="dateSep" th:text="${form.key}"></span>
-                    <a href="#" class="subFuncBlock" th:each="list : ${form.value}">
+                    <a th:href="|/match/${form.matchId}|" class="subFuncBlock" th:each="list : ${form.value}">
                         <span class="subFuncTime" th:text="${list.hour}"></span>
                         <span class="subFuncRegion" th:text="${list.region}"></span>
                         <span class="subFuncTitle" th:text="${list.fieldTitle}"></span>
