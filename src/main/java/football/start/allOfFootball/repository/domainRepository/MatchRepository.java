@@ -81,7 +81,7 @@ public class MatchRepository {
         List<TeamEnum> team = TeamEnum.getTeam(teamCount);
         ordersList.sort((o1, o2) -> o2.getMember().getMemberScore() - o1.getMember().getMemberScore()); // 점수가 높은순
 
-        Map<TeamEnum, List<TeamInfo>> result = new ConcurrentHashMap<>();
+        Map<TeamEnum, List<TeamInfo>> result = new LinkedHashMap<>(); // Map 순서보장(RED, BLUE, YELLOW 순)을 위해 LinkedHashMap 사용
         for (TeamEnum teamEnum : team) {
             result.put(teamEnum, new ArrayList<>());
         }
