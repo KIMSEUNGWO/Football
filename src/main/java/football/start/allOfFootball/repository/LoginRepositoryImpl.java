@@ -38,7 +38,7 @@ public class LoginRepositoryImpl implements LoginRepository {
 
     @Override
     public void renewLoginTime(Member member) {
-        member.setMemberRecentlyDate(LocalDate.now());
+        member.renewLoginTime(LocalDateTime.now());
     }
 
 }
