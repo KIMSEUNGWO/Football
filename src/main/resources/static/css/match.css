@@ -294,6 +294,10 @@
     margin: 0;
 }
 
+.playInfo-manager {
+    margin-top: 1rem;
+}
+
 .infoDetail {
     display: flex;
     gap: 1rem;
@@ -408,11 +412,11 @@ b.notImpact {
 
 a.resultButton.already {
     cursor: default;
-    background-color: gainsboro;
+    background-color: rgb(185, 185, 185);
     pointer-events: none;
 }
 .resultButton.already:hover{
-    background-color: gainsboro;
+    background-color: rgb(185, 185, 185);
 }
 /* map */
 #maps {
@@ -488,8 +492,26 @@ a.resultButton.already {
     }
 }
 
-
-
+#managerBtn {
+    width: 100%;
+    height: 3.5rem;
+    font-size: 1.2rem;
+    border: none;
+    margin-top: 1.5rem;
+    border-radius: 0.7rem;
+    color: white;
+    box-shadow: 2px 2px 5px #b3b3b3;
+    background-color: orange;
+    cursor: pointer;
+}
+#managerBtn:hover {
+    background-color: rgb(234, 152, 1);
+}
+#managerBtn.already {
+    background-color: rgb(185, 185, 185);
+    cursor: default;
+    pointer-events: none;
+}
 
 
 

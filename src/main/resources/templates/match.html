@@ -11,6 +11,7 @@
     <script src="/js/match_imageSlide.js"></script>
     <script src="/js/match.js"></script>
     <script src="/js/match_maps.js"></script>
+    <script src="/js/fetch.js"></script>
     <title>구장정보 :: 프로젝트</title>
 </head>
 <body>
@@ -91,7 +92,7 @@
                                 </li>
                             </ul>
                         </div>
-                        
+
                     </div>
                     <div class="match-result-wrap">
                         <div class="match-result">
@@ -121,7 +122,7 @@
                                 </li>
                             </ul>
                         </div>
-                        
+
                     </div>
                     <div class="match-result-wrap">
                         <div class="match-result">
@@ -146,7 +147,7 @@
                             <ul class="score-record right-score-record">
                             </ul>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div class="matchData box" th:if="${collection != null && collection.matchData != null}">
@@ -185,7 +186,7 @@
                                         <span class="playerGrade" th:text="${player.memberGrade}">아마추어</span>
                                     </div>
                                 </li>
-                                
+
                             </ul>
                         </li>
                     </ul>
@@ -204,6 +205,12 @@
                         <div class="infoDetail playMatch">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M64 128c0-17.7 14.3-32 32-32H544c17.7 0 32 14.3 32 32V448c0 17.7 14.3 32 32 32s32-14.3 32-32V128c0-53-43-96-96-96H96C43 32 0 75 0 128V448c0 17.7 14.3 32 32 32s32-14.3 32-32V128zm112 0c-8.8 0-16 7.2-16 16v48H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16h48v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h64v48c0 8.8 7.2 16 16 16s16-7.2 16-16V416h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V320h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V224h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H480V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H384V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H288V144c0-8.8-7.2-16-16-16s-16 7.2-16 16v48H192V144c0-8.8-7.2-16-16-16zm80 256H192V320h64v64zm96 0H288V320h64v64zm96 0H384V320h64v64zm0-96H384V224h64v64zm-96 0H288V224h64v64zm-96 0H192V224h64v64z"/></svg>
                             <span th:text="${matchForm.maxPersonAndMatchCount}">6 vs 6 3파전</span>
+                        </div>
+                    </div>
+                    <div class="playInfo-manager">
+                        <div class="infoDetail playManager">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M119 95.2C107.8 76.5 87.4 64 64 64C28.7 64 0 92.7 0 128c0 28.4 18.5 52.5 44.1 60.8C36.3 209.7 32 232.4 32 256c0 106 86 192 192 192c64.7 0 121.9-32 156.7-81L529 444.4c4.6 2.4 9.6 3.6 14.8 3.6h2c9 0 17.6-3.8 23.7-10.5l63.3-69.6c4.6-5.1 7.2-11.7 7.2-18.5c0-8.4-3.9-16.4-10.5-21.6L352.5 108.7C315.9 79.7 270.6 64 224 64c-38.8 0-74.8 11.5-105 31.2zM68.5 143.4c-1.4 .4-2.9 .6-4.5 .6c-8.8 0-16-7.2-16-16s7.2-16 16-16s16 7.2 16 16c0 .3 0 .7 0 1c-4 4.6-7.9 9.4-11.5 14.3zM402.9 324.4c-21.3-11.1-47.5-4.8-61.4 14.8C315.4 376.1 272.5 400 224 400c-79.5 0-144-64.5-144-144s64.5-144 144-144c35.8 0 70.6 12.1 98.7 34.3l70 55.4-11.9 15.9c-8 10.6-5.8 25.6 4.8 33.6s25.6 5.8 33.6-4.8l11.2-14.9L582.6 351.8l-40.9 45L402.9 324.4zM224 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
+                            <span th:text="${matchForm.managerName == null} ? '아직 매니저님이 정해지지 않았어요.' : ${matchForm.managerName} + ' 매니저님이 함께해요'"></span>
                         </div>
                     </div>
                 </div>
@@ -231,19 +238,19 @@
                     <div class="fieldRule">
                         <h4>구장 특이사항</h4>
                         <pre th:text="${matchForm.fieldInfo}">
-                            ■주차: 사무실 등록 시 3시간 무료 주차 (마트에서 물건 구매 혹은 카운터에서 30분 당 1,000원에 기존 3시간 무료 주차 + 최대 2시간까지 추가 주차 등록 가능) 
+                            ■주차: 사무실 등록 시 3시간 무료 주차 (마트에서 물건 구매 혹은 카운터에서 30분 당 1,000원에 기존 3시간 무료 주차 + 최대 2시간까지 추가 주차 등록 가능)
 
                             ■흡연: 흡연장 이용
-                            
+
                             ■화장실: 3층
-                            
+
                             ■풋살화: 250~285 대여료 3천원 (22.11.23부터 대여 가능)
                         </pre>
                     </div>
                 </div>
                 <div class="scoreInfo box">
                     <h2>점수산정 기준</h2>
-                    
+
                 </div>
                 <div class="matchRule box">
                     <h2>매치 진행 방식</h2>
@@ -283,8 +290,9 @@
                         <span class="matchPrice">10,000원<b class="notImpact"> / 2시간</b></span>
                     </div>
                      <a th:href="|/order/${matchForm.matchId}|" th:unless="${participant}" th:class="'resultButton ' + ${matchForm.matchStatus.className}" th:text="${matchForm.matchStatus.status}"></a>
-                     <a th:if="${participant}" class="resultButton already" th:text="${matchForm.matchStatus.status}">참가완료</a>
+                    <a th:if="${participant}" class="resultButton already" th:text="${matchForm.matchStatus.status}">참가완료</a>
                 </div>
+                <button type="button" id="managerBtn" th:if="${manager}" th:class="${managerFull} ? 'already' : ''" th:text="${managerFull} ? '매니저 마감' : '매니저로 참여'"></button>
             </div>
         </div>
     </div>
