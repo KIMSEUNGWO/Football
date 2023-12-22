@@ -1,29 +1,28 @@
 package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.common.redis.RankService;
+import football.start.allOfFootball.controller.mypage.ManagerDataForm;
+import football.start.allOfFootball.controller.mypage.MatchDataForm;
 import football.start.allOfFootball.controller.mypage.MyProfileDto;
 import football.start.allOfFootball.controller.mypage.MypageMainDto;
-import football.start.allOfFootball.domain.BeforePassword;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Profile;
+import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.ChangePasswordForm;
-import football.start.allOfFootball.enums.SocialEnum;
+import football.start.allOfFootball.dto.match.TeamInfo;
+import football.start.allOfFootball.enums.TeamEnum;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.formatter.DateFormatter;
 import football.start.allOfFootball.formatter.NumberFormatter;
 import football.start.allOfFootball.repository.MypageRepository;
+import football.start.allOfFootball.repository.domainRepository.MatchRepository;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
+import football.start.allOfFootball.service.domainService.MatchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 
-import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static football.start.allOfFootball.formatter.NumberFormatter.*;
 
@@ -35,9 +34,11 @@ public class MypageServiceImpl implements MypageService{
     private final MypageRepository mypageRepository;
     private final MemberRepository memberRepository;
     private final RankService rankService;
+    private final MatchRepository matchRepository;
 
     @Override
     public Optional<Member> findById(Long memberId) {
+        if (memberId == null) Optional.empty();
         return mypageRepository.findById(memberId);
     }
 
@@ -133,5 +134,37 @@ public class MypageServiceImpl implements MypageService{
             .phone(phone)
             .changePasswordDate(date)
             .build();
+    }
+
+    @Override
+    public Map<String, List<ManagerDataForm>> getManagerList(Member findMember) {
+        Manager manager = findMember.getManager();
+        List<Match> matchList = matchRepository.findAllMatchBefore(manager);
+        if (matchList.isEmpty()) return null;
+
+        Map<String, List<ManagerDataForm>> result = new LinkedHashMap<>();
+
+        for (Match match : matchList) {
+            List<Orders> ordersList = match.getOrdersList();
+
+            MatchDataForm matchDataForm = matchRepository.getMatchDataForm(match, ordersList);
+            Map<TeamEnum, List<TeamInfo>> teamInfo = null;
+            if (match.getMatchStatus() == MatchStatus.경기시작전) {
+                teamInfo = matchRepository.getTeamInfo(match, ordersList);
+            }
+
+            String date = DateFormatter.dateFormatAndWeek(match.getMatchDate());
+
+            ManagerDataForm build = ManagerDataForm.builder()
+                .teamInfo(teamInfo)
+                .topInfo(matchDataForm)
+                .build();
+
+            if (!result.containsKey(date)) {
+                result.put(date, new ArrayList<>());
+            }
+            result.get(date).add(build);
+        }
+        return result;
     }
 }

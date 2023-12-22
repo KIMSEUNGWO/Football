@@ -2,8 +2,13 @@ package football.start.allOfFootball.controller.mypage;
 
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.dto.CouponListForm;
+import football.start.allOfFootball.dto.match.TeamInfo;
+import football.start.allOfFootball.enums.TeamEnum;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.domainService.CouponListService;
+import football.start.allOfFootball.service.domainService.MatchService;
+import football.start.allOfFootball.service.domainService.MemberService;
 import football.start.allOfFootball.service.domainService.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static football.start.allOfFootball.SessionConst.*;
@@ -27,10 +33,13 @@ public class MypageController {
     private final MypageService mypageService;
     private final CouponListService couponListService;
     private final PaymentService paymentService;
+    private final MatchService matchService;
+    private final MemberService memberService;
 
     @GetMapping
     public String mainPage(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
-        Optional<Member> optionalMember = mypageService.findById(memberId);
+        System.out.println("메인페이지 접속");
+        Optional<Member> optionalMember = memberService.findByMemberId(memberId);
         if (optionalMember.isEmpty()) {
             log.info("사용자 정보가 없습니다");
             return "redirect:/";
@@ -46,7 +55,7 @@ public class MypageController {
 
     @GetMapping("/order")
     public String orderList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
-        Optional<Member> optionalMember = mypageService.findById(memberId);
+        Optional<Member> optionalMember = memberService.findByMemberId(memberId);
         if (optionalMember.isEmpty()) {
             log.info("사용자 정보가 없습니다");
             return "redirect:/";
@@ -59,7 +68,7 @@ public class MypageController {
     }
     @GetMapping("/cash")
     public String cashList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
-        Optional<Member> optionalMember = mypageService.findById(memberId);
+        Optional<Member> optionalMember = memberService.findByMemberId(memberId);
         if (optionalMember.isEmpty()) {
             log.info("사용자 정보가 없습니다");
             return "redirect:/";
@@ -75,7 +84,7 @@ public class MypageController {
     }
     @GetMapping("/coupon")
     public String couponList(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
-        Optional<Member> optionalMember = mypageService.findById(memberId);
+        Optional<Member> optionalMember = memberService.findByMemberId(memberId);
         if (optionalMember.isEmpty()) {
             log.info("사용자 정보가 없습니다");
             return "redirect:/";
@@ -87,6 +96,24 @@ public class MypageController {
         model.addAttribute("couponList", couponList);
         model.addAttribute("menu", "coupon");
         return "/mypage/mypage_coupon";
+    }
+
+    @GetMapping("/manager")
+    public String manager(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
+        System.out.println("manager 접속");
+        Optional<Member> optionalMember = memberService.findByMemberId(memberId);
+        if (optionalMember.isEmpty()) {
+            log.info("사용자 정보가 없습니다");
+            return "redirect:/";
+        }
+        Member findMember = optionalMember.get();
+        MyProfileDto myProfileDto = mypageService.getMyProfile(findMember);
+        Map<String, List<ManagerDataForm>> list = mypageService.getManagerList(findMember);
+
+        model.addAttribute("profile", myProfileDto);
+        model.addAttribute("matchList", list);
+        model.addAttribute("menu", "manager");
+        return "/mypage/mypage_manager";
     }
 
 }
