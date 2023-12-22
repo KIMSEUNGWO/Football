@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/mypage_menu.css">
+    <link rel="stylesheet" href="/css/mypage_manager.css">
+    <script src="/js/mypage_manager.js"></script>
+    <script src="/js/mypage_manager_drag.js"></script>
+    <script src="/js/fetch.js"></script>
+    <title>매니저 일정 :: 프로젝트</title>
+</head>
+<body>
+    <header th:replace="~{/common/header :: header}"></header>
+    <div class="container">
+        <div class="myInfo box" th:replace="~{/common/mypage_info_menu :: myinfo}"></div>
+        <div class="mypageMain">
+            <div class="mypageMenu" th:replace="~{/common/mypage_info_menu :: mypage_menu}"></div>
+            <div class="content">
+                <h2>매니저 일정</h2>
+                <div class="managerSchedule" th:if="${matchList != null}" th:each="match : ${matchList}">
+                    <h4 th:text="${match.key}"></h4>
+                    <ul class="dayBox box">
+                        <li class="matchBox" th:each="dataForm : ${match.value}">
+
+                            <div class="topInfo" th:with="topInfo = ${dataForm.topInfo}">
+                                <span class="matchId" th:text="${topInfo.matchId}"></span>
+                                <span class="matchTime" th:text="${topInfo.matchTime}">18:00</span>
+                                <span class="matchMax" th:text="${topInfo.maxPersonAndCount}">6 vs 6 3파전</span>
+                                <a href="#" class="title" th:text="${topInfo.fieldTitle}">부산 준타스 풋살 아레나 화이트</a>
+                                <span class="person" th:text="${topInfo.nowPerson}">7 / 18</span>
+                                <span th:text="${topInfo.matchStatus}">경기종료</span>
+                            </div>
+                            <div class="matchTeamConfirm" th:if="${dataForm.teamInfo != null}">
+                                <h3>소셜팀 정보</h3>
+                                <ul class="teamList">
+                                    <li class="team" th:each="team : ${dataForm.teamInfo}">
+                                        <div th:class="'teamColor ' + ${team.key.className}" th:text="${team.key}"></div>
+                                        <ul class="players">
+                                            <button type="button" class="player" th:each="player : ${team.value}" th:value="${player.orderId}" draggable="true">
+                                                <div class="playerImg">
+                                                     <img th:src="|/images/profile/${player.profileImage}|" th:alt="${player.memberName}">
+                                                </div>
+                                                <strong class="playerName" th:text="${player.memberName}"></strong>
+                                                <div class="playerInfo">
+                                                    <span class="playerGrade" th:text="${player.memberGrade}"></span>
+                                                </div>
+                                            </button>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="bottomBox">
+                                    <button class="confirmBtn">팀 확정</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
