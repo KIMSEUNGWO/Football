@@ -1,6 +1,7 @@
 package football.start.allOfFootball.dto;
 
 import football.start.allOfFootball.domain.FieldImage;
+import football.start.allOfFootball.domain.Manager;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
@@ -29,6 +30,7 @@ public class MatchViewForm {
     private MatchEnum matchGrade;
     private GenderEnum matchGender;
     private String maxPersonAndMatchCount;
+    private String managerName;
 
     private String fieldSize;
     private ParkingEnum fieldParking;
@@ -50,6 +52,7 @@ public class MatchViewForm {
             .matchGrade(match.getMatchGrade())
             .matchGender(match.getMatchGender())
             .maxPersonAndMatchCount(getPersonAndCount(match.getMaxPerson(), match.getMatchCount()))
+            .managerName(getManager(match.getManager()))
             .fieldSize(match.getField().getFieldSize())
             .fieldParking(match.getField().getFieldParking())
             .fieldShower(match.getField().getFieldShower())
@@ -60,6 +63,13 @@ public class MatchViewForm {
             .fieldAddress(match.getField().getFieldAddress())
             .matchStatus(match.getMatchStatus())
             .build();
+    }
+
+    private static String getManager(Manager manager) {
+        if (manager == null) {
+            return null;
+        }
+        return manager.getMember().getMemberName();
     }
 
     private static String getPersonAndCount(Integer maxPerson, Integer matchCount) {
