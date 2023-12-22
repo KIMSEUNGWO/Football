@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,6 +19,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "MEMBER")
 @AllArgsConstructor
+@NoArgsConstructor
 @DynamicInsert
 @SequenceGenerator(name = "SEQ_MEMBER", sequenceName = "SEQ_MEMBER_ID", allocationSize = 1)
 public class Member extends BaseTimeEntity {
@@ -49,12 +49,13 @@ public class Member extends BaseTimeEntity {
     @Nullable
     private GradeEnum grade;
 
-    private LocalDate memberRecentlyDate;
+    private LocalDateTime memberRecentlyDate;
     private LocalDateTime memberExpireDate;
+
     @Enumerated(EnumType.STRING)
     private SocialEnum memberSocial;
 
-    // not columns
+    // Not Columns
     @OneToMany(mappedBy = "member")
     private List<CouponList> couponList;
     @OneToMany(mappedBy = "member")
@@ -63,11 +64,6 @@ public class Member extends BaseTimeEntity {
     private BeforePassword beforePassword;
     @OneToOne(mappedBy = "member")
     private Manager manager;
-
-    public Member() {
-
-    }
-
 
     public String combineSalt(String password) {
         return memberSalt + password;
@@ -78,48 +74,19 @@ public class Member extends BaseTimeEntity {
         return uuid.toString().substring(0, 4);
     }
 
-
-    public void setCouponList(List<CouponList> couponList) {
-        this.couponList = couponList;
-    }
-
-    public void setMemberCash(int memberCash) {
-        this.memberCash = memberCash;
-    }
-
-    public void setMemberEmail(String memberEmail) {
-        this.memberEmail = memberEmail;
-    }
-
-    public void setMemberPassword(String memberPassword) {
-        this.memberPassword = memberPassword;
-    }
-
     public void setMemberSalt() {
         this.memberSalt = createSalt();
     }
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
+    public void renewLoginTime(LocalDateTime now) {
+        memberRecentlyDate = now;
     }
 
-    public void setMemberGender(GenderEnum memberGender) {
-        this.memberGender = memberGender;
+    public void setMemberCash(int resultCash) {
+        memberCash = resultCash;
     }
 
-    public void setMemberBirthday(LocalDate memberBirthday) {
-        this.memberBirthday = memberBirthday;
-    }
-
-    public void setMemberPhone(String memberPhone) {
-        this.memberPhone = memberPhone;
-    }
-
-    public void setMemberRecentlyDate(LocalDate memberRecentlyDate) {
-        this.memberRecentlyDate = memberRecentlyDate;
-    }
-
-    public void setMemberSocial(SocialEnum memberSocial) {
-        this.memberSocial = memberSocial;
+    public void setMemberPassword(String changePassword) {
+        memberPassword = changePassword;
     }
 }
