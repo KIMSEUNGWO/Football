@@ -2,16 +2,14 @@ package football.start.allOfFootball.service.domainService;
 
 import football.start.allOfFootball.controller.admin.EditMatchForm;
 import football.start.allOfFootball.controller.admin.SaveMatchForm;
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Orders;
+import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.match.MatchCollection;
 import football.start.allOfFootball.dto.match.MatchData;
-import football.start.allOfFootball.dto.match.MatchDataCalculator;
 import football.start.allOfFootball.dto.match.TeamInfo;
 import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
+import football.start.allOfFootball.enums.matchEnums.RequestTeam;
+import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static football.start.allOfFootball.enums.matchEnums.MatchStatus.*;
 
@@ -32,6 +29,9 @@ public class MatchService {
     private final MatchRepository matchRepository;
 
     public Optional<Match> findByMatch(Long matchId) {
+        if (matchId == null) {
+            return Optional.empty();
+        }
         return matchRepository.findByMatch(matchId);
     }
 
@@ -118,5 +118,33 @@ public class MatchService {
             .matchData(data)
             .teamInfo(teamInfo)
             .build();
+    }
+
+    public void changeTeam(Match match, RequestTeam team) {
+        List<Orders> ordersList = match.getOrdersList();
+
+        List<TeamConfirm> changeList = team.getTeam();
+        for (TeamConfirm teamConfirm : changeList) {
+            matchRepository.changeTeam(ordersList, teamConfirm);
+        }
+
+        match.setMatchStatus(경기중);
+    }
+
+    public void saveManager(Member member, Match match) {
+        Manager manager = member.getManager();
+        match.setManager(manager);
+    }
+
+    public Long numberCheck(String matchIdStr) {
+        try {
+            return Long.parseLong(matchIdStr.replace("\"", ""));
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    public List<Match> findAllMatchBefore(Manager manager) {
+        return matchRepository.findAllMatchBefore(manager);
     }
 }
