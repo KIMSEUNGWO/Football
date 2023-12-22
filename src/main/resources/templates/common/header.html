@@ -8,14 +8,12 @@
 <body>
     <header th:fragment="header">
         <div class="flexL">
-            <a href="#" class="logo">
+            <a class="logo">
                 <img src="#" alt="로고이미지">
             </a>
             <ul class="menu">
-                <li class="menuTitle">메뉴1</li>
-                <li class="menuTitle">메뉴2</li>
-                <li class="menuTitle">메뉴3</li>
-                <li class="menuTitle">메뉴4</li>
+                <a href="/" class="menuTitle">소셜매치</a>
+                <a href="/manager" class="menuTitle">매니저 지원</a>
             </ul>
         </div>
         <div class="flexR" th:if="${session.memberId == null}">
