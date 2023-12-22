@@ -1,14 +1,14 @@
 package football.start.allOfFootball.repository.domainRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.domain.Profile;
+import football.start.allOfFootball.controller.mypage.MatchDataForm;
+import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.match.MatchData;
 import football.start.allOfFootball.dto.match.MatchDataCalculator;
 import football.start.allOfFootball.dto.match.TeamInfo;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
 import football.start.allOfFootball.jpaRepository.JpaMatchRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +16,11 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import static football.start.allOfFootball.domain.QMatch.match;
+import static football.start.allOfFootball.enums.matchEnums.MatchStatus.종료;
+import static football.start.allOfFootball.enums.matchEnums.MatchStatus.취소;
 
 @Repository
 @Slf4j
@@ -92,6 +93,7 @@ public class MatchRepository {
                 profileName = "base.jpeg";
             }
             TeamInfo teamInfo = TeamInfo.builder()
+                .orderId(x.getOrdersId())
                 .profileImage(profileName)
                 .memberName(x.getMember().getMemberName())
                 .memberGrade(x.getMember().getGrade())
@@ -101,5 +103,45 @@ public class MatchRepository {
             teamInfoList.add(teamInfo);
         }
         return result;
+    }
+
+    public void changeTeam(List<Orders> ordersList, TeamConfirm teamConfirm) {
+        TeamEnum teamColor = teamConfirm.getTeamColor();
+        List<Long> player = teamConfirm.getPlayer();
+
+        for (Orders orders : ordersList) {
+            if (player.contains(orders.getOrdersId())) {
+                orders.setTeam(teamColor);
+            }
+        }
+    }
+
+    public List<Match> findAllMatchBefore(Manager manager) {
+        return query.selectFrom(match)
+            .where(match.manager.eq(manager).and(match.matchStatus.notIn(종료,취소)))
+            .orderBy(match.matchDate.asc())
+            .fetch();
+    }
+
+    public MatchDataForm getMatchDataForm(Match match, List<Orders> ordersList) {
+        return MatchDataForm.builder()
+            .matchId(match.getMatchId())
+            .matchTime(getTime(match.getMatchDate()))
+            .maxPersonAndCount(getPersonAndCount(match))
+            .fieldTitle(match.getField().getFieldTitle())
+            .nowPerson(ordersList.size() + " / " + (match.getMaxPerson() * match.getMatchCount()))
+            .matchStatus(match.getMatchStatus())
+            .build();
+    }
+
+    private String getPersonAndCount(Match match) {
+        int person = match.getMaxPerson();
+        int count = match.getMatchCount();
+        return person + " vs " + person + " " + count + "파전";
+    }
+
+    private String getTime(LocalDateTime matchDate) {
+        int hour = matchDate.getHour();
+        return String.format("%02d:00", hour);
     }
 }
