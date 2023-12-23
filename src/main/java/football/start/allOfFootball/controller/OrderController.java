@@ -1,11 +1,7 @@
 package football.start.allOfFootball.controller;
 
-import football.start.allOfFootball.SessionConst;
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.domain.CouponList;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
+import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.dto.OrderForm;
 import football.start.allOfFootball.dto.OrderPostForm;
@@ -96,6 +92,7 @@ public class OrderController {
 
         Match match = findMatch.get();
         Member member = findMember.get();
+        List<Orders> ordersList = member.getOrdersList();
         boolean distinctMember = matchService.distinctCheck(match, memberId);
         if (distinctMember) {
             return AlertUtils.alertAndMove(response, "이미 신청된 경기입니다.", "/");
@@ -104,6 +101,10 @@ public class OrderController {
         if (maxCheck) {
             return AlertUtils.alert(response, "경기가 마감되었습니다.");
         }
+        Manager manager = member.getManager();
+        boolean isAlreadyApply = memberService.isAlreadyApply(ordersList, match, manager);
+
+
         Optional<CouponList> couponList = couponListService.findByCouponListId(form.getCouponNum());
 
         int cash = member.getMemberCash();

@@ -1,12 +1,16 @@
 package football.start.allOfFootball.service.domainService;
 
+import football.start.allOfFootball.domain.Manager;
+import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,5 +23,45 @@ public class MemberService {
     public Optional<Member> findByMemberId(Long memberId) {
         if (memberId == null) return Optional.empty();
         return memberRepository.findByMemberId(memberId);
+    }
+
+    public boolean isAlreadyApply(List<Orders> ordersList, Match match) {
+        LocalDateTime minDate = match.getMatchDate().minusHours(1);
+        LocalDateTime maxDate = minDate.plusHours(3);
+        for (Orders orders : ordersList) {
+            Match m = orders.getMatch();
+            LocalDateTime myMatchDate = m.getMatchDate();
+
+            if (myMatchDate.isAfter(minDate) && myMatchDate.isBefore(maxDate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAlreadyApply(List<Orders> memberOrdersList, Match match, Manager manager) {
+        LocalDateTime minDate = match.getMatchDate().minusHours(1);
+        LocalDateTime maxDate = minDate.plusHours(3);
+
+        if (manager != null) {
+            List<Orders> ordersList = memberRepository.findAllOrders(manager.getMember());
+            for (Orders orders : ordersList) {
+                Match m = orders.getMatch();
+                LocalDateTime myMatchDate = m.getMatchDate();
+
+                if (myMatchDate.isAfter(minDate) && myMatchDate.isBefore(maxDate)) {
+                    return true;
+                }
+            }
+        }
+        for (Orders orders : memberOrdersList) {
+            Match m = orders.getMatch();
+            LocalDateTime myMatchDate = m.getMatchDate();
+
+            if (myMatchDate.isAfter(minDate) && myMatchDate.isBefore(maxDate)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
