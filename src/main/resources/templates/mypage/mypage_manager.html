@@ -26,10 +26,10 @@
                         <li class="matchBox" th:each="dataForm : ${match.value}">
 
                             <div class="topInfo" th:with="topInfo = ${dataForm.topInfo}">
-                                <span class="matchId" th:text="${topInfo.matchId}"></span>
+                                <span class="matchId" th:text="${topInfo.matchId}">1</span>
                                 <span class="matchTime" th:text="${topInfo.matchTime}">18:00</span>
                                 <span class="matchMax" th:text="${topInfo.maxPersonAndCount}">6 vs 6 3파전</span>
-                                <a href="#" class="title" th:text="${topInfo.fieldTitle}">부산 준타스 풋살 아레나 화이트</a>
+                                <a th:href="|/match/${topInfo.matchId}|" class="title" th:text="${topInfo.fieldTitle}">부산 준타스 풋살 아레나 화이트</a>
                                 <span class="person" th:text="${topInfo.nowPerson}">7 / 18</span>
                                 <span th:text="${topInfo.matchStatus}">경기종료</span>
                             </div>

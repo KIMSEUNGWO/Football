@@ -2,9 +2,6 @@ package football.start.allOfFootball.controller.mypage;
 
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.dto.CouponListForm;
-import football.start.allOfFootball.dto.match.TeamInfo;
-import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.domainService.CouponListService;
 import football.start.allOfFootball.service.domainService.MatchService;
@@ -100,7 +97,6 @@ public class MypageController {
 
     @GetMapping("/manager")
     public String manager(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
-        System.out.println("manager 접속");
         Optional<Member> optionalMember = memberService.findByMemberId(memberId);
         if (optionalMember.isEmpty()) {
             log.info("사용자 정보가 없습니다");
