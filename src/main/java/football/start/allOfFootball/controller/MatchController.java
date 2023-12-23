@@ -50,7 +50,6 @@ public class MatchController {
             model.addAttribute("manager", true);
             // 매치에 이미 매니저가 있으면
             if (match.getManager() != null) {
-                System.out.println("이미 매니저가 있음");
                 model.addAttribute("managerFull", true);
             }
         }
@@ -89,7 +88,6 @@ public class MatchController {
     public Map<String, String> managerApply(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, @RequestBody String matchIdStr) {
         Map<String, String> result = new HashMap<>();
         Long matchId = matchService.numberCheck(matchIdStr);
-        System.out.println("matchId = " + matchId);
         Optional<Member> findMember = memberService.findByMemberId(memberId);
         if (findMember.isEmpty()) {
             result.put("result", "NotLogin");
@@ -108,6 +106,23 @@ public class MatchController {
         if (manager != null) {
             result.put("result", "fail");
             result.put("message", "이미 매니저가 배정되었어요.");
+            return result;
+        }
+        List<Orders> ordersList = match.getOrdersList();
+        for (Orders orders : ordersList) {
+            Long orderMemberId = orders.getMember().getMemberId();
+            Long myMemberId = member.getMemberId();
+            if (orderMemberId.equals(myMemberId)) {
+                result.put("result", "fail");
+                result.put("message", "이미 선수로 신청되어있어요.");
+                return result;
+            }
+        }
+
+        boolean isAlreadyApply = memberService.isAlreadyApply(member.getOrdersList(), match);
+        if (isAlreadyApply) {
+            result.put("result", "fail");
+            result.put("message", "동시간대에 다른 경기신청내역이 존재해요.");
             return result;
         }
 
