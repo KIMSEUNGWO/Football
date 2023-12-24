@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/mypage_manager.css">
     <script src="/js/mypage_manager.js"></script>
     <script src="/js/mypage_manager_drag.js"></script>
+    <script src="/js/mypage_manager_result.js"></script>
     <script src="/js/fetch.js"></script>
     <title>매니저 일정 :: 프로젝트</title>
 </head>
@@ -23,7 +24,7 @@
                 <div class="managerSchedule" th:if="${matchList != null}" th:each="match : ${matchList}">
                     <h4 th:text="${match.key}"></h4>
                     <ul class="dayBox box">
-                        <li class="matchBox" th:each="dataForm : ${match.value}">
+                        <li class="matchBox" th:each="dataForm : ${match.value}" th:data-is-id="${dataForm.topInfo.matchId}">
 
                             <div class="topInfo" th:with="topInfo = ${dataForm.topInfo}">
                                 <span class="matchId" th:text="${topInfo.matchId}">1</span>
@@ -33,7 +34,8 @@
                                 <span class="person" th:text="${topInfo.nowPerson}">7 / 18</span>
                                 <span th:text="${topInfo.matchStatus}">경기종료</span>
                             </div>
-                            <div class="matchTeamConfirm" th:if="${dataForm.teamInfo != null}">
+
+                            <div class="matchTeamConfirm" th:if="${!dataForm.isRecordScore && dataForm.teamInfo != null}">
                                 <h3>소셜팀 정보</h3>
                                 <ul class="teamList">
                                     <li class="team" th:each="team : ${dataForm.teamInfo}">
@@ -48,15 +50,144 @@
                                                     <span class="playerGrade" th:text="${player.memberGrade}"></span>
                                                 </div>
                                             </button>
-
                                         </ul>
                                     </li>
                                 </ul>
                                 <div class="bottomBox">
-                                    <button class="confirmBtn">팀 확정</button>
+                                    <button class="confirmBtn teamConfirm">팀 확정</button>
+                                </div>
+                            </div>
+
+                            <div class="matchPlaying" th:if="${dataForm.isMatchPlaying}">
+                                <h3>경기 결과</h3>
+                                <div class="match-result-empty">
+                                    <button type="button" class="lock-radius matchEnd">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="lock"><path d="M224 64c44.2 0 80 35.8 80 80v48H144V144c0-44.2 35.8-80 80-80zM80 144v48H64c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V256c0-35.3-28.7-64-64-64H368V144C368 64.5 303.5 0 224 0S80 64.5 80 144zM256 320v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32s3,2 14.3 32 32z"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="lock-open"><path d="M432 64c-44.2 0-80 35.8-80 80v48h32c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H288V144C288 64.5 352.5 0 432 0s144 64.5 144 144v48c0 17.7-14.3 32-32 32s-32-14.3-32-32V144c0-44.2-35.8-80-80-80zM256 384c17.7 0 32-14.3 32-32s-14.3-32-32-32H192c-17.7 0-32 14.3-32 32s14.3 32 32 32h64z"/></svg>
+                                        <span>경기 종료</span>
+                                    </button>
+                                    <span>경기가 진행중이에요.</span>
+                                    <span>경기가 종료되면 버튼을 눌러주세요.</span>
+                                </div>
+                            </div>
+
+                            <div class="matchPlaying" th:if="${dataForm.isRecordScore}">
+                                <div class="resultTop">
+                                    <h3>결과 입력</h3>
+                                    <button class="addMatch addBtn">
+                                        <span>경기추가</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                                    </button>
+                                </div>
+                                <div class="flexBox">
+                                    <div class="matchList">
+                                        <div class="match-result-wrap">
+                                            <div class="match-result">
+                                                <div class="match-team left-team">
+                                                    <div class="team-name">
+                                                        <div class="selectColor">
+                                                            <button type="button" class="selector red">R</button>
+                                                            <button type="button" class="selector blue">B</button>
+                                                            <button type="button" class="selector yellow">Y</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="team-detail left-team-detail">
+                                                        <span class="match-score left-score">0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="middle-box">
+                                                    <button type="button" class="remove">제거</button>
+                                                </div>
+                                                <div class="match-team right-team">
+                                                    <div class="team-detail right-team-detail">
+                                                        <div class="match-score right-score">0</div>
+                                                    </div>
+                                                    <div class="team-name">
+                                                        <div class="selectColor">
+                                                            <button type="button" class="selector red">R</button>
+                                                            <button type="button" class="selector blue">B</button>
+                                                            <button type="button" class="selector yellow">Y</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="match-result-detail">
+                                                <ul class="score-record left-score-record">
+                                                    <li class="goal left-goal">
+                                                        <button type="button" class="addBtn addPlayer" disabled>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                                                            선수추가
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                                <ul class="score-record right-score-record">
+                                                    <li class="goal right-goal">
+                                                        <button type="button" class="addBtn addPlayer" disabled>선수추가
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="matchPlayer">
+                                        <div class="playerWrap">
+                                            <div class="playerColor disabled" th:each="team : ${dataForm.teamInfo}">
+                                                <div th:class="'color ' + ${team.key.className}" th:text="${team.key}"></div>
+                                                <ul class="colorPlayerList">
+                                                    <label th:each="player : ${team.value}" th:for="${player.orderId}" class="colorPlayer" aria-pressed="false">
+                                                        <input type="radio" th:name="${team.key.className}" th:id="${player.orderId}"  th:value="${player.orderId}" hidden>
+                                                        <div class="colorPlayerImg">
+                                                            <img th:src="|/images/profile/${player.profileImage}|" alt="${player.memberName}">
+                                                        </div>
+                                                        <strong class="colorPlayerName" th:text="${player.memberName}"></strong>
+                                                        <div class="colorPlayerInfo">
+                                                            <span class="colorPlayerGrade" th:text="${player.memberGrade}"></span>
+                                                        </div>
+                                                    </label>
+                                                </ul>
+                                                <div class="colorBottom">
+                                                    <div class="inputBox">
+                                                        <input type="text" name="time" inputmode="numeric" value="">
+                                                        <span>분</span>
+                                                    </div>
+                                                    <button type="button" class="applyGoal">적용</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottomBox">
+                                    <button class="confirmBtn scoreConfirm">점수 확정</button>
                                 </div>
                             </div>
                         </li>
+
+<!--                        <li class="matchBox" th:each="dataForm : ${match.value}">-->
+
+<!--                            <div class="topInfo" th:with="topInfo = ${dataForm.topInfo}">-->
+<!--                                <span class="matchId" th:text="${topInfo.matchId}">1</span>-->
+<!--                                <span class="matchTime" th:text="${topInfo.matchTime}">18:00</span>-->
+<!--                                <span class="matchMax" th:text="${topInfo.maxPersonAndCount}">6 vs 6 3파전</span>-->
+<!--                                <a th:href="|/match/${topInfo.matchId}|" class="title" th:text="${topInfo.fieldTitle}">부산 준타스 풋살 아레나 화이트</a>-->
+<!--                                <span class="person" th:text="${topInfo.nowPerson}">7 / 18</span>-->
+<!--                                <span th:text="${topInfo.matchStatus}">경기종료</span>-->
+<!--                            </div>-->
+<!--                            <div class="matchPlaying" th:if="${isMatchPlaying}">-->
+<!--                                <h3>경기 결과</h3>-->
+<!--                                <div class="match-result-empty">-->
+<!--                                    <button type="button" class="lock-radius matchEnd">-->
+<!--                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="lock"><path d="M224 64c44.2 0 80 35.8 80 80v48H144V144c0-44.2 35.8-80 80-80zM80 144v48H64c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V256c0-35.3-28.7-64-64-64H368V144C368 64.5 303.5 0 224 0S80 64.5 80 144zM256 320v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32s3,2 14.3 32 32z"/></svg>-->
+<!--                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="lock-open"><path d="M432 64c-44.2 0-80 35.8-80 80v48h32c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H288V144C288 64.5 352.5 0 432 0s144 64.5 144 144v48c0 17.7-14.3 32-32 32s-32-14.3-32-32V144c0-44.2-35.8-80-80-80zM256 384c17.7 0 32-14.3 32-32s-14.3-32-32-32H192c-17.7 0-32 14.3-32 32s14.3 32 32 32h64z"/></svg>-->
+<!--                                        <span>경기 종료</span>-->
+<!--                                    </button>-->
+<!--                                    <span>경기가 진행중이에요.</span>-->
+<!--                                    <span>경기가 종료되면 버튼을 눌러주세요.</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                        </li>-->
+                        
                     </ul>
                 </div>
             </div>

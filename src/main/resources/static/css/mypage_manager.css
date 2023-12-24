@@ -8,6 +8,10 @@
 
     a {
         color: gray;
+        cursor: pointer;
+        width: 100%;
+        display: inline-block;
+        margin-left: 3rem;
     }
     a:hover {
         color: black;
@@ -15,8 +19,9 @@
     }
 }
 
-.matchTeamConfirm {
+.matchTeamConfirm, .matchPlaying {
     padding: 1rem;
+    border-bottom: 0.1rem solid var(--gray);
 }
 
 
@@ -121,4 +126,385 @@ li {
 }
 .bottomBox .confirmBtn:hover {
     background-color: var(--main-color-hover);
+}
+
+
+ /* 경기결과 */
+ .match-result-empty {
+    width: 100%;
+    height: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+
+    .lock-radius {
+        width: 10rem;
+        height: 10rem;
+        background-color: rgb(210, 210, 210);
+        border-radius: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        cursor: pointer;
+        svg {
+            width: 3rem;
+            height: 3rem;
+            fill: rgb(179, 179, 179);
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+        }
+
+        #lock-open {
+            display: none;
+        }
+    }
+    .lock-radius:hover {
+        background-color: rgb(187, 187, 187);
+        svg {
+            fill: rgb(128, 128, 128);
+        }
+        #lock-open {
+            display: initial;
+        }
+        #lock {
+            display: none;
+        }
+    }
+    .lock-radius * {
+        pointer-events: none;
+    }
+    span {
+        color: gray;
+    }
+}
+
+
+/* 결과 집계 */
+.resultTop {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.resultTop > * {
+    margin: 0;
+}
+.addBtn {
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    cursor: pointer;
+}
+.goal .addBtn {
+    font-size: 1rem;
+}
+.goal .addBtn * {
+    pointer-events: none;
+}
+
+.flexBox {
+    display: flex;
+    gap: 2rem;
+    .matchList {
+        width: 70%;
+    }
+    .matchPlayer {
+        width: 30%;
+        min-height: 20rem;
+        border-radius: 1rem;
+    }
+}
+
+.match-result-wrap {
+    width: 100%;
+    margin-bottom: 2rem;
+
+    .match-result-detail {
+        display: flex;
+        gap: 2.5rem;
+        min-height: 4rem;
+
+        .score-record {
+            margin-top: 0.5rem;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column; 
+            flex-wrap: wrap;
+            row-gap: 0.2rem;
+            column-gap: 1rem;
+            .goal {
+                margin: 0;
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
+                .goal-player {
+                    color: gray;
+                }
+                svg {
+                    width: 0.9rem;
+                    height: 0.9rem;
+                    fill: gray;
+                }
+                .removePlayer {
+                    fill: rgb(255, 41, 41);
+                    cursor: pointer;
+                }
+                .removePlayer * {
+                    pointer-events: none;
+                }
+            }
+            .goal > * {
+                margin: 0;
+            }
+            .left-goal {
+                justify-content: right;
+            }
+            .right-goal {
+                justify-content: left;
+            }
+        }
+        .left-score-record {
+            text-align: right;
+        }
+        .right-score-record {
+            text-align: left;
+        }
+    }
+    .match-result-detail > * {
+        margin: 0;
+    }
+    
+    .match-result {
+        display: flex;
+        position: relative;
+        gap: 0.5rem;
+        
+        .match-team {
+            width: 50%;
+            height: 6rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 2px 2px 5px #e4e4e4;
+            .match-score {
+                font-family: 'Pretendard-ExtraBold';
+                font-size: 2.5rem;
+            }
+        }
+        .left-team {
+            padding: 0 3rem 0 2rem;
+        }
+        .right-team {
+            padding: 0 2rem 0 3rem;
+            text-align: right;
+        }
+        .team-name {
+            font-family: 'Pretendard-SemiBold';
+            font-size: 1.5rem;
+        }
+        .match-team.lose {
+            opacity: .3;
+        }
+        .match-team > * {
+            margin: 0;
+        }
+        .middle-box {
+            position: absolute;
+            top: calc(50% - 2.5rem);
+            left: calc(50% - 2rem);
+            width: 4rem;
+            height: 5rem;
+            border-radius: 1rem;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            .remove {
+                font-family: 'Pretendard-Bold';
+                font-size: 1.1rem;
+                color: white;
+                border: 1rem;
+                width: 80%;
+                height: 2rem;
+                border-radius: var(--border-radius);
+                background-color: rgb(255, 56, 56);
+                cursor: pointer;;
+            }
+            .remove:hover {
+                background-color: rgb(231, 48, 48);
+            }
+        }
+        .middle-box.win {
+            color: red;
+        }
+        .middle-box.lose {
+            color: blue;
+        }
+        .middle-box.draw {
+            color: black;
+        }
+
+        .team-detail {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .left-team-detail {
+            justify-content: right;
+        }
+        .right-team-detail {
+            justify-content: left;
+        }
+    }
+    .match-result > * {
+        margin: 0;
+    }
+}
+.match-team.red {
+    background-color: var(--red-team);
+    color: white;
+}
+.match-team.blue {
+    background-color: var(--blue-team);
+    color: white;
+}
+.match-team.yellow {
+    background-color: var(--yellow-team);
+    color: black;
+}
+.match-team {
+    background-color: rgb(191, 191, 191);
+}
+
+.team-name {
+    width: 80%;
+}
+.selectColor {
+    display: flex;
+    align-items: center;
+    height: 4rem;
+    button {
+        width: 3rem;
+        height: 3rem;
+        border: none;
+        border-radius: 1rem;
+        font-size: 1.1rem;
+        cursor: pointer;;
+    }
+
+    button.red:hover {
+        background-color: var(--red-team-hover);
+    }
+    button.blue:hover {
+        background-color: var(--blue-team-hover);
+    }
+    button.yellow:hover {
+        background-color: var(--yellow-team-hover);
+    }
+}
+
+.color {
+    width: 50%;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+.colorPlayerList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.colorPlayerList > * {
+    margin: 0;
+}
+.colorPlayer {
+    width: 6rem;
+    height: 8rem;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px #e4e4e4;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 1rem;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.colorPlayer * {
+    pointer-events: none;
+}
+.colorPlayerName {
+    padding: 0 1rem;
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+.colorPlayerGrade {
+    font-size: 0.8rem;
+}
+.colorPlayerImg {
+    height: 70%;
+}
+.colorPlayerImg img {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+.colorPlayer[aria-pressed="true"] {
+    border: 0.15rem solid var(--gray);
+}
+.colorBottom {
+    width: 100%;
+    display: flex;
+    margin-top: 2rem;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    .inputBox {
+        height: 2rem;
+        border: 0.1rem solid var(--border-color);
+        display: flex;
+        padding: 0.3rem 0.8rem;
+        gap: 0.2rem;
+        border-radius: 1rem;
+        width: 50%;
+        input[name="time"] {
+            width: 100%;
+            outline: none;
+            border: none;
+            text-align: right;
+        }
+    }
+    .applyGoal {
+        width: 5rem;
+        height: 2rem;
+        padding: 0;
+        border: none;
+        background-color: var(--main-font-color);
+        color: white;
+        border-radius: 1rem;
+        cursor: pointer;
+    }
+}
+.colorBottom > * {
+    margin: 0;
 }
