@@ -17,4 +17,6 @@ public class ManagerDataForm {
 
     private MatchDataForm topInfo;
     private Map<TeamEnum, List<TeamInfo>> teamInfo;
+    private boolean isMatchPlaying;
+    private boolean isRecordScore;
 }
