@@ -1,4 +1,4 @@
-package football.start.allOfFootball.domain.matchRecordForm;
+package football.start.allOfFootball.dto.matchRecordForm;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

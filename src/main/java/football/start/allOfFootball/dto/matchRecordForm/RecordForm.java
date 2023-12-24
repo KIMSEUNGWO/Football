@@ -1,4 +1,4 @@
-package football.start.allOfFootball.domain.matchRecordForm;
+package football.start.allOfFootball.dto.matchRecordForm;
 
 import football.start.allOfFootball.enums.TeamEnum;
 import lombok.AllArgsConstructor;
