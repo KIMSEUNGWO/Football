@@ -125,10 +125,10 @@
                             <input type="radio" name="couponNum" id="couponNumNone" value="">
                         </li>
                         <ul class='couponList'>
-                            <li class='coupon noncoupon' th:if="${orderForm.couponList == null || orderForm.couponList.size == 0}">
+                            <li class='coupon noncoupon' th:if="${orderForm.couponList == null || #lists.size(orderForm.couponList) == 0}">
                                 <span>등록된 쿠폰이 없습니다.</span>
                             </li>
-                            <li class='coupon' th:if="${orderForm.couponList.size != 0}" th:each="item : ${orderForm.couponList}">
+                            <li class='coupon' th:if="${#lists.size(orderForm.couponList) != 0}" th:each="item : ${orderForm.couponList}">
                                 <div class='couponRadio'>
                                     <span class='couponPrice' th:text="${#numbers.formatInteger(item.couponDiscount, 3, 'COMMA')} + '원 할인'">5,000원 할인</span>
                                      <input type="radio" name="couponNum" th:id="couponNum + ${item.couponListId}" hidden th:value="${item.couponListId}">
