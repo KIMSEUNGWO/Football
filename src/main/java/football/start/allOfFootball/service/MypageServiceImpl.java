@@ -11,11 +11,9 @@ import football.start.allOfFootball.dto.match.TeamInfo;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.formatter.DateFormatter;
-import football.start.allOfFootball.formatter.NumberFormatter;
 import football.start.allOfFootball.repository.MypageRepository;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
-import football.start.allOfFootball.service.domainService.MatchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -149,7 +147,7 @@ public class MypageServiceImpl implements MypageService{
 
             MatchDataForm matchDataForm = matchRepository.getMatchDataForm(match, ordersList);
             Map<TeamEnum, List<TeamInfo>> teamInfo = null;
-            if (match.getMatchStatus() == MatchStatus.경기시작전) {
+            if (match.getMatchStatus() == MatchStatus.경기시작전 || match.getMatchStatus() == MatchStatus.기록중) {
                 teamInfo = matchRepository.getTeamInfo(match, ordersList);
             }
 
@@ -158,6 +156,8 @@ public class MypageServiceImpl implements MypageService{
             ManagerDataForm build = ManagerDataForm.builder()
                 .teamInfo(teamInfo)
                 .topInfo(matchDataForm)
+                .isMatchPlaying(match.getMatchStatus() == MatchStatus.경기중)
+                .isRecordScore(match.getMatchStatus() == MatchStatus.기록중)
                 .build();
 
             if (!result.containsKey(date)) {
