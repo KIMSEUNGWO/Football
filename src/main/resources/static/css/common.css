@@ -36,8 +36,11 @@
     --off: #bbbbbb;
 
     --red-team: rgb(255, 80, 80);
+    --red-team-hover: rgb(235, 75, 75);
     --blue-team: rgb(80, 80, 255);
+    --blue-team-hover: rgb(69, 69, 220);
     --yellow-team: rgb(255, 255, 80);
+    --yellow-team-hover: rgb(235, 235, 74);
 }
 
 *{
