@@ -147,4 +147,8 @@ public class MatchService {
     public List<Match> findAllMatchBefore(Manager manager) {
         return matchRepository.findAllMatchBefore(manager);
     }
+
+    public void matchEnd(Match match) {
+        match.setMatchStatus(기록중);
+    }
 }
