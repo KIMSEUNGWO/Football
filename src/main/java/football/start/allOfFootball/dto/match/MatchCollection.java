@@ -13,6 +13,7 @@ import java.util.Map;
 @Builder
 public class MatchCollection {
 
+    private ScoreResult scoreResult;
     private List<MatchData> matchData;
     private Map<TeamEnum, List<TeamInfo>> teamInfo;
 }
