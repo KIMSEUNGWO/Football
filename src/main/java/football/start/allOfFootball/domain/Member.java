@@ -82,6 +82,10 @@ public class Member extends BaseTimeEntity {
         memberRecentlyDate = now;
     }
 
+    public void addScore(int score) {
+        memberScore += score;
+    }
+
     public void setMemberCash(int resultCash) {
         memberCash = resultCash;
     }
