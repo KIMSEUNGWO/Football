@@ -38,6 +38,8 @@ public class Orders {
     @JoinColumn(name = "couponListId")
     private CouponList couponList;
 
+    private Integer score;
+
     public static Orders build(Match match, Member member) {
         return Orders.builder()
             .match(match)
