@@ -2,6 +2,7 @@ package football.start.allOfFootball.domain;
 
 import football.start.allOfFootball.controller.admin.EditMatchForm;
 import football.start.allOfFootball.controller.admin.SaveMatchForm;
+import football.start.allOfFootball.domain.score.Score;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
@@ -50,8 +51,13 @@ public class Match {
     @Enumerated(EnumType.STRING)
     private MatchStatus matchStatus;
 
+    // Not Columns
+
     @OneToMany(mappedBy = "match")
     private List<Orders> ordersList;
+
+    @OneToMany(mappedBy = "match")
+    private List<Score> scoreList;
 
     public static Match build(Field field, SaveMatchForm form) {
         return Match.builder()
