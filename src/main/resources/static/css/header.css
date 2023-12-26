@@ -39,3 +39,13 @@ header .menu .menuTitle {
     justify-content: center;
 }
 
+.logo {
+    padding: 0;
+    text-align: left;
+
+    img {
+        margin: 0;
+        width: 140px;
+    }
+}
+
