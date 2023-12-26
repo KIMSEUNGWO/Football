@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static football.start.allOfFootball.domain.QMatch.match;
 import static football.start.allOfFootball.domain.QOrders.orders;
@@ -54,5 +55,9 @@ public class OrderRepository {
             ))
             .orderBy(orders.match.matchDate.desc())
             .fetch();
+    }
+
+    public Optional<Orders> findById(Long orderId) {
+        return jpaOrderRepository.findById(orderId);
     }
 }
