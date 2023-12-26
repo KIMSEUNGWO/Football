@@ -90,7 +90,7 @@ function getGoalList(players) {
     for (let i=0;i<players.length-1;i++){
         let name = players[i].querySelector('input[name="player"]').value.replace(/[^0-9]/g, '');
         let time = players[i].querySelector('b').textContent.replace(/[^0-9]/g, '');
-        let temp = {name : Number(name), time : Number(time)};
+        let temp = {orderId : Number(name), time : Number(time)};
         array.push(temp);
     }
     return array;
@@ -109,7 +109,7 @@ function result(map) {
     if (map.result == 'NotLogin') {
         this.location.href = '/login';
     }
-    // this.location.reload();
+    this.location.reload();
 }
 
 function getMatchId(myMatchBox) {
