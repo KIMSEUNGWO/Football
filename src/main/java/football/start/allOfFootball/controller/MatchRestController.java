@@ -4,19 +4,20 @@ import football.start.allOfFootball.domain.Manager;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Orders;
+import football.start.allOfFootball.domain.score.Score;
+import football.start.allOfFootball.domain.score.Team;
 import football.start.allOfFootball.dto.matchRecordForm.RecordForm;
 import football.start.allOfFootball.dto.matchRecordForm.ScoreResultForm;
 import football.start.allOfFootball.enums.matchEnums.RequestTeam;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
+import football.start.allOfFootball.service.domainService.ScoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
 
@@ -27,6 +28,7 @@ public class MatchRestController {
 
     private final MatchService matchService;
     private final MemberService memberService;
+    private final ScoreService scoreService;
 
     @PostMapping("/match/team/confirm")
     public Map<String, String> teamConfirm(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, @RequestBody RequestTeam team) {
@@ -134,12 +136,11 @@ public class MatchRestController {
         return result;
     }
 
+    @Transactional
     @PostMapping("/match/record/{matchIdStr}")
     public Map<String, String> scoreRecord(@PathVariable String matchIdStr,
                                            @SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
                                            @RequestBody ScoreResultForm score) {
-
-        System.out.println("score = " + score);
 
         Map<String, String> result = new HashMap<>();
         Long matchId = matchService.numberCheck(matchIdStr);
@@ -165,12 +166,24 @@ public class MatchRestController {
         }
 
         List<List<RecordForm>> playList = score.getPlayList();
+
         for (List<RecordForm> play : playList) { // 한 경기씩 for 문
-
-
+            if (play.size() != 2) {
+                result.put("result", "fail");
+                result.put("message", "점수 데이터가 존재하지 않습니다.");
+                return result;
+            }
+            boolean saveScore = scoreService.saveScore(match, play);
+            if (!saveScore) {
+                result.put("result", "fail");
+                result.put("message", "점수 기록이 실패했습니다. 관리자에게 문의해주세요.");
+                return result;
+            }
         }
-
-
+        scoreService.applyScore(match, playList);
+        matchService.matchFinal(match);
+        result.put("result", "ok");
+        result.put("message", "기록을 확정했습니다.");
         return result;
     }
 }

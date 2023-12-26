@@ -3,9 +3,7 @@ package football.start.allOfFootball.service.domainService;
 import football.start.allOfFootball.controller.admin.EditMatchForm;
 import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.domain.*;
-import football.start.allOfFootball.dto.match.MatchCollection;
-import football.start.allOfFootball.dto.match.MatchData;
-import football.start.allOfFootball.dto.match.TeamInfo;
+import football.start.allOfFootball.dto.match.*;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.enums.matchEnums.RequestTeam;
@@ -27,6 +25,7 @@ import static football.start.allOfFootball.enums.matchEnums.MatchStatus.*;
 public class MatchService {
 
     private final MatchRepository matchRepository;
+    private final ScoreService scoreService;
 
     public Optional<Match> findByMatch(Long matchId) {
         if (matchId == null) {
@@ -108,13 +107,15 @@ public class MatchService {
 
     public MatchCollection getMatchCollection(Match match, Long memberId) {
         List<Orders> ordersList = match.getOrdersList();
-        boolean isPresent = matchRepository.isContainsMember(ordersList, memberId);
-        if (!isPresent) return null;
+        Optional<Orders> byOrders = matchRepository.isContainsMember(ordersList, memberId);
+        if (byOrders.isEmpty()) return null;
 
+        ScoreResult scoreList = scoreService.getScore(match, byOrders.get());
         List<MatchData> data = matchRepository.getMatchData(match, ordersList); // 매치 데이터
         Map<TeamEnum, List<TeamInfo>> teamInfo = matchRepository.getTeamInfo(match, ordersList); // 참가자
 
         return MatchCollection.builder()
+            .scoreResult(scoreList)
             .matchData(data)
             .teamInfo(teamInfo)
             .build();
@@ -150,5 +151,9 @@ public class MatchService {
 
     public void matchEnd(Match match) {
         match.setMatchStatus(기록중);
+    }
+
+    public void matchFinal(Match match) {
+        match.setMatchStatus(종료);
     }
 }

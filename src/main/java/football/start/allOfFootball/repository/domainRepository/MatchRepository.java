@@ -42,14 +42,14 @@ public class MatchRepository {
         jpaMatchRepository.save(saveMatch);
     }
 
-    public boolean isContainsMember(List<Orders> ordersList, Long memberId) {
+    public Optional<Orders> isContainsMember(List<Orders> ordersList, Long memberId) {
         for (Orders orders : ordersList) {
             Long memberId1 = orders.getMember().getMemberId();
             if (memberId1 == memberId) {
-                return true;
+                return Optional.of(orders);
             }
         }
-        return false;
+        return Optional.empty();
     }
 
     public List<Match> getMatchDeadLine() {
