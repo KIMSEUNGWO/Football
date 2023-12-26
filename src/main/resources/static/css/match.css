@@ -203,13 +203,14 @@
             font-size: 1.5rem;
         }
         .match-team.lose {
-            opacity: .3;
+            opacity: .6;
         }
         .match-team > * {
             margin: 0;
         }
         .middle-box {
             position: absolute;
+            z-index: 3;
             top: calc(50% - 2.5rem);
             left: calc(50% - 2rem);
             width: 4rem;
