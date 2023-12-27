@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/call.css">
     <link rel="stylesheet" href="/css/calendar_one_main.css">
+    <script src="/js/match_imageSlide.js"></script>
     <script src="/js/calendar_one_main.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/fetch.js"></script>
@@ -16,7 +17,24 @@
 <body>
     <header th:replace="~{/common/header :: header}"></header>
     <div class="banner">
-
+        <div class="fieldImageContainer">
+            <div class="arrow">
+                <button type="button" id="left">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="rotate: 180deg;" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                </button>
+                <button type="button" id="right">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                </button>
+            </div>
+            <div class="slider">
+                <!-- <img th:each="image : ${matchForm.fieldImages}" th:src="|/images/fieldImage/${image.fieldImageStoreName}|" th:alt="${image.fieldImageName}"> -->
+                <img src="/images/banner/1.png" alt="">
+                <img src="/images/banner/2.png" alt="">
+                <img src="/images/banner/3.png" alt="">
+                <img src="/images/banner/4.png" alt="">
+            </div>
+            <ul class="slide_pagination"></ul>
+        </div>
     </div>
     <div class="container">
         <div class="main">

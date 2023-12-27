@@ -16,8 +16,7 @@
 .banner {
     width: 100%;
     height: 20rem;
-    background-color: rgb(238, 238, 238);
-    margin-bottom: 3.5rem;
+    margin-bottom: 1rem;
 }
 
 .container {
@@ -370,3 +369,88 @@ input::-webkit-search-results-decoration{
     margin-top: 1rem;
     color: var(--gray);
 }
+
+/* 이미지 슬라이더 */
+.fieldImageContainer {
+    width: 75rem;
+    height: 320px;
+    border-radius: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+.fieldImageContainer img {
+    width: 100%;
+    height: 100%;
+}
+
+/* 화살표 */
+.arrow {
+    position: absolute;
+    top: calc(50% - 1.5rem);
+    left: 1%;
+    right: 1%;
+    display: flex;
+    justify-content: space-between;
+}
+.arrow button {
+    width: 2rem;
+    height: 3rem;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    background-color: rgb(0,0,0,0);
+    border: none;
+    z-index: 10;
+}
+
+.arrow svg {
+    width: 2rem;
+    height: 3rem;
+    pointer-events: none;
+    fill: rgb(244, 244, 244);
+}
+.arrow button:hover svg {
+    fill: rgb(202, 202, 202);
+}
+
+.slider {
+    width: 100%;
+    height: 100%;
+    position: relative;    
+    display: flex;
+    left: 0px;
+    user-select: none;
+}
+.slider img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /* 기본값은 1 -> 1이면 컨테이너에 맞게 줄어듬*/
+    /* 0 -> 자동조절아님*/
+    flex-shrink: 0;
+    transition: left 0.15s;
+}
+
+
+.slide_pagination {
+    /* layout */
+    display: flex;
+    gap: 5px;
+  
+    /* position */
+    position: absolute;
+    bottom: 0;
+    /* left:50%, translateX(-50%)를 하면 가로 가운데로 위치시킬 수 있다. */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .slide_pagination > li {
+    /* 현재 슬라이드가 아닌 것은 투명도 부여 */
+    color: #7fb5ff88;
+    cursor: pointer;
+    font-size: 50px;
+  }
+  .slide_pagination > li.active {
+    /* 현재 슬라이드 색상은 투명도 없이 */
+    color: #7fb5ff;
+  }
