@@ -14,6 +14,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
@@ -65,6 +69,23 @@ public class FileService {
         return res;
     }
 
+    public int saveImage(String imageUrl, FileUploadType type) {
+
+        try {
+            URL url = new URL(imageUrl);
+            ReadableByteChannel rbc = Channels.newChannel(url.openStream());
+
+            String exe = imageUrl.substring(imageUrl.lastIndexOf("."));
+            String originalFileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1) + exe;
+            String storeFileName = createFileName(originalFileName);
+
+            return 0;
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public boolean removeFile(String fileStoreName, FileUploadType type) {
         String fullPath = getFullPath(fileStoreName, type);
