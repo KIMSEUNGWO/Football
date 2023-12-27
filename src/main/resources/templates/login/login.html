@@ -6,11 +6,25 @@
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/loginCommon.css">
     <link rel="stylesheet" href="/css/login.css">
+    <script src="/js/login_social.js"></script>
     <title>로그인 :: 프로젝트</title>
 </head>
 <body>
     <div class='container'>
+        
         <form class='login_form' method="post" th:object="${loginDto}" action="/login">
+            <!-- <div class='login_social'>
+                <div class="kakaologo">kakao</div>
+                <span class="explain">계정과 비밀번호 입력없이</span>
+                <span class="explain">카카오톡으로 로그인 해 보세요.</span>
+                <button type="button" class="login_naver">네이버 로그인</button>
+                <button type="button" class="login_kakao">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                        <path d="M9.98613 0.909058C4.47157 0.909058 0 4.28535 0 8.45987C0 11.0379 1.71984 13.314 4.34398 14.6731L3.29543 18.4485C3.29543 18.4485 3.12344 18.8207 3.39528 18.9879C3.47157 19.0542 3.57033 19.0909 3.67268 19.0909C3.77502 19.0909 3.87378 19.0542 3.95007 18.9879L8.74897 15.8974C9.16506 15.9352 9.58113 15.9621 10.0139 15.9621C15.5284 15.9621 20 12.5912 20 8.41131C20 4.2314 15.5007 0.909058 9.98613 0.909058Z" fill="#181602"/>
+                    </svg>
+                    <span>카카오톡으로 로그인하기</span>
+                </button>
+            </div> -->
             <div class='login_logo'>
                 <img src="/images/login_logo.svg" alt="logo" width="100%" height="100%">
             </div>
@@ -31,11 +45,14 @@
                 <a href="/findEmail">이메일 찾기</a>
                 <a href="/findPassword">비밀번호 찾기</a>
             </div>
-            <div class='login_social'>
-                <button type="button" class="login_naver">네이버 로그인</button>
-                <button type="button" class="login_kakao"> 카카오 로그인</button>
-            </div>
+            <button type="button" class="login_kakao">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                    <path d="M9.98613 0.909058C4.47157 0.909058 0 4.28535 0 8.45987C0 11.0379 1.71984 13.314 4.34398 14.6731L3.29543 18.4485C3.29543 18.4485 3.12344 18.8207 3.39528 18.9879C3.47157 19.0542 3.57033 19.0909 3.67268 19.0909C3.77502 19.0909 3.87378 19.0542 3.95007 18.9879L8.74897 15.8974C9.16506 15.9352 9.58113 15.9621 10.0139 15.9621C15.5284 15.9621 20 12.5912 20 8.41131C20 4.2314 15.5007 0.909058 9.98613 0.909058Z" fill="#181602"/>
+                </svg>
+                <span>카카오톡으로 로그인하기</span>
+            </button>
         </form>
+        
     </div>
 </body>
 </html>
