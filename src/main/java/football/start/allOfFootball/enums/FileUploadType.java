@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum FileUploadType {
 
     FIELD_IMAGE("fieldImage"),
-    PROFILE("profile");
+    PROFILE("profile"),
+    BANNER("banner");
 
     private String dir;
 
