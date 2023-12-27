@@ -26,7 +26,7 @@ public class Team {
     @JoinColumn(name = "scoreId")
     private Score score;
 
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private TeamEnum teamEnum;
 
     // Not Columns
