@@ -1,6 +1,7 @@
 package football.start.allOfFootball.controller.mypage;
 
 import football.start.allOfFootball.domain.Match;
+import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.formatter.DateFormatter;
 import lombok.*;
@@ -12,8 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
-@Builder
 public class OrderListForm {
 
     private Long matchId;
@@ -22,17 +21,18 @@ public class OrderListForm {
     private String maxPersonAndCount;
     private String fieldTitle;
     private String matchStatus;
-    private String resultScore;
+    private Integer resultScore;
 
-    public static OrderListForm build(Match match) {
-        return OrderListForm.builder()
-            .matchId(match.getMatchId())
-            .matchDate(DateFormatter.dateFormat(match.getMatchDate()))
-            .matchHour(getHourForm(match.getMatchDate()))
-            .maxPersonAndCount(getMix(match.getMaxPerson(), match.getMatchCount()))
-            .fieldTitle(match.getField().getFieldTitle())
-            .matchStatus(match.getMatchStatus().name())
-            .build();
+    public void build(Orders orders) {
+        Match match = orders.getMatch();
+
+        matchId = match.getMatchId();
+        matchDate = DateFormatter.dateFormat(match.getMatchDate());
+        matchHour = getHourForm(match.getMatchDate());
+        maxPersonAndCount = getMix(match.getMaxPerson(), match.getMatchCount());
+        fieldTitle = match.getField().getFieldTitle();
+        matchStatus = match.getMatchStatus().name();
+        resultScore = orders.getScore();
     }
 
     private static String getMix(Integer maxPerson, Integer matchCount) {

@@ -72,6 +72,24 @@ function resultForm(form) {
                 '<span class="matchMax">' + form.maxPersonAndCount + '</span>' +
                 '<a href="/match/' + form.matchId + '" class="title">' + form.fieldTitle + '</a>' +
                 '<span>' + form.matchStatus + '</span>' +
-                '<div class="point win">+ 5</div>' +
+                getScore(score) +
             '</li>'
+}
+
+function getScore(resultScore) {
+    if (resultScore == null) return '<div class="point"></div>';
+
+    let score;
+    let className;
+    if (score > 0) {
+        score = '+ ' + resultScore;
+        className = 'win';
+    } else if (score < 0) {
+        score = '- ' + resultScore;
+        className = 'lose';
+    } else {
+        score = resultScore;
+        className = 'draw';
+    }
+    return '<div class="point ' + className + '">' + score + '</div>';
 }

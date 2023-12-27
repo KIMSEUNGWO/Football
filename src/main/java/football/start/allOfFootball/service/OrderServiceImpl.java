@@ -6,6 +6,7 @@ import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.enums.paymentEnums.CashEnum;
+import football.start.allOfFootball.formatter.DateFormatter;
 import football.start.allOfFootball.repository.domainRepository.OrderRepository;
 import football.start.allOfFootball.service.domainService.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,7 +65,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderListForm> getMatchResultForm(List<Orders> orderList) {
         if (orderList.isEmpty()) return Collections.emptyList();
-        return orderList.stream().map(x -> OrderListForm.build(x.getMatch())).collect(Collectors.toList());
+        List<OrderListForm> list = new ArrayList<>();
+
+        for (Orders orders : orderList) {
+            OrderListForm form = new OrderListForm();
+            form.build(orders);
+            list.add(form);
+        }
+        return list;
     }
 
     @Override
