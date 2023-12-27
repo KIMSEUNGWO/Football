@@ -1,24 +1,19 @@
 package football.start.allOfFootball.common.file;
 
+import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.enums.FileUploadType;
 import jakarta.annotation.Nullable;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,29 +57,40 @@ public class FileService {
             fileDto.setImageStoreName(storeFileName);
             fileDto.setType(type);
 
-            res += typeConvert.saveFile(fileDto);
+            res += typeConvert.saveFile(fileDto, null);
 
         }
 
         return res;
     }
 
-    public int saveImage(String imageUrl, FileUploadType type) {
-
+    public int saveImage(String imageUrl, Member member, FileUploadType type) {
+        int res = 0;
         try {
             URL url = new URL(imageUrl);
             ReadableByteChannel rbc = Channels.newChannel(url.openStream());
 
-            String exe = imageUrl.substring(imageUrl.lastIndexOf("."));
+            String exe = imageUrl.substring(imageUrl.lastIndexOf(".")).toLowerCase();
             String originalFileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1) + exe;
             String storeFileName = createFileName(originalFileName);
 
-            return 0;
+            String fullPath = getFullPath(storeFileName, type);
+            FileOutputStream fos = new FileOutputStream(fullPath);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            fos.close();
 
+            FileUploadDto fileDto = new FileUploadDto();
+            fileDto.setImageUploadName(originalFileName);
+            fileDto.setImageStoreName(storeFileName);
+            fileDto.setType(type);
+
+            res += typeConvert.saveFile(fileDto, member);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error("링크 파일 저장 실패 : ", imageUrl);
         }
+
+        return res;
     }
 
     public boolean removeFile(String fileStoreName, FileUploadType type) {

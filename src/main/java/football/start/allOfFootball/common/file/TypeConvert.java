@@ -1,6 +1,7 @@
 package football.start.allOfFootball.common.file;
 
 
+import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.enums.FileUploadType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +16,14 @@ public class TypeConvert {
 
     private final FileRepository fileRepository;
 
-    public int saveFile(FileUploadDto fileUploadDto) {
+    public int saveFile(FileUploadDto fileUploadDto, Member member) {
         FileUploadType type = fileUploadDto.getType();
 
         if (type.equals(FIELD_IMAGE)) {
             return fileRepository.saveFieldImage(fileUploadDto);
         }
         if (type.equals(PROFILE)) {
-            return fileRepository.saveProfile(fileUploadDto);
+            return fileRepository.saveProfile(fileUploadDto, member);
         }
         log.error("TypeConvert TypeMissMatch error = {}", type.name());
         return 0;

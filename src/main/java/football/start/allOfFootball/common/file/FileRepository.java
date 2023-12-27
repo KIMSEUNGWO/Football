@@ -44,15 +44,17 @@ public class FileRepository {
         return 1;
     }
 
-    public int saveProfile(FileUploadDto form) {
+    public int saveProfile(FileUploadDto form, Member member) {
 
-        Long memberId = form.getId();
-        Optional<Member> findMember = jpaMemberRepository.findById(memberId);
-        if (findMember.isEmpty()) {
-            log.error("FileRepository NotFoundField memberId = {}", memberId);
-            return 0;
+        if (member == null) {
+            Long memberId = form.getId();
+            Optional<Member> findMember = jpaMemberRepository.findById(memberId);
+            if (findMember.isEmpty()) {
+                log.error("FileRepository NotFoundField memberId = {}", memberId);
+                return 0;
+            }
+            member = findMember.get();
         }
-        Member member = findMember.get();
 
         // profile domain 객체로 변환
         Profile profile = Profile.build(form, member);
