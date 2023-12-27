@@ -2,10 +2,12 @@ package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.common.BCrypt;
 import football.start.allOfFootball.common.ResultMessage;
+import football.start.allOfFootball.common.file.FileService;
 import football.start.allOfFootball.controller.api.kakaoLogin.LoginResponse;
 import football.start.allOfFootball.controller.login.EmailDto;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Social;
+import football.start.allOfFootball.enums.FileUploadType;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.SocialEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
@@ -26,6 +28,7 @@ public class RegisterServiceImpl implements RegisterService{
 
     private final RegisterRepository registerRepository;
     private final LoginRepository loginRepository;
+    private final FileService fileService;
     private final BCrypt bc;
 
     @Override
@@ -74,6 +77,7 @@ public class RegisterServiceImpl implements RegisterService{
             .memberPhone(userInfo.getPhone())
             .build();
         registerRepository.save(saveMember);
+
         Social saveSocial = Social.builder()
             .member(saveMember)
             .socialType(type)
@@ -81,6 +85,7 @@ public class RegisterServiceImpl implements RegisterService{
             .build();
         registerRepository.saveSocial(saveSocial);
 
-        return null;
+        fileService.saveImage(profile, saveMember, FileUploadType.PROFILE);
+        return saveMember;
     }
 }
