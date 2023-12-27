@@ -16,4 +16,10 @@ public enum GenderEnum {
     public String matchInfo;
     public String className;
 
+    public static GenderEnum getGender(String gender) {
+        if ("male".equals(gender)) {
+            return 남자;
+        }
+        return 여자;
+    }
 }
