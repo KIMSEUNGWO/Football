@@ -52,9 +52,6 @@ public class Member extends BaseTimeEntity {
     private LocalDateTime memberRecentlyDate;
     private LocalDateTime memberExpireDate;
 
-    @Enumerated(EnumType.STRING)
-    private SocialEnum memberSocial;
-
     // Not Columns
     @OneToMany(mappedBy = "member")
     private List<CouponList> couponList;
