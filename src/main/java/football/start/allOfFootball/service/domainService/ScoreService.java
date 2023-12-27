@@ -90,6 +90,8 @@ public class ScoreService {
             TeamEnum team = orders.getTeam();
             int score = calculator.getScore(team);
             Member member = orders.getMember();
+
+            orders.setScore(score);
             member.addScore(score);
         }
     }
