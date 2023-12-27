@@ -2,6 +2,7 @@ package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.common.BCrypt;
 import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.enums.SocialEnum;
 import football.start.allOfFootball.repository.LoginRepository;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,15 @@ public class LoginServiceImpl implements LoginService{
         loginRepository.renewLoginTime(findMember);
 
         return loginMember;
+    }
+
+    @Override
+    public Optional<Member> login(Member member, SocialEnum socialType, String Id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+        return loginRepository.findByMember(email);
     }
 }
