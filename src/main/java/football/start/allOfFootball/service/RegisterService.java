@@ -1,5 +1,6 @@
 package football.start.allOfFootball.service;
 
+import football.start.allOfFootball.controller.api.kakaoLogin.LoginResponse;
 import football.start.allOfFootball.controller.login.EmailDto;
 import football.start.allOfFootball.controller.login.RegisterDto;
 import football.start.allOfFootball.domain.Member;
@@ -12,4 +13,6 @@ public interface RegisterService {
     void save(Member member);
 
     boolean distinctEmail(String email);
+
+    Member socialSave(LoginResponse userInfo);
 }

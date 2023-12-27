@@ -2,13 +2,19 @@ package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.common.BCrypt;
 import football.start.allOfFootball.common.ResultMessage;
+import football.start.allOfFootball.controller.api.kakaoLogin.LoginResponse;
 import football.start.allOfFootball.controller.login.EmailDto;
 import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.domain.Social;
+import football.start.allOfFootball.enums.GenderEnum;
+import football.start.allOfFootball.enums.SocialEnum;
+import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.repository.LoginRepository;
 import football.start.allOfFootball.repository.RegisterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Optional;
@@ -50,5 +56,31 @@ public class RegisterServiceImpl implements RegisterService{
     public boolean distinctEmail(String email) {
         Optional<Member> byMember = loginRepository.findByMember(email);
         return byMember.isPresent();
+    }
+
+    @Override
+    @Transactional
+    public Member socialSave(LoginResponse userInfo) {
+        SocialEnum type = userInfo.getSocialType();
+        Integer id = userInfo.getId();
+        String profile = userInfo.getProfile();
+
+        Member saveMember = Member.builder()
+            .memberEmail(userInfo.getEmail())
+            .memberName(userInfo.getNickName())
+            .grade(GradeEnum.루키)
+            .memberGender(userInfo.getGender())
+            .memberBirthday(userInfo.getBirthday())
+            .memberPhone(userInfo.getPhone())
+            .build();
+        registerRepository.save(saveMember);
+        Social saveSocial = Social.builder()
+            .member(saveMember)
+            .socialType(type)
+            .socialNum(id)
+            .build();
+        registerRepository.saveSocial(saveSocial);
+
+        return null;
     }
 }
