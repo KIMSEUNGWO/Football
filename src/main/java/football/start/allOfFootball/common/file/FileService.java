@@ -70,8 +70,7 @@ public class FileService {
             URL url = new URL(imageUrl);
             ReadableByteChannel rbc = Channels.newChannel(url.openStream());
 
-            String exe = imageUrl.substring(imageUrl.lastIndexOf(".")).toLowerCase();
-            String originalFileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1) + exe;
+            String originalFileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
             String storeFileName = createFileName(originalFileName);
 
             String fullPath = getFullPath(storeFileName, type);
