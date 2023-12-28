@@ -52,7 +52,7 @@ public class KakaoLoginController {
         } else {
             Member member = findMember.get();
             Social social = member.getSocial();
-            if (social != null && social.getSocialType() == KAKAO && social.getSocialNum().equals(userInfo.getId())) {
+            if (social != null && social.getSocialType() == KAKAO && social.getSocialNum().equals(userInfo.getId()) && !member.getMemberPhone().equals(userInfo.getPhone())) {
                 loginMember = findMember.get();
                 kakaoLoginService.updateKakaoToken(loginMember, kakaoToken);
             } else {
