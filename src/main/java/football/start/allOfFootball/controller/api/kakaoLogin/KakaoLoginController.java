@@ -77,9 +77,8 @@ public class KakaoLoginController {
         if (social == null || social.getSocialType() != KAKAO) return "redirect:/";
         KakaoToken kakaoToken = social.getKakaoToken();
         kakaoLoginService.logout(kakaoToken);
+        return "redirect:" + kakaoLoginService.serviceLogout();
 
-
-        return "redirect:/";
     }
 
 

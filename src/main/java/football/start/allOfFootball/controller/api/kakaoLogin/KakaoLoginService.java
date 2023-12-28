@@ -254,4 +254,10 @@ public class KakaoLoginService {
             e.printStackTrace();
         }
     }
+
+    public String serviceLogout() {
+        return "https://kauth.kakao.com/oauth/logout" +
+                            "?client_id=" + restApiKey +
+                            "&logout_redirect_uri=http://localhost:8080";
+    }
 }

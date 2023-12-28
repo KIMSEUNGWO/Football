@@ -77,7 +77,7 @@ public class LoginController {
 
         SocialEnum type = social.getSocialType();
         if (type == SocialEnum.KAKAO) {
-            kakaoLoginService.logout(social.getKakaoToken());
+            return "redirect:/logout/kakao/" + memberId;
         }
 
         return "redirect:/";
