@@ -1,7 +1,11 @@
 package football.start.allOfFootball.controller.login;
 
+import football.start.allOfFootball.controller.api.kakaoLogin.KakaoLoginService;
 import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.domain.Social;
+import football.start.allOfFootball.enums.SocialEnum;
 import football.start.allOfFootball.service.LoginService;
+import football.start.allOfFootball.service.domainService.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +24,9 @@ import static football.start.allOfFootball.SessionConst.*;
 @RequiredArgsConstructor
 public class LoginController {
 
+    private final MemberService memberService;
     public final LoginService loginService;
+    public final KakaoLoginService kakaoLoginService;
 
 
     @GetMapping("/login")
@@ -56,10 +62,24 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpServletRequest request) {
-        if (memberId != null) {
-            HttpSession session = request.getSession();
-            session.removeAttribute(LOGIN_MEMBER);
+        if (memberId == null) return "redirect:/";
+
+        HttpSession session = request.getSession();
+        session.removeAttribute(LOGIN_MEMBER);
+
+        Optional<Member> byMemberId = memberService.findByMemberId(memberId);
+        if (byMemberId.isEmpty()) return "redirect:/";
+
+        // 소셜 로그아웃
+        Member member = byMemberId.get();
+        Social social = member.getSocial();
+        if (social == null) return "redirect:/";
+
+        SocialEnum type = social.getSocialType();
+        if (type == SocialEnum.KAKAO) {
+            kakaoLoginService.logout(social.getKakaoToken());
         }
+
         return "redirect:/";
     }
 }
