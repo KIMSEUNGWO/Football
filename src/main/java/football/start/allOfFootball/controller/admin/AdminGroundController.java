@@ -25,25 +25,21 @@ public class AdminGroundController {
 
     @GetMapping
     public String ground(Model model) {
-        LocationEnum[] locations = LocationEnum.values();
-        model.addAttribute("locations", locations);
+        model.addAttribute("locations", LocationEnum.values());
         model.addAttribute("myName", "김승우");
         return "/admin/admin_ground";
     }
 
     @GetMapping("/add")
     public String groundAdd(@ModelAttribute SaveFieldForm saveFieldForm, Model model) {
-        LocationEnum[] locations = LocationEnum.values();
-        model.addAttribute("locations", locations);
+        model.addAttribute("locations", LocationEnum.values());
         return "/admin/admin_ground_add";
     }
 
     @PostMapping("/add")
     public String groundAddPost(@ModelAttribute SaveFieldForm saveFieldForm) {
-        System.out.println("saveGroundForm = " + saveFieldForm);
 
         fieldService.saveField(saveFieldForm);
-
         return "redirect:/admin/ground";
     }
 
