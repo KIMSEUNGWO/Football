@@ -1,5 +1,6 @@
 package football.start.allOfFootball.domain;
 
+import football.start.allOfFootball.domain.score.Score;
 import football.start.allOfFootball.enums.TeamEnum;
 import jakarta.persistence.*;
 import lombok.Getter;

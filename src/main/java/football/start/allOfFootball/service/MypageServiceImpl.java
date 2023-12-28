@@ -39,7 +39,7 @@ public class MypageServiceImpl implements MypageService{
     @Override
     public MyProfileDto getMyProfile(Member findMember) {
         MyProfileDto myProfileDto = MyProfileDto.builder()
-            .profileImage(Constant.BASE_IMG)
+            .profileImage(getProfileImage(findMember.getProfile()))
             .name(findMember.getMemberName())
             .social(findMember.getSocial())
             .email(findMember.getMemberEmail())
@@ -48,12 +48,13 @@ public class MypageServiceImpl implements MypageService{
             .grade(findMember.getGrade())
             .cash(format(findMember.getMemberCash()))
             .build();
-        Profile profile = findMember.getProfile();
-        if (profile != null) {
-            myProfileDto.setProfileImage(profile.getProfileStoreName());
-        }
 //        myProfileDto.setMatchScore();
         return myProfileDto;
+    }
+
+    private String getProfileImage(Profile profile) {
+        if (profile == null) return Constant.BASE_IMG;
+        return profile.getProfileStoreName();
     }
 
     @Override
@@ -110,24 +111,20 @@ public class MypageServiceImpl implements MypageService{
 
     @Override
     public MypageMainDto getMypageMain(Member findMember) {
-        String imgName = Constant.BASE_IMG;
-        Profile profile = findMember.getProfile();
-        if (profile != null) {
-            imgName = profile.getProfileStoreName();
-        }
-        String name = findMember.getMemberName();
-        String phone = findMember.getMemberPhone();
-        Optional<BeforePassword> findBeforePassword = memberRepository.findByBeforePassword(findMember);
-        String date = "변경된 기록 없음";
-        if (findBeforePassword.isPresent()) {
-            date = DateFormatter.dateFormat(findBeforePassword.get().getPasswordChangeDate());
-        }
         return MypageMainDto.builder()
-            .profileImage(imgName)
-            .name(name)
-            .phone(phone)
-            .changePasswordDate(date)
+            .profileImage(getProfileImage(findMember.getProfile()))
+            .name(findMember.getMemberName())
+            .phone(findMember.getMemberPhone())
+            .changePasswordDate(getDate(memberRepository.findByBeforePassword(findMember)))
             .build();
+    }
+
+    private String getDate(Optional<BeforePassword> findBeforePassword) {
+        if (findBeforePassword.isPresent()) {
+            BeforePassword beforePassword = findBeforePassword.get();
+            return DateFormatter.dateFormat(beforePassword.getPasswordChangeDate());
+        }
+        return "변경된 기록 없음";
     }
 
     @Override

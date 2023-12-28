@@ -4,7 +4,6 @@ import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.domainService.CouponListService;
-import football.start.allOfFootball.service.domainService.MemberService;
 import football.start.allOfFootball.service.domainService.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +43,7 @@ public class MypageController {
     public String cashList(Model model) {
         Member member = (Member) model.getAttribute("member");
 
-        List<CashListForm> cashList = paymentService.findByAllMemberCashList(member);
+        List<CashListForm> cashList = paymentService.findByAllMemberCacheList(member);
         model.addAttribute("cashList", cashList);
         return "/mypage/mypage_cash";
     }

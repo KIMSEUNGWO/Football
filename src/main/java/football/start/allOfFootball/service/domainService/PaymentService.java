@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,19 +46,22 @@ public class PaymentService {
         memberRepository.refreshMemberCache(member, payment.getResultCash());
     }
 
-    public List<CashListForm> findByAllMemberCashList(Member findMember) {
+    public List<CashListForm> findByAllMemberCacheList(Member findMember) {
         List<Payment> list = paymentRepository.findByAllMemberCashList(findMember);
-        if (list.isEmpty()) return Collections.emptyList();
-        return list.stream().map(payment ->
-            CashListForm.builder()
+
+        List<CashListForm> result = new ArrayList<>();
+        for (Payment payment : list) {
+            CashListForm build = CashListForm.builder()
                 .cashDate(DateFormatter.dateFormatAndWeek(payment.getCreateDate()))
                 .cashTime(getTime(payment.getCreateDate()))
                 .cashEnum(payment.getCashType())
                 .cash(payment.getCharge())
                 .cashStr(NumberFormatter.format(payment.getCharge()))
                 .nowCash(NumberFormatter.format(payment.getResultCash()))
-                .build()
-            ).collect(Collectors.toList());
+                .build();
+            result.add(build);
+        }
+        return result;
     }
 
     private String getTime(LocalDateTime createDate) {

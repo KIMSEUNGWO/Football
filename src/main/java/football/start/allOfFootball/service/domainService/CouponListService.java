@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,14 @@ public class CouponListService {
 
         // 만료일이 지난 쿠폰 삭제
         List<CouponList> renewCouponList = couponListRepository.deleteByExpireDate(couponList);
-        return renewCouponList.stream().map(CouponListForm::build).collect(Collectors.toList());
+
+        List<CouponListForm> result = new ArrayList<>();
+
+        for (CouponList list : renewCouponList) {
+            CouponListForm form = new CouponListForm(list);
+            result.add(form);
+        }
+        return result;
     }
 
     public Optional<CouponList> findByCouponListId(Long couponNum) {

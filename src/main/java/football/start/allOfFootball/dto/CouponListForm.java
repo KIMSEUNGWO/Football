@@ -2,10 +2,7 @@ package football.start.allOfFootball.dto;
 
 import football.start.allOfFootball.domain.CouponList;
 import football.start.allOfFootball.formatter.NumberFormatter;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -14,6 +11,8 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CouponListForm {
 
     private Long couponListId;
@@ -23,14 +22,12 @@ public class CouponListForm {
     private String couponEndDate;
 
 
-    public static CouponListForm build(CouponList couponList) {
-        return CouponListForm.builder()
-            .couponListId(couponList.getCouponListId())
-            .couponName(couponList.getCoupon().getCouponName())
-            .couponDiscount(couponList.getCoupon().getCouponDiscount())
-            .remainingTime(getRemain(couponList.getCouponListExpireDate()))
-            .couponEndDate(getEndDate(couponList.getCouponListExpireDate()))
-            .build();
+    public CouponListForm(CouponList couponList) {
+        couponListId = couponList.getCouponListId();
+        couponName = couponList.getCoupon().getCouponName();
+        couponDiscount = couponList.getCoupon().getCouponDiscount();
+        remainingTime = getRemain(couponList.getCouponListExpireDate());
+        couponEndDate = getEndDate(couponList.getCouponListExpireDate());
     }
 
     private static String getRemain(LocalDateTime couponListExpireDate) {

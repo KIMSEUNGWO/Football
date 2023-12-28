@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,14 +44,17 @@ public class CouponListRepository {
 
     @Transactional
     public List<CouponList> deleteByExpireDate(List<CouponList> couponList) {
-        return couponList.stream().filter(coupon -> {
+        List<CouponList> list = new ArrayList<>();
+
+        for (CouponList coupon : couponList) {
             LocalDateTime expireDate = coupon.getCouponListExpireDate();
             LocalDateTime now = LocalDateTime.now();
             if (now.isAfter(expireDate)) {
                 jpaCouponListRepository.delete(coupon);
-                return false;
+            } else {
+                list.add(coupon);
             }
-            return true;
-        }).collect(Collectors.toList());
+        }
+        return list;
     }
 }
