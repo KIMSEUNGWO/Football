@@ -31,4 +31,7 @@ public class Social {
 
     @Enumerated(EnumType.STRING)
     private SocialEnum socialType;
+
+    @OneToOne(mappedBy = "social")
+    private KakaoToken kakaoToken;
 }
