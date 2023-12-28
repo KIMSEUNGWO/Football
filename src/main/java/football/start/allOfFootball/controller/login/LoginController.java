@@ -30,20 +30,30 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String startLogin(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, @ModelAttribute LoginDto loginDto) {
+    public String startLogin(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
+                             @ModelAttribute LoginDto loginDto,
+                             @RequestParam(required = false) String url,
+                             Model model) {
         if (memberId != null) return "redirect:/";
+
+        if (url != null && !url.equals("null")) {
+            model.addAttribute("url", url);
+        }
         return "/login/login";
     }
 
 
     @PostMapping("/login")
-    public String loginAction(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
-                              @SessionAttribute(name = REDIRECT_URL, required = false) String redirectURI,
-                              @ModelAttribute LoginDto loginDto,
+    public String loginAction(@ModelAttribute LoginDto loginDto,
+                              @RequestParam(required = false) String url,
                               HttpSession session,
                               Model model) {
-        if (memberId != null) return "redirect:/";
-        if (loginDto == null || loginDto.getEmail() == null || loginDto.getPassword() == null) return "redirect:/";
+        String redirectUrl = getRedirectUrl(url);
+
+        if (loginDto == null || loginDto.getEmail() == null || loginDto.getPassword() == null) {
+            model.addAttribute("errorMsg", "이메일 또는 비밀번호가 일치하지 않습니다.");
+            return "/login/login";
+        }
 
         Optional<Member> loginMember = loginService.login(loginDto.getEmail(), loginDto.getPassword());
         if (loginMember.isEmpty()) {
@@ -51,13 +61,14 @@ public class LoginController {
             return "/login/login";
         }
         Member findMember = loginMember.get();
-        // 세션 생성
+
         session.setAttribute(LOGIN_MEMBER, findMember.getMemberId());
-        session.removeAttribute(REDIRECT_URL);
-        if (redirectURI == null) {
-            return "redirect:";
-        }
-        return "redirect:" + redirectURI;
+        return "redirect:" + redirectUrl;
+    }
+
+    private String getRedirectUrl(String url) {
+        if (url == null || url.equals("null")) return "/";
+        return url;
     }
 
     @GetMapping("/logout")

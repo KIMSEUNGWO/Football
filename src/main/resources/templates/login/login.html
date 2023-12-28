@@ -12,7 +12,7 @@
 <body>
     <div class='container'>
         
-        <form class='login_form' method="post" th:object="${loginDto}" action="/login">
+        <form class='login_form' method="post" th:object="${loginDto}" th:action="'/login' + (${url} ? '?url=' + ${url} : '')">
             <!-- <div class='login_social'>
                 <div class="kakaologo">kakao</div>
                 <span class="explain">계정과 비밀번호 입력없이</span>

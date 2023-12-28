@@ -35,7 +35,8 @@ public class KakaoLoginController {
 
     @ResponseBody
     @GetMapping("/login/kakao")
-    public LoginResponse kakaoLogin(@RequestParam(required = false) String code, HttpServletRequest request, HttpServletResponse response) {
+    public LoginResponse kakaoLogin(@RequestParam(required = false) String code,
+                                    HttpServletRequest request, HttpServletResponse response) {
 
         KakaoToken kakaoToken = kakaoLoginService.getKakaoAccessToken(code);
         System.out.println("accessToken = " + kakaoToken.getAccess_token());
@@ -98,7 +99,13 @@ public class KakaoLoginController {
     }
 
     private String getOption(String option) {
-        if (option == null) return "opener.location.href='/';";
+        // redirect url이 있으면 url로 이동
+        if (option == null) {
+            return "const urlParams = new URLSearchParams(opener.location.search); " +
+                    "let redirect = urlParams.get('url');" +
+                    "if (redirect == null) redirect = '/';" +
+                    "opener.location.href=redirect;";
+        }
         return String.format("alert('%s');", option);
     }
 }
