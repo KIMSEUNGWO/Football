@@ -1,6 +1,7 @@
 package football.start.allOfFootball.repository.domainRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import football.start.allOfFootball.Constant;
 import football.start.allOfFootball.controller.mypage.MatchDataForm;
 import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.match.MatchData;
@@ -90,7 +91,7 @@ public class MatchRepository {
             Profile profile = x.getMember().getProfile();
             String profileName = null;
             if (profile == null) {
-                profileName = "base.jpeg";
+                profileName = Constant.BASE_IMG;
             }
             TeamInfo teamInfo = TeamInfo.builder()
                 .orderId(x.getOrdersId())

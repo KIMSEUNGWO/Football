@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface MypageService {
-    Optional<Member> findById(Long memberId);
 
     MyProfileDto getMyProfile(Member findMember);
 

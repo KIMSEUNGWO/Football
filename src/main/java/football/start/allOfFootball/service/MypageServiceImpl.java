@@ -1,5 +1,6 @@
 package football.start.allOfFootball.service;
 
+import football.start.allOfFootball.Constant;
 import football.start.allOfFootball.common.redis.RankService;
 import football.start.allOfFootball.controller.mypage.ManagerDataForm;
 import football.start.allOfFootball.controller.mypage.MatchDataForm;
@@ -34,16 +35,11 @@ public class MypageServiceImpl implements MypageService{
     private final RankService rankService;
     private final MatchRepository matchRepository;
 
-    @Override
-    public Optional<Member> findById(Long memberId) {
-        if (memberId == null) Optional.empty();
-        return mypageRepository.findById(memberId);
-    }
 
     @Override
     public MyProfileDto getMyProfile(Member findMember) {
         MyProfileDto myProfileDto = MyProfileDto.builder()
-            .profileImage("base.jpeg")
+            .profileImage(Constant.BASE_IMG)
             .name(findMember.getMemberName())
             .social(findMember.getSocial())
             .email(findMember.getMemberEmail())
@@ -114,7 +110,7 @@ public class MypageServiceImpl implements MypageService{
 
     @Override
     public MypageMainDto getMypageMain(Member findMember) {
-        String imgName = "base.jpeg";
+        String imgName = Constant.BASE_IMG;
         Profile profile = findMember.getProfile();
         if (profile != null) {
             imgName = profile.getProfileStoreName();
