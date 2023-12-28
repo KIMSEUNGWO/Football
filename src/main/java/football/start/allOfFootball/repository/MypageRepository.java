@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MypageRepository {
-    Optional<Member> findById(Long memberId);
 
     void validNowPw(HashMap<String, String> result, List<FieldError> nowPassword);
 

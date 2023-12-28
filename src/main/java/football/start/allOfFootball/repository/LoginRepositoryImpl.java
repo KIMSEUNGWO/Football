@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -39,6 +40,11 @@ public class LoginRepositoryImpl implements LoginRepository {
     @Override
     public void renewLoginTime(Member member) {
         member.renewLoginTime(LocalDateTime.now());
+    }
+
+    @Override
+    public Optional<Member> findByPhone(String phone) {
+        return jpaMemberRepository.findByMemberPhone(phone);
     }
 
 }

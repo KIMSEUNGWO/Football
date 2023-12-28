@@ -9,6 +9,7 @@ import football.start.allOfFootball.dto.match.MatchDataCalculator;
 import football.start.allOfFootball.dto.match.TeamInfo;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
 import football.start.allOfFootball.jpaRepository.JpaMatchRepository;
 import jakarta.persistence.EntityManager;
@@ -76,6 +77,9 @@ public class MatchRepository {
     }
 
     public Map<TeamEnum, List<TeamInfo>> getTeamInfo(Match match, List<Orders> ordersList) {
+        if (match.getMatchStatus() == MatchStatus.경기시작전 || match.getMatchStatus() == MatchStatus.기록중) {
+            return null;
+        }
         for (Orders orders : ordersList) {
             if (orders.getTeam() == null) return null;
         }

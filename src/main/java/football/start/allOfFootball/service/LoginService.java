@@ -11,4 +11,6 @@ public interface LoginService {
     Optional<Member> login(Member member, SocialEnum socialType, String Id);
 
     Optional<Member> findByEmail(String email);
+
+    boolean findByPhone(String phone);
 }

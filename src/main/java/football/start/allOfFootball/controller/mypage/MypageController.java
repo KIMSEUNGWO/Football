@@ -59,6 +59,7 @@ public class MypageController {
     @GetMapping("/manager")
     public String manager(Model model) {
         Member member = (Member) model.getAttribute("member");
+        if (member.getManager() == null) return "redirect:/maypage";
 
         Map<String, List<ManagerDataForm>> list = mypageService.getManagerList(member);
         model.addAttribute("matchList", list);

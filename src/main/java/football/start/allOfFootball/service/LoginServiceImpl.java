@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,5 +44,11 @@ public class LoginServiceImpl implements LoginService{
     @Override
     public Optional<Member> findByEmail(String email) {
         return loginRepository.findByMember(email);
+    }
+
+    @Override
+    public boolean findByPhone(String phone) {
+        Optional<Member> findMember = loginRepository.findByPhone(phone);
+        return findMember.isPresent();
     }
 }

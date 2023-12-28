@@ -1,9 +1,6 @@
 package football.start.allOfFootball.repository;
 
 import football.start.allOfFootball.common.MessageConvert;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.enums.ErrorLevel;
-import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -11,20 +8,13 @@ import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Slf4j
 @RequiredArgsConstructor
 public class MypageRepositoryImpl implements MypageRepository{
 
-    private final JpaMemberRepository jpaMemberRepository;
     private final MessageConvert messageConvert;
-
-    @Override
-    public Optional<Member> findById(Long memberId) {
-        return jpaMemberRepository.findById(memberId);
-    }
 
     @Override
     public void validNowPw(HashMap<String, String> result, List<FieldError> nowPassword) {
@@ -33,7 +23,7 @@ public class MypageRepositoryImpl implements MypageRepository{
             return;
         }
         for (FieldError fieldError : nowPassword) {
-            String nowPwMessage = messageConvert.getErrorMessage(fieldError, ErrorLevel.LEVEL_1);
+            String nowPwMessage = messageConvert.getErrorMessage(fieldError);
             result.put("nowPwError", nowPwMessage);
             return;
         }
@@ -46,7 +36,7 @@ public class MypageRepositoryImpl implements MypageRepository{
             return;
         }
         for (FieldError fieldError : changePassword) {
-            String changePwMessage = messageConvert.getErrorMessage(fieldError, ErrorLevel.LEVEL_1);
+            String changePwMessage = messageConvert.getErrorMessage(fieldError);
             result.put("changePwError", changePwMessage);
             return;
         }
@@ -59,7 +49,7 @@ public class MypageRepositoryImpl implements MypageRepository{
             return;
         }
         for (FieldError fieldError : checkPassword) {
-            String checkPwMessage = messageConvert.getErrorMessage(fieldError, ErrorLevel.LEVEL_1);
+            String checkPwMessage = messageConvert.getErrorMessage(fieldError);
             result.put("checkPwError", checkPwMessage);
             return;
         }

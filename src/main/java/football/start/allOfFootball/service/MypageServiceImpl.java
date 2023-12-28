@@ -131,7 +131,6 @@ public class MypageServiceImpl implements MypageService{
     public Map<String, List<ManagerDataForm>> getManagerList(Member findMember) {
         Manager manager = findMember.getManager();
         List<Match> matchList = matchRepository.findAllMatchBefore(manager);
-        if (matchList.isEmpty()) return null;
 
         Map<String, List<ManagerDataForm>> result = new LinkedHashMap<>();
 
@@ -139,23 +138,17 @@ public class MypageServiceImpl implements MypageService{
             List<Orders> ordersList = match.getOrdersList();
 
             MatchDataForm matchDataForm = matchRepository.getMatchDataForm(match, ordersList);
-            Map<TeamEnum, List<TeamInfo>> teamInfo = null;
-            if (match.getMatchStatus() == MatchStatus.경기시작전 || match.getMatchStatus() == MatchStatus.기록중) {
-                teamInfo = matchRepository.getTeamInfo(match, ordersList);
-            }
-
+            Map<TeamEnum, List<TeamInfo>> teamInfo = matchRepository.getTeamInfo(match, ordersList);
             String date = DateFormatter.dateFormatAndWeek(match.getMatchDate());
 
             ManagerDataForm build = ManagerDataForm.builder()
-                .teamInfo(teamInfo)
-                .topInfo(matchDataForm)
-                .isMatchPlaying(match.getMatchStatus() == MatchStatus.경기중)
-                .isRecordScore(match.getMatchStatus() == MatchStatus.기록중)
-                .build();
+                                    .teamInfo(teamInfo)
+                                    .topInfo(matchDataForm)
+                                    .isMatchPlaying(match.getMatchStatus() == MatchStatus.경기중)
+                                    .isRecordScore(match.getMatchStatus() == MatchStatus.기록중)
+                                    .build();
 
-            if (!result.containsKey(date)) {
-                result.put(date, new ArrayList<>());
-            }
+            if (!result.containsKey(date)) result.put(date, new ArrayList<>());
             result.get(date).add(build);
         }
         return result;

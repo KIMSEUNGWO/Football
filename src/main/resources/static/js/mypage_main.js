@@ -80,7 +80,6 @@ window.addEventListener('load', () => {
 })
 
 function result(map) {
-    console.log(map);
     if (map.result == 'fail') {
         if (map.message == null) {
             let currPwError = document.querySelector('#bfpw');
