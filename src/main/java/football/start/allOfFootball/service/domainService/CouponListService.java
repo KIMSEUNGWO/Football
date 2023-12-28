@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +28,6 @@ public class CouponListService {
         List<CouponList> renewCouponList = couponListRepository.deleteByExpireDate(couponList);
 
         List<CouponListForm> result = new ArrayList<>();
-
         for (CouponList list : renewCouponList) {
             CouponListForm form = new CouponListForm(list);
             result.add(form);
@@ -38,15 +36,10 @@ public class CouponListService {
     }
 
     public Optional<CouponList> findByCouponListId(Long couponNum) {
-        if (couponNum == null) {
-            return Optional.empty();
-        }
+        if (couponNum == null) return Optional.empty();
+
         Optional<CouponList> byCouponListId = couponListRepository.findByCouponListId(couponNum);
-        if (byCouponListId.isEmpty()) {
-            return byCouponListId;
-        }
-        CouponList couponList = byCouponListId.get();
-        if (couponList.getCouponListStatus() != 'N') {
+        if (byCouponListId.isEmpty() || byCouponListId.get().getCouponListStatus() != 'N') {
             return Optional.empty();
         }
         return byCouponListId;
