@@ -47,12 +47,17 @@ public class KakaoLoginController {
         Optional<Member> findMember =  loginService.findByEmail(userInfo.getEmail());
         Member loginMember = null;
         if (findMember.isEmpty()) {
+            boolean phoneDistinct = loginService.findByPhone(userInfo.getPhone());
+            if (phoneDistinct) {
+                execute(response, "이미 가입한 계정이 존재합니다.");
+                return null;
+            }
             loginMember = registerService.socialSave(userInfo, kakaoToken);
             System.out.println("loginMember = " + loginMember);
         } else {
             Member member = findMember.get();
             Social social = member.getSocial();
-            if (social != null && social.getSocialType() == KAKAO && social.getSocialNum().equals(userInfo.getId()) && !member.getMemberPhone().equals(userInfo.getPhone())) {
+            if (social != null && social.getSocialType() == KAKAO && social.getSocialNum().equals(userInfo.getId())) {
                 loginMember = findMember.get();
                 kakaoLoginService.updateKakaoToken(loginMember, kakaoToken);
             } else {
