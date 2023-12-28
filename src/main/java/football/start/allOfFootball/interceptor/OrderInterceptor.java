@@ -32,15 +32,14 @@ public class OrderInterceptor implements HandlerInterceptor {
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER);
         if (memberId == null) {
             log.info("로그인 되어있지 않은 사용자 접근");
-            session.setAttribute(REDIRECT_URL, requestURI);
-            response.sendRedirect("/login");
+            response.sendRedirect("/login?url=" + requestURI);
             return false;
         }
 
         Optional<Member> findMember = memberService.findByMemberId(memberId);
         if (findMember.isEmpty()) {
             log.info("존재하지 않는 사용자 접근");
-            response.sendRedirect("/");
+            response.sendRedirect("/login?url=" + requestURI);
             return false;
         }
 
@@ -49,13 +48,11 @@ public class OrderInterceptor implements HandlerInterceptor {
 
         if (cache < 10000) {
             log.info("잔액 부족");
-            session.setAttribute(REDIRECT_URL, requestURI);
-            response.sendRedirect("/cache/charge");
+            response.sendRedirect("/cache/charge?url=" + requestURI);
             return false;
         }
 
         log.info("정상적인 신청 요청");
-        session.removeAttribute(REDIRECT_URL);
         return true;
     }
 }
