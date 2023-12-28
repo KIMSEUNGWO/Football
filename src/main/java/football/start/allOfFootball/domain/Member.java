@@ -41,10 +41,6 @@ public class Member extends BaseTimeEntity {
     @ColumnDefault("1000")
     private Integer memberScore;
 
-    @OneToOne
-    @JoinColumn(name = "profileId")
-    private Profile profile;
-
     @Enumerated(EnumType.STRING)
     @Nullable
     private GradeEnum grade;
@@ -53,6 +49,8 @@ public class Member extends BaseTimeEntity {
     private LocalDateTime memberExpireDate;
 
     // Not Columns
+    @OneToOne(mappedBy = "member")
+    private Profile profile;
     @OneToMany(mappedBy = "member")
     private List<CouponList> couponList;
     @OneToMany(mappedBy = "member")
