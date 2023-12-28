@@ -11,7 +11,7 @@
         <div class="status">
             <div class="name">
                 <span th:text="${profile.name}"></span>
-                <span th:if="${profile.social != null}" th:class="'social ' + ${profile.social.className}" th:text="${profile.social}"></span>
+                <span th:if="${profile.social != null}" th:class="'social ' + ${profile.social.socialType.className}" th:text="${profile.social.socialType}"></span>
             </div>
             <div class="email">tmd8633@naver.com</div>
         </div>

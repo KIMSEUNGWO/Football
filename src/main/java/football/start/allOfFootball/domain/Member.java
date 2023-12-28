@@ -61,6 +61,8 @@ public class Member extends BaseTimeEntity {
     private BeforePassword beforePassword;
     @OneToOne(mappedBy = "member")
     private Manager manager;
+    @OneToOne(mappedBy = "member")
+    private Social social;
 
     public String combineSalt(String password) {
         return memberSalt + password;

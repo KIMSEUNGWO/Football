@@ -1,5 +1,6 @@
 package football.start.allOfFootball.controller.mypage;
 
+import football.start.allOfFootball.domain.Social;
 import football.start.allOfFootball.enums.SocialEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import lombok.*;
@@ -13,7 +14,7 @@ public class MyProfileDto {
 
     private String profileImage;
     private String name;
-    private SocialEnum social;
+    private Social social;
     private String email;
 
     private String score;

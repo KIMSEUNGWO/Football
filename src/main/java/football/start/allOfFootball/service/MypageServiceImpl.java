@@ -45,7 +45,7 @@ public class MypageServiceImpl implements MypageService{
         MyProfileDto myProfileDto = MyProfileDto.builder()
             .profileImage("base.jpeg")
             .name(findMember.getMemberName())
-            .social(findMember.getMemberSocial())
+            .social(findMember.getSocial())
             .email(findMember.getMemberEmail())
             .score(format(findMember.getMemberScore()))
             .rank(format(rankService.getRank(findMember)))
