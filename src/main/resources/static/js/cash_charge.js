@@ -92,7 +92,8 @@ window.addEventListener('load', () => {
     
 })
 function result(response) {
-    location.href = response.next_redirect_pc_url	
+    var options = 'width=500, height=600, top=100, left=100, resizable=yes, scrollbars=yes';
+    window.open(response.next_redirect_pc_url, '_blank', options);
 }
 
 function clearCashSelect() {
