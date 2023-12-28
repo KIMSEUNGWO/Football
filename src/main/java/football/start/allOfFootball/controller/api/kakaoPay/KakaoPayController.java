@@ -1,5 +1,6 @@
 package football.start.allOfFootball.controller.api.kakaoPay;
 
+import football.start.allOfFootball.common.alert.AlertTemplate;
 import football.start.allOfFootball.common.alert.AlertUtils;
 import football.start.allOfFootball.controller.api.kakaoPay.dto.ApproveResponse;
 import football.start.allOfFootball.controller.api.kakaoPay.dto.ReadyResponse;
@@ -19,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Optional;
 
 import static football.start.allOfFootball.SessionConst.*;
@@ -84,10 +87,29 @@ public class KakaoPayController {
         String requestURL = (String) session.getAttribute(REDIRECT_URL);
         kakaoPayService.deleteSessionId(session);
 
-        if (requestURL == null) {
-            return "redirect:/";
+        execute(response, "충전이 완료되었습니다.");
+        return null;
+    }
+    private String execute(HttpServletResponse response, String alert) {
+        response.setContentType("text/html; charset=utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        String command = "<script> alert(" + alert + "); " + getOption() + " window.self.close(); </script>";
+        try (PrintWriter out = response.getWriter()) {
+            out.println(command);
+            out.flush();
+        } catch (IOException e) {
+            log.error("Alert IOException 발생! = {}", AlertTemplate.class);
         }
-        return "redirect:" + requestURL;
+        return null;
+    }
+
+    private String getOption() {
+        // redirect url이 있으면 url로 이동
+        return "const urlParams = new URLSearchParams(opener.location.search); " +
+            "let redirect = urlParams.get('url');" +
+            "if (redirect == null) redirect = '/';" +
+            "opener.location.href=redirect;";
     }
 
     @GetMapping("/cancel")
