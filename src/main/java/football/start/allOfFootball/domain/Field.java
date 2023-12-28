@@ -48,17 +48,15 @@ public class Field {
     @OneToMany(mappedBy = "field")
     private List<FieldImage> fieldImages = new ArrayList<>();
 
-    public static Field build(SaveFieldForm form) {
-        return new Field().builder()
-            .fieldTitle(form.getFieldName())
-            .fieldLocation(form.getRegion())
-            .fieldAddress(form.getFieldAddress())
-            .fieldSize(getSize(form.getXSize(), form.getYSize()))
-            .fieldParking(form.getParking())
-            .fieldToilet(form.getToilet())
-            .fieldShower(form.getShower())
-            .fieldInformation(form.getFieldDetails())
-            .build();
+    public Field(SaveFieldForm form) {
+        fieldTitle = form.getFieldName();
+        fieldLocation = form.getRegion();
+        fieldAddress = form.getFieldAddress();
+        fieldSize = getSize(form.getXSize(), form.getYSize());
+        fieldParking = form.getParking();
+        fieldToilet = form.getToilet();
+        fieldShower = form.getShower();
+        fieldInformation = form.getFieldDetails();
     }
 
     public void setEditField(EditFieldForm form) {

@@ -10,6 +10,7 @@ import football.start.allOfFootball.repository.domainRepository.FieldRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -27,10 +28,11 @@ public class FieldService {
         return fieldRepository.findByField(fieldId);
     }
 
+    @Transactional
     public void saveField(SaveFieldForm saveGroundForm) {
 
         // field 객체 저장
-        Field field = Field.build(saveGroundForm);
+        Field field = new Field(saveGroundForm);
         fieldRepository.saveField(field);
 
         // fieldImage 파일로 저장 - DB 저장
