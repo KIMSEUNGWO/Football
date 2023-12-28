@@ -5,12 +5,13 @@ import football.start.allOfFootball.common.ResultMessage;
 import football.start.allOfFootball.common.file.FileService;
 import football.start.allOfFootball.controller.api.kakaoLogin.LoginResponse;
 import football.start.allOfFootball.controller.login.EmailDto;
+import football.start.allOfFootball.domain.KakaoToken;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Social;
 import football.start.allOfFootball.enums.FileUploadType;
-import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.SocialEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.start.allOfFootball.jpaRepository.JpaKakaoTokenRepository;
 import football.start.allOfFootball.repository.LoginRepository;
 import football.start.allOfFootball.repository.RegisterRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RegisterServiceImpl implements RegisterService{
 
+    private final JpaKakaoTokenRepository jpaKakaoTokenRepository;
     private final RegisterRepository registerRepository;
     private final LoginRepository loginRepository;
     private final FileService fileService;
@@ -63,7 +65,7 @@ public class RegisterServiceImpl implements RegisterService{
 
     @Override
     @Transactional
-    public Member socialSave(LoginResponse userInfo) {
+    public Member socialSave(LoginResponse userInfo, KakaoToken kakaoToken) {
         SocialEnum type = userInfo.getSocialType();
         Integer id = userInfo.getId();
         String profile = userInfo.getProfile();
@@ -76,6 +78,7 @@ public class RegisterServiceImpl implements RegisterService{
             .memberBirthday(userInfo.getBirthday())
             .memberPhone(userInfo.getPhone())
             .build();
+
         registerRepository.save(saveMember);
 
         Social saveSocial = Social.builder()
@@ -84,6 +87,9 @@ public class RegisterServiceImpl implements RegisterService{
             .socialNum(id)
             .build();
         registerRepository.saveSocial(saveSocial);
+
+        kakaoToken.setSocial(saveSocial);
+        jpaKakaoTokenRepository.save(kakaoToken);
 
         fileService.saveImage(profile, saveMember, FileUploadType.PROFILE);
         return saveMember;
