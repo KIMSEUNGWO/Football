@@ -2,8 +2,6 @@ package football.start.allOfFootball.common;
 
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.enums.TeamEnum;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -12,7 +10,7 @@ public class MatchTeamAlgorithms {
     private final List<Orders> score;
 
     public MatchTeamAlgorithms(List<Orders> orders) {
-        Collections.sort(orders, (o1, o2) -> o2.getMember().getGrade().getScore() - o1.getMember().getGrade().getScore());
+        orders.sort((o1, o2) -> o2.getMember().getGrade().getScore() - o1.getMember().getGrade().getScore());
         this.score = orders;
     }
 
