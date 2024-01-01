@@ -39,38 +39,14 @@ public class OrderController {
 
 
     @GetMapping("/order/{matchId}")
-    public String order(@PathVariable Long matchId, @SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model, HttpServletResponse response, HttpServletRequest request) {
-        if (matchId == null) {
-            return AlertUtils.alertAndBack(response, "비정상적인 접근입니다.");
-        }
-        if (memberId == null) {
-            String redirectURL = request.getHeader("referer");
-            HttpSession session = request.getSession();
-            session.setAttribute(REDIRECT_URL, redirectURL);
-            return AlertUtils.alertAndMove(response, "로그인이 필요합니다.", "/login");
-        }
+    public String order(@PathVariable Long matchId, @SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model, HttpServletRequest request) {
 
-        Optional<Match> findMatch = matchService.findByMatch(matchId);
-        Optional<Member> findMember = memberService.findByMemberId(memberId);
-        if (findMatch.isEmpty() || findMember.isEmpty()) {
-            return AlertUtils.alertAndBack(response, "경기 정보가 없습니다.");
-        }
+        Match match = matchService.findByMatch(matchId).get();
+        Member member = memberService.findByMemberId(memberId).get();
 
-        Match match = findMatch.get();
-        Member member = findMember.get();
-
-        if (match.getMatchGender() != GenderEnum.전체 && match.getMatchGender() != member.getMemberGender()) {
-            return AlertUtils.alert(response, match.getMatchGender() + "만 참여할 수 있습니다.");
-        }
-        if (match.getMatchGrade() != MatchEnum.전체 && !match.getMatchGrade().getGradeList().contains(member.getGrade())) {
-            return AlertUtils.alert(response, match.getMatchGrade().getMatchInfo() + "만 참여할 수 있습니다.");
-        }
         List<CouponListForm> couponList = couponListService.getCouponList(member);
-        boolean distinctMember = matchService.distinctCheck(match, memberId);
-        if (distinctMember) {
-            return AlertUtils.alertAndMove(response, "이미 신청된 경기입니다.", "/");
-        }
-        OrderForm orderForm = OrderForm.build(member, match, couponList);
+
+        OrderForm orderForm = new OrderForm(member, match, couponList);
         model.addAttribute("orderForm", orderForm);
 
         return "order";
@@ -78,29 +54,16 @@ public class OrderController {
 
     @PostMapping("/order/{matchId}")
     public String orderPost(@PathVariable Long matchId, @SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpServletResponse response, @ModelAttribute OrderPostForm form) {
-        if (matchId == null || memberId == null) {
-            return AlertUtils.alertAndBack(response, "비정상적인 접근입니다.");
-        }
-        Optional<Match> findMatch = matchService.findByMatch(matchId);
-        Optional<Member> findMember = memberService.findByMemberId(memberId);
-        if (findMatch.isEmpty() || findMember.isEmpty()) {
-            return AlertUtils.alertAndBack(response, "경기 정보가 없습니다.");
-        }
+
         if (form.getPolicy() == null) {
             return AlertUtils.alertAndBack(response, "모든 약관에 동의해주세요.");
         }
 
-        Match match = findMatch.get();
-        Member member = findMember.get();
+        Match match = matchService.findByMatch(matchId).get();
+        Member member = memberService.findByMemberId(memberId).get();
+
         List<Orders> ordersList = member.getOrdersList();
-        boolean distinctMember = matchService.distinctCheck(match, memberId);
-        if (distinctMember) {
-            return AlertUtils.alertAndMove(response, "이미 신청된 경기입니다.", "/");
-        }
-        boolean maxCheck = matchService.maxCheck(match);
-        if (maxCheck) {
-            return AlertUtils.alert(response, "경기가 마감되었습니다.");
-        }
+
         Manager manager = member.getManager();
         boolean isAlreadyApply = memberService.isAlreadyApply(ordersList, match, manager);
 
@@ -114,7 +77,10 @@ public class OrderController {
             return AlertUtils.alertAndMove(response, "잔액이 부족합니다.", "/cash/charge");
         }
 
-        Orders orders = Orders.build(match, member);
+        Orders orders = Orders.builder()
+                            .match(match)
+                            .member(member)
+                            .build();
         orderService.save(orders, member, couponList, price); // order 저장
         matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
         log.info("Orders 정상 처리");

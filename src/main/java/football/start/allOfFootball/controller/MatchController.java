@@ -31,11 +31,8 @@ public class MatchController {
     public String match(@PathVariable Long matchId,
                         @SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
                         HttpServletResponse response, Model model) {
-        Optional<Match> findMatch = matchService.findByMatch(matchId);
-        if (findMatch.isEmpty()) {
-            return AlertUtils.alertAndMove(response, "존재하지 않는 경기입니다.", "/");
-        }
-        Match match = findMatch.get();
+        Match match = matchService.findByMatch(matchId).get();
+
         MatchViewForm matchForm = new MatchViewForm(match); // 기본 데이터
         model.addAttribute("matchForm", matchForm);
 

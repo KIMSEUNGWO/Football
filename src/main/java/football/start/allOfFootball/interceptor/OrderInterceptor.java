@@ -1,6 +1,11 @@
 package football.start.allOfFootball.interceptor;
 
+import football.start.allOfFootball.common.alert.AlertUtils;
+import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.enums.GenderEnum;
+import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
+import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,40 +24,65 @@ import static football.start.allOfFootball.SessionConst.REDIRECT_URL;
 public class OrderInterceptor implements HandlerInterceptor {
 
     private final MemberService memberService;
+    private final MatchService matchService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String requestURI = request.getRequestURI();
-        log.info("잔액 체크 인터셉터 실행 {}", requestURI);
+        String method = request.getMethod();
+        System.out.println("method = " + method);
+        log.info("Order 체크 인터셉터 실행 {}", requestURI);
 
-        HttpSession session = request.getSession(true);
+        Long matchId = getMatchId(requestURI);
+        Match match = matchService.findByMatch(matchId).get();
+
+        Long memberId = (Long) request.getSession().getAttribute(LOGIN_MEMBER);
+        Member member = memberService.findByMemberId(memberId).get();
+
+        if (match.getMatchGender() != GenderEnum.전체 && match.getMatchGender() != member.getMemberGender()) {
+            AlertUtils.alertAndBack(response, match.getMatchGender() + "만 참여할 수 있습니다.");
+            return false;
+        }
+        if (match.getMatchGrade() != MatchEnum.전체 && !match.getMatchGrade().getGradeList().contains(member.getGrade())) {
+            AlertUtils.alertAndBack(response, match.getMatchGrade().getMatchInfo() + " 만 참여할 수 있습니다.");
+            return false;
+        }
+        boolean distinctMember = matchService.distinctCheck(match, memberId);
+        if (distinctMember) {
+            AlertUtils.alertAndMove(response, "이미 신청된 경기입니다.", "/");
+            return false;
+        }
+        boolean maxCheck = matchService.maxCheck(match);
+        if (maxCheck) {
+            AlertUtils.alert(response, "경기가 마감되었습니다.");
+            return false;
+        }
 
         // 회원확인
-        Long memberId = (Long) session.getAttribute(LOGIN_MEMBER);
-        if (memberId == null) {
-            log.info("로그인 되어있지 않은 사용자 접근");
-            response.sendRedirect("/login?url=" + requestURI);
-            return false;
-        }
 
-        Optional<Member> findMember = memberService.findByMemberId(memberId);
-        if (findMember.isEmpty()) {
-            log.info("존재하지 않는 사용자 접근");
-            response.sendRedirect("/login?url=" + requestURI);
-            return false;
-        }
-
-        Member member = findMember.get();
-        int cache = member.getMemberCash();
-
-        if (cache < 10000) {
-            log.info("잔액 부족");
-            response.sendRedirect("/cache/charge?url=" + requestURI);
-            return false;
-        }
+//        Member member = findMember.get();
+//        int cache = member.getMemberCash();
+//
+//        if (cache < 10000) {
+//            log.info("잔액 부족");
+//            response.sendRedirect("/cache/charge?url=" + request.getRequestURI());
+//            return false;
+//        }
 
         log.info("정상적인 신청 요청");
         return true;
+    }
+
+    private Long getMatchId(String requestURI) {
+        int index = requestURI.lastIndexOf("/");
+        if (index == -1 || requestURI.length() == index + 1) return null;
+
+        String matchIdStr = requestURI.substring(index + 1);
+        try {
+            return Long.parseLong(matchIdStr);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }

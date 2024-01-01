@@ -26,14 +26,12 @@ public class OrderForm {
     private Integer cash;
 
 
-    public static OrderForm build(Member member, Match match, List<CouponListForm> couponList) {
-        return OrderForm.builder()
-            .matchId(match.getMatchId())
-            .fieldTitle(match.getField().getFieldTitle())
-            .fieldAddress(match.getField().getFieldAddress())
-            .matchDate(DateFormatter.dateFormatAll(match.getMatchDate()))
-            .couponList(couponList)
-            .cash(member.getMemberCash())
-            .build();
+    public OrderForm(Member member, Match match, List<CouponListForm> couponLists) {
+        matchId = match.getMatchId();
+        fieldTitle = match.getField().getFieldTitle();
+        fieldAddress = match.getField().getFieldAddress();
+        matchDate = DateFormatter.dateFormatAll(match.getMatchDate());
+        couponList = couponLists;
+        cash = member.getMemberCash();
     }
 }
