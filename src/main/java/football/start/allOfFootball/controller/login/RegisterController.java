@@ -1,17 +1,13 @@
 package football.start.allOfFootball.controller.login;
 
-import football.start.allOfFootball.SessionConst;
 import football.start.allOfFootball.common.MatchTeamAlgorithms;
-import football.start.allOfFootball.common.ResultMessage;
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.domain.CouponList;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
-import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.RegisterService;
 import football.start.allOfFootball.service.domainService.MatchService;
@@ -22,15 +18,12 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

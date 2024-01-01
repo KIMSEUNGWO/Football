@@ -1,7 +1,6 @@
 package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.common.BCrypt;
-import football.start.allOfFootball.common.ResultMessage;
 import football.start.allOfFootball.common.file.FileService;
 import football.start.allOfFootball.controller.api.kakaoLogin.LoginResponse;
 import football.start.allOfFootball.controller.login.EmailDto;
@@ -38,10 +37,12 @@ public class RegisterServiceImpl implements RegisterService{
         String email = emailDto.getEmail();
         Optional<Member> findMember = registerRepository.findByMemberEmail(email);
         if (findMember.isPresent()) {
-            ResultMessage.errorMessage(map, "중복된 이메일입니다.");
+            map.put("status", "error");
+            map.put("message", "중복된 이메일입니다.");
             return map;
         }
-        ResultMessage.okMessage(map, "사용가능한 이메일입니다.");
+        map.put("status", "ok");
+        map.put("message", "사용가능한 이메일입니다.");
         return map;
     }
 
