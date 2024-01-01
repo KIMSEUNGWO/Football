@@ -1,6 +1,7 @@
 package football.start.allOfFootball.common.file;
 
 import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.dto.ImageParent;
 import football.start.allOfFootball.enums.FileUploadType;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class FileService {
     private final TypeConvert typeConvert;
     private final StandardServletMultipartResolver multipartResolver;
 
-    public int saveFile(List<MultipartFile> files, Long id, FileUploadType type) {
+    public int saveFile(List<MultipartFile> files, ImageParent parent, FileUploadType type) {
 
         int res = 0;
 
@@ -40,8 +41,8 @@ public class FileService {
                 continue;
             }
 
-            String originalFilename = file.getOriginalFilename();
-            String storeFileName = createFileName(originalFilename);
+            String originalFileName = file.getOriginalFilename();
+            String storeFileName = createFileName(originalFileName);
 
             String fullPath = getFullPath(storeFileName, type);
             try {
@@ -51,13 +52,14 @@ public class FileService {
                 continue;
             }
 
-            FileUploadDto fileDto = new FileUploadDto();
-            fileDto.setId(id);
-            fileDto.setImageUploadName(originalFilename);
-            fileDto.setImageStoreName(storeFileName);
-            fileDto.setType(type);
+            FileUploadDto fileDto = FileUploadDto.builder()
+                                    .parent(parent)
+                                    .imageUploadName(originalFileName)
+                                    .imageStoreName(storeFileName)
+                                    .type(type)
+                                    .build();
 
-            res += typeConvert.saveFile(fileDto, null);
+            res += typeConvert.saveFile(fileDto);
 
         }
 
@@ -78,12 +80,14 @@ public class FileService {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             fos.close();
 
-            FileUploadDto fileDto = new FileUploadDto();
-            fileDto.setImageUploadName(originalFileName);
-            fileDto.setImageStoreName(storeFileName);
-            fileDto.setType(type);
+            FileUploadDto fileDto = FileUploadDto.builder()
+                                    .parent(member)
+                                    .imageUploadName(originalFileName)
+                                    .imageStoreName(storeFileName)
+                                    .type(type)
+                                    .build();
 
-            res += typeConvert.saveFile(fileDto, member);
+            res += typeConvert.saveFile(fileDto);
 
         } catch (IOException e) {
             log.error("링크 파일 저장 실패 : ", imageUrl);

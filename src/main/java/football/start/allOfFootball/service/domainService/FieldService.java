@@ -37,7 +37,7 @@ public class FieldService {
 
         // fieldImage 파일로 저장 - DB 저장
         List<MultipartFile> images = saveGroundForm.getImages();
-        int res = fileService.saveFile(images, field.getFieldId(), FileUploadType.FIELD_IMAGE);
+        int res = fileService.saveFile(images, field, FileUploadType.FIELD_IMAGE);
     }
     public EditFieldForm findByFieldId(Long fieldId) {
 
@@ -67,7 +67,7 @@ public class FieldService {
 
         // 새로 추가될 사진 저장
         List<MultipartFile> saveImages = form.getImages();
-        fileService.saveFile(saveImages, field.getFieldId(), FileUploadType.FIELD_IMAGE);
+        fileService.saveFile(saveImages, field, FileUploadType.FIELD_IMAGE);
     }
 
 }

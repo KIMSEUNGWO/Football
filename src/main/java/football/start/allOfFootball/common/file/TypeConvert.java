@@ -16,14 +16,14 @@ public class TypeConvert {
 
     private final FileRepository fileRepository;
 
-    public int saveFile(FileUploadDto fileUploadDto, Member member) {
+    public int saveFile(FileUploadDto fileUploadDto) {
         FileUploadType type = fileUploadDto.getType();
 
         if (type.equals(FIELD_IMAGE)) {
             return fileRepository.saveFieldImage(fileUploadDto);
         }
         if (type.equals(PROFILE)) {
-            return fileRepository.saveProfile(fileUploadDto, member);
+            return fileRepository.saveProfile(fileUploadDto);
         }
         log.error("TypeConvert TypeMissMatch error = {}", type.name());
         return 0;

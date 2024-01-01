@@ -1,7 +1,5 @@
 package football.start.allOfFootball.domain;
 
-import football.start.allOfFootball.common.file.FileUploadDto;
-import football.start.allOfFootball.dto.File;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +12,7 @@ import lombok.*;
 @SequenceGenerator(name = "SEQ_FIELD_IMAGE", sequenceName = "SEQ_FIELD_IMAGE_ID")
 @AllArgsConstructor
 @NoArgsConstructor
-public class FieldImage extends File {
+public class FieldImage {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FIELD_IMAGE")
     private Long fieldImageId;
@@ -24,5 +22,6 @@ public class FieldImage extends File {
     private Field field;
     private String fieldImageName;
     private String fieldImageStoreName;
+
 
 }

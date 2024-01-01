@@ -27,16 +27,14 @@ public class FileRepository {
 
     public int saveFieldImage(FileUploadDto form) {
 
-        Long fieldId = form.getId();
-        Optional<Field> findField = jpaFieldRepository.findById(fieldId);
-        if (findField.isEmpty()) {
-            log.error("FileRepository NotFoundField fieldId = {}", fieldId);
-            return 0;
-        }
-        Field field = findField.get();
+        Field field = (Field) form.getParent();
 
         // fieldImage domain 객체로 변환
-        FieldImage fieldImage = FieldImage.build(form, field);
+        FieldImage fieldImage = FieldImage.builder()
+            .field(field)
+            .fieldImageName(form.getImageUploadName())
+            .fieldImageStoreName(form.getImageStoreName())
+            .build();
 
         // fieldImage DB 저장
         jpaFieldImageRepository.save(fieldImage);
@@ -44,20 +42,16 @@ public class FileRepository {
         return 1;
     }
 
-    public int saveProfile(FileUploadDto form, Member member) {
+    public int saveProfile(FileUploadDto form) {
 
-        if (member == null) {
-            Long memberId = form.getId();
-            Optional<Member> findMember = jpaMemberRepository.findById(memberId);
-            if (findMember.isEmpty()) {
-                log.error("FileRepository NotFoundField memberId = {}", memberId);
-                return 0;
-            }
-            member = findMember.get();
-        }
+        Member member = (Member) form.getParent();
 
         // profile domain 객체로 변환
-        Profile profile = Profile.build(form, member);
+        Profile profile = Profile.builder()
+            .member(member)
+            .profileName(form.getImageUploadName())
+            .profileStoreName(form.getImageStoreName())
+            .build();
 
         // profile DB 저장
         jpaProfileRepository.save(profile);

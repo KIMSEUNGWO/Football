@@ -1,5 +1,6 @@
 package football.start.allOfFootball.domain;
 
+import football.start.allOfFootball.dto.ImageParent;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.enums.SocialEnum;
@@ -8,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,7 +24,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @DynamicInsert
 @SequenceGenerator(name = "SEQ_MEMBER", sequenceName = "SEQ_MEMBER_ID", allocationSize = 1)
-public class Member extends BaseTimeEntity {
+public class Member extends ImageParent {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER")
     private Long memberId;
@@ -30,11 +32,11 @@ public class Member extends BaseTimeEntity {
     private String memberPassword;
     private String memberSalt;
     private String memberName;
+
     @Enumerated(EnumType.STRING)
     private GenderEnum memberGender;
     private LocalDate memberBirthday;
     private String memberPhone;
-
     private int memberCash;
 
     @Column(nullable = false)
@@ -47,6 +49,9 @@ public class Member extends BaseTimeEntity {
 
     private LocalDateTime memberRecentlyDate;
     private LocalDateTime memberExpireDate;
+
+    @CreatedDate
+    private LocalDateTime createDate;
 
     // Not Columns
     @OneToOne(mappedBy = "member")

@@ -2,6 +2,7 @@ package football.start.allOfFootball.domain;
 
 import football.start.allOfFootball.controller.admin.EditFieldForm;
 import football.start.allOfFootball.controller.admin.SaveFieldForm;
+import football.start.allOfFootball.dto.ImageParent;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.enums.groundEnums.ParkingEnum;
 import football.start.allOfFootball.enums.groundEnums.ShowerEnum;
@@ -21,7 +22,7 @@ import java.util.List;
 @Builder
 @Table(name = "FIELD")
 @SequenceGenerator(name = "SEQ_FIELD", sequenceName = "SEQ_FIELD_ID", allocationSize = 1)
-public class Field {
+public class Field extends ImageParent {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FIELD")
     private Long fieldId;
