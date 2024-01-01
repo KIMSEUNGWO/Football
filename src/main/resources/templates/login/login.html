@@ -13,32 +13,27 @@
     <div class='container'>
         
         <form class='login_form' method="post" th:object="${loginDto}" th:action="'/login' + (${url} ? '?url=' + ${url} : '')">
-            <!-- <div class='login_social'>
-                <div class="kakaologo">kakao</div>
-                <span class="explain">계정과 비밀번호 입력없이</span>
-                <span class="explain">카카오톡으로 로그인 해 보세요.</span>
-                <button type="button" class="login_naver">네이버 로그인</button>
-                <button type="button" class="login_kakao">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
-                        <path d="M9.98613 0.909058C4.47157 0.909058 0 4.28535 0 8.45987C0 11.0379 1.71984 13.314 4.34398 14.6731L3.29543 18.4485C3.29543 18.4485 3.12344 18.8207 3.39528 18.9879C3.47157 19.0542 3.57033 19.0909 3.67268 19.0909C3.77502 19.0909 3.87378 19.0542 3.95007 18.9879L8.74897 15.8974C9.16506 15.9352 9.58113 15.9621 10.0139 15.9621C15.5284 15.9621 20 12.5912 20 8.41131C20 4.2314 15.5007 0.909058 9.98613 0.909058Z" fill="#181602"/>
-                    </svg>
-                    <span>카카오톡으로 로그인하기</span>
-                </button>
-            </div> -->
             <div class='login_logo'>
                 <img src="/images/login_logo.svg" alt="logo" width="100%" height="100%">
             </div>
             <div class='login_box email'>
                 <h5>이메일</h5>
-                <input type="text" th:field="*{email}" placeholder="email@gmail.com">
+                <input type="text" th:field="*{email}" placeholder="email@gmail.com" th:errorclass="field-error">
+                <div class="errorMsgBox">
+                    <div class="errorMsg" th:errors="*{email}">[[${errorMsg}]]</div>
+                </div>
             </div>
             <div class='login_box password'>
                 <h5>비밀번호</h5>
-                <input type="password" maxlength='15' minlength="8" th:field="*{password}" placeholder="대,소문자 특수문자 포함 8~15자">
+                <input type="password" maxlength='15' minlength="8" th:field="*{password}" placeholder="대,소문자 특수문자 포함 8~15자" th:errorclass="field-error">
+                <div class="errorMsgBox">
+                    <div class="errorMsg" th:errors="*{password}">[[${errorMsg}]]</div>
+                </div>
             </div>
+            
             <input type="submit" value="로그인" class="login_button">
-            <div class="errorMsgBox">
-                <div class="errorMsg">[[${errorMsg}]]</div>
+            <div class="errorMsgBox" th:if="${#fields.hasGlobalErrors()}">
+                <div class="errorMsg" th:each="err : ${#fields.globalErrors()}" th:text="${err}">[[${errorMsg}]]</div>
             </div>
             <div class='login_look'>
                 <a href="/register">회원가입</a>
