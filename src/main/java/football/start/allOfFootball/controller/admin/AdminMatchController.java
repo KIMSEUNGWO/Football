@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,6 +30,13 @@ public class AdminMatchController {
 
     private final MatchService matchService;
     private final FieldService fieldService;
+    private final AdminService adminService;
+
+    @ResponseBody
+    @PostMapping("/get")
+    public List<SearchMatchForm> matchGet(@RequestBody SearchMatchDto searchDto) {
+        return adminService.getSearchMatchResult(searchDto);
+    }
     @GetMapping
     public String match(Model model) {
         LocationEnum[] locations = LocationEnum.values();

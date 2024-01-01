@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,6 +23,13 @@ import java.util.Optional;
 public class AdminGroundController {
 
     private final FieldService fieldService;
+    private final AdminService adminService;
+
+    @ResponseBody
+    @PostMapping("/get")
+    public List<SearchFieldForm> groundGet(@RequestBody SearchFieldDto searchDto) {
+        return adminService.getSearchFieldResult(searchDto);
+    }
 
     @GetMapping
     public String ground(Model model) {
