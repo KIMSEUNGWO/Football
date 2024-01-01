@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor(loginRepository))
                 .order(1)
-                .addPathPatterns("/mypage", "/mypage/**", "/admin", "/admin/**")
+                .addPathPatterns("/mypage", "/mypage/**", "/admin", "/admin/**", "/cash/charge")
                 .excludePathPatterns("/css/**", "/js/**", "/fonts/**", "/images/**");
         registry.addInterceptor(new OrderInterceptor(memberService))
             .order(2)

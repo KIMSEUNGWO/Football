@@ -26,14 +26,7 @@ public class CashController {
 
     @GetMapping("/cash/charge")
     public String cash(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpServletResponse response, Model model, HttpServletRequest request) {
-        if (memberId == null) {
-            return AlertUtils.alertAndMove(response, "로그인이 필요합니다.", "/login");
-        }
         Optional<Member> findMember = memberService.findByMemberId(memberId);
-        if (findMember.isEmpty()) {
-            return AlertUtils.alertAndMove(response, "존재하지 않는 회원입니다.", "/");
-        }
-
         Member member = findMember.get();
 
         String redirectURL = request.getHeader("referer");
