@@ -1,10 +1,12 @@
 package football.start.allOfFootball.common;
 
-import football.start.allOfFootball.dto.match.MatchTeamForm;
 import football.start.allOfFootball.enums.TeamEnum;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static football.start.allOfFootball.Constant.LOSE_SCORE;
+import static football.start.allOfFootball.Constant.WIN_SCORE;
 
 public class ScoreCalculator {
 
@@ -16,21 +18,16 @@ public class ScoreCalculator {
 
 
     public void put(TeamEnum leftTeam, int leftGoal, TeamEnum rightTeam, int rightGoal) {
-        System.out.println(leftGoal + " : " + rightGoal);
         if (leftGoal == rightGoal) return;
 
         if (leftGoal > rightGoal) {
-            total.put(leftTeam, total.getOrDefault(leftTeam, 0) + 5);
-            total.put(rightTeam, total.getOrDefault(rightTeam, 0) - 5);
-            System.out.println(leftTeam.name() + " +5");
-            System.out.println(rightTeam.name() + " -5");
+            total.put(leftTeam, total.getOrDefault(leftTeam, 0) + WIN_SCORE);
+            total.put(rightTeam, total.getOrDefault(rightTeam, 0) + LOSE_SCORE);
         }
 
         if (leftGoal < rightGoal) {
-            total.put(leftTeam, total.getOrDefault(leftTeam, 0) - 5);
-            total.put(rightTeam, total.getOrDefault(rightTeam, 0) + 5);
-            System.out.println(leftTeam.name() + " -5");
-            System.out.println(rightTeam.name() + " +5");
+            total.put(leftTeam, total.getOrDefault(leftTeam, 0) + LOSE_SCORE);
+            total.put(rightTeam, total.getOrDefault(rightTeam, 0) + WIN_SCORE);
         }
     }
 
