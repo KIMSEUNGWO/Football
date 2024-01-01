@@ -35,24 +35,22 @@ public class EditFieldForm {
 
     private String fieldDetails;
 
-    public static EditFieldForm build(Field field, List<FieldImage> savedImages) {
+    public EditFieldForm(Field field, List<FieldImage> imageList) {
         String fieldSize = field.getFieldSize();
         String replace = fieldSize.replaceAll("m", "");
         String[] split = replace.split("x");
         String x = split[0];
         String y = split[1];
 
-        return EditFieldForm.builder()
-            .savedImages(savedImages)
-            .fieldName(field.getFieldTitle())
-            .region(field.getFieldLocation())
-            .fieldAddress(field.getFieldAddress())
-            .xSize(x)
-            .ySize(y)
-            .parking(field.getFieldParking())
-            .toilet(field.getFieldToilet())
-            .shower(field.getFieldShower())
-            .fieldDetails(field.getFieldInformation())
-            .build();
+        savedImages = imageList;
+        fieldName = field.getFieldTitle();
+        region = field.getFieldLocation();
+        fieldAddress = field.getFieldAddress();
+        xSize = x;
+        ySize = y;
+        parking = field.getFieldParking();
+        toilet = field.getFieldToilet();
+        shower = field.getFieldShower();
+        fieldDetails = field.getFieldInformation();
     }
 }

@@ -39,18 +39,6 @@ public class FieldService {
         List<MultipartFile> images = saveGroundForm.getImages();
         int res = fileService.saveFile(images, field, FileUploadType.FIELD_IMAGE);
     }
-    public EditFieldForm findByFieldId(Long fieldId) {
-
-        Optional<Field> findField = fieldRepository.findByField(fieldId);
-        if (findField.isEmpty()) {
-            return null;
-        }
-        Field field = findField.get();
-
-        List<FieldImage> findFieldImage = fieldRepository.findByAllFieldImage(field);
-
-        return EditFieldForm.build(field, findFieldImage);
-    }
 
     public void editField(Field field, EditFieldForm form) {
         // field 수정된 내용 저장
@@ -70,4 +58,8 @@ public class FieldService {
         fileService.saveFile(saveImages, field, FileUploadType.FIELD_IMAGE);
     }
 
+    public EditFieldForm getEditFieldForm(Field field) {
+        List<FieldImage> findFieldImage = fieldRepository.findByAllFieldImage(field);
+        return new EditFieldForm(field, findFieldImage);
+    }
 }
