@@ -26,16 +26,14 @@ public class SearchMatchForm {
     private String matchStatus;
 
 
-    public static SearchMatchForm build(Match match, Integer orderPerson) {
-        return SearchMatchForm.builder()
-            .matchId(match.getMatchId())
-            .matchDate(getDateForm(match.getMatchDate()))
-            .matchTime(getTimeForm(match.getMatchDate()))
-            .matchRegion(match.getField().getFieldLocation())
-            .matchTitle(match.getField().getFieldTitle())
-            .matchPerson(orderPerson + " / " + (match.getMaxPerson() * match.getMatchCount()))
-            .matchStatus(match.getMatchStatus().name())
-            .build();
+    public SearchMatchForm(Match match, Integer orderPerson) {
+        matchId = match.getMatchId();
+        matchDate = getDateForm(match.getMatchDate());
+        matchTime = getTimeForm(match.getMatchDate());
+        matchRegion = match.getField().getFieldLocation();
+        matchTitle = match.getField().getFieldTitle();
+        matchPerson = orderPerson + " / " + (match.getMaxPerson() * match.getMatchCount());
+        matchStatus = match.getMatchStatus().name();
     }
 
     private static String getTimeForm(LocalDateTime time) {

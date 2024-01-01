@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,15 +29,27 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<SearchFieldForm> getSearchFieldResult(SearchFieldDto searchDto) {
-
         List<Field> list = adminRepository.findByAllField(searchDto);
-        return list.stream().map(x -> SearchFieldForm.build(x)).collect(Collectors.toList());
+
+        List<SearchFieldForm> result = new ArrayList<>();
+        for (Field field : list) {
+            SearchFieldForm form = new SearchFieldForm(field);
+            result.add(form);
+        }
+        return result;
     }
 
     @Override
     public List<SearchMatchForm> getSearchMatchResult(SearchMatchDto searchDto) {
         List<Match> list = adminRepository.findByAllMatch(searchDto);
-        return list.stream().map( x -> SearchMatchForm.build(x, adminRepository.findByMatchCount(x))).collect(Collectors.toList());
+
+        List<SearchMatchForm> result = new ArrayList<>();
+        for (Match match : list) {
+            Integer orderPerson = adminRepository.findByMatchCount(match);
+            SearchMatchForm form = new SearchMatchForm(match, orderPerson);
+            result.add(form);
+        }
+        return result;
     }
 
 

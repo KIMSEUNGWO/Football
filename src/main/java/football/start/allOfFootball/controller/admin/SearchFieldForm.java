@@ -16,11 +16,9 @@ public class SearchFieldForm {
     private LocationEnum region;
     private String fieldName;
 
-    public static SearchFieldForm build(Field form) {
-        return SearchFieldForm.builder()
-            .fieldId(form.getFieldId())
-            .region(form.getFieldLocation())
-            .fieldName(form.getFieldTitle())
-            .build();
+    public SearchFieldForm(Field form) {
+        fieldId = form.getFieldId();
+        region = form.getFieldLocation();
+        fieldName = form.getFieldTitle();
     }
 }
