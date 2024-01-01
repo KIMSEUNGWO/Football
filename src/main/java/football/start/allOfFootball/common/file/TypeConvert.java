@@ -1,7 +1,6 @@
 package football.start.allOfFootball.common.file;
 
 
-import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.enums.FileUploadType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

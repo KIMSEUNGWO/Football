@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import java.io.*;
 import java.net.URL;
@@ -27,7 +26,6 @@ public class FileService {
     private String fileDir;
 
     private final TypeConvert typeConvert;
-    private final StandardServletMultipartResolver multipartResolver;
 
     public int saveFile(List<MultipartFile> files, ImageParent parent, FileUploadType type) {
 

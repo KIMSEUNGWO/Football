@@ -5,24 +5,17 @@ import football.start.allOfFootball.domain.FieldImage;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Profile;
 import football.start.allOfFootball.jpaRepository.JpaFieldImageRepository;
-import football.start.allOfFootball.jpaRepository.JpaFieldRepository;
-import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
 import football.start.allOfFootball.jpaRepository.JpaProfileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 @Slf4j
 @RequiredArgsConstructor
 public class FileRepository {
 
-    private final JpaMemberRepository jpaMemberRepository;
     private final JpaProfileRepository jpaProfileRepository;
-
-    private final JpaFieldRepository jpaFieldRepository;
     private final JpaFieldImageRepository jpaFieldImageRepository;
 
     public int saveFieldImage(FileUploadDto form) {
