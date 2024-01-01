@@ -36,7 +36,7 @@ public class MatchController {
             return AlertUtils.alertAndMove(response, "존재하지 않는 경기입니다.", "/");
         }
         Match match = findMatch.get();
-        MatchViewForm matchForm = MatchViewForm.build(match); // 기본 데이터
+        MatchViewForm matchForm = new MatchViewForm(match); // 기본 데이터
         model.addAttribute("matchForm", matchForm);
 
         Optional<Member> byMemberId = memberService.findByMemberId(memberId);

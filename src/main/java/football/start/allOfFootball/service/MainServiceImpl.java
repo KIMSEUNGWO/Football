@@ -1,6 +1,7 @@
 package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.common.redis.RankService;
+import football.start.allOfFootball.controller.admin.SearchMatchForm;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.dto.MainSideInfoForm;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,7 +34,12 @@ public class MainServiceImpl implements MainService{
     public List<SearchResultForm> getSearchResult(SearchDto searchDto) {
         List<Match> matchList = mainRepository.findByAllMatch(searchDto);
 
-        return matchList.stream().map(x -> SearchResultForm.build(x)).collect(Collectors.toList());
+        List<SearchResultForm> list = new ArrayList<>();
+        for (Match match : matchList) {
+            SearchResultForm searchResultForm = new SearchResultForm(match);
+            list.add(searchResultForm);
+        }
+        return list;
     }
 
     @Override
@@ -46,10 +53,10 @@ public class MainServiceImpl implements MainService{
         form.setMyInfo(member, myRank);
 
         List<Orders> ordersList = orderService.findByMatchBefore(member);
-        if (ordersList.isEmpty()) return form;
 
-        ordersList.forEach(x -> form.setMySchedule(x.getMatch()));
-
+        for (Orders orders : ordersList) {
+            form.setMySchedule(orders.getMatch());
+        }
         return form;
     }
 }

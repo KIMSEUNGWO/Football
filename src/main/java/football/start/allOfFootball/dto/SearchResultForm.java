@@ -26,17 +26,15 @@ public class SearchResultForm {
     private String matchMaxPerson;
     private MatchStatus matchStatus;
 
-    public static SearchResultForm build(Match form) {
-        return SearchResultForm.builder()
-            .matchId(form.getMatchId())
-            .matchHour(getTimeForm(form.getMatchDate()))
-            .matchRegion(form.getField().getFieldLocation())
-            .matchTitle(form.getField().getFieldTitle())
-            .matchGender(form.getMatchGender())
-            .matchGrade(form.getMatchGrade())
-            .matchMaxPerson(getMaxPersonForm(form.getMaxPerson()))
-            .matchStatus(form.getMatchStatus())
-            .build();
+    public SearchResultForm(Match form) {
+        matchId = form.getMatchId();
+        matchHour = getTimeForm(form.getMatchDate());
+        matchRegion = form.getField().getFieldLocation();
+        matchTitle = form.getField().getFieldTitle();
+        matchGender = form.getMatchGender();
+        matchGrade = form.getMatchGrade();
+        matchMaxPerson = getMaxPersonForm(form.getMaxPerson());
+        matchStatus = form.getMatchStatus();
     }
 
     private static String getMaxPersonForm(Integer maxPerson) {

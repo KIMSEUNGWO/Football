@@ -45,24 +45,22 @@ public class MatchViewForm {
 
     private MatchStatus matchStatus;
 
-    public static MatchViewForm build(Match match) {
-        return MatchViewForm.builder()
-            .matchId(match.getMatchId())
-            .fieldImages(match.getField().getFieldImages())
-            .matchGrade(match.getMatchGrade())
-            .matchGender(match.getMatchGender())
-            .maxPersonAndMatchCount(getPersonAndCount(match.getMaxPerson(), match.getMatchCount()))
-            .managerName(getManager(match.getManager()))
-            .fieldSize(match.getField().getFieldSize())
-            .fieldParking(match.getField().getFieldParking())
-            .fieldShower(match.getField().getFieldShower())
-            .fieldToilet(match.getField().getFieldToilet())
-            .fieldInfo(match.getField().getFieldInformation())
-            .matchDate(DateFormatter.dateFormatAll(match.getMatchDate()))
-            .fieldTitle(match.getField().getFieldTitle())
-            .fieldAddress(match.getField().getFieldAddress())
-            .matchStatus(match.getMatchStatus())
-            .build();
+    public MatchViewForm(Match match) {
+        matchId = match.getMatchId();
+        fieldImages = match.getField().getFieldImages();
+        matchGrade = match.getMatchGrade();
+        matchGender = match.getMatchGender();
+        maxPersonAndMatchCount = getPersonAndCount(match.getMaxPerson(), match.getMatchCount());
+        managerName = getManager(match.getManager());
+        fieldSize = match.getField().getFieldSize();
+        fieldParking = match.getField().getFieldParking();
+        fieldShower = match.getField().getFieldShower();
+        fieldToilet = match.getField().getFieldToilet();
+        fieldInfo = match.getField().getFieldInformation();
+        matchDate = DateFormatter.dateFormatAll(match.getMatchDate());
+        fieldTitle = match.getField().getFieldTitle();
+        fieldAddress = match.getField().getFieldAddress();
+        matchStatus = match.getMatchStatus();
     }
 
     private static String getManager(Manager manager) {
