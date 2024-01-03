@@ -5,6 +5,7 @@ import football.start.allOfFootball.domain.CouponList;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.formatter.DateFormatter;
+import football.start.allOfFootball.formatter.NumberFormatter;
 import lombok.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class OrderForm {
     private String fieldTitle;
     private String fieldAddress;
     private String matchDate;
+    private String price;
 
     private List<CouponListForm> couponList;
     private Integer cash;
@@ -31,6 +33,7 @@ public class OrderForm {
         fieldTitle = match.getField().getFieldTitle();
         fieldAddress = match.getField().getFieldAddress();
         matchDate = DateFormatter.dateFormatAll(match.getMatchDate());
+        price = NumberFormatter.format(match.getPrice());
         couponList = couponLists;
         cash = member.getMemberCash();
     }

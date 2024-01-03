@@ -103,6 +103,7 @@ window.addEventListener('load', function(){
 })
 
 function calculator(totalPrice) {
+    const matchPrice = document.querySelector('#matchPrice').textContent.replace(/[^0-9]/g, '');
     let coupon = document.querySelector('input[name="couponNum"]:checked');
 
     let calculate = 0;
@@ -110,7 +111,7 @@ function calculator(totalPrice) {
         let price = document.querySelector('#couponPrice' + coupon.value).value;
         calculate += Number(price);
     }
-    totalPrice.innerHTML = Math.max(0, (10000 - calculate)).toLocaleString('ko-KR') + '원';
+    totalPrice.innerHTML = Math.max(0, (Number(matchPrice) - calculate)).toLocaleString('ko-KR') + '원';
 }
 
 function print(title, price) {

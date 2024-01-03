@@ -34,7 +34,7 @@
                                 <button type="button" id="couponBtn" th:text="${#lists.size(orderForm.couponList)} + '개 보유 >'">1개 보유 ></button>
                             </div>
                             <div class="cash">
-                                <span>머니</span>
+                                <span>캐시</span>
                                 <div>
                                     <span th:if="${orderForm.cash < 1000}" th:text="${orderForm.cash} + '원'"></span>
                                     <span th:unless="${orderForm.cash < 1000}" th:text="${#numbers.formatInteger(orderForm.cash, 3, 'COMMA')} + '원'">9,000원</span>
@@ -96,7 +96,7 @@
                     <h2>결제 정보</h2>
                     <div class="expectedPrice">
                         <b>이용 금액</b>
-                        <b>10,000원</b>
+                        <b id="matchPrice" th:text="${orderForm.price} + '원'">10,000원</b>
                     </div>
                     <div class="detailBox">
                         <div class="calCoupon">
@@ -106,7 +106,7 @@
                     <hr class="sideHr">
                     <div class="finalPrice">
                         <b>결제 금액</b>
-                        <b id="totalPrice">10,000원</b>
+                        <b id="totalPrice" th:text="${orderForm.price} + '원'"></b>
                     </div>
                     <input type="submit" value="신청하기" id="orderBtn">
                 </div>

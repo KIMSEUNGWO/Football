@@ -223,7 +223,10 @@
                 <div class="matchDecide">
                     <div class="matchExtra">
                         <span class="matchFriend">참가하는 친구가 <b class="impact">0명</b> 있어요</span>
-                        <span class="matchPrice">10,000원<b class="notImpact"> / 2시간</b></span>
+                        <span class="matchPrice">
+                            <span th:text="${matchForm.price} + '원'"></span>
+                            <b class="notImpact"> / 2시간</b>
+                        </span>
                     </div>
                      <a th:href="|/order/${matchForm.matchId}|" th:unless="${participant}" th:class="'resultButton ' + ${matchForm.matchStatus.className}" th:text="${matchForm.matchStatus.status}"></a>
                     <a th:if="${participant}" class="resultButton already" th:text="${matchForm.matchStatus.status}">참가완료</a>

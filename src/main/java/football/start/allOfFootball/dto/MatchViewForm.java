@@ -10,6 +10,7 @@ import football.start.allOfFootball.enums.groundEnums.ShowerEnum;
 import football.start.allOfFootball.enums.groundEnums.ToiletEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.formatter.DateFormatter;
+import football.start.allOfFootball.formatter.NumberFormatter;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -43,6 +44,7 @@ public class MatchViewForm {
     private String fieldTitle;
     private String fieldAddress;
 
+    private String price;
     private MatchStatus matchStatus;
 
     public MatchViewForm(Match match) {
@@ -60,6 +62,7 @@ public class MatchViewForm {
         matchDate = DateFormatter.dateFormatAll(match.getMatchDate());
         fieldTitle = match.getField().getFieldTitle();
         fieldAddress = match.getField().getFieldAddress();
+        price = NumberFormatter.format(match.getPrice());
         matchStatus = match.getMatchStatus();
     }
 
