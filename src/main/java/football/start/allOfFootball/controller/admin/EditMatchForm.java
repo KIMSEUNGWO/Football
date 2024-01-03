@@ -17,7 +17,7 @@ public class EditMatchForm {
     private Long matchId;
     private String matchDate;
 
-    private Integer matchHour;
+    private String matchHour;
     private Integer matchMaxPerson;
     private Integer matchCount;
 
@@ -25,18 +25,22 @@ public class EditMatchForm {
 
     private MatchEnum matchGrade;
 
+    private boolean isExit;
+
     public EditMatchForm(Match form) {
         matchId = form.getMatchId();
         matchDate = getDateForm(form.getMatchDate());
-        matchHour = getHour(form.getMatchDate());
+        matchHour = timeFormat(form.getMatchDate().getHour());
         matchMaxPerson = form.getMaxPerson();
         matchCount = form.getMatchCount();
         gender = form.getMatchGender();
         matchGrade = form.getMatchGrade();
+        isExit = isExit(form.getMatchDate());
     }
 
-    private static Integer getHour(LocalDateTime matchDate) {
-        return matchDate.getHour();
+    private boolean isExit(LocalDateTime matchDate) {
+        LocalDateTime now = LocalDateTime.now();
+        return matchDate.isBefore(now);
     }
 
     private static String getDateForm(LocalDateTime matchDate) {

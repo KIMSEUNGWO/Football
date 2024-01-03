@@ -61,3 +61,7 @@ input[name="matchDate"] {
     justify-content: center;
     align-items: center;
 }
+.submitBtn.disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}

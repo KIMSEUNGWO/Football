@@ -50,7 +50,7 @@ input[name="matchDate"] {
 
 #nextButton:disabled, #preButton:disabled{
     fill: rgb(215, 215, 215);
-    cursor: default;;
+    cursor: default;
 }
 
 /* 캘린더 바디 */

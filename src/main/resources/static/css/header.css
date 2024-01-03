@@ -28,16 +28,52 @@ header .menu .menuTitle {
     font-size: 1.05rem;
 }
 
-.info_user {
-    width: 45px;
-    height: 45px;
-    background-color: antiquewhite;
-    overflow: hidden;
-    border-radius: 50%;
+.flexR a {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    height: 40px;
+    gap: 0.2rem;
+    overflow-y: hidden;
+    position: relative;
+    flex-wrap: nowrap;
+
+    svg {
+        flex:0 0 30px;
+        margin-top: 1rem;
+        width: 30px;
+        height: 30px;
+        fill: rgb(80, 80, 80);
+        transition: margin 0.2s ease, flex 0.2s ease;
+    }
+
+    span {
+        font-size: 0.7rem;
+        color: rgb(80, 80, 80);
+        position: relative; /* 수정: absolute 대신 relative로 변경 */
+        transition: top 0.2s ease;
+        top: 80%; /* 수정: 초기에는 아래로 이동하여 숨기기 */
+    }
+
+    &:hover {
+        svg {
+            flex: auto;
+            margin: initial;
+
+        }
+
+        span {
+            top: 0; /* hover시 위로 이동하여 화면에 보이게 함 */
+        }
+    }
 }
+
+
+.flexR a * {
+    pointer-events: none;
+}
+
 
 .logo {
     padding: 0;

@@ -92,7 +92,8 @@ public class Match {
         matchGrade = editMatchForm.getMatchGrade();
     }
 
-    private LocalDateTime getLocalDate(String matchDate, int matchHour) {
+    private LocalDateTime getLocalDate(String matchDate, String matchHourStr) {
+        int matchHour = Integer.parseInt(matchHourStr);
         String[] split = matchDate.split("/");
         return LocalDateTime.of(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]), matchHour, 0);
     }

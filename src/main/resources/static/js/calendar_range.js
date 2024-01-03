@@ -21,7 +21,7 @@ window.addEventListener('load', () => {
     let endDate = document.querySelector('input[name="endDate"]');
     let calendar = document.querySelector('#date_range_calendar');
 
-    select(week1);
+    initial();
 
     let confirmBtn = document.querySelector('div#calendar_bottom #confirmButton');
     confirmBtn.addEventListener('click', () => {
@@ -124,6 +124,28 @@ window.addEventListener('load', () => {
     })
 
 })
+
+function initial() {
+    const addDay = 14;
+
+    let date = new Date();
+    
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    let startDate = document.querySelector('input[name="startDate"]');
+    startDate.value = dateForm(year, month, day);
+    
+    let newDate = new Date(year, month-1, day+addDay);
+    console.log(newDate);
+    let newYear = newDate.getFullYear();
+    let newMonth = newDate.getMonth() + 1;
+    let newDay = newDate.getDate();
+    
+    let endDate = document.querySelector('input[name="endDate"]');
+    endDate.value = dateForm(newYear, newMonth, newDay);
+}
 
 function focusInputDate(start, end) {
     if (flag) {

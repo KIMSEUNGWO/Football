@@ -8,6 +8,11 @@ let year = date.getFullYear();
 let month = date.getMonth() + 1;
 let day = date.getDate();
 
+const afterYear = date.getFullYear();
+const afterMonth = date.getMonth();
+const afterDay = date.getDate() + 14; // 14일 후까지 
+const afterDate = new Date(afterYear, afterMonth, afterDay);
+
 window.addEventListener('load', () => {
 
 
@@ -26,20 +31,27 @@ window.addEventListener('load', () => {
         let mainBody = document.querySelector('#mainBody');
         lender(mainMonth, mainBody, year, month);
 
-        // 이번달 기준 2달 후까지 표시
+        // 이번달 기준 1달 후까지 표시
         let calDate = new Date(year, month-1, 0);
-        let compareDate = new Date(fixYear, fixMonth+1, 0);
+        let compareDate = new Date(fixYear, fixMonth, 0);
 
-        if (calDate.getTime() >= compareDate.getTime()) {
+        nextBtn.disabled = (calDate.getTime() >= compareDate.getTime());
+        preBtn.disabled = (year == fixYear && month == fixMonth);
+
+        if (new Date(year, month, 1).getTime() > afterDate.getTime()) {
             nextBtn.disabled = true;
-        } else {
-            nextBtn.disabled = false;
         }
-        checkToday();
+        checkToday(year, month);
+        // 오늘 이전인 날은 data-is-disabled = "true"로 변경
+        checkBefore(year, month);
+        // 오늘 + 14일 후  부 data-is-disabled = "true"로 변경
+        checkLimit(year, month);
     
     }
 
     renderCalendar();
+    initial();
+    setTime(document.querySelector('.cell button[data-is-today="true"]'));
 
     preBtn.addEventListener('click', () => {
         if (month == 1) {
@@ -64,7 +76,7 @@ window.addEventListener('load', () => {
 
 
     this.document.addEventListener('click', (e) => {
-        if (e.target.hasAttribute('aria-pressed') && e.target.hasAttribute('data-is-today')) {
+        if (e.target.hasAttribute('aria-pressed') && e.target.getAttribute('data-is-disabled') == 'false') {
             clearRange();
             e.target.setAttribute('aria-pressed', 'true');
             let clickDate = clickAndGetDate(e.target);
@@ -74,11 +86,43 @@ window.addEventListener('load', () => {
             let innerDate = dateForm(clickDate.getFullYear(), clickDate.getMonth()+1, clickDate.getDate());
 
             match.value = innerDate;
+            setTime(e.target)
             calendar.classList.remove('display');
         }
     })
 
 })
+
+function setTime(target) {
+    console.log(target);
+    const select = document.querySelector('select[name="matchHour"]');
+    
+    let dateHour = 0;
+    if (target.getAttribute('data-is-today') == 'true') {
+        dateHour = new Date().getHours() + 2;
+        if (dateHour > 24) {
+            alert('오늘은 더 이상 경기를 추가할 수 없습니다.');
+            select.innerHTML = '';
+            return;
+        }    
+    }
+
+    let temp = '';
+    for (let i=dateHour;i<=24;i++) {
+        let time = String(i).padStart(2, '0');
+        let option = '<option value="' + time + '">' + time + '</option>';
+        temp += option;
+    }
+    select.innerHTML = temp;
+}
+function initial() {
+    let today = document.querySelector('button[data-is-today="true"]');
+    today.setAttribute('aria-pressed', 'true');
+    let clickDate = clickAndGetDate(today);
+    let match = document.querySelector('input[name="matchDate"]');
+    let innerDate = dateForm(clickDate.getFullYear(), clickDate.getMonth()+1, clickDate.getDate());
+    match.value = innerDate;
+}
 
 function clickAndGetDate(target) {
     let parentId = target.parentElement.parentElement.parentElement.id;
@@ -97,13 +141,50 @@ function clearRange() {
     })
 }
 
-function checkToday() {
-    let mainMonth = document.querySelector('#mainMonth');
-    let main = mainMonth.textContent.split(". ");
-    if (fixYear == Number(main[0]) && fixMonth == Number(main[1])) {
-        drawToday();
+function checkToday(checkYear, checkMonth) {
+    if (fixYear == checkYear && fixMonth == checkMonth) {
+        let selector = '#mainBody button[data-is-today="false"]';
+        let cellList = document.querySelectorAll(selector);
+        cellList[fixDay-1].setAttribute('data-is-today', 'true');
     }
 }
+
+function checkBefore(checkYear, checkMonth) {
+    if (fixYear > checkYear || (fixYear == checkYear && fixMonth > checkMonth)) {
+        drawBefore();
+        return
+    }
+    if (fixYear == checkYear && fixMonth == checkMonth) {
+        drawBefore();
+        return;
+    }
+}
+function drawBefore() {
+    let selector = '#mainBody button[data-is-disabled="false"]';
+    let cellList = document.querySelectorAll(selector);
+    for (let i=0;i<cellList.length;i++) {
+        if (cellList[i].getAttribute('data-is-today') == 'true'){
+            return;
+        }
+        cellList[i].setAttribute('data-is-disabled', 'true');
+    }
+}
+function checkLimit(checkYear, checkMonth) {
+    if (afterYear > checkYear) return;
+    if (afterYear == checkYear && afterMonth > checkMonth) return;
+
+    let selector = '#mainBody button[data-is-disabled="false"]';
+    let cellList = document.querySelectorAll(selector);
+
+    for (let i=0;i<cellList.length;i++) {
+        let checkDay = Number(cellList[i].textContent);
+        let newDate = new Date(checkYear, checkMonth-1, checkDay);
+        if (newDate.getTime() > afterDate.getTime()) {
+            cellList[i].setAttribute('data-is-disabled', true);
+        }
+    }
+}
+
 function drawToday() {
     let selector = '#mainBody button[data-is-today="false"]';
     let cellList = document.querySelectorAll(selector);
@@ -146,13 +227,13 @@ function createWeek(now, lastDateMonth, startDateMonth) {
     for (let i=startDateMonth;i<7;i++) {
         if (now <= lastDateMonth) {
             if (i == 0) { // 일요일
-                temp += '<div class="cell" data-is-within-range="false"><button type="button" aria-pressed="false" data-is-today="false" class="SUN">' + now + '</button></div>'
+                temp += '<div class="cell"><button type="button" aria-pressed="false" data-is-disabled="false" data-is-today="false" class="SUN">' + now + '</button></div>'
             }
             else if (i == 6) { // 토요일
-                temp += '<div class="cell" data-is-within-range="false"><button type="button" aria-pressed="false" data-is-today="false" class="SAT">' + now + '</button></div>'
+                temp += '<div class="cell"><button type="button" aria-pressed="false" data-is-disabled="false" data-is-today="false" class="SAT">' + now + '</button></div>'
             }
             else {
-                temp += '<div class="cell" data-is-within-range="false"><button type="button" aria-pressed="false" data-is-today="false">' + now + '</button></div>'
+                temp += '<div class="cell"><button type="button" aria-pressed="false" data-is-disabled="false" data-is-today="false">' + now + '</button></div>'
             }
             now++;
         }

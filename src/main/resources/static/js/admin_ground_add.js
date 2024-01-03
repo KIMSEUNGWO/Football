@@ -107,8 +107,8 @@ function isFieldAddress() {
     let address = document.querySelector('input[name="fieldAddress"]');
     let text = address.value.replaceAll(' ', '');
     let errorTag = document.querySelector('#errorFieldAddress');
-    if (text == null || text.length < 10) {
-        errorTag.innerHTML = '주소를 정확하게 작성해주세요';
+    if (text == null || text.length < 3) {
+        errorTag.innerHTML = '주소를 설정해주세요';
         return false;
     }
     errorTag.innerHTML = '';

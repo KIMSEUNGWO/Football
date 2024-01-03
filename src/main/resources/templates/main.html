@@ -15,163 +15,159 @@
     <title>풋볼 :: 프로젝트</title>
 </head>
 <body>
-    <header th:replace="~{/common/header :: header}"></header>
-    <div class="banner">
-        <div class="fieldImageContainer">
-            <div class="arrow">
-                <button type="button" id="left">
-                    <svg xmlns="http://www.w3.org/2000/svg" style="rotate: 180deg;" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
-                </button>
-                <button type="button" id="right">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
-                </button>
-            </div>
-            <div class="slider">
-                <!-- <img th:each="image : ${matchForm.fieldImages}" th:src="|/images/fieldImage/${image.fieldImageStoreName}|" th:alt="${image.fieldImageName}"> -->
-                <img src="/images/banner/1.png" alt="">
-                <img src="/images/banner/2.png" alt="">
-                <img src="/images/banner/3.png" alt="">
-                <img src="/images/banner/4.png" alt="">
-            </div>
-            <ul class="slide_pagination"></ul>
+<header th:replace="~{/common/header :: header}"></header>
+<div class="banner">
+    <div class="fieldImageContainer">
+        <div class="arrow">
+            <button type="button" id="left">
+                <svg xmlns="http://www.w3.org/2000/svg" style="rotate: 180deg;" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+            </button>
+            <button type="button" id="right">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+            </button>
         </div>
+        <div class="slider">
+            <!-- <img th:each="image : ${matchForm.fieldImages}" th:src="|/images/fieldImage/${image.fieldImageStoreName}|" th:alt="${image.fieldImageName}"> -->
+            <img src="/images/banner/1.png" alt="">
+            <img src="/images/banner/2.png" alt="">
+            <img src="/images/banner/3.png" alt="">
+            <img src="/images/banner/4.png" alt="">
+        </div>
+        <ul class="slide_pagination"></ul>
     </div>
-    <div class="container">
-        <div class="main">
-            <div class="searchBox box">
-                <div class="date_picker_wrapper">
-                    <input type="text" name="matchDate" class="inputForm" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
+</div>
+<div class="container">
+    <div class="main">
+        <div class="searchBox box">
+            <div class="date_picker_wrapper">
+                <input type="text" name="matchDate" class="inputForm" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
 
-                    <div id="date_range_calendar">
-                        <div id="calendar_header">
-                            <button type="button" id="preButton">
-                                <svg transform='rotate(180)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                    <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
-                            </button>
-                            <div class="months">
-                                <div id="mainMonth"></div>
-                            </div>
-                            <button type="button" id="nextButton">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                    <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
-                            </button>
+                <div id="date_range_calendar">
+                    <div id="calendar_header">
+                        <button type="button" id="preButton">
+                            <svg transform='rotate(180)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                        </button>
+                        <div class="months">
+                            <div id="mainMonth"></div>
                         </div>
-                        <div id="calendar_body">
-                            <div id="mainBody">
-                            </div>
+                        <button type="button" id="nextButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                        </button>
+                    </div>
+                    <div id="calendar_body">
+                        <div id="mainBody">
                         </div>
                     </div>
                 </div>
-                <div class="search">
-                    <div>
-                        <div class="searchForm">
-                            <input type="search" name="searchWord" id="searchWord" class="btnBox" placeholder="지역 또는 구장명 검색">
-                            <button class="searchButton svgBox">
+            </div>
+            <div class="search">
+                <div>
+                    <div class="searchForm">
+                        <input type="search" name="searchWord" id="searchWord" class="btnBox" placeholder="지역 또는 구장명 검색">
+                        <button class="searchButton svgBox">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-                            </button>
-                        </div>
-                        <div class="option">
-                            <button class="region btnBox">
-                                <span>지역</span>
-                                <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
-                                <ul class="subOption regionOption disabled">
-                                    <li><input type="radio" name="region" id="regionAll" value="전체" checked><label for="regionAll">전체</label></li>
-                                    <li><input type="radio" name="region" id="seoul" value="서울"><label for="seoul">서울</label></li>
-                                    <li><input type="radio" name="region" id="incheon" value="인천"><label for="incheon">인천</label></li>
-                                    <li><input type="radio" name="region" id="gyeonggi" value="경기도"><label for="gyeonggi">경기도</label></li>
-                                </ul>
-                            </button>
-                            <button class="grade btnBox">
-                                <span>등급</span>
-                                <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
-                                <ul class="subOption gradeOption disabled">
-                                    <li><input type="radio" name="grade" id="gradeAll" value="전체" checked><label for="gradeAll">등급무관</label></li>
-                                    <li><input type="radio" name="grade" id="beginner" value="초급"><label for="beginner">초보</label></li>
-                                    <li><input type="radio" name="grade" id="amateur" value="중급"><label for="amateur">중급</label></li>
-                                    <li><input type="radio" name="grade" id="expert" value="전문가"><label for="expert">전문가</label></li>
-                                </ul>
-                            </button>
-                            <button class="gender btnBox">
-                                <span>성별</span>
-                                <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
-                                <ul class="subOption genderOption disabled">
-                                    <li><input type="radio" name="gender" id="genderAll" value="전체" checked><label for="genderAll">전체</label></li>
-                                    <li><input type="radio" name="gender" id="male" value="남자"><label for="male">남자만</label></li>
-                                    <li><input type="radio" name="gender" id="female" value="여자"><label for="female">여자만</label></li>
-                                </ul>
-                            </button>
-                        </div>
+                        </button>
                     </div>
-
-                </div>
-            </div>
-
-            <div class="searchListBox">
-                <div class="searchCountBox">
-                    <span class="searchCount"></span>
-                    <span class="searchDate"></span>
+                    <div class="option">
+                        <button class="region btnBox">
+                            <span>지역</span>
+                            <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                            <ul class="subOption regionOption disabled">
+                                <li><input type="radio" name="region" id="regionAll" value="전체" checked><label for="regionAll">전체</label></li>
+                                <li><input type="radio" name="region" id="seoul" value="서울"><label for="seoul">서울</label></li>
+                                <li><input type="radio" name="region" id="incheon" value="인천"><label for="incheon">인천</label></li>
+                                <li><input type="radio" name="region" id="gyeonggi" value="경기도"><label for="gyeonggi">경기도</label></li>
+                            </ul>
+                        </button>
+                        <button class="grade btnBox">
+                            <span>등급</span>
+                            <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                            <ul class="subOption gradeOption disabled">
+                                <li><input type="radio" name="grade" id="gradeAll" value="전체" checked><label for="gradeAll">등급무관</label></li>
+                                <li><input type="radio" name="grade" id="beginner" value="초급"><label for="beginner">초보</label></li>
+                                <li><input type="radio" name="grade" id="amateur" value="중급"><label for="amateur">중급</label></li>
+                                <li><input type="radio" name="grade" id="expert" value="전문가"><label for="expert">전문가</label></li>
+                            </ul>
+                        </button>
+                        <button class="gender btnBox">
+                            <span>성별</span>
+                            <svg viewBox="0 0 9 6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6L8.39711 0.75H0.602886L4.5 6Z" fill="currentColor"></path></svg>
+                            <ul class="subOption genderOption disabled">
+                                <li><input type="radio" name="gender" id="genderAll" value="전체" checked><label for="genderAll">전체</label></li>
+                                <li><input type="radio" name="gender" id="male" value="남자"><label for="male">남자만</label></li>
+                                <li><input type="radio" name="gender" id="female" value="여자"><label for="female">여자만</label></li>
+                            </ul>
+                        </button>
+                    </div>
                 </div>
 
-                <ul class="searchResult">
-                    <div class="btnBox notFound">
-                        <span>검색 결과가 없습니다.</span>
-                    </div>
-                </ul>
             </div>
-            
         </div>
-        <aside class="side" th:if="${session.memberId == null}">
-            <div class="noneId">
-                <a href="/login" class="cashBtn" style="color: white;">로그인하러 가기</a>
+
+        <div class="searchListBox">
+            <div class="searchCountBox">
+                <span class="searchCount"></span>
+                <span class="searchDate"></span>
             </div>
-        </aside>
-        <aside class="side" th:if="${session.memberId != null}">
-            <div class="readMe">
-                <div class="me">
-                    <span class="myName" th:text="${side.name}">김승우</span>
+
+            <ul class="searchResult">
+                <div class="btnBox notFound">
+                    <span>검색 결과가 없습니다.</span>
                 </div>
-                <table class="rank">
-                    <tr class="rankTitle">
-                        <th>순위</th>
-                        <th>점수</th>
-                        <th>등급</th>
-                    </tr>
-                    <tr>
-                        <td class="ranking" th:text="${side.rank == null} ? '집계중' : ${side.rank} + '위'">100,000위</td>
-                        <td class="" th:text="${side.score} + '점'">1,000점</td>
-                        <td class="grade" th:text="${side.grade}">아마추어1</td>
-                    </tr>
-                </table>
-            </div>
+            </ul>
+        </div>
 
-            <a href="/cash/charge" class="cashBtn">
-                <span class="" th:text="${side.cash} + '원'">1,000원</span>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M464 160c8.8 0 16 7.2 16 16V336c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16H464zM80 96C35.8 96 0 131.8 0 176V336c0 44.2 35.8 80 80 80H464c44.2 0 80-35.8 80-80V320c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32V176c0-44.2-35.8-80-80-80H80zm368 96H96V320H448V192z"/></svg>
-                <!-- 충전이 필요한 경우 -->
-                <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7l-87.5-68.6C563.1 386 576 362.5 576 336V320c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32V176c0-44.2-35.8-80-80-80H154.8L38.8 5.1zM236.4 160H496c8.8 0 16 7.2 16 16V336c0 8.8-7.2 16-16 16H481.4l-245-192zm88.5 192H112c-8.8 0-16-7.2-16-16V176c0-1.4 .2-2.7 .5-4L45.4 131.7C36.9 144.4 32 159.6 32 176V336c0 44.2 35.8 80 80 80H406.2l-81.2-64z"/></svg> -->
-            </a>
-
-            <hr class="sideHr">
-
-            <div class="subFunc">
-                <a href="#" class="subFuncSubject">내 일정 ></a>
-                <div class="empty" th:if="${#maps.size(side.schedule) == 0}">
-                    아직 일정이 없어요
-                </div>
-                <ul class="subFuncList" th:unless="${#maps.size(side.schedule) == 0}" th:each="form : ${side.schedule}">
-                    <span class="dateSep" th:text="${form.key}"></span>
-                    <a th:href="|/match/${form.matchId}|" class="subFuncBlock" th:each="list : ${form.value}">
-                        <span class="subFuncTime" th:text="${list.hour}"></span>
-                        <span class="subFuncRegion" th:text="${list.region}"></span>
-                        <span class="subFuncTitle" th:text="${list.fieldTitle}"></span>
-                    </a>
-                </ul>
-            </div>
-        </aside>
     </div>
 
-    <footer>
+    <aside class="side" th:if="${session.memberId != null}">
+        <div class="readMe">
+            <div class="me">
+                <span class="myName" th:text="${side.name}">김승우</span>
+            </div>
+            <table class="rank">
+                <tr class="rankTitle">
+                    <th>순위</th>
+                    <th>점수</th>
+                    <th>등급</th>
+                </tr>
+                <tr>
+                    <td class="ranking" th:text="${side.rank == null} ? '집계중' : ${side.rank} + '위'">100,000위</td>
+                    <td class="" th:text="${side.score} + '점'">1,000점</td>
+                    <td class="grade" th:text="${side.grade}">아마추어1</td>
+                </tr>
+            </table>
+        </div>
 
-    </footer>
+        <a href="/cash/charge" class="cashBtn">
+            <span class="" th:text="${side.cash} + '원'">1,000원</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M464 160c8.8 0 16 7.2 16 16V336c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16H464zM80 96C35.8 96 0 131.8 0 176V336c0 44.2 35.8 80 80 80H464c44.2 0 80-35.8 80-80V320c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32V176c0-44.2-35.8-80-80-80H80zm368 96H96V320H448V192z"/></svg>
+            <!-- 충전이 필요한 경우 -->
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7l-87.5-68.6C563.1 386 576 362.5 576 336V320c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32V176c0-44.2-35.8-80-80-80H154.8L38.8 5.1zM236.4 160H496c8.8 0 16 7.2 16 16V336c0 8.8-7.2 16-16 16H481.4l-245-192zm88.5 192H112c-8.8 0-16-7.2-16-16V176c0-1.4 .2-2.7 .5-4L45.4 131.7C36.9 144.4 32 159.6 32 176V336c0 44.2 35.8 80 80 80H406.2l-81.2-64z"/></svg> -->
+        </a>
+
+        <hr class="sideHr">
+
+        <div class="subFunc">
+            <a href="#" class="subFuncSubject">내 일정 ></a>
+            <div class="empty" th:if="${#maps.size(side.schedule) == 0}">
+                아직 일정이 없어요
+            </div>
+            <ul class="subFuncList" th:unless="${#maps.size(side.schedule) == 0}" th:each="form : ${side.schedule}">
+                <span class="dateSep" th:text="${form.key}"></span>
+                <a th:href="|/match/${form.matchId}|" class="subFuncBlock" th:each="list : ${form.value}">
+                    <span class="subFuncTime" th:text="${list.hour}"></span>
+                    <span class="subFuncRegion" th:text="${list.region}"></span>
+                    <span class="subFuncTitle" th:text="${list.fieldTitle}"></span>
+                </a>
+            </ul>
+        </div>
+    </aside>
+</div>
+
+<footer>
+
+</footer>
 </body>
 </html>

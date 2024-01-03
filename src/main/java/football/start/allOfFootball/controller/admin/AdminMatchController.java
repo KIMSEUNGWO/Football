@@ -97,6 +97,9 @@ public class AdminMatchController {
         ViewMatchFieldForm fieldForm = new ViewMatchFieldForm(field);
         EditMatchForm editMatchForm = new EditMatchForm(match);
 
+        if (editMatchForm.isExit()) {
+            return AlertUtils.alertAndMove(response, "이미 경기가 진행된 경기입니다.", "/admin/match");
+        }
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("editMatchForm", editMatchForm);
 

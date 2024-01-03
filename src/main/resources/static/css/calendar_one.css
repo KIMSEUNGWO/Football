@@ -58,9 +58,9 @@
     cursor: pointer;
 }
 
-#nextButton:disabled{
+#nextButton:disabled, #preButton:disabled{
     fill: rgb(215, 215, 215);
-    cursor: default;;
+    cursor: default;
 }
 
 /* 캘린더 바디 */
@@ -138,6 +138,39 @@
     color: white;
 }
 
+.cell button:hover {
+    background-color: #5584e1;
+    color: white;
+}
+
+
+.cell button[aria-pressed="true"] {
+    background-color: var(--main-color);
+    color: white;
+}
+.cell button[aria-pressed="true"]:hover {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.cell button.SUN[aria-pressed="true"] {
+    background-color: red;
+    color: white;
+}
+.cell button.SUN[aria-pressed="true"]:hover {
+    background-color: red;
+    color: white;
+}
+.cell button.SAT[aria-pressed="true"] {
+    background-color: blue;
+    color: white;
+}
+.cell button.SAT[aria-pressed="true"]:hover {
+    background-color: blue;
+    color: white;
+}
+
+
 
 /* 일 - 토 글씨*/
 .cell > div {
@@ -154,7 +187,16 @@
 }
 
 
-.cell button:hover {
-    background-color: rgb(124, 124, 124);
+/* 오늘 이전 날짜는 선택 x */
+
+button[data-is-before="true"], button[data-is-disabled="true"] {
+    background-color: rgb(138, 138, 138);
     color: white;
+    cursor: default;
 }
+button[data-is-before="true"]:hover, button[data-is-disabled="true"]:hover {
+    background-color: rgb(138, 138, 138);
+    color: white;
+    cursor: default;
+}
+
