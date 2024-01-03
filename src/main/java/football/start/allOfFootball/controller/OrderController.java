@@ -80,6 +80,7 @@ public class OrderController {
         Orders orders = Orders.builder()
                             .match(match)
                             .member(member)
+                            .payment(price)
                             .build();
         orderService.save(orders, member, couponList, price); // order 저장
         matchService.refreshMatchStatus(match); // MatchStatus 상태 변경

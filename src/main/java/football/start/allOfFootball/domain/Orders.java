@@ -27,6 +27,8 @@ public class Orders {
     @JoinColumn(name = "memberId")
     private Member member;
 
+    private Integer payment; // 결제한 금액
+
     @Enumerated(EnumType.STRING)
     private TeamEnum team;
 

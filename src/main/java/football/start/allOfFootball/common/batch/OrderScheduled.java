@@ -39,9 +39,12 @@ public class OrderScheduled {
     public void match() {
         log.info("경기 시작 전 스케쥴러 실행");
 
-        log.info("최소인원 체크 시작");
         List<Match> matchList = matchService.getMatchDeadLine();
-        if (matchList.isEmpty()) return ;
+        if (matchList.isEmpty()) {
+            log.info("경기 정보 없음");
+            return;
+        }
+        log.info("최소인원 체크 시작");
 
         List<Match> refundList = matchService.understaffedList(matchList); // 최소 인원 이하인 경우
         for (Match match : refundList) {

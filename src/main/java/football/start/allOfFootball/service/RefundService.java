@@ -22,13 +22,12 @@ public class RefundService {
         List<Orders> ordersList = match.getOrdersList();
         for (Orders orders : ordersList) {
 
+            Integer expectedPrice = orders.getPayment();
             CouponList couponList = orders.getCouponList();
-            int expectedPrice = 10000;
 
             if (couponList != null) {
                 couponList.setCouponListStatus('N');
                 orders.setCouponList(null);
-                expectedPrice -= couponList.getCoupon().getCouponDiscount();
             }
 
             int refund = refundEnum.refund(expectedPrice);
