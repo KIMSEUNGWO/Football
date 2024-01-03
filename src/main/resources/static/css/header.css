@@ -1,8 +1,11 @@
 header{
-    width: 75rem;
+    max-width: 75rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.mobileHeader {
+    display: none;
 }
 
 header .flexL, .flexR{
