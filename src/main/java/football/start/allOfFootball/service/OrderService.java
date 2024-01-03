@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface OrderService {
-    int calculate(Optional<CouponList> form);
 
     void save(Orders orders, Member member, Optional<CouponList> couponList, int price);
 

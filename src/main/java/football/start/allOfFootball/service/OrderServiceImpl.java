@@ -26,17 +26,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final PaymentService paymentService;
 
-    @Override
-    public int calculate(Optional<CouponList> form) {
-        if (form.isEmpty()) {
-            return 10000;
-        }
-        CouponList couponList = form.get();
-        Coupon coupon = couponList.getCoupon();
-        int price = coupon.getCouponDiscount();
-
-        return Math.max(0, 10000 - price);
-    }
 
     @Override
     public void save(Orders orders, Member member, Optional<CouponList> couponList, int price) {

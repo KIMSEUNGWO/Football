@@ -1,5 +1,6 @@
 package football.start.allOfFootball.domain;
 
+import football.start.allOfFootball.Constant;
 import football.start.allOfFootball.controller.admin.EditMatchForm;
 import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.domain.score.Score;
@@ -9,10 +10,13 @@ import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.ibatis.annotations.One;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static football.start.allOfFootball.Constant.PRICE;
 
 @Getter
 @Setter
@@ -51,6 +55,7 @@ public class Match {
     @Enumerated(EnumType.STRING)
     private MatchStatus matchStatus;
 
+    private int price;
     // Not Columns
 
     @OneToMany(mappedBy = "match")
@@ -68,6 +73,7 @@ public class Match {
             .maxPerson(form.getMatchMaxPerson())
             .matchGrade(form.getMatchGrade())
             .matchStatus(MatchStatus.모집중)
+            .price(PRICE)
             .build();
     }
 

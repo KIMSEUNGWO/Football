@@ -13,6 +13,7 @@ import football.start.allOfFootball.service.domainService.CashService;
 import football.start.allOfFootball.service.domainService.CouponListService;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
+import football.start.exception.NotEnoughCashException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -78,22 +79,24 @@ public class OrderController {
 
         Optional<CouponList> couponList = couponListService.findByCouponListId(form.getCouponNum());
 
-        int cash = member.getMemberCash();
-        int price = orderService.calculate(couponList);
 
-        if (cash < price) {
+        try {
+            int price = cashService.calculate(match, member, couponList);
+
+            Orders orders = Orders.builder()
+                                .match(match)
+                                .member(member)
+                                .payment(price)
+                                .build();
+
+            orderService.save(orders, member, couponList, price); // order 저장
+            matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
+
+            log.info("Orders 정상 처리");
+            return "redirect:/match/" + matchId;
+
+        } catch (NotEnoughCashException e) {
             return AlertUtils.alertAndMove(response, "잔액이 부족합니다.", "/cash/charge");
         }
-
-        Orders orders = Orders.builder()
-                            .match(match)
-                            .member(member)
-                            .payment(price)
-                            .build();
-        orderService.save(orders, member, couponList, price); // order 저장
-        matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
-        log.info("Orders 정상 처리");
-
-        return "redirect:/mypage/order";
     }
 }
