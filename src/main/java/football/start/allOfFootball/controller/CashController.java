@@ -1,6 +1,7 @@
 package football.start.allOfFootball.controller;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
+import football.start.allOfFootball.customAnnotation.SessionLogin;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.formatter.NumberFormatter;
 import football.start.allOfFootball.service.domainService.MemberService;
@@ -22,13 +23,9 @@ import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
 @Slf4j
 public class CashController {
 
-    private final MemberService memberService;
 
     @GetMapping("/cash/charge")
-    public String cash(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpServletResponse response, Model model, HttpServletRequest request) {
-        Optional<Member> findMember = memberService.findByMemberId(memberId);
-        Member member = findMember.get();
-
+    public String cash(@SessionLogin Member member, Model model, HttpServletRequest request) {
         String redirectURL = request.getHeader("referer");
 
         model.addAttribute("redirect", redirectURL);

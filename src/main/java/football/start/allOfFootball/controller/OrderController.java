@@ -1,6 +1,7 @@
 package football.start.allOfFootball.controller;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
+import football.start.allOfFootball.customAnnotation.SessionLogin;
 import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.dto.OrderForm;
@@ -8,6 +9,7 @@ import football.start.allOfFootball.dto.OrderPostForm;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.service.OrderService;
+import football.start.allOfFootball.service.domainService.CashService;
 import football.start.allOfFootball.service.domainService.CouponListService;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
@@ -37,12 +39,16 @@ public class OrderController {
     private final MemberService memberService;
     private final CouponListService couponListService;
 
+    private final CashService cashService;
+
 
     @GetMapping("/order/{matchId}")
-    public String order(@PathVariable Long matchId, @SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model, HttpServletRequest request) {
+    public String order(@PathVariable Long matchId,
+                        @SessionLogin Member member,
+                        Model model,
+                        HttpServletRequest request) {
 
         Match match = matchService.findByMatch(matchId).get();
-        Member member = memberService.findByMemberId(memberId).get();
 
         List<CouponListForm> couponList = couponListService.getCouponList(member);
 
@@ -53,14 +59,16 @@ public class OrderController {
     }
 
     @PostMapping("/order/{matchId}")
-    public String orderPost(@PathVariable Long matchId, @SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpServletResponse response, @ModelAttribute OrderPostForm form) {
+    public String orderPost(@PathVariable Long matchId,
+                            @SessionLogin Member member,
+                            HttpServletResponse response,
+                            @ModelAttribute OrderPostForm form) {
 
         if (form.getPolicy() == null) {
             return AlertUtils.alertAndBack(response, "모든 약관에 동의해주세요.");
         }
 
         Match match = matchService.findByMatch(matchId).get();
-        Member member = memberService.findByMemberId(memberId).get();
 
         List<Orders> ordersList = member.getOrdersList();
 

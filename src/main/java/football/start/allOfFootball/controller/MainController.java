@@ -1,5 +1,7 @@
 package football.start.allOfFootball.controller;
 
+import football.start.allOfFootball.customAnnotation.SessionLogin;
+import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.dto.MainSideInfoForm;
 import football.start.allOfFootball.dto.SearchDto;
 import football.start.allOfFootball.dto.SearchResultForm;
@@ -22,9 +24,9 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping
-    public String main(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, Model model) {
-        if (memberId != null) {
-            MainSideInfoForm form = mainService.getSideInfo(memberId);
+    public String main(@SessionLogin Member member, Model model) {
+        if (member != null) {
+            MainSideInfoForm form = mainService.getSideInfo(member.getMemberId());
             model.addAttribute("side", form);
         }
         return "main";
