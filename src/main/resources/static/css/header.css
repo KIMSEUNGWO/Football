@@ -88,3 +88,60 @@ header .menu .menuTitle {
     }
 }
 
+@media screen and (max-width: 768px) {
+    body {
+        position: relative;
+        margin-bottom: 5rem;
+    }
+    header {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 5rem;
+        border-top: 1px solid #f0f0f0;
+        box-shadow: 0 0 10px 2px rgba(0,0,0,.15);
+        background-color: white;
+        z-index: 10;
+
+        .mobileHeader {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+
+            .logo img {
+                width: 100px;
+                height: 44px;
+            }
+
+            a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                gap: 0.5rem;
+                width: calc(100% / 3);
+                height: 100%;
+
+                * {
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+    header > *:not(.mobileHeader) {
+        display: none;
+    }
+    .mobileHeader svg {
+        width: 25px;
+        height: 25px;
+        fill: var(--gray);
+    }
+    .mobileHeader span {
+        font-size: 1rem;
+        color: var(--gray)
+    }
+}
+
