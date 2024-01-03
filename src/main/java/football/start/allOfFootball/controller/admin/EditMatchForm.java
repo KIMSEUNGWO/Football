@@ -2,14 +2,11 @@ package football.start.allOfFootball.controller.admin;
 
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Setter
 @Getter
 @ToString
 @AllArgsConstructor
@@ -17,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class EditMatchForm {
 
+    private Long matchId;
     private String matchDate;
 
     private Integer matchHour;
@@ -27,15 +25,14 @@ public class EditMatchForm {
 
     private MatchEnum matchGrade;
 
-    public static EditMatchForm build(Match form) {
-        return EditMatchForm.builder()
-            .matchDate(getDateForm(form.getMatchDate()))
-            .matchHour(getHour(form.getMatchDate()))
-            .matchMaxPerson(form.getMaxPerson())
-            .matchCount(form.getMatchCount())
-            .gender(form.getMatchGender())
-            .matchGrade(form.getMatchGrade())
-            .build();
+    public EditMatchForm(Match form) {
+        matchId = form.getMatchId();
+        matchDate = getDateForm(form.getMatchDate());
+        matchHour = getHour(form.getMatchDate());
+        matchMaxPerson = form.getMaxPerson();
+        matchCount = form.getMatchCount();
+        gender = form.getMatchGender();
+        matchGrade = form.getMatchGrade();
     }
 
     private static Integer getHour(LocalDateTime matchDate) {

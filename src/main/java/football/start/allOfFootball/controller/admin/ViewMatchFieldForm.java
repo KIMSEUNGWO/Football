@@ -19,13 +19,11 @@ public class ViewMatchFieldForm {
     private String fieldTitle;
     private String fieldAddress;
 
-    public static ViewMatchFieldForm build(Field field) {
-        return ViewMatchFieldForm.builder()
-            .fieldId(field.getFieldId())
-            .fieldImage(field.getFieldImages().get(0))
-            .fieldRegion(field.getFieldLocation())
-            .fieldTitle(field.getFieldTitle())
-            .fieldAddress(field.getFieldAddress())
-            .build();
+    public ViewMatchFieldForm(Field field) {
+        fieldId = field.getFieldId();
+        fieldImage = field.getFieldImages().get(0);
+        fieldRegion = field.getFieldLocation();
+        fieldTitle = field.getFieldTitle();
+        fieldAddress = field.getFieldAddress();
     }
 }

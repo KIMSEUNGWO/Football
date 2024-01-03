@@ -51,7 +51,7 @@ public class AdminMatchController {
             return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
         }
         Field field = findField.get();
-        ViewMatchFieldForm fieldForm = ViewMatchFieldForm.build(field);
+        ViewMatchFieldForm fieldForm = new ViewMatchFieldForm(field);
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("fieldId", fieldId);
         return "/admin/admin_match_add";
@@ -59,7 +59,6 @@ public class AdminMatchController {
 
     @PostMapping("/{fieldId}/add")
     public String matchAddPost(@PathVariable Long fieldId, @ModelAttribute SaveMatchForm saveMatchForm, HttpServletResponse response) {
-        System.out.println("saveMatchForm = " + saveMatchForm);
         Optional<Field> findField = fieldService.findByField(fieldId);
         if (findField.isEmpty()) {
             return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
@@ -78,11 +77,9 @@ public class AdminMatchController {
         }
         Match match = findMatch.get();
         Field field = match.getField();
-        ViewMatchFieldForm fieldForm = ViewMatchFieldForm.build(field);
-        EditMatchForm editMatchForm = EditMatchForm.build(match);
+        ViewMatchFieldForm fieldForm = new ViewMatchFieldForm(field);
+        EditMatchForm editMatchForm = new EditMatchForm(match);
 
-        model.addAttribute("fieldId", field.getFieldId());
-        model.addAttribute("matchId", match.getMatchId());
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("editMatchForm", editMatchForm);
         return "/admin/admin_match_view";
@@ -97,14 +94,11 @@ public class AdminMatchController {
         }
         Match match = findMatch.get();
         Field field = match.getField();
-        ViewMatchFieldForm fieldForm = ViewMatchFieldForm.build(field);
-        EditMatchForm editMatchForm = EditMatchForm.build(match);
+        ViewMatchFieldForm fieldForm = new ViewMatchFieldForm(field);
+        EditMatchForm editMatchForm = new EditMatchForm(match);
 
-        model.addAttribute("fieldId", field.getFieldId());
-        model.addAttribute("matchId", match.getMatchId());
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("editMatchForm", editMatchForm);
-        System.out.println(editMatchForm);
 
         return "/admin/admin_match_edit";
     }

@@ -19,7 +19,7 @@
             <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
             <div class="mainBox box">
                 <h2>경기등록</h2>
-                <a th:href="|/admin/ground/${fieldId}|" class="fieldInfo box">
+                <a th:href="|/admin/ground/${fieldInfo.fieldId}|" class="fieldInfo box">
                     <h3>구장정보</h3>
                     <div class="fieldInfoFlex">
                         <div class="fieldImage">
@@ -41,7 +41,7 @@
                         </table>
                     </div>
                 </a>
-                <form th:action="@{/admin/match/} + ${matchId} + @{/edit}" method="post" th:object="${editMatchForm}">
+                <form th:object="${editMatchForm}" th:action="@{/admin/match/} + *{matchId} + @{/edit}" method="post" >
                     <table>
                         <tr>
                             <th>경기날짜</th>
