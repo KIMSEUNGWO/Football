@@ -220,4 +220,36 @@
     background-color: rgb(66, 66, 66);
 }
 
+@media screen and (max-width: 1024px) {
+    .date_picker_calendar {
+        position: initial;
+    }
+}
+@media screen and (max-width: 939px) {
+    #date_range_calendar {
+    }
+}
+@media screen and (max-width: 939px) {
+    #date_range_calendar {
+        left: -3rem;
+    }
+}
+@media screen and (max-width: 770px) {
+    #date_range_calendar {
+        left: 0rem;
+    }
+}
+@media screen and (max-width: 670px) {
+    #leftMonth, #leftBody {
+        display: none;
+    }
+    #date_range_calendar {
+        width: auto;;
+    }
+}
+@media screen and (max-width: 363px) {
+    #date_range_calendar {
+        padding: 1.5rem 0.8rem 1rem 0.8rem;
+    }
+}
 

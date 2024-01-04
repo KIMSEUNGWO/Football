@@ -61,3 +61,110 @@
     cursor: default;
 }
 
+@media screen and (max-width: 1024px) {
+    body {
+        min-height: 45rem;
+    }
+    .matchId, .matchMax {
+        display: none;
+    }
+}
+@media screen and (max-width: 900px) {
+    .date_picker_wrapper {
+        justify-content: center;
+
+        .date_picker_buttons button {
+            width: 4rem;
+        }
+    }
+    #date_range .date_wrap {
+        width: 8rem;
+    }
+}
+@media screen and (max-width: 840px) {
+    ul.matchList {
+        padding: 0;
+    }
+}
+@media screen and (max-width: 768px) {
+    ul.matchList {
+        padding: 1rem;
+    }
+    .date_picker_wrapper {
+        justify-content: initial;
+
+        .date_picker_buttons button {
+            width: 5.5rem;
+        }
+    }
+    #date_range .date_wrap {
+        width: 10rem;
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .date_picker_wrapper {
+
+        .date_picker_buttons button {
+            width: 4rem;
+        }
+    }
+    #date_range .date_wrap {
+        width: 8rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .matchList {
+        .matchBox {
+            height: auto;;
+            flex-wrap: wrap;
+            row-gap: 1rem;
+            padding-bottom: 1rem;
+            .matchDate {
+                color: black;
+                width: 100%;
+            }
+        }
+    }
+    .matchMax {
+        display: initial;
+    }
+}
+
+@media screen and (max-width: 543px) {
+    .matchMax {
+        display: none;
+    }
+    .matchList .matchBox .title{
+        width: 50%;
+    }
+    #date_picker_6months {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 473px) {
+    .date_picker_wrapper {
+        justify-content: center;
+        .date_picker_buttons {
+            width: 100%;
+        }
+    }
+    #date_picker_1months {
+        display: none;
+    }
+    #date_picker_1weeks {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .date_picker_wrapper .date_picker_buttons {
+        display: none;
+    }
+}
+@media screen and (max-width: 370px) {
+    .point {
+        display: none;
+    }
+}
