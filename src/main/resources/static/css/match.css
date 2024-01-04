@@ -279,7 +279,7 @@
 .fieldDetails {
     margin: 0;
     flex: 0 0 auto;
-    width: 48rem;
+    width: 65%;
 }
 .fieldDetails > * {
     margin-bottom: 1.5rem;
@@ -330,7 +330,7 @@
 
 .fieldMain {
     margin: 0;
-    width: 25rem;
+    width: 35%;
     position: sticky;
     top: 1rem;
     max-height: 16rem;
@@ -443,13 +443,13 @@ a.resultButton.already {
 }
 
 .teamColor {
-    width: 7rem;
-    height: 7rem;
+    width: clamp(4rem, 15vw, 7rem);
+    height: clamp(4rem, 15vw, 7rem);
     border-radius: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: clamp(1rem, 15vw, 1.4rem);
     min-width: 7rem;
 }
 .teamColor > * {
@@ -465,13 +465,14 @@ a.resultButton.already {
     overflow: hidden;
     border-radius: 1rem;
     box-shadow: 2px 2px 5px #e4e4e4;
-    width: 8.5rem;
-    height: 11rem;
+    width: clamp(4rem, 15vw, 8.5rem);
+    height: clamp(8rem, 15vw, 11rem);;
     cursor: initial;
+    padding-bottom: 0.5rem;
 
     .playerImg {
         width: 100%;
-        height: 65%;
+        height: clamp(50%, 20vw, 65%);
         border-radius: 1rem;
 
         img {
@@ -514,7 +515,269 @@ a.resultButton.already {
     pointer-events: none;
 }
 
+#detail {
+    display: none;
+}
 
 
 
+@media screen and (max-width: 75rem) {
+    body {
+        padding: 1rem;
+    }   
+}
+@media screen and (max-width: 1100px) {
+    .matchDecide {
+        flex-direction: column;
+    }
+    .matchExtra {
+        display: flex;
+        flex-direction: column;
+    }
+    a.resultButton {
+        width: 100%;
+        margin: 0;
+    }
+    #managerBtn {
+        margin-top: 1rem;
+    }
+    .playInfoDetails {
+        grid-template-columns: 50% 50%;
+    }
+    .player {
+        /* width: 7rem; */
+        /* height: 10rem; */
+    }
+
+    
+}
+
+@media screen and (max-width: 800px) {
+    body {
+        position: relative;
+        margin-bottom: 11rem;
+    }
+    header {
+        display: none;;
+    }
+    .fieldDetails {
+        width: 100%;
+    }
+    .fieldMain {
+        position: fixed;
+        top: initial;
+        bottom: 0;
+        left: 0;
+        width: 100%;;
+        overflow: hidden;
+        z-index: 100;
+    }
+    #detail {
+        display: initial;
+        border: none;
+        background-color: rgba(255, 255, 255, 0);
+        width: 35px;
+        height: 35px;
+        left: calc(50% - 15px);
+        top: 0;
+
+        position: absolute;
+
+        svg {
+            rotate: 270deg;
+            width: 90%;
+            height: 90%;
+            fill: var(--gray);
+            pointer-events: none;
+        }
+        svg.show {
+            rotate: 90deg;
+        }
+    }
+    .matchDecide {
+        gap: 0.5rem;
+        flex-direction: initial;
+        .resultButton {
+            width: 100%;
+            margin: 0;
+        }
+    }
+    a.fieldAddress {
+        text-decoration: underline;
+    }
+    .matchExtra {
+        display: initial;
+    }
+
+    .matchDate, .matchLocation, .fieldMain .sideHr {
+        overflow: hidden;
+        transition: all 0.3s ease;
+        max-height: 0;
+        margin: 0;
+
+    }
+    
+    .matchDate.show, .matchLocation.show, .sideHr.show {
+        transition: all 0.3s ease;
+        max-height: 100vh;
+    }
+    .matchDate.show, .matchLocation.show {
+        margin-bottom: 1rem;
+    }
+    .sideHr.show {
+        margin: 1.5rem 0;
+    }
+    #managerBtn {
+        height: 2.5rem;
+    }
+
+    .fieldImageContainer {
+        height: 20rem;
+    }
+    
+}
+
+@media screen and (max-width: 630px) {
+    .teamColor {
+        min-width: initial;
+    }
+    .player .playerName {
+        font-size: 1.1rem;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+    .match-result-wrap .match-result  {
+
+        .middle-box {
+            top: calc(50% - 2rem);
+            height: 4rem;
+        }
+        .match-team {
+            height: 4rem;
+
+            .match-score {
+                font-size: 2rem;
+            }
+        }
+    }
+    .matchData .innerBox {
+        height: 21rem
+    }
+    .innerBox .axis_x {
+        flex-wrap: wrap;
+        gap: 1.5rem
+
+    }
+    .players {
+        gap: 1rem;
+    }
+    .player {
+        width: 5rem;
+        height: initial;
+    }
+    .playerImg {
+        display: none;
+    }
+    .matchDecide {
+        gap: 2rem;
+    }
+    .matchExtra {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .matchFriend {
+        display: none;
+    }
+    .matchPrice {
+        white-space: nowrap;
+
+        span {
+            color: var(--main-color);
+        }
+        .notImpact {
+            font-size: 0.9rem;
+        }
+    }
+}
+@media screen and (max-width: 425px) {
+    .fieldImageContainer {
+        height: 15rem;
+    }
+    .match-result-empty .lock-radius {
+        width: 7rem;
+        height: 7rem;
+
+        svg {
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+    .teamColor {
+        font-size: 1rem;
+    }
+    .match-result-wrap .match-result  {
+        .team-name {
+            font-size: 1.2rem;
+        }
+        .left-team {
+            padding: 0 3rem 0 1rem;
+        }
+        .right-team {
+            padding: 0 1rem 0 3rem; 
+        }
+        .middle-box {
+            top: calc(50% - 1.75rem);
+            height: 3.5rem;
+
+            left: calc(50% - 1.5rem);
+            width: 3rem;
+            
+            .myResult {
+                font-size: 1rem;
+            }
+        }
+        .match-team {
+            height: 3.5rem;
+
+            .match-score {
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 365px) {
+    
+    .match-result-wrap .match-result  {
+        .team-name {
+            font-size: 1.2rem;
+        }
+        .left-team {
+            padding: 0 2rem 0 1rem;
+        }
+        .right-team {
+            padding: 0 1rem 0 2rem; 
+        }
+    }
+}
+
+@media screen and (max-width: 335px) {
+    .teamColor {
+        width: 100%;
+        height: 3rem;
+        font-size: 1.3rem;
+    }
+    .team {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 322px) {
+    .matchData .innerBox {
+        height: 32rem;
+    }
+}
 

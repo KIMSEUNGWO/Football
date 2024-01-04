@@ -16,6 +16,15 @@ window.addEventListener('load', function(){
             fetchPost('/manager/apply', json, result);
         }
     })
+
+    let detail = this.document.querySelector('#detail');
+    detail.addEventListener('click', () => {
+        let a = this.document.querySelectorAll('.fieldMain .matchDate, .fieldMain .matchLocation, .fieldMain .sideHr');
+        a.forEach(el => el.classList.toggle('show'));
+
+        let svg = this.document.querySelector('#detail svg');
+        svg.classList.toggle('show');
+    })
 })
 
 function result(map) {

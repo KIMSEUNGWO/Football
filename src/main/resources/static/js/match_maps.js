@@ -2,6 +2,7 @@ window.addEventListener('load', () => {
     let mapsBtn = document.querySelector('.fieldAddress');
     let maps = document.querySelector('#maps');
     mapsBtn.addEventListener('click', () => {
+        maps.scrollIntoView({behavior : 'smooth'});
         maps.classList.toggle('disabled');
         let mapBox = document.querySelector('#map');
         if (mapBox.children.length == 0) {
