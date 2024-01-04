@@ -375,3 +375,65 @@ input[name="couponNum"]:checked + .custom-radio {
     text-align: left;
 }
 
+
+@media screen and (max-width: 75rem) {
+    body {
+        padding: 1rem;
+        min-height: 55rem;
+    }
+    
+}
+
+
+@media screen and (max-width: 768px) {
+    body {
+        margin-bottom: 43rem;
+    }
+    header {
+        display: none;
+    }
+
+    .order {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        margin: 0;
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        
+        h2 {
+            display: none;
+        }
+
+        .sideHr {
+            margin: 1rem 0;
+        }
+    }
+    #orderBtn {
+        height: 3.5rem;
+    }
+    .finalPrice {
+        margin: 0;
+    }
+    
+}
+
+@media screen and (max-width: 420px) {
+    .couponPop {
+        width: 22rem;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .couponPop {
+        width: 22rem;
+    }
+    .couponExpireCount {
+        display: none;
+    }
+    .coupon {
+        height: auto;
+    }
+}
