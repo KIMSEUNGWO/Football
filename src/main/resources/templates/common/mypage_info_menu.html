@@ -28,15 +28,15 @@
                 <h3>등급</h3>
                 <span th:text="${profile.grade}">아마추어1</span>
             </a>
-            <a href="#" class="box">
+            <a href="#" class="box" id="count">
                 <h3>전적</h3>
-                <span>10전 6승 4패</span>
+                <span>100전 60승 40패</span>
             </a>
-            <a href="#" class="box">
+            <a href="#" class="box" id="good">
                 <h3>매너점수</h3>
                 <span>0점</span>
             </a>
-            <a href="#" class="box">
+            <a href="#" class="box" id="bad">
                 <h3>비매너점수</h3>
                 <span>0점</span>
             </a>
@@ -45,26 +45,32 @@
     </div>
 
     <div class="mypageMenu" th:fragment="mypage_menu">
-        <div class="myCash box">
-            <div class="nowCash">
-                <div class="flex">
-                    <span>캐시</span>
-                    <a href="/cash/charge" class="cashBtn">충전</a>
+        <button type="button" id="mobileMenu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+        </button>
+        <div id="overlay"></div>
+        <div class="menuLists">
+            <div class="myCash box">
+                <div class="nowCash">
+                    <div class="flex">
+                        <span>캐시</span>
+                        <a href="/cash/charge" class="cashBtn">충전</a>
+                    </div>
+                    <div class="money" th:text="${profile.cash} + '원'"></div>
                 </div>
-                <div class="money" th:text="${profile.cash} + '원'"></div>
             </div>
-        </div>
-        <div class="box">
-            <h3>마이페이지</h3>
-            <ul class="menuList">
-                <li th:aria-pressed="${menu  == 'main'} ? 'true' : 'false'"><a href="/mypage">계정 관리</a></li>
-                <li th:aria-pressed="${menu  == 'order'} ? 'true' : 'false'"><a href="/mypage/order">경기내역</a></li>
-                <li th:aria-pressed="${menu  == 'cash'} ? 'true' : 'false'"><a href="/mypage/cash">충전내역</a></li>
-                <li th:aria-pressed="${menu  == 'coupon'} ? 'true' : 'false'"><a href="/mypage/coupon">쿠폰</a></li>
-                <li th:aria-pressed="${menu  == 'manager'} ? 'true' : 'false'"><a href="/mypage/manager">매니저</a></li>
-                <li th:aria-pressed="${menu  == 'friend'} ? 'true' : 'false'"><a href="/mypage/friend">친구</a></li>
-                <li th:aria-pressed="${menu  == 'setting'} ? 'true' : 'false'"><a href="/mypage/settings">설정</a></li>
-            </ul>
+            <div class="box">
+                <h3>마이페이지</h3>
+                <ul class="menuList">
+                    <li th:aria-pressed="${menu  == 'main'} ? 'true' : 'false'"><a href="/mypage">계정 관리</a></li>
+                    <li th:aria-pressed="${menu  == 'order'} ? 'true' : 'false'"><a href="/mypage/order">경기내역</a></li>
+                    <li th:aria-pressed="${menu  == 'cash'} ? 'true' : 'false'"><a href="/mypage/cash">충전내역</a></li>
+                    <li th:aria-pressed="${menu  == 'coupon'} ? 'true' : 'false'"><a href="/mypage/coupon">쿠폰</a></li>
+                    <li th:aria-pressed="${menu  == 'manager'} ? 'true' : 'false'"><a href="/mypage/manager">매니저</a></li>
+                    <li th:aria-pressed="${menu  == 'friend'} ? 'true' : 'false'"><a href="/mypage/friend">친구</a></li>
+                    <li th:aria-pressed="${menu  == 'setting'} ? 'true' : 'false'"><a href="/mypage/settings">설정</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </body>

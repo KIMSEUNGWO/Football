@@ -378,10 +378,8 @@ input[name="couponNum"]:checked + .custom-radio {
 
 @media screen and (max-width: 75rem) {
     body {
-        padding: 1rem;
         min-height: 55rem;
     }
-    
 }
 
 

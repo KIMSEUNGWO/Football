@@ -144,4 +144,19 @@ header .menu .menuTitle {
         color: var(--gray)
     }
 }
+@media screen and (max-width: 460px) {
+    header {
+        height: 4rem;
+    }
+    .mobileHeader svg {
+        width: 22px;
+        height: 22px;
+        fill: var(--gray);
+    }
+    .mobileHeader span {
+        font-size: 0.8rem;;
+        color: var(--gray)
+    }
+
+}
 

@@ -179,3 +179,10 @@ svg {
     background-color: var(--off);
     pointer-events: none;
 }
+
+@media screen and (max-width: 75rem) {
+    body {
+        padding: 1rem;
+    }
+    
+}

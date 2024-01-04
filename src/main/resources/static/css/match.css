@@ -520,12 +520,6 @@ a.resultButton.already {
 }
 
 
-
-@media screen and (max-width: 75rem) {
-    body {
-        padding: 1rem;
-    }   
-}
 @media screen and (max-width: 1100px) {
     .matchDecide {
         flex-direction: column;

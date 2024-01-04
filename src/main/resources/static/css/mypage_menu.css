@@ -151,7 +151,188 @@
     gap: 0.5rem;
     align-items: center;
     margin-bottom: 0.3rem;
+
+    span {
+        width: 3rem;
+    }
 }
 .flex > * {
     margin: 0;
+}
+#mobileMenu {
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    background-color: rgba(255, 255, 255);
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 5px rgb(220, 220, 220);
+    padding: 0.3rem;
+    display: none;
+
+}
+#mobileMenu svg {
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    fill: var(--gray);
+}
+#overlay {
+    background: #000;
+    bottom: 0;
+    height: 100%;
+    opacity: 0;
+    overflow: hidden;
+    position: fixed;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+    width: 100%;
+    z-index: 101;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+
+@media screen and (max-width: 1024px) {
+    .myInfo {
+        gap: 1rem;
+    }
+    .status {
+        width: auto;
+    }
+    .totalStatus .box {
+        padding: 1rem;
+
+        h3 {
+            margin-bottom: 1.5rem;
+        }
+    }
+}
+
+@media screen and (max-width: 1020px) {
+    .myInfo {
+        height: 12rem;
+    }
+    .totalStatus {
+        #count, #good, #bad {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 840px) {
+    .myInfo {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    html body {
+        left: 0;
+        -webkit-transition: left .5s ease-in-out;
+        -moz-transition: left .5s ease-in-out;
+        transition: left .5s ease-in-out;
+        margin: 0;
+        header {
+            transition: all .5s ease-in-out;
+        }
+    }
+    html.active body {
+        left: -200px;
+        -webkit-transition: left .5s ease-in-out;
+        -moz-transition: left .5s ease-in-out;
+        transition: left .5s ease-in-out;
+
+        .profilebox button#img {
+            position: initial;
+        }
+        .mypageMenu {
+            right: 0;
+            transition: right .5s ease-in-out;
+        }
+    }
+    html.active #overlay {
+        z-index: 101;
+        opacity: .65;
+        visibility: visible;
+        right: 200px;
+        -webkit-transition: right .5s ease-in-out;
+        -moz-transition: right .5s ease-in-out;
+        transition: right .5s ease-in-out;
+      }
+    body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+    .mypageMenu {
+        width: auto;
+        position: fixed;
+        display: flex;
+        top:0;
+        right: -200px;
+        gap: 2rem;
+        max-height: none;
+        transition: right .5s ease-in-out;
+    }
+    .menuLists {
+        width: 200px;
+        background: #FFF;
+
+        -webkit-transition: all .5s ease-in-out;
+        -moz-transition: all .5s ease-in-out;
+        transition: all .5s ease-in-out;
+        padding: 1rem 1.5rem;
+        div.myCash.box{
+            border-radius: 1rem;
+            padding: 0 1rem;
+            height: 5rem;
+            border: none;
+        }
+    }
+
+    .menuLists > div.box {
+        border-radius: 0;
+        border: none;
+        border-top: 0.1rem solid var(--border-color);
+        box-shadow: none;
+        padding: 0;
+        padding-top: 1rem;
+        position: sticky;
+        h3 {
+            display: none;
+        }
+    }
+    #mobileMenu {
+        margin-top: 1rem;
+        display: inline-block;
+    }
+}
+@media screen and (max-width: 375px) {
+    .mypageMenu {
+        gap: 1rem;
+    }
+    #mobileMenu {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+@media screen and (max-width: 320px) {
+    .phoneBox {
+        flex-direction: column;
+
+        button.formEditBtn {
+            margin-top: 1rem;
+            width: 100%;
+            height: 3rem;
+        }
+    }
+
+    .profilebox button#img {
+        width: 6rem;
+        height: 6rem;
+    }
+    .editBox #submitBtn {
+        margin-top: 1rem;
+    }
+    
 }
