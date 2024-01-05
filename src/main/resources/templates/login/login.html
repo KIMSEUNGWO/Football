@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/loginCommon.css">
     <link rel="stylesheet" href="/css/login.css">
     <script src="/js/login_social.js"></script>
     <title>로그인 :: 프로젝트</title>
 </head>
 <body>
+    <header th:replace="~{/common/header :: header}"></header>
     <div class='container'>
         
         <form class='login_form' method="post" th:object="${loginDto}" th:action="'/login' + (${url} ? '?url=' + ${url} : '')">

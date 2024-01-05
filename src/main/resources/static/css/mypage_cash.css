@@ -11,11 +11,12 @@
 }
 
 .cashBox {
-    height: 2rem;
+    line-height: 3rem;
     display: grid;
     align-items: center;
-    grid-template-columns: 20% 5% 10% 10% 10%;
+    grid-template-columns: 40% 10% 20% 10% 20%;
 }
+
 .cashList > .empty {
     display: flex;
     justify-content: center;
@@ -23,4 +24,35 @@
     color: gray;
     padding: 1rem 0;
     cursor: default;
+}
+
+@media screen and (max-width: 555px) {
+    .cashBox {
+        grid-template-rows: auto auto;
+        grid-template-columns: 20% 35% 10% 35%;
+        border-bottom: 0.1rem solid var(--border-color);
+    }
+    .cashDate {
+        width: 100%;
+        line-height: 1rem;
+        grid-column-start: 1;
+        grid-column-end: 6;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .cashBox {
+        grid-template-columns: 50% 20% 30%;
+    }
+    .cashDate {
+        width: 100%;
+        line-height: 1rem;
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+    .cashTime {
+        width: 100%;
+        grid-column-start: 3;
+        grid-column-end: 4;
+    }
 }

@@ -17,6 +17,14 @@ window.addEventListener('load', () => {
         })
     })
 
+    let playerWrap = document.querySelector('.playerWrap');
+    playerWrap.addEventListener('click', (e) => {
+        if (e.target.classList.contains('playerWrap')) {
+            playerWrap.classList.add('disabled');
+            playerWrap.children.forEach(el => el.classList.add('disabled'));
+        }
+    })
+
     // 이벤트리스터 위임
     let matchPlaying = document.querySelectorAll('.matchList');
     matchPlaying.forEach(el => {
@@ -68,6 +76,8 @@ window.addEventListener('load', () => {
             teamScore.innerHTML = score.children.length - 1
 
             let colorList = document.querySelectorAll('.matchPlayer .playerColor');
+            let playerWrap = document.querySelector('.playerWrap'); 
+            playerWrap.classList.add('disabled');
             colorList.forEach(el => el.classList.add('disabled'));
             targets = '';
             score = '';
@@ -114,9 +124,13 @@ function addGoal(target) {
     let playerColor = getPlayerColor(isSelectColor);
     if (playerColor == null) return;
     let colorList = document.querySelectorAll('.matchPlayer .playerColor');
-    colorList.forEach(el => el.classList.add('disabled'));
+    colorList.forEach(el => {
+        el.classList.add('disabled');
+        el.parentElement.classList.add('disabled');
+    });
 
     playerColor.parentElement.classList.remove('disabled');
+    playerColor.parentElement.parentElement.classList.remove('disabled');
     return {target : target.parentNode, score : score, arrow : arrow, teamScore : teamScore};
 }
 function getTeamScore(target, arrow) {

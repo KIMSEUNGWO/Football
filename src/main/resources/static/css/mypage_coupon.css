@@ -97,3 +97,10 @@
     margin-bottom: 1rem;
     color: rgb(183, 185, 187);
 }
+
+@media screen and (max-width:350px) {
+    .coupon {
+        width: 17rem;
+    }
+    
+}
