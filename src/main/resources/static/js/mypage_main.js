@@ -14,9 +14,11 @@ window.addEventListener('load', () => {
 
     let pwdBtn = document.querySelector('#pwdBtn');
     let deleteBtn = document.querySelector('#deleteBtn');
-    pwdBtn.addEventListener('click', () => {
-        pwdPop.classList.remove('disabled');
-    })
+    if (pwdBtn != null){
+        pwdBtn.addEventListener('click', () => {
+            pwdPop.classList.remove('disabled');
+        })
+    }
     deleteBtn.addEventListener('click', () => {
         deletePop.classList.remove('disabled');
     })

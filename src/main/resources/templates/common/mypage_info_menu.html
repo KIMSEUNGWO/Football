@@ -13,7 +13,7 @@
                 <span th:text="${profile.name}"></span>
                 <span th:if="${profile.social != null}" th:class="'social ' + ${profile.social.socialType.className}" th:text="${profile.social.socialType}"></span>
             </div>
-            <div class="email">tmd8633@naver.com</div>
+            <div class="email" th:text="${profile.email}">tmd8633@naver.com</div>
         </div>
         <div class="totalStatus">
             <a href="#" class="box">
