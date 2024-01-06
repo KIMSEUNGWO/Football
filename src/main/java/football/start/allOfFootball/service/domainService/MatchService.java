@@ -83,7 +83,6 @@ public class MatchService {
 
     public List<Match> understaffedList(List<Match> matchList) {
         List<Match> refundMatchList = new ArrayList<>();
-        List<Match> removeList = new ArrayList<>();
 
         for (Match match : matchList) {
             MatchStatus status = match.getMatchStatus();
@@ -94,11 +93,10 @@ public class MatchService {
 
             if (ordersList.size() <= maxPerson) {
                 refundMatchList.add(match);
-                removeList.add(match);
             }
         }
 
-        for (Match match : removeList) {
+        for (Match match : refundMatchList) {
             matchList.remove(match);
         }
 
