@@ -40,7 +40,11 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         if (session == null) return null;
 
         Long memberId = (Long) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        Optional<Member> byMemberId = memberService.findByMemberId(memberId);
-        return byMemberId.orElse(null);
+        Optional<Member> findMember = memberService.findByMemberId(memberId);
+        if (findMember.isEmpty()) {
+            session.removeAttribute(SessionConst.LOGIN_MEMBER);
+            return null;
+        }
+        return findMember.get();
     }
 }
