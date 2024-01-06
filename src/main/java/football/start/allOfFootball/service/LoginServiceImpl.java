@@ -51,4 +51,9 @@ public class LoginServiceImpl implements LoginService{
         Optional<Member> findMember = loginRepository.findByPhone(phone);
         return findMember.isPresent();
     }
+
+    @Override
+    public void renewLoginTime(Member loginMember) {
+        loginRepository.renewLoginTime(loginMember);
+    }
 }

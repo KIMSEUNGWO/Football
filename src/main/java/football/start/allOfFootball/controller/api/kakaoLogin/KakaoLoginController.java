@@ -39,10 +39,7 @@ public class KakaoLoginController {
                                     HttpServletRequest request, HttpServletResponse response) {
 
         KakaoToken kakaoToken = kakaoLoginService.getKakaoAccessToken(code);
-        System.out.println("accessToken = " + kakaoToken.getAccess_token());
-
         LoginResponse userInfo = kakaoLoginService.getUserInfo(kakaoToken.getAccess_token());
-        System.out.println("userInfo = " + userInfo);
 
         Optional<Member> findMember =  loginService.findByEmail(userInfo.getEmail());
         Member loginMember = null;
@@ -67,7 +64,9 @@ public class KakaoLoginController {
         }
 
         HttpSession session = request.getSession();
+        loginService.renewLoginTime(loginMember);
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getMemberId());
+
         execute(response, null);
         return null;
 

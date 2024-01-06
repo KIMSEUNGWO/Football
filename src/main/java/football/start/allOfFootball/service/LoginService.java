@@ -13,4 +13,6 @@ public interface LoginService {
     Optional<Member> findByEmail(String email);
 
     boolean findByPhone(String phone);
+
+    void renewLoginTime(Member loginMember);
 }
