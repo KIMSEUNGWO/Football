@@ -4,6 +4,7 @@ import football.start.allOfFootball.common.alert.AlertTemplate;
 import football.start.allOfFootball.common.alert.AlertUtils;
 import football.start.allOfFootball.controller.api.kakaoPay.dto.ApproveResponse;
 import football.start.allOfFootball.controller.api.kakaoPay.dto.ReadyResponse;
+import football.start.allOfFootball.customAnnotation.SessionLogin;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Payment;
 import football.start.allOfFootball.enums.paymentEnums.CashEnum;
@@ -34,7 +35,6 @@ import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
 public class KakaoPayController {
 
     private final KakaoPayService kakaoPayService;
-    private final MemberService memberService;
     private final PaymentService paymentService;
 
     @PostMapping
@@ -55,25 +55,19 @@ public class KakaoPayController {
                                @SessionAttribute(name = TID, required = false) String tid,
                                @SessionAttribute(name = KAKAO_ORDER_ID, required = false) String partner_order_id,
                                @SessionAttribute(name = KAKAO_MEMBER_ID, required = false) Long kakaoMemberId,
-                               @SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
+                               @SessionLogin Member member,
                                HttpServletResponse response,
                                HttpServletRequest request,
                                Model model) {
-        if (tid == null || partner_order_id == null || kakaoMemberId == null || memberId == null || kakaoMemberId != memberId) {
+        if (tid == null || partner_order_id == null || kakaoMemberId == null || member == null || member.getMemberId().equals(kakaoMemberId)) {
             return AlertUtils.alertAndMove(response, "잘못된 결제요청입니다.", "/");
         }
         log.info("결제승인 요청을 인증하는 토큰 : {}", pg_token);
         log.info("주문정보 : {}", partner_order_id);
         log.info("결재고유 번호 : {}", tid);
 
-        Optional<Member> findMember = memberService.findByMemberId(memberId);
-        if (findMember.isEmpty()) {
-            return AlertUtils.alertAndMove(response, "잘못된 결제요청입니다.", "/");
-        }
+        ApproveResponse approve = kakaoPayService.payApprove(tid, pg_token, partner_order_id, member.getMemberId());
 
-        ApproveResponse approve = kakaoPayService.payApprove(tid, pg_token, partner_order_id, memberId);
-
-        Member member = findMember.get();
         Payment payment = Payment.builder()
             .member(member)
             .charge(approve.getAmount().getTotal())
@@ -84,7 +78,6 @@ public class KakaoPayController {
         paymentService.save(payment);
 
         HttpSession session = request.getSession();
-        String requestURL = (String) session.getAttribute(REDIRECT_URL);
         kakaoPayService.deleteSessionId(session);
 
         execute(response, "충전이 완료되었습니다.");
