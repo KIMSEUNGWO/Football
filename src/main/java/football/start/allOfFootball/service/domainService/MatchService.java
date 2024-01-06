@@ -103,9 +103,9 @@ public class MatchService {
         return refundMatchList;
     }
 
-    public MatchCollection getMatchCollection(Match match, Long memberId) {
+    public MatchCollection getMatchCollection(Match match, Member member) {
         List<Orders> ordersList = match.getOrdersList();
-        Optional<Orders> byOrders = matchRepository.isContainsMember(ordersList, memberId);
+        Optional<Orders> byOrders = matchRepository.isContainsMember(ordersList, member);
         if (byOrders.isEmpty()) return null;
 
         ScoreResult scoreList = scoreService.getScore(match, byOrders.get());

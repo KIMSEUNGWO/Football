@@ -44,10 +44,11 @@ public class MatchRepository {
         jpaMatchRepository.save(saveMatch);
     }
 
-    public Optional<Orders> isContainsMember(List<Orders> ordersList, Long memberId) {
+    public Optional<Orders> isContainsMember(List<Orders> ordersList, Member member) {
+
         for (Orders orders : ordersList) {
-            Long memberId1 = orders.getMember().getMemberId();
-            if (memberId1 == memberId) {
+            Member inMember = orders.getMember();
+            if (inMember.equals(member)) {
                 return Optional.of(orders);
             }
         }

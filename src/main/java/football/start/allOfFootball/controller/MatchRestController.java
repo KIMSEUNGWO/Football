@@ -1,5 +1,6 @@
 package football.start.allOfFootball.controller;
 
+import football.start.allOfFootball.customAnnotation.SessionLogin;
 import football.start.allOfFootball.domain.Manager;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
@@ -31,8 +32,15 @@ public class MatchRestController {
     private final ScoreService scoreService;
 
     @PostMapping("/match/team/confirm")
-    public Map<String, String> teamConfirm(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, @RequestBody RequestTeam team) {
+    public Map<String, String> teamConfirm(@SessionLogin Member member,
+                                           @RequestBody RequestTeam team) {
         Map<String, String> result = new HashMap<>();
+
+        if (member == null) {
+            result.put("result", "NotLogin");
+            result.put("message", "로그인이 필요합니다.");
+            return result;
+        }
 
         Optional<Match> findMatch = matchService.findByMatch(team.getMatchId());
         if (findMatch.isEmpty()) {
@@ -43,7 +51,7 @@ public class MatchRestController {
         Match match = findMatch.get();
         Manager manager = match.getManager();
 
-        if (manager == null || !manager.getMember().getMemberId().equals(memberId)) {
+        if (manager == null || !manager.getMember().equals(member)) {
             result.put("result", "fail");
             result.put("message", "접근권한이 없습니다.");
             return result;
@@ -56,11 +64,11 @@ public class MatchRestController {
     }
 
     @PostMapping("/manager/apply")
-    public Map<String, String> managerApply(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, @RequestBody String matchIdStr) {
+    public Map<String, String> managerApply(@SessionLogin Member member,
+                                            @RequestBody String matchIdStr) {
         Map<String, String> result = new HashMap<>();
         Long matchId = matchService.numberCheck(matchIdStr);
-        Optional<Member> findMember = memberService.findByMemberId(memberId);
-        if (findMember.isEmpty()) {
+        if (member == null) {
             result.put("result", "NotLogin");
             result.put("message", "로그인이 필요합니다.");
             return result;
@@ -73,7 +81,7 @@ public class MatchRestController {
         }
         Match match = findMatch.get();
         Manager manager = match.getManager();
-        Member member = findMember.get();
+
         if (manager != null) {
             result.put("result", "fail");
             result.put("message", "이미 매니저가 배정되었어요.");
@@ -105,11 +113,12 @@ public class MatchRestController {
     }
 
     @PostMapping("/match/end/{matchIdStr}")
-    public Map<String, String> matchEnd(@PathVariable String matchIdStr, @SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId) {
+    public Map<String, String> matchEnd(@PathVariable String matchIdStr,
+                                        @SessionLogin Member member) {
         Map<String, String> result = new HashMap<>();
         Long matchId = matchService.numberCheck(matchIdStr);
-        Optional<Member> findMember = memberService.findByMemberId(memberId);
-        if (findMember.isEmpty()) {
+
+        if (member == null) {
             result.put("result", "NotLogin");
             result.put("message", "로그인이 필요합니다.");
             return result;
@@ -122,8 +131,8 @@ public class MatchRestController {
         }
         Match match = findMatch.get();
         Manager manager = match.getManager();
-        Member member = findMember.get();
-        if (member.getManager() == null || !memberId.equals(manager.getMember().getMemberId())) {
+
+        if (member.getManager() == null || !member.equals(manager.getMember())) {
             result.put("result", "fail");
             result.put("message", "권한이 없습니다.");
             return result;
@@ -139,13 +148,13 @@ public class MatchRestController {
     @Transactional
     @PostMapping("/match/record/{matchIdStr}")
     public Map<String, String> scoreRecord(@PathVariable String matchIdStr,
-                                           @SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
+                                           @SessionLogin Member member,
                                            @RequestBody ScoreResultForm score) {
 
         Map<String, String> result = new HashMap<>();
         Long matchId = matchService.numberCheck(matchIdStr);
-        Optional<Member> findMember = memberService.findByMemberId(memberId);
-        if (findMember.isEmpty()) {
+
+        if (member == null) {
             result.put("result", "NotLogin");
             result.put("message", "로그인이 필요합니다.");
             return result;
@@ -158,8 +167,7 @@ public class MatchRestController {
         }
         Match match = findMatch.get();
         Manager manager = match.getManager();
-        Member member = findMember.get();
-        if (member.getManager() == null || !memberId.equals(manager.getMember().getMemberId())) {
+        if (member.getManager() == null || !member.equals(manager.getMember())) {
             result.put("result", "fail");
             result.put("message", "권한이 없습니다.");
             return result;
