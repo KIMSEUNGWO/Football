@@ -32,6 +32,7 @@
     color: white;
     height: 2.5rem;
     font-size: 1.05rem;
+    cursor: pointer;
 }
 
 .registerButton:hover {
@@ -56,5 +57,8 @@ input[type="submit"] {
 .confirmMsg {
     color: #2abc2a;
     font-size: 0.9rem;
+}
+.confirmMsg.error {
+    color: red;
 }
 

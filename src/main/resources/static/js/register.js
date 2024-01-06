@@ -8,7 +8,11 @@ window.addEventListener('load', function(){
 
     let distinctEmail = document.querySelector('.distinctEmailBtn');
     distinctEmail.addEventListener('click', function(){
-        validEmail()
+        if (validEmail()) {
+            var emailInput = document.querySelector('input[name="email"]').value
+            var emailJson = {email : emailInput};
+            fetchPost('/register/check', emailJson, result);
+        }
     })
 
     let passwordCheck = document.querySelector('input[name="passwordCheck"]');
@@ -21,7 +25,27 @@ window.addEventListener('load', function(){
     let phoneBtn = document.querySelector('#phoneBtn');
     phoneBtn.addEventListener('click', function(e){
         if (phoneBtn.isEqualNode(e.target)){
-            validPhone();
+            let name = validName();
+            let gender = validGender();
+            let birth = validBirth();
+            let phone = validPhone();
+            if (name != null) {
+                name.scrollIntoView({behavior : "smooth"});
+                return;
+            }
+            if (gender != null) {
+                gender.scrollIntoView({behavior : "smooth"});
+                return
+            }
+            if (birth != null) {
+                birth.scrollIntoView({behavior : "smooth"});
+                return
+            }
+            if (phone != null) {
+                phone.scrollIntoView({behavior : "smooth"});
+                return
+            }
+            sendSMS()
         }
     })
 
@@ -37,21 +61,16 @@ window.addEventListener('load', function(){
             }
         }
     })
-
-    // let birthday = document.querySelector('input[name="birthday"]');
-    // birthday.addEventListener('keyup', function(e){
-    //     if (birthday.isEqualNode(e.target)) {
-    //         if (e.key === 'Backspace') {
-    //             birthday.value = removePhone(birthday.value);
-    //         } else {
-    //             var str = removeNotNumber(birthday.value);
-    //             birthday.value = addBirthday(str);
-    //         }
-    //     }
-    // })
-
-
 })
+
+function sendSMS() {
+    
+    var cPhone = document.querySelector('.confirmPhone');
+    printTrue(cPhone, '인증번호가 발송되었습니다.');
+    clearInterval(timerInterval);
+    var timerInterval = limitTimer();
+}
+
 
 function removePhone(str) {
     if (str.endsWith('-')) {
@@ -107,90 +126,50 @@ function removeNotNumber(text) {
     return distinctString;
 }
 
-function printTrue(eTag, cTag, cMsg) {
-    if (eTag != null) {
-        eTag.classList.add(disabled);
-    }
+function printTrue(cTag, message) {
     if (cTag != null ){
-        cTag.innerHTML = cMsg;
+        cTag.innerHTML = message;
         cTag.classList.remove(disabled)
+        cTag.classList.remove("error")
     }
 }
 
-function printFalse(eTag, cTag, eMsg) {
-    if (eTag != null) {
-        eTag.innerHTML = eMsg;
-        eTag.classList.remove(disabled);
-    }
+function printFalse(cTag, message) {
     if (cTag != null) {
-        cTag.classList.add(disabled);
+        cTag.innerHTML = message;
+        cTag.classList.add("error");
+        cTag.classList.remove(disabled);
     }
-}
-
-function checkEmail() {
-    var email = document.querySelector("input[name='email']");
-    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return emailRegex.test(email.value);
-}
-
-function checkPassword() {
-    var validPassword = document.querySelector("input[name='password']");
-    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,15}$/;
-    return passwordRegex.test(validPassword.value);
-}
-
-function checkName() {
-    var validName = document.querySelector('input[name="name"]');
-    var nameRegex = /^[가-힣]{1,5}$/;
-    return nameRegex.test(validName.value);
-}
-
-function checkPhone() {
-    var validPhobe = document.querySelector('input[name="phone"]');
-    var phoneRegex = /^(010)-[0-9]{3,4}-[0-9]{4}$/;
-    return phoneRegex.test(validPhobe.value);
-}
-
-function checkBirth() {
-    var validBirth = document.querySelector('input[name="birth"]');
-    var birthRegex = /^[0-9]{6}$/;
-    return birthRegex.test(validBirth.value);
-}
-
-function validEmail(){
-    var eEmail = document.querySelector('.errorEmail');
-    var cEmail = document.querySelector('.confirmEmail');
-    if (!checkEmail()){
-        printFalse(eEmail, cEmail, '유효하지 않은 이메일입니다.');
-        return
-    }
-    var emailInput = document.querySelector('input[name="email"]').value
-    var emailJson = {email : emailInput };
-    fetchPost('/register/check', emailJson, result);
 }
 
 function result(map) {
-    var eEmail = document.querySelector('.errorEmail');
     var cEmail = document.querySelector('.confirmEmail');
     if (map.status == 'ok') {
-        printTrue(eEmail, cEmail, map.message);
+        printTrue(cEmail, map.message);
         return;
     }
     if (map.status == 'error') {
         alert(map.message);
-        printFalse(eEmail, cEmail, map.message);
+        printFalse(cEmail, map.message);
     }
-    return
+}
+function validEmail(){
+    var cEmail = document.querySelector('.confirmEmail');
+    if (!checkEmail()){
+        printFalse(cEmail, '유효하지 않은 이메일입니다.');
+        return document.querySelector("input[name='email']");;
+    }
+    return null;
 }
 
 function validPassword() {
-    let ePassword = document.querySelector('.errorPassword');
     let cPassword = document.querySelector('.confirmPassword');
-    validPasswordCheck();
     if (checkPassword()) {
-        printTrue(ePassword, cPassword, '사용가능한 비밀번호 입니다.')
+        printTrue(cPassword, '사용가능한 비밀번호 입니다.')
+        return null;
     } else {
-        printFalse(ePassword, cPassword, '8~15자의 대,소문자와 특수문자를 1개 이상 작성해주세요.');
+        printFalse(cPassword, '8자 이상의 대,소문자와 특수문자를 1개 이상 작성해주세요.');
+        return document.querySelector("input[name='password']");;
     }
 }
 
@@ -198,46 +177,59 @@ function validPasswordCheck(){
     var password = document.querySelector('input[name="password"]');
     var passwordCheck = document.querySelector('input[name="passwordCheck"]');
 
-    var ePasswordCheck = document.querySelector('.errorPasswordCheck');
     var cPasswordCheck = document.querySelector('.confirmPasswordCheck');
     if (password.value === passwordCheck.value) {
-        printTrue(ePasswordCheck, cPasswordCheck, '비밀번호가 일치합니다.');
+        printTrue(cPasswordCheck, '비밀번호가 일치합니다.');
+        return null;
     } else {
-        printFalse(ePasswordCheck, cPasswordCheck, '비밀번호가 일치하지 않습니다.')
+        printFalse(cPasswordCheck, '비밀번호가 일치하지 않습니다.')
+        return passwordCheck;
     }
 }
 
 function validName(){
-    var eName = document.querySelector('.errorName');
+    var cName = document.querySelector('.confirmName');
     if (checkName()){
-        printTrue(eName, null, '')
+        printTrue(cName, '')
+        return null;
     } else {
-        printFalse(eName, null, '한글만 작성해주세요')
+        printFalse(cName, '이름을 작성해주세요')
+        return document.querySelector('input[name="name"]');;
+    }
+}
+function validGender(){
+    var cGender = document.querySelector('.confirmGender');
+    if (checkGender()){
+        printTrue(cGender, '')
+        return null;
+    } else {
+        printFalse(cGender, '성별을 선택해주세요.')
+        return document.querySelector('select[name="gender"]');;
     }
 }
 
 function validBirth() {
     var birthday = document.querySelector('input[name="birthday"]');
 
-    var eBirth = document.querySelector('.errorBirth');
+    var cBirth = document.querySelector('.confirmBirth');
     if (checkBirth(birthday.value)) {
-        printTrue(eBirth, null, null);
+        printTrue(cBirth, '');
+        return null;
     } else {
-        printFalse(eBirth, null, '날짜 형식이 잘못되었습니다.');
-    }
-    
+        printFalse(cBirth, '날짜 형식이 잘못되었습니다.');
+        return birthday;
+    } 
 }
 
 function validPhone() {
-    var ePhone = document.querySelector('.errorPhone');
     var cPhone = document.querySelector('.confirmPhone');
 
     if (checkPhone()){
-        printTrue(ePhone, cPhone, '인증번호가 발송되었습니다.');
-        clearInterval(timerInterval);
-        var timerInterval = limitTimer();
+        printTrue(cPhone, '');
+        return null;
     } else {
-        printFalse(ePhone, cPhone, '입력정보가 잘못되었습니다');
+        printFalse(cPhone, '입력정보가 잘못되었습니다');
+        return document.querySelector('input[name="phone"]');
     }
 }
 
@@ -272,21 +264,6 @@ function limitTimer() {
             return true;
         }
     }, 1000);
-}
-
-
-function checkBirth(birth) {
-    var split = birth.split("-");
-    if (split.length != 3) return false;
-    for (var i=0;i<split.length;i++) {
-        if (!numberCheck(split[i])) {
-            return false;
-        }
-    }
-    if (!rangeCheck(split[0], split[1], split[2])) {
-        return false;
-    }
-    return true;
 }
 
 function rangeCheck(year, month, day) {
@@ -339,3 +316,46 @@ function updateTimer(timer) {
       alert("타이머 종료!");
     }
   }
+
+
+
+function checkEmail() {
+    var email = document.querySelector("input[name='email']");
+    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailRegex.test(email.value);
+}
+
+function checkPassword() {
+    var validPassword = document.querySelector("input[name='password']");
+    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,15}$/;
+    return passwordRegex.test(validPassword.value);
+}
+
+function checkName() {
+    var validName = document.querySelector('input[name="name"]');
+    var nameRegex = /[ ]+/;
+    return nameRegex.test(validName.value);
+}
+
+function checkGender() {
+    var validGender = document.querySelector('select[name="gender"]');
+    if (validGender == null || validGender.value == null || validGender.value == '') {
+        return false;
+    }
+    if (validGender.value != '남자' && validGender.value != '여자') {
+        return false;
+    }
+    return true;
+}
+
+function checkPhone() {
+    var validPhobe = document.querySelector('input[name="phone"]');
+    var phoneRegex = /^(010)-[0-9]{3,4}-[0-9]{4}$/;
+    return phoneRegex.test(validPhobe.value);
+}
+
+function checkBirth() {
+    var validBirth = document.querySelector('input[name="birthday"]');
+    var birthRegex = /^[0-9]{6}$/;
+    return birthRegex.test(validBirth.value);
+}

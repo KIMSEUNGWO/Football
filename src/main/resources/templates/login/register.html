@@ -22,7 +22,6 @@
                     <input type="text" th:field="*{email}" placeholder="email@gmail.com" th:errorclass="field-error" inputmode="email">
                     <button type="button" class="registerButton distinctEmailBtn">중복확인</button>
                 </div>
-                <div class="errorMsg errorEmail"></div>
                 <div class="errorMsg errorEmail field-error" th:errors="*{email}">[[${errorMsg}]]</div>
                 <div class="confirmMsg confirmEmail disabled">사용가능한 아이디입니다.</div>
             </div>
@@ -44,6 +43,7 @@
                     <h5>이름</h5>
                     <input type="text" th:field="*{name}" th:errorclass="field-error" onfocusout="validName()">
                     <div class="errorMsg errorName field-error" th:errors="*{name}">[[${errorMsg}]]</div>
+                    <div class="confirmMsg confirmName disabled">이름검증란</div>
                 </div>
                 <div class='login_box gender'>
                     <h5>성별</h5>
@@ -52,12 +52,14 @@
                         <option value="여자">여자</option>
                     </select>
                     <div class="errorMsg errorGender field-error" th:errors="*{gender}">[[${errorMsg}]]</div>
+                    <div class="confirmMsg confirmGender disabled">성별검증란</div>
                 </div>
             </div>
             <div class="login_box">
                 <h5>생년월일</h5>
                 <input type="text" maxlength='6' minlength="6" th:errorclass="field-error" th:field="*{birthday}" placeholder="990101"  onfocusout="validBirth()" inputmode="numeric">
                 <div class="errorMsg errorBirth field-error" th:errors="*{birthday}">[[${errorMsg}]]</div>
+                <div class="confirmMsg confirmBirth disabled">생일검증란</div>
             </div>
             <div class='login_box phone'>
                 <h5>휴대폰 번호</h5>
