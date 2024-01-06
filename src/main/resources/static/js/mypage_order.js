@@ -72,7 +72,7 @@ function resultForm(form) {
                 '<span class="matchMax">' + form.maxPersonAndCount + '</span>' +
                 '<a href="/match/' + form.matchId + '" class="title">' + form.fieldTitle + '</a>' +
                 '<span>' + form.matchStatus + '</span>' +
-                getScore(score) +
+                getScore(form.score) +
             '</li>'
 }
 

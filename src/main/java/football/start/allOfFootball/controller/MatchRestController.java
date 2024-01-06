@@ -25,13 +25,14 @@ import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/manager")
 public class MatchRestController {
 
     private final MatchService matchService;
     private final MemberService memberService;
     private final ScoreService scoreService;
 
-    @PostMapping("/match/team/confirm")
+    @PostMapping("/team/confirm")
     public Map<String, String> teamConfirm(@SessionLogin Member member,
                                            @RequestBody RequestTeam team) {
         Map<String, String> result = new HashMap<>();
@@ -63,7 +64,7 @@ public class MatchRestController {
         return result;
     }
 
-    @PostMapping("/manager/apply")
+    @PostMapping("/apply")
     public Map<String, String> managerApply(@SessionLogin Member member,
                                             @RequestBody String matchIdStr) {
         Map<String, String> result = new HashMap<>();
@@ -112,7 +113,7 @@ public class MatchRestController {
         return result;
     }
 
-    @PostMapping("/match/end/{matchIdStr}")
+    @PostMapping("/end/{matchIdStr}")
     public Map<String, String> matchEnd(@PathVariable String matchIdStr,
                                         @SessionLogin Member member) {
         Map<String, String> result = new HashMap<>();
@@ -146,7 +147,7 @@ public class MatchRestController {
     }
 
     @Transactional
-    @PostMapping("/match/record/{matchIdStr}")
+    @PostMapping("/record/{matchIdStr}")
     public Map<String, String> scoreRecord(@PathVariable String matchIdStr,
                                            @SessionLogin Member member,
                                            @RequestBody ScoreResultForm score) {

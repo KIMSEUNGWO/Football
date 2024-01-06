@@ -43,11 +43,7 @@ public class MainServiceImpl implements MainService{
     }
 
     @Override
-    public MainSideInfoForm getSideInfo(Long memberId) {
-        Optional<Member> byMemberId = memberService.findByMemberId(memberId);
-        if (byMemberId.isEmpty()) return null;
-
-        Member member = byMemberId.get();
+    public MainSideInfoForm getSideInfo(Member member) {
         Long myRank = rankService.getRank(member);
         MainSideInfoForm form = new MainSideInfoForm();
         form.setMyInfo(member, myRank);

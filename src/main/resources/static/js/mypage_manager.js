@@ -14,7 +14,7 @@ window.addEventListener('load', () => {
             let resultJson = getJson(myMatchId, teamList);
             let confirm = window.confirm('팀을 확정하시겠습니까?');
             if (confirm) {
-                fetchPost('/match/team/confirm', resultJson, result);
+                fetchPost('/manager/team/confirm', resultJson, result);
             }
 
         })
@@ -35,7 +35,7 @@ window.addEventListener('load', () => {
             // }
             let confirm = window.confirm('경기를 종료하시겠습니까?');
             if (confirm) {
-                fetchPost('/match/end/' + myMatchId, null, result);
+                fetchPost('/manager/end/' + myMatchId, null, result);
             }
 
         })
@@ -56,7 +56,7 @@ window.addEventListener('load', () => {
         
             let confirm = window.confirm('기록을 확정하시겠습니까?');
             if (confirm) {
-                fetchPost('/match/record/' + data, resultJson, result);
+                fetchPost('/manager/record/' + data, resultJson, result);
             }
 
         })

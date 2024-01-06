@@ -36,7 +36,7 @@
                                 <span th:text="${topInfo.matchStatus}">경기종료</span>
                             </div>
 
-                            <div class="matchTeamConfirm" th:if="${!dataForm.isRecordScore && dataForm.teamInfo != null}">
+                            <div class="matchTeamConfirm" th:if="${!dataForm.isRecordScore && !dataForm.isMatchPlaying && dataForm.teamInfo != null}">
                                 <h3>소셜팀 정보</h3>
                                 <ul class="teamList">
                                     <li class="team" th:each="team : ${dataForm.teamInfo}">
@@ -132,14 +132,14 @@
                                         </div>
                                     </div>
                                     <div class="matchPlayer">
-                                        <div class="playerWrap">
+                                        <div class="playerWrap disabled">
                                             <div class="playerColor disabled" th:each="team : ${dataForm.teamInfo}">
                                                 <div th:class="'color ' + ${team.key.className}" th:text="${team.key}"></div>
                                                 <ul class="colorPlayerList">
                                                     <label th:each="player : ${team.value}" th:for="${player.orderId}" class="colorPlayer" aria-pressed="false">
                                                         <input type="radio" th:name="${team.key.className}" th:id="${player.orderId}"  th:value="${player.orderId}" hidden>
                                                         <div class="colorPlayerImg">
-                                                            <img th:src="|/images/profile/${player.profileImage}|" alt="${player.memberName}">
+                                                            <img th:src="|/images/profile/${player.profileImage}|" alt="${player.memberName}" src="">
                                                         </div>
                                                         <strong class="colorPlayerName" th:text="${player.memberName}"></strong>
                                                         <div class="colorPlayerInfo">

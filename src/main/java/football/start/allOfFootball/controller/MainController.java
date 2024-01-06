@@ -26,7 +26,7 @@ public class MainController {
     @GetMapping
     public String main(@SessionLogin Member member, Model model) {
         if (member != null) {
-            MainSideInfoForm form = mainService.getSideInfo(member.getMemberId());
+            MainSideInfoForm form = mainService.getSideInfo(member);
             model.addAttribute("side", form);
         }
         return "main";

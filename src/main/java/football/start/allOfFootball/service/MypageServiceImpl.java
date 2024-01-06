@@ -142,8 +142,8 @@ public class MypageServiceImpl implements MypageService{
             String date = DateFormatter.dateFormatAndWeek(match.getMatchDate());
 
             ManagerDataForm build = ManagerDataForm.builder()
-                                    .teamInfo(teamInfo)
                                     .topInfo(matchDataForm)
+                                    .teamInfo(teamInfo)
                                     .isMatchPlaying(match.getMatchStatus() == MatchStatus.경기중)
                                     .isRecordScore(match.getMatchStatus() == MatchStatus.기록중)
                                     .build();

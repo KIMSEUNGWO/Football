@@ -104,7 +104,7 @@ public class RegisterController {
         Optional<Match> byMatch = matchService.findByMatch(matchId);
         Match match = byMatch.get();
 
-        Member member = memberService.findByMemberId(2L).get();
+        Member member = memberService.findByMemberId(7L).get();
         Member member2 = memberService.findByMemberId(3L).get();
         Member member3 = memberService.findByMemberId(4L).get();
         Member member4 = memberService.findByMemberId(5L).get();
