@@ -1,6 +1,7 @@
 package football.start.allOfFootball.controller.login;
 
 import football.start.allOfFootball.controller.api.kakaoLogin.KakaoLoginService;
+import football.start.allOfFootball.customAnnotation.SessionLogin;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Social;
 import football.start.allOfFootball.enums.SocialEnum;
@@ -31,11 +32,11 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String startLogin(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
+    public String startLogin(@SessionLogin Member member,
                              @ModelAttribute LoginDto loginDto,
                              @RequestParam(required = false) String url,
                              Model model) {
-        if (memberId != null) return "redirect:/";
+        if (member != null) return "redirect:/";
 
         if (url != null && !url.equals("null")) {
             model.addAttribute("url", url);
