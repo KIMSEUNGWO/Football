@@ -79,7 +79,7 @@ public class RegisterController {
         Member saveMember = registerDto.builder();
         registerService.save(saveMember);
         httpSession.removeAttribute(REGISTER); // DB 저장 완료 후 회원가입 세션 삭제
-        return "redirect:/register/done";
+        return AlertUtils.alertAndMove(response, "회원가입이 완료되었습니다.", "/login");
     }
 
     @GetMapping("/member/create")

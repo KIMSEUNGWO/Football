@@ -8,7 +8,7 @@ window.addEventListener('load', function(){
 
     let distinctEmail = document.querySelector('.distinctEmailBtn');
     distinctEmail.addEventListener('click', function(){
-        if (validEmail()) {
+        if (validEmail() == null) {
             var emailInput = document.querySelector('input[name="email"]').value
             var emailJson = {email : emailInput};
             fetchPost('/register/check', emailJson, result);
