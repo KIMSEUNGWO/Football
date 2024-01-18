@@ -1,5 +1,6 @@
 package football.start.allOfFootball.domain;
 
+import football.start.allOfFootball.enums.LocationEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,9 @@ public class Manager {
     @OneToOne
     @JoinColumn(name = "memberId")
     private Member member;
+
+    private String name; // 본명
+    private LocationEnum region; // 활동구역
 
     // Not Columns
     @OneToMany(mappedBy = "manager")
