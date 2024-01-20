@@ -24,11 +24,11 @@
                 </div>
                 <div class="input_form">
                     <span>생년월일</span>
-                    <input type="text" name="birth" id="birth" placeholder="1999-01-01" disabled>
+                    <input type="text" name="birth" id="birth" th:value="${birth}" disabled>
                 </div>
                 <div class="input_form">
                     <span>전화번호</span>
-                    <input type="text" name="phone" id="phone" value="010-1234-5678" disabled>
+                    <label for="phone"></label><input type="text" name="phone" id="phone" th:value="${phone}" disabled>
                 </div>
                 <div class="input_form">
                     <span>활동구역</span>
@@ -38,7 +38,7 @@
                         <ul class="subOption" name="subOption">
                             <li><input type="radio" name="region" id="seoul" value="서울"><label for="seoul">서울</label></li>
                             <li><input type="radio" name="region" id="incheon" value="인천"><label for="incheon">인천</label></li>
-                            <li><input type="radio" name="region" id="gyeonggi" value="경기도"><label for="gyeonggi">경기도</label></li>
+                            <li><input type="radio" name="region" id="gyeonggi" value="경기"><label for="gyeonggi">경기도</label></li>
                         </ul>
                     </button>
                 </div>

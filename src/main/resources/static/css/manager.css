@@ -107,3 +107,8 @@ body {
 #manager_submit:hover {
     background-color: var(--main-color-hover);
 }
+
+
+input[name="birth"], input[name="phone"] {
+    color: gray;
+}

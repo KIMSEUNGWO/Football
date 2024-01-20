@@ -26,6 +26,7 @@ public class Manager {
     private Member member;
 
     private String name; // 본명
+    @Enumerated(EnumType.STRING)
     private LocationEnum region; // 활동구역
 
     // Not Columns
