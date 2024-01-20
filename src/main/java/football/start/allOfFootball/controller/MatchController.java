@@ -52,19 +52,4 @@ public class MatchController {
         return "match";
     }
 
-    @GetMapping("/test/match/{matchId}")
-    public String test(@PathVariable Long matchId) {
-        Match match = matchService.findByMatch(matchId).get();
-        match.setMatchStatus(경기시작전);
-        List<Orders> ordersList = match.getOrdersList();
-
-        // team 자동 분배 알고리즘 시작
-        MatchTeamAlgorithms setTeam = new MatchTeamAlgorithms(ordersList);
-        Map<TeamEnum, List<Orders>> result = setTeam.getResult(match.getMatchCount());
-
-        // 결과 Orders TeamEnum 설정
-        orderService.setTeam(result);
-
-        return "redirect:/mypage/manager";
-    }
 }
