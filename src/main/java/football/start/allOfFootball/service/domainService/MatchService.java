@@ -135,13 +135,6 @@ public class MatchService {
         match.setManager(manager);
     }
 
-    public Long numberCheck(String matchIdStr) {
-        try {
-            return Long.parseLong(matchIdStr.replace("\"", ""));
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
 
     public List<Match> findAllMatchBefore(Manager manager) {
         return matchRepository.findAllMatchBefore(manager);
