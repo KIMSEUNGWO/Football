@@ -1,15 +1,12 @@
 package football.start.allOfFootball.service;
 
-import football.start.allOfFootball.common.BCrypt;
 import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.enums.SocialEnum;
 import football.start.allOfFootball.repository.LoginRepository;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,7 +19,7 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public Optional<Member> login(String email, String password) {
-        Optional<Member> loginMember = loginRepository.findByMember(email);
+        Optional<Member> loginMember = loginRepository.findByMemberEmail(email);
         if (loginMember.isEmpty()) return Optional.empty();
 
         Member findMember = loginMember.get();
@@ -36,14 +33,10 @@ public class LoginServiceImpl implements LoginService{
         return loginMember;
     }
 
-    @Override
-    public Optional<Member> login(Member member, SocialEnum socialType, String Id) {
-        return Optional.empty();
-    }
 
     @Override
     public Optional<Member> findByEmail(String email) {
-        return loginRepository.findByMember(email);
+        return loginRepository.findByMemberEmail(email);
     }
 
     @Override

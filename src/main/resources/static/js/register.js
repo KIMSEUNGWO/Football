@@ -144,12 +144,11 @@ function printFalse(cTag, message) {
 
 function result(map) {
     var cEmail = document.querySelector('.confirmEmail');
-    if (map.status == 'ok') {
+    if (map.result == 'ok') {
         printTrue(cEmail, map.message);
         return;
     }
-    if (map.status == 'error') {
-        alert(map.message);
+    if (map.result == 'error') {
         printFalse(cEmail, map.message);
     }
 }

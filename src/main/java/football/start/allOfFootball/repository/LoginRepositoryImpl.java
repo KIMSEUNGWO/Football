@@ -32,7 +32,7 @@ public class LoginRepositoryImpl implements LoginRepository {
     }
 
     @Override
-    public Optional<Member> findByMember(String email) {
+    public Optional<Member> findByMemberEmail(String email) {
         return jpaMemberRepository.findByMemberEmail(email);
     }
 

@@ -115,11 +115,10 @@ public class MypageServiceImpl implements MypageService{
     }
 
     private String getDate(Optional<BeforePassword> findBeforePassword) {
-        if (findBeforePassword.isPresent()) {
-            BeforePassword beforePassword = findBeforePassword.get();
-            return DateFormatter.dateFormat(beforePassword.getPasswordChangeDate());
-        }
-        return "변경된 기록 없음";
+        if (findBeforePassword.isEmpty()) return "변경된 기록 없음";
+
+        BeforePassword beforePassword = findBeforePassword.get();
+        return DateFormatter.dateFormat(beforePassword.getPasswordChangeDate());
     }
 
     @Override

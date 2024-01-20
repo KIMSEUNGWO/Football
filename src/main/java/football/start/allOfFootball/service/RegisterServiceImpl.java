@@ -7,6 +7,7 @@ import football.start.allOfFootball.controller.login.EmailDto;
 import football.start.allOfFootball.domain.KakaoToken;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Social;
+import football.start.allOfFootball.dto.json.JsonDefault;
 import football.start.allOfFootball.enums.FileUploadType;
 import football.start.allOfFootball.enums.SocialEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
@@ -15,10 +16,11 @@ import football.start.allOfFootball.repository.LoginRepository;
 import football.start.allOfFootball.repository.RegisterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -33,17 +35,13 @@ public class RegisterServiceImpl implements RegisterService{
     private final BCrypt bc;
 
     @Override
-    public Map<String, String> validEmail(EmailDto emailDto, Map<String, String> map) {
+    public ResponseEntity<JsonDefault> validEmail(EmailDto emailDto) {
         String email = emailDto.getEmail();
         Optional<Member> findMember = registerRepository.findByMemberEmail(email);
         if (findMember.isPresent()) {
-            map.put("status", "error");
-            map.put("message", "중복된 이메일입니다.");
-            return map;
+            return new ResponseEntity<>(new JsonDefault("error", "중복된 이메일입니다."), HttpStatus.OK);
         }
-        map.put("status", "ok");
-        map.put("message", "사용가능한 이메일입니다.");
-        return map;
+        return new ResponseEntity<>(new JsonDefault("ok", "사용가능한 이메일입니다."), HttpStatus.OK);
     }
 
     @Override
@@ -60,7 +58,7 @@ public class RegisterServiceImpl implements RegisterService{
 
     @Override
     public boolean distinctEmail(String email) {
-        Optional<Member> byMember = loginRepository.findByMember(email);
+        Optional<Member> byMember = loginRepository.findByMemberEmail(email);
         return byMember.isPresent();
     }
 

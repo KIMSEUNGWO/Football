@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 public class MainServiceImpl implements MainService{
 
     private final MainRepository mainRepository;
-    private final MemberService memberService;
     private final OrderService orderService;
     private final RankService rankService;
     @Override
