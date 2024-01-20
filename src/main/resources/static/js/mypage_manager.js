@@ -11,10 +11,10 @@ window.addEventListener('load', () => {
                 alert('오류가 생겼습니다. 관리자에게 문의해주세요.');
                 return;
             }
-            let resultJson = getJson(myMatchId, teamList);
+            let resultJson = getJson(teamList);
             let confirm = window.confirm('팀을 확정하시겠습니까?');
             if (confirm) {
-                fetchPost('/manager/team/', resultJson, result);
+                fetchPost('/manager/team/' + myMatchId, resultJson, result);
             }
 
         })
@@ -144,9 +144,7 @@ function getTeamList(myMatchBox) {
 
 }
 
-function getJson(myMatchId, teamList) {
-    let json = {matchId : myMatchId};
-
+function getJson(teamList) {
     let childrens = teamList.children;
     
     let teamArray = [];
@@ -157,7 +155,7 @@ function getJson(myMatchId, teamList) {
         let team = {teamColor : color, player : players};
         teamArray.push(team);
     }
-    json = {...json, team : teamArray};
+    let json = {team : teamArray};
 
     return json;
 }
