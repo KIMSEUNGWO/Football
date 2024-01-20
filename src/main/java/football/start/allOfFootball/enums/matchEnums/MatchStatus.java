@@ -21,4 +21,8 @@ public enum MatchStatus {
     private String status;
     private String className;
 
+    public boolean isPlayBefore() {
+        return (this == 모집중 || this == 마감임박 || this == 마감);
+    }
+
 }

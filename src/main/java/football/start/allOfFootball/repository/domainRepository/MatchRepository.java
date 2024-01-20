@@ -78,7 +78,7 @@ public class MatchRepository {
     }
 
     public Map<TeamEnum, List<TeamInfo>> getTeamInfo(Match match, List<Orders> ordersList) {
-        if (match.getMatchStatus() == MatchStatus.경기시작전) {
+        if (match.getMatchStatus().isPlayBefore()) {
             return null;
         }
         for (Orders orders : ordersList) {
