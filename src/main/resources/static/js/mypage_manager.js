@@ -14,7 +14,7 @@ window.addEventListener('load', () => {
             let resultJson = getJson(myMatchId, teamList);
             let confirm = window.confirm('팀을 확정하시겠습니까?');
             if (confirm) {
-                fetchPost('/manager/team/confirm', resultJson, result);
+                fetchPost('/manager/team/', resultJson, result);
             }
 
         })
