@@ -33,7 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor(loginRepository))
                 .order(1)
-                .addPathPatterns("/mypage", "/mypage/**", "/admin", "/admin/**", "/cash/charge", "/order/**", "/manager")
+                .addPathPatterns("/mypage", "/mypage/**", "/admin", "/admin/**", "/cash/charge", "/order/**", "/manager", "/manager/**")
                 .excludePathPatterns("/css/**", "/js/**", "/fonts/**", "/images/**");
 
         registry.addInterceptor(new MatchInterceptor(matchService))
