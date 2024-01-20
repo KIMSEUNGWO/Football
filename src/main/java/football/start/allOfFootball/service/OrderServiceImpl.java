@@ -4,9 +4,7 @@ import football.start.allOfFootball.controller.mypage.OrderDateForm;
 import football.start.allOfFootball.controller.mypage.OrderListForm;
 import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.enums.paymentEnums.CashEnum;
-import football.start.allOfFootball.formatter.DateFormatter;
 import football.start.allOfFootball.repository.domainRepository.OrderRepository;
 import football.start.allOfFootball.service.domainService.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,7 +50,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderListForm> getMatchResultForm(List<Orders> orderList) {
-        if (orderList.isEmpty()) return Collections.emptyList();
         List<OrderListForm> list = new ArrayList<>();
 
         for (Orders orders : orderList) {

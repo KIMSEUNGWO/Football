@@ -22,11 +22,9 @@ public class MypageRepositoryImpl implements MypageRepository{
             result.put("nowPwError", "");
             return;
         }
-        for (FieldError fieldError : nowPassword) {
-            String nowPwMessage = messageConvert.getErrorMessage(fieldError);
-            result.put("nowPwError", nowPwMessage);
-            return;
-        }
+        String nowPwMessage = messageConvert.getErrorMessage(nowPassword.get(0));
+        result.put("nowPwError", nowPwMessage);
+
     }
 
     @Override
@@ -35,11 +33,8 @@ public class MypageRepositoryImpl implements MypageRepository{
             result.put("changePwError", "");
             return;
         }
-        for (FieldError fieldError : changePassword) {
-            String changePwMessage = messageConvert.getErrorMessage(fieldError);
-            result.put("changePwError", changePwMessage);
-            return;
-        }
+        String changePwMessage = messageConvert.getErrorMessage(changePassword.get(0));
+        result.put("changePwError", changePwMessage);
     }
 
     @Override
@@ -48,10 +43,7 @@ public class MypageRepositoryImpl implements MypageRepository{
             result.put("checkPwError", "");
             return;
         }
-        for (FieldError fieldError : checkPassword) {
-            String checkPwMessage = messageConvert.getErrorMessage(fieldError);
-            result.put("checkPwError", checkPwMessage);
-            return;
-        }
+        String checkPwMessage = messageConvert.getErrorMessage(checkPassword.get(0));
+        result.put("checkPwError", checkPwMessage);
     }
 }

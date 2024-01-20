@@ -58,22 +58,17 @@ public class MypageServiceImpl implements MypageService{
     }
 
     @Override
-    public Map<String, String> changePassword(Optional<Member> findMember, ChangePasswordForm form, BindingResult bindingResult) {
+    public Map<String, String> changePassword(Member member, ChangePasswordForm form, BindingResult bindingResult) {
         HashMap<String, String> result = new HashMap<>();
-        if (findMember.isEmpty()) {
-            result.put("result", "fail");
-            result.put("message", "회원을 찾지 못했습니다.");
-            return result;
-        }
-        Member member = findMember.get();
+
         if (bindingResult.hasErrors()) {
+            result.put("result", "fail");
             List<FieldError> nowPassword = bindingResult.getFieldErrors("nowPassword");
             mypageRepository.validNowPw(result, nowPassword);
             List<FieldError> changePassword = bindingResult.getFieldErrors("changePassword");
             mypageRepository.validChangePw(result, changePassword);
             List<FieldError> checkPassword = bindingResult.getFieldErrors("checkPassword");
             mypageRepository.validCheckPw(result, checkPassword);
-            result.put("result", "fail");
             return result;
         }
         // 비밀번호 변경 로직

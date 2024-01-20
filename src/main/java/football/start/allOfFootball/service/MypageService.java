@@ -18,7 +18,7 @@ public interface MypageService {
 
     MyProfileDto getMyProfile(Member findMember);
 
-    Map<String, String> changePassword(Optional<Member> findMember, ChangePasswordForm form, BindingResult bindingResult);
+    Map<String, String> changePassword(Member member, ChangePasswordForm form, BindingResult bindingResult);
 
     MypageMainDto getMypageMain(Member findMember);
 
