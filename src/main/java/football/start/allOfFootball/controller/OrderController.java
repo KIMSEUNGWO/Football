@@ -6,17 +6,14 @@ import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.dto.OrderForm;
 import football.start.allOfFootball.dto.OrderPostForm;
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.domainService.CashService;
 import football.start.allOfFootball.service.domainService.CouponListService;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
-import football.start.exception.NotEnoughCashException;
+import football.start.allOfFootball.exception.NotEnoughCashException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -25,9 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
-import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
-import static football.start.allOfFootball.SessionConst.REDIRECT_URL;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,8 +40,7 @@ public class OrderController {
     @GetMapping("/order/{matchId}")
     public String order(@PathVariable Long matchId,
                         @SessionLogin Member member,
-                        Model model,
-                        HttpServletRequest request) {
+                        Model model) {
 
         Match match = matchService.findByMatch(matchId).get();
 
@@ -66,7 +59,7 @@ public class OrderController {
                             @ModelAttribute OrderPostForm form) {
 
         if (form.getPolicy() == null) {
-            return AlertUtils.alertAndBack(response, "모든 약관에 동의해주세요.");
+            return AlertUtils.alertAndMove(response, "모든 약관에 동의해주세요.", "/order/" + matchId);
         }
 
         Match match = matchService.findByMatch(matchId).get();
@@ -96,7 +89,7 @@ public class OrderController {
             return "redirect:/match/" + matchId;
 
         } catch (NotEnoughCashException e) {
-            return AlertUtils.alertAndMove(response, "잔액이 부족합니다.", "/cash/charge");
+            return AlertUtils.alertAndMove(response, "잔액이 부족합니다.", "/cash/charge?url=" + "/order/" + matchId);
         }
     }
 }
