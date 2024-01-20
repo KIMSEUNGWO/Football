@@ -4,7 +4,7 @@ import football.start.allOfFootball.domain.CouponList;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.repository.domainRepository.CashRepository;
-import football.start.exception.NotEnoughCashException;
+import football.start.allOfFootball.exception.NotEnoughCashException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

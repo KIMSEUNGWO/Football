@@ -1,4 +1,4 @@
-package football.start.exception;
+package football.start.allOfFootball.exception;
 
 import java.io.IOException;
 
