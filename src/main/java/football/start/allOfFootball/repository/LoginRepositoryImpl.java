@@ -2,15 +2,14 @@ package football.start.allOfFootball.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.domain.QMember;
 import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -39,7 +38,9 @@ public class LoginRepositoryImpl implements LoginRepository {
 
     @Override
     public void renewLoginTime(Member member) {
-        member.renewLoginTime(LocalDateTime.now());
+        query.update(QMember.member)
+            .set(QMember.member.memberRecentlyDate, LocalDateTime.now())
+            .where(QMember.member.memberId.eq(member.getMemberId()));
     }
 
     @Override
