@@ -1,4 +1,4 @@
-package football.start.allOfFootball.dto;
+package football.start.allOfFootball.dto.json;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
