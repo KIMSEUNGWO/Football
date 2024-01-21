@@ -71,7 +71,7 @@ public class LoginController {
 
         Optional<Admin> byMember = adminService.findByMember(findMember);
         if (byMember.isPresent()) {
-            return "redirect:/admin";
+            return "redirect:/admin/ground";
         }
         return "redirect:" + redirectUrl;
     }

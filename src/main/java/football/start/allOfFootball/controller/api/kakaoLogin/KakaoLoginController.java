@@ -120,7 +120,7 @@ public class KakaoLoginController {
                     "opener.location.href=redirect;";
         }
         if ("admin".equals(option)) {
-            return "opener.location.href='/admin';";
+            return "opener.location.href='/admin/ground';";
         }
         return String.format("alert('%s');", option);
     }
