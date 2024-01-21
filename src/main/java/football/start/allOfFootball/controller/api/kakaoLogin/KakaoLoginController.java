@@ -2,10 +2,12 @@ package football.start.allOfFootball.controller.api.kakaoLogin;
 
 import football.start.allOfFootball.SessionConst;
 import football.start.allOfFootball.common.alert.AlertTemplate;
+import football.start.allOfFootball.domain.Admin;
 import football.start.allOfFootball.domain.KakaoToken;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Social;
 import football.start.allOfFootball.enums.SocialEnum;
+import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.RegisterService;
 import football.start.allOfFootball.service.domainService.MemberService;
@@ -32,6 +34,8 @@ public class KakaoLoginController {
     private final KakaoLoginService kakaoLoginService;
     private final LoginService loginService;
     private final RegisterService registerService;
+    private final AdminService adminService;
+
 
     @ResponseBody
     @GetMapping("/login/kakao")
@@ -67,6 +71,11 @@ public class KakaoLoginController {
         loginService.renewLoginTime(loginMember);
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getMemberId());
 
+        Optional<Admin> byMember = adminService.findByMember(loginMember);
+        if (byMember.isPresent()) {
+            execute(response, "admin");
+            return null;
+        }
         execute(response, null);
         return null;
 
@@ -109,6 +118,9 @@ public class KakaoLoginController {
                     "let redirect = urlParams.get('url');" +
                     "if (redirect == null) redirect = '/';" +
                     "opener.location.href=redirect;";
+        }
+        if ("admin".equals(option)) {
+            return "opener.location.href='/admin';";
         }
         return String.format("alert('%s');", option);
     }

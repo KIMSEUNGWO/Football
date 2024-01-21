@@ -1,10 +1,11 @@
 package football.start.allOfFootball.controller.login;
 
-import football.start.allOfFootball.controller.api.kakaoLogin.KakaoLoginService;
 import football.start.allOfFootball.customAnnotation.SessionLogin;
+import football.start.allOfFootball.domain.Admin;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Social;
 import football.start.allOfFootball.enums.SocialEnum;
+import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,8 +28,9 @@ import static football.start.allOfFootball.SessionConst.*;
 public class LoginController {
 
     private final MemberService memberService;
-    public final LoginService loginService;
-    public final KakaoLoginService kakaoLoginService;
+    private final LoginService loginService;
+    private final AdminService adminService;
+
 
 
     @GetMapping("/login")
@@ -66,6 +68,11 @@ public class LoginController {
         Member findMember = loginMember.get();
 
         session.setAttribute(LOGIN_MEMBER, findMember.getMemberId());
+
+        Optional<Admin> byMember = adminService.findByMember(findMember);
+        if (byMember.isPresent()) {
+            return "redirect:/admin";
+        }
         return "redirect:" + redirectUrl;
     }
 
