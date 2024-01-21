@@ -4,15 +4,9 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.controller.admin.SearchFieldDto;
 import football.start.allOfFootball.controller.admin.SearchMatchDto;
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.FieldImage;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.QMatch;
+import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.enums.LocationEnum;
-import football.start.allOfFootball.jpaRepository.JpaFieldImageRepository;
-import football.start.allOfFootball.jpaRepository.JpaFieldRepository;
-import football.start.allOfFootball.jpaRepository.JpaMatchRepository;
-import football.start.allOfFootball.jpaRepository.JpaOrderRepository;
+import football.start.allOfFootball.jpaRepository.*;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -31,10 +25,12 @@ import static football.start.allOfFootball.enums.LocationEnum.전체;
 public class AdminRepositoryImpl implements AdminRepository{
 
     private final JpaOrderRepository jpaOrderRepository;
+    private final JpaAdminRepository jpaAdminRepository;
     private final JPAQueryFactory query;
 
-    public AdminRepositoryImpl(JpaOrderRepository jpaOrderRepository, EntityManager em) {
+    public AdminRepositoryImpl(JpaOrderRepository jpaOrderRepository, JpaAdminRepository jpaAdminRepository, EntityManager em) {
         this.jpaOrderRepository = jpaOrderRepository;
+        this.jpaAdminRepository = jpaAdminRepository;
         this.query = new JPAQueryFactory(em);
     }
 
@@ -68,6 +64,11 @@ public class AdminRepositoryImpl implements AdminRepository{
                 ,joinRegion(searchDto.getRegion()))
             .orderBy(match.matchDate.desc())
             .fetch();
+    }
+
+    @Override
+    public Optional<Admin> findByMember(Member member) {
+        return jpaAdminRepository.findByMember(member);
     }
 
 

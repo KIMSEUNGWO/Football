@@ -1,11 +1,11 @@
 package football.start.allOfFootball.config;
 
 import football.start.allOfFootball.customAnnotation.argumentresolver.LoginMemberArgumentResolver;
-import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.interceptor.AdminInterceptor;
 import football.start.allOfFootball.interceptor.LoginInterceptor;
 import football.start.allOfFootball.interceptor.MatchInterceptor;
 import football.start.allOfFootball.interceptor.OrderInterceptor;
-import football.start.allOfFootball.repository.LoginRepository;
+import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +20,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final LoginRepository loginRepository;
     private final MatchService matchService;
     private final MemberService memberService;
+    private final AdminService adminService;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
@@ -31,7 +31,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor(loginRepository))
+        registry.addInterceptor(new LoginInterceptor(memberService))
                 .order(1)
                 .addPathPatterns("/mypage", "/mypage/**", "/admin", "/admin/**", "/cash/charge", "/order/**", "/manager", "/manager/**")
                 .excludePathPatterns("/css/**", "/js/**", "/fonts/**", "/images/**");
@@ -43,6 +43,11 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new OrderInterceptor(memberService, matchService))
                 .order(3)
                 .addPathPatterns("/order/**");
+
+        registry.addInterceptor(new AdminInterceptor(memberService, adminService))
+                .order(4)
+                .addPathPatterns("/admin", "/admin/**");
+
     }
 
 }
