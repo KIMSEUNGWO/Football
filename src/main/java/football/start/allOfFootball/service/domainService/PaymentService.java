@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +41,7 @@ public class PaymentService {
     public void save(Payment payment) {
         paymentRepository.save(payment);
         Member member = payment.getMember();
-        memberRepository.refreshMemberCache(member, payment.getResultCash());
+        memberRepository.refreshMemberCash(member, payment.getResultCash());
     }
 
     public List<CashListForm> findByAllMemberCacheList(Member findMember) {

@@ -6,8 +6,6 @@ import java.util.Optional;
 
 public interface LoginRepository {
 
-    Optional<Member> findByMemberId(Long memberId);
-
     Optional<Member> findByMemberEmail(String email);
 
     void renewLoginTime(Member member);

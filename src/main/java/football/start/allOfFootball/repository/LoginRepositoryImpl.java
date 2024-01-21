@@ -27,11 +27,6 @@ public class LoginRepositoryImpl implements LoginRepository {
     }
 
     @Override
-    public Optional<Member> findByMemberId(Long memberId) {
-        return jpaMemberRepository.findById(memberId);
-    }
-
-    @Override
     public Optional<Member> findByMemberEmail(String email) {
         return jpaMemberRepository.findByMemberEmail(email);
     }

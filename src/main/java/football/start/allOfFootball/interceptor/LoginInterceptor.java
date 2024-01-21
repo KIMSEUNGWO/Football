@@ -2,6 +2,7 @@ package football.start.allOfFootball.interceptor;
 
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.repository.LoginRepository;
+import football.start.allOfFootball.service.domainService.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -18,7 +19,7 @@ import static football.start.allOfFootball.SessionConst.REDIRECT_URL;
 @RequiredArgsConstructor
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private final LoginRepository loginRepository;
+    private final MemberService memberService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -39,7 +40,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
         Long memberId = Long.parseLong(memberIdStr);
-        Optional<Member> byMemberId = loginRepository.findByMemberId(memberId);
+        Optional<Member> byMemberId = memberService.findByMemberId(memberId);
         if (byMemberId.isEmpty()) {
             log.info("존재하지 않는 회원의 접근입니다.");
             response.sendRedirect("/login?url=" + requestURI);
