@@ -92,7 +92,6 @@ function confirmSMS(result) {
         clearInterval(timerInterval);
         clearInterval(clickLimit);
     }
-
 }
 
 function sendSMS(result) {
@@ -112,7 +111,6 @@ function sendSMS(result) {
         let phoneCheckBox = document.querySelector('.phoneCheck');
         phoneCheckBox.classList.remove('disabled');
     }
-    
 }
 
 

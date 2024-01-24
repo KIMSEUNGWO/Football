@@ -1,0 +1,136 @@
+html {
+    height: 100%;
+}
+body {
+    min-height: fit-content;
+    height: 100%;
+}
+.container {
+    max-width: none;
+    height: 100%;
+    position: relative;
+}
+
+.social {
+    font-size: 0.8rem;
+    border-radius: var(--border-radius);
+    border: 0.01rem solid var(--border-color);
+    padding: 0.23rem;
+    margin-right: 0.5rem;
+}
+.social.kakao {
+    color: black;
+    background-color: #FEE500;
+}
+.social.naver {
+    background-color: rgb(72, 214, 72);
+    color: rgb(255, 255, 255)
+}
+
+.phoneBox {
+    display: flex;
+    gap: 1rem;
+}
+.phoneBox > * {
+    margin: 0;
+}
+.inputWarp {
+    margin-bottom: 1rem;
+}
+
+.inputTitle {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    color: rgb(47, 47, 47)
+}
+input[name="phone"] {
+    width: 75%;
+}
+input[name="phoneCheck"] {
+    width: 60%;
+}
+.inputWarp input {
+    border: 0.1rem solid var(--border-color);
+    outline: none;
+    border-radius: var(--border-radius);
+    padding: 0 1rem;
+    height: 2.5rem;
+
+}
+.inputWarp button {
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--main-color);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.inputWarp button:hover {
+    background-color: var(--main-color-hover);
+
+}
+#phoneBtn {
+    width: 25%;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    height: 2.5rem;
+    gap: 0.5rem
+}
+.btn > * {
+    margin: 0;
+}
+#phoneCheckBtn {
+    height: 100%;
+    width: 100%;
+}
+
+.confirmMsg {
+    color: rgb(115, 207, 82);
+    margin-top: 0.5rem;
+}
+
+.confirmMsg.error {
+    color: red;
+}
+.resultBox {
+    width: 100%;
+    height: 11rem;
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: 2px 2px 5px #eeeeee;
+    padding: 1rem;
+    display: grid;
+    grid-template-rows: 30% 70%;
+    align-items: center;
+}
+#resultTitle {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    color: rgb(101, 101, 101);
+}
+.resultWarp {
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+}
+#close {
+    position: absolute;
+    width: 100%;
+    height: 2.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--main-color);
+    color: white;
+    font-size: 1.1rem;
+    bottom: 0;
+}
+#close:hover {
+    background-color: var(--main-color-hover);
+}

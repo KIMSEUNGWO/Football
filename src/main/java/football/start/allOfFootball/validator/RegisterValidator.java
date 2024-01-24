@@ -43,8 +43,6 @@ public class RegisterValidator implements Validator {
         smsRequest.setPhone(dto.getPhone());
         smsRequest.setCertificationNumber(dto.getPhoneCheck());
         try {
-            smsService.regexPhone(smsRequest);
-            smsService.distinctPhone(smsRequest);
             smsService.isValid(smsRequest);
         } catch (CertificationException e) {
             errors.rejectValue("phoneCheck", "NotFound", e.getJsonDefault().getMessage());

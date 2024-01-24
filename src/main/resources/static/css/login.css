@@ -21,7 +21,9 @@ input{
     grid-template-columns: 33% 33% 33%;
     margin: 1.5rem 0;
     color: #6b6b6b;
-
+}
+.login_look > * {
+    cursor: pointer;
 }
 
 

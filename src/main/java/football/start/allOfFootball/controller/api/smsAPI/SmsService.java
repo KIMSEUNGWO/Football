@@ -58,6 +58,7 @@ public class SmsService {
     }
 
     public void saveSms(SmsRequest data, String certificationNumber) {
+
         Sms sms = Sms.builder()
             .phone(data.getPhone())
             .certificationNumber(certificationNumber)
@@ -80,6 +81,9 @@ public class SmsService {
      * @throws CertificationException
      */
     public void checkCertification(SmsRequest smsRequest) throws CertificationException {
+        regexPhone(smsRequest);
+        distinctPhone(smsRequest);
+
         Optional<Sms> findSms = smsRepository.findSms(smsRequest);
         if (findSms.isEmpty()) {
             throw new NotFoundCertificationNumberException(HttpStatus.BAD_REQUEST, new JsonDefault("error", "인증정보가 존재하지 않습니다."));
@@ -100,16 +104,20 @@ public class SmsService {
      * @throws CertificationException
      */
     public void isValid(SmsRequest smsRequest) throws CertificationException {
+        regexPhone(smsRequest);
+        distinctPhone(smsRequest);
+
         Optional<Sms> findSms = smsRepository.findSms(smsRequest);
         if (findSms.isEmpty()) {
             throw new NotFoundCertificationNumberException(HttpStatus.BAD_REQUEST, new JsonDefault("error", "인증정보가 존재하지 않습니다."));
         }
+
         Sms sms = findSms.get();
         smsRepository.delete(sms);
 
     }
 
-    public void regexPhone(SmsRequest data) throws IllegalPhoneException {
+    protected void regexPhone(SmsRequest data) throws IllegalPhoneException {
 
         String phone = data.getPhone();
         if (phone == null || phone.length() < 10) {
@@ -118,7 +126,7 @@ public class SmsService {
         data.setPhone(phone.replaceAll("[^0-9]", ""));
     }
 
-    public void distinctPhone(SmsRequest data) throws DistinctPhoneException{
+    protected void distinctPhone(SmsRequest data) throws DistinctPhoneException{
         String phone = data.getPhone();
         Optional<Long> findMember = smsRepository.findByPhone(phone);
         if (findMember.isPresent()) {

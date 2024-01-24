@@ -42,7 +42,6 @@ public class SmsController {
     public ResponseEntity<JsonDefault> confirmSMS(@RequestBody SmsRequest data) {
         System.out.println("data = " + data);
         try {
-            smsService.regexPhone(data);
             smsService.checkCertification(data);
         } catch (CertificationException e) {
             return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
