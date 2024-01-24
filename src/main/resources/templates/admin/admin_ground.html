@@ -33,10 +33,19 @@
                     <button type="button" class="btn" id="searchBtn">검색</button>
                 </div>
                 <div class="group">
-                    <span class="total">총 3건</span>
+                    <span class="total">총 0건</span>
                     <a href="/admin/ground/add" class="btn" id="groundAdd">등록</a>
                 </div>
-                <ul class="searchResult">
+                <ul class="searchResult" id="searchTitle">
+                    <a disabled>
+                        <li>번호</li>
+                        <li>지역</li>
+                        <li>구장이름</li>
+                        <li>구장주소</li>
+                        <li>등록일</li>
+                    </a>
+                </ul>
+                <ul class="searchResult" id="searchResult">
                     <li class="none">검색 결과가 없습니다.</li>
                 </ul>
             </div>

@@ -65,3 +65,25 @@ input[name="matchDate"] {
     background-color: gray;
     cursor: not-allowed;
 }
+
+.group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.group > * {
+    margin: 0;
+}
+#groundAdd, #matchAdd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5.5rem;
+    height: 2.5rem;
+    font-size: 1.1rem;
+}
+
+.searchResult > * {
+    grid-template-columns: 15% 10% 10% 35% 10% 20%;
+}

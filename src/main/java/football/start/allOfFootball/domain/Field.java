@@ -9,7 +9,9 @@ import football.start.allOfFootball.enums.groundEnums.ShowerEnum;
 import football.start.allOfFootball.enums.groundEnums.ToiletEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,9 @@ public class Field extends ImageParent {
     @Enumerated(EnumType.STRING)
     private ShowerEnum fieldShower;
 
+    @CreatedDate
+    private LocalDateTime createDate;
+
     @OneToMany(mappedBy = "field")
     private List<FieldImage> fieldImages = new ArrayList<>();
 
@@ -58,6 +63,7 @@ public class Field extends ImageParent {
         fieldToilet = form.getToilet();
         fieldShower = form.getShower();
         fieldInformation = form.getFieldDetails();
+        createDate = LocalDateTime.now();
     }
 
     public void setEditField(EditFieldForm form) {

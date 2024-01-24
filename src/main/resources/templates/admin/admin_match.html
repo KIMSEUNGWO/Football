@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/admin_main.css">
-    <link rel="stylesheet" href="/css/admin_ground.css">
+    <link rel="stylesheet" href="/css/admin_match.css">
     <link rel="stylesheet" href="/css/calendar_range.css">
     <script src="/js/calendar_range.js"></script>
     <script src="/js/admin_match.js"></script>
@@ -96,11 +96,20 @@
                     <button type="button" class="btn" id="searchBtn">검색</button>
                 </div>
                 <div class="group">
-                    <span class="total">총 3건</span>
+                    <span class="total">총 0건</span>
                 </div>
-                
-                <ul class="searchResult">
-
+                <ul class="searchResult" id="searchTitle">
+                    <a disabled>
+                        <li>경기일</li>
+                        <li>매치시간</li>
+                        <li>지역</li>
+                        <li>구장명</li>
+                        <li>등록인원</li>
+                        <li>상태</li>
+                    </a>
+                </ul>
+                <ul class="searchResult" id="searchResult">
+                    <li class="none">검색 결과가 없습니다.</li>
                 </ul>
             </div>
         </div>

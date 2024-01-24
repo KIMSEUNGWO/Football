@@ -74,12 +74,12 @@ function matchSearch(list) {
     }
 }
 function searchEmpty() {
-    const searchResult = document.querySelector('.searchResult');
+    const searchResult = document.querySelector('#searchResult');
     searchResult.innerHTML = '<li class="none">검색 결과가 없습니다.</li>';
 }
 
 function createList(list) {
-    const searchResult = document.querySelector('.searchResult');
+    const searchResult = document.querySelector('#searchResult');
 
     let temp = ''
     for (let i=0;i<list.length;i++) {

@@ -94,13 +94,13 @@ function search() {
 }
 
 function searchEmpty() {
-    const searchResult = document.querySelector('.searchResult');
+    const searchResult = document.querySelector('#searchResult');
 
     searchResult.innerHTML = '<li class="none">검색 결과가 없습니다.</li>';
 }
 
 function createList(list) {
-    const searchResult = document.querySelector('.searchResult');
+    const searchResult = document.querySelector('#searchResult');
 
     let temp = ''
     for (let i=0;i<list.length;i++) {
@@ -109,7 +109,13 @@ function createList(list) {
     searchResult.innerHTML = temp;
 }
 function resultForm(searchForm) {
-    return '<a href="/admin/ground/' + searchForm.fieldId + '" class="result"><span id="groundRegion">' + searchForm.region + '</span><span id="groundTitle">' + searchForm.fieldName +'</span></a>';
+    return '<a href="/admin/ground/' + searchForm.fieldId + '" class="result">' +
+                '<span>' + searchForm.fieldId + '</span>' +
+                '<span>' + searchForm.region + '</span>' +
+                '<span>' + searchForm.fieldName +'</span>' +
+                '<span>' + searchForm.fieldAddress + '</span>' +
+                '<span>' + searchForm.createDate + '</span>' +
+            '</a>'
 }
 
 function addDisabled(e) {
