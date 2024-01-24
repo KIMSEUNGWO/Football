@@ -70,16 +70,16 @@
                 <div class="errorMsg errorPhone field-error" th:errors="*{phone}">[[${errorMsg}]]</div>
                 <div class="confirmMsg confirmPhone disabled">인증번호가 발송되었습니다.</div>
             </div>
-            <div class='login_box phoneCheck'>
+            <div class='login_box phoneCheck disabled'>
                 <h5>인증번호</h5>
                 <div class="phoneBox">
-                    <input type="text" maxlength='5' minlength="5" name="phoneCheck"  class="confirm" inputmode="numeric">
+                    <input type="text" maxlength='5' minlength="5" th:field="*{phoneCheck}" th:errorclass="field-error" class="confirm" inputmode="numeric">
                     <div class="btn">
                         <span class="limitTime">05:00</span>
-                        <button type="button" class="registerButton" id="phoneCheck">인증확인</button>
+                        <button type="button" class="registerButton" id="phoneCheckBtn">인증확인</button>
                     </div>
                 </div>
-                <div class="errorMsg errorPhoneCheck disabled">[[${errorMsg}]]</div>
+                <div class="errorMsg errorPhoneCheck" th:errors="*{phoneCheck}"></div>
                 <div class="confirmMsg confirmPhoneCheck disabled">인증이 완료되었습니다.</div>
             </div>
             <input type="submit" value="회원가입">

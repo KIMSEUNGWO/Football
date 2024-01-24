@@ -1,6 +1,10 @@
 const disabled = 'disabled';
+let timerInterval = null;
+let clickLimit = null;
 
 window.addEventListener('load', function(){
+
+    document.querySelector('#phoneCheck').value = '';
 
     let form = document.querySelector('.register_form');
     form.addEventListener('submit', function(e){
@@ -45,8 +49,23 @@ window.addEventListener('load', function(){
                 phone.scrollIntoView({behavior : "smooth"});
                 return
             }
-            sendSMS()
+
+            phone = document.querySelector('input[name="phone"]').value.replaceAll('-', '');
+            let json = {phone : phone};
+
+            fetchPost('/sms/send', json, sendSMS);
         }
+
+        const phoneCheck = document.querySelector('#phoneCheckBtn');
+        phoneCheck.addEventListener('click', () => {
+            let phone = document.querySelector('input[name="phone"]').value;
+            let certification = document.querySelector('input[name="phoneCheck"]').value;
+
+            let json = {phone : phone.replaceAll('-', ''), certificationNumber : certification};
+            
+            fetchPost('/sms/confirm', json, confirmSMS);
+            
+        })
     })
 
     let phone = document.querySelector('input[name="phone"]');
@@ -63,12 +82,37 @@ window.addEventListener('load', function(){
     })
 })
 
-function sendSMS() {
+function confirmSMS(result) {
+    console.log(result)
+    if (result.result == 'ok') {
+        var cPhone = document.querySelector('.confirmPhoneCheck');
+        printTrue(cPhone, result.message);
+        let inputPhone = document.querySelector('input[name="phone"]')
+        inputPhone.setAttribute('disabled', true);
+        clearInterval(timerInterval);
+        clearInterval(clickLimit);
+    }
+
+}
+
+function sendSMS(result) {
+    console.log(result);
+    if (result.result == 'ok') {
+        if (clickLimit) {
+            alert("잠시 후에 시도해주세요.");
+            return;
+        }
+        var cPhone = document.querySelector('.confirmPhone');
+        printTrue(cPhone, result.message);
+        clearInterval(timerInterval);
+
+        timerInterval = limitTimer();
+        clickLimit = limitClick();
+
+        let phoneCheckBox = document.querySelector('.phoneCheck');
+        phoneCheckBox.classList.remove('disabled');
+    }
     
-    var cPhone = document.querySelector('.confirmPhone');
-    printTrue(cPhone, '인증번호가 발송되었습니다.');
-    clearInterval(timerInterval);
-    var timerInterval = limitTimer();
 }
 
 
@@ -188,7 +232,7 @@ function validPasswordCheck(){
 
 function validName(){
     var cName = document.querySelector('.confirmName');
-    if (checkName()){
+    if (!checkName()){
         printTrue(cName, '')
         return null;
     } else {
@@ -232,11 +276,28 @@ function validPhone() {
     }
 }
 
+
+function limitClick() {
+    var seconds = 10;
+    var timerId = setInterval(function(){
+        // 시간 감소
+        seconds--;
+        // 시간이 0이면 타이머 중지
+        if (seconds === 0) {
+            clearInterval(timerId);
+            clickLimit = undefined; // 타이머 중지 후 초기화
+            return true;
+        }
+    }, 1000);
+
+    return timerId; // 새로운 타이머 ID 반환
+}
+
 function limitTimer() {
     let timer = document.querySelector('.limitTime');
     var minutes = 5;
     var seconds = 0;
-    var timerInterval = setInterval(function(){
+    var timerId = setInterval(function(){
         // 시간 감소
         seconds--;
     
@@ -246,7 +307,7 @@ function limitTimer() {
             seconds = 59;
         }
         if (minutes == 0) {
-            timer.style.color = 'red'
+            timer.style.color = 'red';
         }
     
         // 분과 초를 2자리 숫자로 표시
@@ -258,11 +319,13 @@ function limitTimer() {
     
         // 시간이 0이면 타이머 중지
         if (minutes === 0 && seconds === 0) {
-            clearInterval(timerInterval);
+            clearInterval(timerId);
             alert('타이머 종료!');
             return true;
         }
     }, 1000);
+
+    return timerId; // 새로운 타이머 ID 반환
 }
 
 function rangeCheck(year, month, day) {
@@ -333,7 +396,7 @@ function checkPassword() {
 function checkName() {
     var validName = document.querySelector('input[name="name"]');
     var nameRegex = /[ ]+/;
-    return nameRegex.test(validName.value);
+    return nameRegex.test(validName.value) || validName.value == '';
 }
 
 function checkGender() {

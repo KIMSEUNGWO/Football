@@ -42,6 +42,8 @@ public class RegisterDto{
     @Pattern(regexp = "(010|011)-[0-9]{3,4}-[0-9]{4}", message = "휴대폰 정보가 잘못입력되었습니다.")
     private String phone;
 
+    private String phoneCheck;
+
     public RegisterDto() {
     }
 

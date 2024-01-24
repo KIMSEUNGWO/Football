@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -66,6 +67,9 @@ public class RegisterController {
         System.out.println("registerDto = " + registerDto);
         if (!registerDto.getPassword().equals(registerDto.getPasswordCheck())) {
             bindingResult.rejectValue("passwordCheck", null, "비밀번호가 일치하지 않습니다.");
+        }
+        if (bindingResult.hasFieldErrors("phoneCheck")) {
+            return AlertUtils.alertAndMove(response, bindingResult.getFieldError("phoneCheck").getDefaultMessage(), "/register");
         }
         if (bindingResult.hasErrors()) {
             System.out.println("bindingResult = " + bindingResult);

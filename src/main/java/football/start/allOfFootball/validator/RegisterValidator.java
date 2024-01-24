@@ -1,23 +1,26 @@
 package football.start.allOfFootball.validator;
 
+import football.start.allOfFootball.controller.api.smsAPI.SmsRequest;
+import football.start.allOfFootball.controller.api.smsAPI.SmsService;
+import football.start.allOfFootball.controller.api.smsAPI.exception.CertificationException;
 import football.start.allOfFootball.controller.login.RegisterDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.time.LocalDate;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class RegisterValidator implements Validator {
 
     private final Pattern p = Pattern.compile("[0-9]{2}");
+    private final SmsService smsService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -30,6 +33,26 @@ public class RegisterValidator implements Validator {
         log.info("RegisterValidator.validate 실행");
         System.out.println("dto = " + dto);
 
+        validBirthday(dto, errors);
+        validCertification(dto, errors);
+
+    }
+
+    private void validCertification(RegisterDto dto, Errors errors) {
+        String phone = dto.getPhone();
+        String phoneCheck = dto.getPhoneCheck();
+        SmsRequest smsRequest = new SmsRequest();
+        smsRequest.setPhone(phone);
+        smsRequest.setCertificationNumber(phoneCheck);
+
+        try {
+            smsService.isValid(smsRequest);
+        } catch (CertificationException e) {
+            errors.rejectValue("phoneCheck", "NotFound", e.getJsonDefault().getMessage());
+        }
+    }
+
+    private void validBirthday(RegisterDto dto, Errors errors) {
         String birthday = dto.getBirthday();
         a:if (birthday.length() == 6) {
             Matcher m = p.matcher(birthday);

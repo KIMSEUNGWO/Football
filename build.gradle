@@ -60,6 +60,9 @@ dependencies {
 	// redis 순위매길때 사용
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+	// 문자 인증
+	implementation 'net.nurigo:sdk:4.2.7'
+
 }
 
 //Querydsl 추가, 자동 생성된 Q클래스 gradle clean으로 제거
