@@ -62,3 +62,8 @@ input[type="submit"] {
     color: red;
 }
 
+input:read-only {
+    outline: none;
+    cursor: default;
+}
+

@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface JpaSmsRepository extends JpaRepository<Sms, Long> {
     Optional<Sms> findByPhoneAndCertificationNumber(String phone, String certificationNumber);
 
-    void deleteByPhone(String phone);
+    void deleteAllByPhone(String phone);
 }

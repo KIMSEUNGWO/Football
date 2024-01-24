@@ -88,7 +88,7 @@ function confirmSMS(result) {
         var cPhone = document.querySelector('.confirmPhoneCheck');
         printTrue(cPhone, result.message);
         let inputPhone = document.querySelector('input[name="phone"]')
-        inputPhone.setAttribute('disabled', true);
+        inputPhone.setAttribute('readonly', true);
         clearInterval(timerInterval);
         clearInterval(clickLimit);
     }
@@ -207,6 +207,8 @@ function validEmail(){
 
 function validPassword() {
     let cPassword = document.querySelector('.confirmPassword');
+    let fieldError = document.querySelector('.errorPassword');
+    fieldError.innerHTML = '';
     if (checkPassword()) {
         printTrue(cPassword, '사용가능한 비밀번호 입니다.')
         return null;

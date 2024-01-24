@@ -39,13 +39,12 @@ public class RegisterValidator implements Validator {
     }
 
     private void validCertification(RegisterDto dto, Errors errors) {
-        String phone = dto.getPhone();
-        String phoneCheck = dto.getPhoneCheck();
         SmsRequest smsRequest = new SmsRequest();
-        smsRequest.setPhone(phone);
-        smsRequest.setCertificationNumber(phoneCheck);
-
+        smsRequest.setPhone(dto.getPhone());
+        smsRequest.setCertificationNumber(dto.getPhoneCheck());
         try {
+            smsService.regexPhone(smsRequest);
+            smsService.distinctPhone(smsRequest);
             smsService.isValid(smsRequest);
         } catch (CertificationException e) {
             errors.rejectValue("phoneCheck", "NotFound", e.getJsonDefault().getMessage());

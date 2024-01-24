@@ -25,12 +25,13 @@ public class SmsController {
 
         try {
             smsService.regexPhone(data);
+            smsService.distinctPhone(data);
             String certificationNumber = smsService.sendSMS(data);
             smsService.saveSms(data, certificationNumber);
 
         } catch (MessageSendException e) {
             return new ResponseEntity<>(new JsonDefault("error", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (IllegalPhoneException e) {
+        } catch (CertificationException e) {
             return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
         }
 

@@ -1,10 +1,16 @@
 package football.start.allOfFootball.controller.api.smsAPI;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import football.start.allOfFootball.domain.Member;
+import football.start.allOfFootball.domain.QMember;
 import football.start.allOfFootball.domain.Sms;
+import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
 import football.start.allOfFootball.jpaRepository.JpaSmsRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -12,12 +18,19 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Repository
-@RequiredArgsConstructor
 @Slf4j
 public class SmsRepository {
 
     private final JpaSmsRepository jpaSmsRepository;
+    private final JpaMemberRepository jpaMemberRepository;
+    private final JPAQueryFactory query;
     private final int maxLength = 5;
+
+    public SmsRepository(JpaSmsRepository jpaSmsRepository, JpaMemberRepository jpaMemberRepository, EntityManager em) {
+        this.jpaSmsRepository = jpaSmsRepository;
+        this.jpaMemberRepository = jpaMemberRepository;
+        this.query = new JPAQueryFactory(em);
+    }
 
     protected String createCertificationNumber() {
         return new Random()
@@ -46,7 +59,16 @@ public class SmsRepository {
         return now.isBefore(expireDate);
     }
 
+    @Transactional
     public void delete(Sms sms) {
-        jpaSmsRepository.deleteByPhone(sms.getPhone());
+        jpaSmsRepository.deleteAllByPhone(sms.getPhone());
+    }
+
+    public Optional<Long> findByPhone(String phone) {
+        return Optional.of(query.select(QMember.member.memberId)
+            .from(QMember.member)
+            .where(QMember.member.memberPhone.eq(phone))
+            .fetchFirst());
+//        return jpaMemberRepository.findByMemberPhone(phone);
     }
 }

@@ -1,6 +1,7 @@
 package football.start.allOfFootball.controller.api.smsAPI;
 
 import football.start.allOfFootball.controller.api.smsAPI.exception.*;
+import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Sms;
 import football.start.allOfFootball.dto.json.JsonDefault;
 import lombok.RequiredArgsConstructor;
@@ -115,5 +116,13 @@ public class SmsService {
             throw new IllegalPhoneException(HttpStatus.BAD_REQUEST, new JsonDefault("error", "휴대폰 번호를 다시 확인해주세요."));
         }
         data.setPhone(phone.replaceAll("[^0-9]", ""));
+    }
+
+    public void distinctPhone(SmsRequest data) throws DistinctPhoneException{
+        String phone = data.getPhone();
+        Optional<Long> findMember = smsRepository.findByPhone(phone);
+        if (findMember.isPresent()) {
+            throw new DistinctPhoneException(HttpStatus.BAD_REQUEST, new JsonDefault("error", "이미 가입한 이력이 있습니다."));
+        }
     }
 }
