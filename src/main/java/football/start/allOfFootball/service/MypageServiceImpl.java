@@ -12,6 +12,7 @@ import football.start.allOfFootball.dto.match.TeamInfo;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.formatter.DateFormatter;
+import football.start.allOfFootball.formatter.DateType;
 import football.start.allOfFootball.repository.MypageRepository;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
@@ -118,7 +119,7 @@ public class MypageServiceImpl implements MypageService{
         if (findBeforePassword.isEmpty()) return "변경된 기록 없음";
 
         BeforePassword beforePassword = findBeforePassword.get();
-        return DateFormatter.dateFormat(beforePassword.getPasswordChangeDate());
+        return DateFormatter.format(DateType.YYYY년_M월_D일, beforePassword.getPasswordChangeDate());
     }
 
     @Override
@@ -133,7 +134,7 @@ public class MypageServiceImpl implements MypageService{
 
             MatchDataForm matchDataForm = matchRepository.getMatchDataForm(match, ordersList);
             Map<TeamEnum, List<TeamInfo>> teamInfo = matchRepository.getTeamInfo(match, ordersList);
-            String date = DateFormatter.dateFormatAndWeek(match.getMatchDate());
+            String date = DateFormatter.format(DateType.YYYY년_M월_D일_W, match.getMatchDate());
 
             ManagerDataForm build = ManagerDataForm.builder()
                                     .topInfo(matchDataForm)

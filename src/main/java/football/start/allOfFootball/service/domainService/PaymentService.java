@@ -6,6 +6,7 @@ import football.start.allOfFootball.domain.Payment;
 import football.start.allOfFootball.enums.paymentEnums.CashEnum;
 import football.start.allOfFootball.enums.paymentEnums.PaymentType;
 import football.start.allOfFootball.formatter.DateFormatter;
+import football.start.allOfFootball.formatter.DateType;
 import football.start.allOfFootball.formatter.NumberFormatter;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
 import football.start.allOfFootball.repository.domainRepository.PaymentRepository;
@@ -50,7 +51,7 @@ public class PaymentService {
         List<CashListForm> result = new ArrayList<>();
         for (Payment payment : list) {
             CashListForm build = CashListForm.builder()
-                .cashDate(DateFormatter.dateFormatAndWeek(payment.getCreateDate()))
+                .cashDate(DateFormatter.format(DateType.YYYY년_M월_D일_W, payment.getCreateDate()))
                 .cashTime(getTime(payment.getCreateDate()))
                 .cashEnum(payment.getCashType())
                 .cash(payment.getCharge())

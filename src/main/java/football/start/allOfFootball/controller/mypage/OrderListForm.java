@@ -4,6 +4,7 @@ import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.formatter.DateFormatter;
+import football.start.allOfFootball.formatter.DateType;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -27,7 +28,7 @@ public class OrderListForm {
         Match match = orders.getMatch();
 
         matchId = match.getMatchId();
-        matchDate = DateFormatter.dateFormat(match.getMatchDate());
+        matchDate = DateFormatter.format(DateType.YYYY년_M월_D일, match.getMatchDate());
         matchHour = getHourForm(match.getMatchDate());
         maxPersonAndCount = getMix(match.getMaxPerson(), match.getMatchCount());
         fieldTitle = match.getField().getFieldTitle();

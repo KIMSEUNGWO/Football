@@ -4,6 +4,7 @@ import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.formatter.DateFormatter;
+import football.start.allOfFootball.formatter.DateType;
 import football.start.allOfFootball.formatter.NumberFormatter;
 import lombok.*;
 
@@ -38,7 +39,7 @@ public class MainSideInfoForm {
     }
 
     public void setMySchedule(Match match) {
-        String date = DateFormatter.sideMenuDateForm(match.getMatchDate());
+        String date = DateFormatter.format(DateType.YYYY년_MM월_DD일, match.getMatchDate());
         MyScheduleForm myScheduleForm = MyScheduleForm.build(match);
 
         if (!schedule.containsKey(date)) {
