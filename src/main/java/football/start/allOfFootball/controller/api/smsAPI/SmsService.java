@@ -51,7 +51,7 @@ public class SmsService {
             throw new MessageSendException("메세지 무응답", e);
         } catch (NurigoUnknownException e) {
             log.error("[SmsService] [메세지 전송에러] {}", e.getMessage());
-            throw new MessageSendException("메세지 알수없는 에러", e);
+            throw new MessageSendException("메세지 알수없는 에러입니다. 관리자에게 문의해주세요.", e);
         }
 
         return certificationNumber;

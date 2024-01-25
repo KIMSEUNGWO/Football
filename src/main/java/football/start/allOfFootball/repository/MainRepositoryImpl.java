@@ -8,9 +8,9 @@ import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
-import football.start.allOfFootball.jpaRepository.JpaMatchRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -24,11 +24,10 @@ import static football.start.allOfFootball.domain.QMatch.match;
 @Slf4j
 public class MainRepositoryImpl implements MainRepository{
 
-    private final JpaMatchRepository jpaMatchRepository;
     private final JPAQueryFactory query;
 
-    public MainRepositoryImpl(JpaMatchRepository jpaMatchRepository, EntityManager em) {
-        this.jpaMatchRepository = jpaMatchRepository;
+    @Autowired
+    public MainRepositoryImpl(EntityManager em) {
         this.query = new JPAQueryFactory(em);
     }
 

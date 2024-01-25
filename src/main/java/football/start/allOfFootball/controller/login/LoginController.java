@@ -123,11 +123,8 @@ public class LoginController {
     @PostMapping("/findEmail")
     public ResponseEntity<JsonDefault> postEmail(@RequestBody SmsRequest smsRequest) {
 
-        try {
-            smsService.isValidFind(smsRequest);
-        } catch (CertificationException e) {
-            return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
-        }
+        smsService.isValidFind(smsRequest);
+
         Optional<Member> findEmail = memberService.findByMemberPhone(smsRequest.getPhone());
         if (findEmail.isEmpty()) {
             return new ResponseEntity<>(new FindEmail("ok", "가입 이력이 존재하지 않습니다.", null, null), HttpStatus.OK);
@@ -147,11 +144,8 @@ public class LoginController {
     @PostMapping("/findPassword")
     public ResponseEntity<JsonDefault> postPassword(@RequestBody SmsRequest smsRequest) {
 
-        try {
-            smsService.checkCertificationFind(smsRequest);
-        } catch (CertificationException e) {
-            return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
-        }
+        smsService.checkCertificationFind(smsRequest);
+
         Optional<Member> findEmail = memberService.findByMemberEmailAndMemberPhone(smsRequest.getEmail(), smsRequest.getPhone());
         if (findEmail.isEmpty()) {
             return new ResponseEntity<>(new JsonDefault("error", "일치하는 회원정보가 없습니다."), HttpStatus.BAD_REQUEST);
@@ -164,11 +158,8 @@ public class LoginController {
     @PostMapping("/changePassword")
     public ResponseEntity<JsonDefault> postPassword(@RequestBody FindPassword findPassword) {
 
-        try {
-            smsService.checkCertificationFind(findPassword);
-        } catch (CertificationException e) {
-            return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
-        }
+        smsService.checkCertificationFind(findPassword);
+
         Optional<Member> findMember = memberService.findByMemberEmailAndMemberPhone(findPassword.getEmail(), findPassword.getPhone());
         if (findMember.isEmpty()) {
             return new ResponseEntity<>(new JsonDefault("error", "일치하는 회원정보가 없습니다."), HttpStatus.BAD_REQUEST);
@@ -182,13 +173,8 @@ public class LoginController {
         if (!password.equals(passwordCheck)) {
             return new ResponseEntity<>(new JsonDefault("error", "변경할 비밀번호가 일치하지 않습니다."), HttpStatus.OK);
         }
+        smsService.isValidFind(findPassword);
         memberService.changePassword(member, password);
-
-        try {
-            smsService.isValidFind(findPassword);
-        } catch (CertificationException e) {
-            return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
-        }
 
         return new ResponseEntity<>(new JsonDefault("ok", ""), HttpStatus.OK);
     }

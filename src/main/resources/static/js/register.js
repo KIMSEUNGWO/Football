@@ -55,17 +55,17 @@ window.addEventListener('load', function(){
 
             fetchPost('/sms/send', json, sendSMS);
         }
+    })
 
-        const phoneCheck = document.querySelector('#phoneCheckBtn');
-        phoneCheck.addEventListener('click', () => {
-            let phone = document.querySelector('input[name="phone"]').value;
-            let certification = document.querySelector('input[name="phoneCheck"]').value;
+    const phoneCheck = document.querySelector('#phoneCheckBtn');
+    phoneCheck.addEventListener('click', () => {
+        let phone = document.querySelector('input[name="phone"]').value;
+        let certification = document.querySelector('input[name="phoneCheck"]').value;
 
-            let json = {phone : phone.replaceAll('-', ''), certificationNumber : certification};
-            
-            fetchPost('/sms/confirm', json, confirmSMS);
-            
-        })
+        let json = {phone : phone.replaceAll('-', ''), certificationNumber : certification};
+        
+        fetchPost('/sms/confirm', json, confirmSMS);
+        
     })
 
     let phone = document.querySelector('input[name="phone"]');

@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 
 @Getter
-public class CertificationException extends IOException {
+public class CertificationException extends RuntimeException {
 
     private final HttpStatus code;
     private final JsonDefault jsonDefault;
