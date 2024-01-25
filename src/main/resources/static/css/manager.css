@@ -37,6 +37,7 @@ body {
     flex-direction: column;
     align-content: flex-end;
     gap: 0.5rem;
+    justify-content: space-between;
 }
 .input_form:nth-child(2n) {
     flex-wrap: wrap;

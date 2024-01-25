@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -158,6 +159,7 @@ public class LoginController {
         return new ResponseEntity<>(new JsonDefault("ok", ""), HttpStatus.OK);
     }
 
+    @Transactional
     @ResponseBody
     @PostMapping("/changePassword")
     public ResponseEntity<JsonDefault> postPassword(@RequestBody FindPassword findPassword) {

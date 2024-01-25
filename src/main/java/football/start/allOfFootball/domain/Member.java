@@ -95,4 +95,8 @@ public class Member extends ImageParent {
     public void setMemberPassword(String changePassword) {
         memberPassword = changePassword;
     }
+
+    public void setMemberPhone(String memberPhone) {
+        this.memberPhone = memberPhone;
+    }
 }

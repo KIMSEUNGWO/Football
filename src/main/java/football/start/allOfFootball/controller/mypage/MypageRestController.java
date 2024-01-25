@@ -1,13 +1,20 @@
 package football.start.allOfFootball.controller.mypage;
 
+import football.start.allOfFootball.controller.api.smsAPI.SmsRequest;
+import football.start.allOfFootball.controller.api.smsAPI.SmsService;
+import football.start.allOfFootball.controller.api.smsAPI.exception.CertificationException;
 import football.start.allOfFootball.customAnnotation.SessionLogin;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.dto.ChangePasswordForm;
+import football.start.allOfFootball.dto.json.JsonDefault;
 import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +30,7 @@ public class MypageRestController {
 
     private final MypageService mypageService;
     private final OrderService orderService;
+    private final SmsService smsService;
 
 
     @PostMapping("/mypage/order/get")
@@ -49,4 +57,44 @@ public class MypageRestController {
         return result;
 
     }
+
+    @PostMapping("/changePhone/check")
+    public ResponseEntity<JsonDefault> confirmSMS(@RequestBody SmsRequest smsRequest, @SessionLogin Member member) {
+        System.out.println("smsRequest = " + smsRequest);
+
+        String memberPhone = member.getMemberPhone();
+        String phone = smsRequest.getPhone();
+        if (memberPhone.equals(phone)) {
+            return new ResponseEntity<>(new JsonDefault("error", "동일한 번호로 변경할 수 없습니다."),HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            smsService.checkCertificationFind(smsRequest);
+        } catch (CertificationException e) {
+            return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
+        }
+        return new ResponseEntity<>(new JsonDefault("ok", "인증이 완료되었습니다."), HttpStatus.OK);
+    }
+
+    @Transactional
+    @PostMapping("/changePhone/confirm")
+    public ResponseEntity<JsonDefault> changePhone(@RequestBody SmsRequest smsRequest, @SessionLogin Member member) {
+        System.out.println("smsRequest = " + smsRequest);
+
+        String memberPhone = member.getMemberPhone();
+        String phone = smsRequest.getPhone();
+        if (memberPhone.equals(phone)) {
+            return new ResponseEntity<>(new JsonDefault("error", "동일한 번호로 변경할 수 없습니다."),HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            smsService.isValidFind(smsRequest);
+        } catch (CertificationException e) {
+            return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
+        }
+        member.setMemberPhone(phone);
+        return new ResponseEntity<>(new JsonDefault("ok", "휴대폰 번호를 변경했습니다."), HttpStatus.OK);
+    }
+
+
 }

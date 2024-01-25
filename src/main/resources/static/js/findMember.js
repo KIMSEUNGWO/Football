@@ -92,7 +92,7 @@ function changePassword() {
 function changePwResult(result) {
     if (result.result == 'ok') {
         alert('비밀번호를 변경하였습니다.');
-        window.opener.parent.location.reload();
+        window.opener.parent.location.reload(); 
         window.close();
     } else if (result.result == 'error') {
         alert(result.message);
