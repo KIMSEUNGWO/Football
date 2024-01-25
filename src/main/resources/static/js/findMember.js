@@ -9,11 +9,46 @@ window.addEventListener('load', () => {
         if (validPhone() != null) return;
 
         let phone = document.querySelector('input[name="phone"]').value.replaceAll('-', '');
+        let box = document.querySelector('#phoneCheckBox');
+        box.classList.remove(disabled);
         let json = {phone : phone};
 
-        sendSMS({result : 'ok'});
-        // fetchPost('/sms/send', json, sendSMS);
+        fetchPost('/sms/send', json, sendSMS);
     })
+
+    const emailBtn = document.querySelector('#phoneCheckBtn.emailBtn');
+    if (emailBtn) {
+        emailBtn.addEventListener('click', () => {
+            let phone = document.querySelector('input[name="phone"]').value;
+            let certification = document.querySelector('input[name="phoneCheck"]').value;
+    
+            let json = {phone : phone.replaceAll('-', ''), certificationNumber : certification};
+            fetchPost('/sms/confirm', json, confirmSMS);
+        })
+    }
+    const pwBtn = document.querySelector('#phoneCheckBtn.pwBtn');
+    if (pwBtn) {
+        pwBtn.addEventListener('click', () => {
+            let email = document.querySelector('input[name="email"]').value;
+            let phone = document.querySelector('input[name="phone"]').value;
+            let certification = document.querySelector('input[name="phoneCheck"]').value;
+    
+            let json = {email : email, phone : phone.replaceAll('-', ''), certificationNumber : certification};
+            fetchPost('/sms/findPassword', json, findPassword);
+        })
+    }
+
+    const confirmBtn = document.querySelector('#confirm');
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+            let check = confirm('비밀번호를 변경하시겠습니까?');
+            if (check) {
+                changePassword();
+            }
+        });
+    }
+
+
 
     const phone = document.querySelector('input[name="phone"]');
     phone.addEventListener('keyup',function(e){
@@ -25,9 +60,53 @@ window.addEventListener('load', () => {
             phone.value = addPhone(str);
         }
     })
+
+    const email = document.querySelector('input[name="email"]');
+    if (email) {
+        email.addEventListener('focusout', () => validEmail());
+    }
+
+    const close = document.querySelector('#close');
+    close.addEventListener('click', () => window.close());
+
+
+    let passwordCheck = document.querySelector('input[name="passwordCheck"]');
+    if (passwordCheck) {
+        passwordCheck.addEventListener('keyup', () => validPasswordCheck());
+    }
 })
 
+function changePassword() {
+    let email = document.querySelector('input[name="email"]').value;
+    let phone = document.querySelector('input[name="phone"]').value;
+    let certification = document.querySelector('input[name="phoneCheck"]').value;
 
+    let pw = document.querySelector('input[name="password"]').value;
+    let pwCheck = document.querySelector('input[name="passwordCheck"]').value;
+
+    let json = {email : email, phone : phone.replaceAll('-', ''), certificationNumber : certification, password : pw, passwordCheck : pwCheck};
+
+    fetchPost('/changePassword', json, changePwResult);
+
+}
+function changePwResult(result) {
+    if (result.result == 'ok') {
+        alert('비밀번호를 변경하였습니다.');
+        opener.window.reloadPage();
+        window.close();
+    }
+}
+
+function findPassword(result) {
+    if (result.result == 'ok') {
+        let wrap = document.querySelector('.warp');
+        wrap.classList.add(disabled);
+        let resultBox = document.querySelector('#resultBox');
+        resultBox.classList.remove(disabled);
+        let confirmBtn = document.querySelector('#confirm');
+        confirmBtn.classList.remove(disabled);
+    }
+}
 
 
 
@@ -40,10 +119,34 @@ function confirmSMS(result) {
         inputPhone.setAttribute('readonly', true);
         clearInterval(timerInterval);
         clearInterval(clickLimit);
+
+        const resultWrap = document.querySelector('.resultWrap');
+        let emailResult = document.querySelector('#result');
+        if (result.social != null) {
+            resultWrap.insertBefore(createSocial(result.social), emailResult);
+        }
+        if (result.email != null) {
+            emailResult.innerHTML = result.email;
+        } else {
+            emailResult.innerHTML = '가입 이력이 존재하지 않습니다.';
+        }
+
+        let resultBox = document.querySelector('.resultBox');
+        resultBox.classList.remove(disabled);
     }
 }
+function createSocial(social) {
+    let span = document.createElement('span');
+    span.classList.add('social')
+
+    if (social == 'KAKAO') {
+        span.classList.add('kakao');
+        span.innerHTML = 'KAKAO';
+    }
+    
+    return span;
+}
 function sendSMS(result) {
-    console.log(result);
     if (result.result == 'ok') {
         if (clickLimit) {
             alert("잠시 후에 시도해주세요.");
@@ -55,7 +158,6 @@ function sendSMS(result) {
 
         timerInterval = limitTimer();
         clickLimit = limitClick();
-
     }
 }
 
@@ -68,6 +170,16 @@ function validPhone() {
     } else {
         printFalse(cPhone, '입력정보가 잘못되었습니다');
         return document.querySelector('input[name="phone"]');
+    }
+}
+function validPassword() {
+    let cPassword = document.querySelector('.confirmPassword');
+    if (checkPassword()) {
+        printTrue(cPassword, '사용가능한 비밀번호 입니다.')
+        return null;
+    } else {
+        printFalse(cPassword, '8자 이상의 대,소문자와 특수문자를 1개 이상 작성해주세요.');
+        return document.querySelector("input[name='password']");;
     }
 }
 
@@ -177,4 +289,38 @@ function limitTimer() {
     }, 1000);
 
     return timerId; // 새로운 타이머 ID 반환
+}
+
+function validEmail(){
+    var cEmail = document.querySelector('.confirmEmail');
+    if (!checkEmail()){
+        printFalse(cEmail, '유효하지 않은 이메일입니다.');
+        return document.querySelector("input[name='email']");;
+    } else {
+        cEmail.classList.add(disabled);
+    }
+    return null;
+}
+function validPasswordCheck(){
+    var password = document.querySelector('input[name="password"]');
+    var passwordCheck = document.querySelector('input[name="passwordCheck"]');
+
+    var cPasswordCheck = document.querySelector('.confirmPasswordCheck');
+    if (password.value === passwordCheck.value) {
+        printTrue(cPasswordCheck, '비밀번호가 일치합니다.');
+        return null;
+    } else {
+        printFalse(cPasswordCheck, '비밀번호가 일치하지 않습니다.')
+        return passwordCheck;
+    }
+}
+function checkEmail() {
+    var email = document.querySelector("input[name='email']");
+    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailRegex.test(email.value);
+}
+function checkPassword() {
+    var validPassword = document.querySelector("input[name='password']");
+    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,15}$/;
+    return passwordRegex.test(validPassword.value);
 }

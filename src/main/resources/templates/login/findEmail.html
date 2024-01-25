@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/common.css">
-    <link rel="stylesheet" href="/static/css/findMember.css">
-    <script src="/static/js/findMember.js"></script>
-    <script src="/static/js/fetch.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/findMember.css">
+    <script src="/js/findMember.js"></script>
+    <script src="/js/fetch.js"></script>
     <title>이메일 찾기 :: 프로젝트</title>
 </head>
 <body>
@@ -21,23 +21,22 @@
                 </div>
                 <div class="confirmMsg confirmPhone disabled">인증번호가 발송되었습니다.</div>
             </div>
-            <div class="inputWarp">
+            <div class="inputWarp disabled" id="phoneCheckBox">
                 <span class="inputTitle">인증번호</span>
                 <div class="phoneBox">
                     <input type="text" maxlength='5' minlength="5" id="phoneCheck" name="phoneCheck" class="confirm" inputmode="numeric">
                     <div class="btn">
                         <span class="limitTime">05:00</span>
-                        <button type="button" class="registerButton" id="phoneCheckBtn">인증확인</button>
+                        <button type="button" class="registerButton emailBtn" id="phoneCheckBtn">인증확인</button>
                     </div>
                 </div>
-                <div class="confirmMsg confirmPhoneCheck disabled">인증이 완료되었습니다.</div>
             </div>
         </div>
-        <div class="resultBox">
+        <div class="resultBox disabled">
             <span id="resultTitle">아이디 찾기 결과</span>
             <div class="resultWrap">
-                <span class="social kakao">KAKAO</span>
-                <span id="result">아이디를 찾을 수 없습니다.</span>
+                <!-- <span class="social kakao">KAKAO</span> -->
+                <span id="result"></span>
             </div>
         </div>
         <button type="button" id="close">닫기</button>
