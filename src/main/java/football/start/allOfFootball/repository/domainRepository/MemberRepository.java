@@ -6,6 +6,7 @@ import football.start.allOfFootball.common.BCrypt;
 import football.start.allOfFootball.domain.BeforePassword;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Orders;
+import football.start.allOfFootball.domain.QMember;
 import football.start.allOfFootball.jpaRepository.JpaBeforePasswordRepository;
 import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
 import jakarta.persistence.EntityManager;
@@ -78,5 +79,13 @@ public class MemberRepository {
         return query.selectFrom(orders)
             .where(orders.member.eq(member).and(orders.match.matchDate.after(LocalDateTime.now())))
             .fetch();
+    }
+
+    public Optional<Member> findByMemberPhone(String phone) {
+        return jpaMemberRepository.findByMemberPhone(phone);
+    }
+
+    public Optional<Member> findByMemberEmailAndMemberPhone(String email, String phone) {
+        return jpaMemberRepository.findByMemberEmailAndMemberPhone(email, phone);
     }
 }

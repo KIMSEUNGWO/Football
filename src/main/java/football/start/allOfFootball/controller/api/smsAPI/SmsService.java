@@ -95,7 +95,21 @@ public class SmsService {
             smsRepository.delete(sms);
             throw new ExpireCertificationException(HttpStatus.BAD_REQUEST, new JsonDefault("error", "인증시간이 만료되었습니다."));
         }
+    }
+    public void checkCertificationFind(SmsRequest smsRequest) throws CertificationException {
+        regexPhone(smsRequest);
 
+        Optional<Sms> findSms = smsRepository.findSms(smsRequest);
+        if (findSms.isEmpty()) {
+            throw new NotFoundCertificationNumberException(HttpStatus.BAD_REQUEST, new JsonDefault("error", "인증정보가 존재하지 않습니다."));
+        }
+        Sms sms = findSms.get();
+
+        boolean isExpireDateBefore = smsRepository.isBefore(sms);
+        if (!isExpireDateBefore) {
+            smsRepository.delete(sms);
+            throw new ExpireCertificationException(HttpStatus.BAD_REQUEST, new JsonDefault("error", "인증시간이 만료되었습니다."));
+        }
     }
 
     /**
@@ -106,6 +120,18 @@ public class SmsService {
     public void isValid(SmsRequest smsRequest) throws CertificationException {
         regexPhone(smsRequest);
         distinctPhone(smsRequest);
+
+        Optional<Sms> findSms = smsRepository.findSms(smsRequest);
+        if (findSms.isEmpty()) {
+            throw new NotFoundCertificationNumberException(HttpStatus.BAD_REQUEST, new JsonDefault("error", "인증정보가 존재하지 않습니다."));
+        }
+
+        Sms sms = findSms.get();
+        smsRepository.delete(sms);
+
+    }
+    public void isValidFind(SmsRequest smsRequest) throws CertificationException {
+        regexPhone(smsRequest);
 
         Optional<Sms> findSms = smsRepository.findSms(smsRequest);
         if (findSms.isEmpty()) {

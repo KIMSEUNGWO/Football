@@ -13,7 +13,7 @@ window.addEventListener('load', () => {
         box.classList.remove(disabled);
         let json = {phone : phone};
 
-        fetchPost('/sms/send', json, sendSMS);
+        fetchPost('/sms/send/find', json, sendSMS);
     })
 
     const emailBtn = document.querySelector('#phoneCheckBtn.emailBtn');
@@ -23,7 +23,7 @@ window.addEventListener('load', () => {
             let certification = document.querySelector('input[name="phoneCheck"]').value;
     
             let json = {phone : phone.replaceAll('-', ''), certificationNumber : certification};
-            fetchPost('/sms/confirm', json, confirmSMS);
+            fetchPost('/findEmail', json, confirmSMS);
         })
     }
     const pwBtn = document.querySelector('#phoneCheckBtn.pwBtn');
@@ -34,7 +34,7 @@ window.addEventListener('load', () => {
             let certification = document.querySelector('input[name="phoneCheck"]').value;
     
             let json = {email : email, phone : phone.replaceAll('-', ''), certificationNumber : certification};
-            fetchPost('/sms/findPassword', json, findPassword);
+            fetchPost('/findPassword', json, findPassword);
         })
     }
 
@@ -92,8 +92,14 @@ function changePassword() {
 function changePwResult(result) {
     if (result.result == 'ok') {
         alert('비밀번호를 변경하였습니다.');
-        opener.window.reloadPage();
+        window.opener.parent.location.reload();
         window.close();
+    } else if (result.result == 'error') {
+        alert(result.message);
+        let pw = document.querySelector('input[name="password"]');
+        let pwCheck = document.querySelector('input[name="passwordCheck"]');
+        pw.value = '';
+        pwCheck.value = '';
     }
 }
 
@@ -113,8 +119,6 @@ function findPassword(result) {
 function confirmSMS(result) {
     console.log(result)
     if (result.result == 'ok') {
-        var cPhone = document.querySelector('.confirmPhoneCheck');
-        printTrue(cPhone, result.message);
         let inputPhone = document.querySelector('input[name="phone"]')
         inputPhone.setAttribute('readonly', true);
         clearInterval(timerInterval);
@@ -128,7 +132,7 @@ function confirmSMS(result) {
         if (result.email != null) {
             emailResult.innerHTML = result.email;
         } else {
-            emailResult.innerHTML = '가입 이력이 존재하지 않습니다.';
+            emailResult.innerHTML = result.message;
         }
 
         let resultBox = document.querySelector('.resultBox');

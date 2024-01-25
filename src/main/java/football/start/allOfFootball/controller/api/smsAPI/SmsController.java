@@ -38,6 +38,24 @@ public class SmsController {
         return new ResponseEntity<>(new JsonDefault("ok", "인증번호가 발송되었습니다."), HttpStatus.OK);
     }
 
+    @PostMapping("/sms/send/find")
+    public ResponseEntity<JsonDefault> sendSMSFindMember(@RequestBody SmsRequest data) {
+        System.out.println("data = " + data);
+
+        try {
+            smsService.regexPhone(data);
+            String certificationNumber = smsService.sendSMS(data);
+            smsService.saveSms(data, certificationNumber);
+
+        } catch (MessageSendException e) {
+            return new ResponseEntity<>(new JsonDefault("error", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (CertificationException e) {
+            return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
+        }
+
+        return new ResponseEntity<>(new JsonDefault("ok", "인증번호가 발송되었습니다."), HttpStatus.OK);
+    }
+
     @PostMapping("/sms/confirm")
     public ResponseEntity<JsonDefault> confirmSMS(@RequestBody SmsRequest data) {
         System.out.println("data = " + data);

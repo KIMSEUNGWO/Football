@@ -65,10 +65,12 @@ public class SmsRepository {
     }
 
     public Optional<Long> findByPhone(String phone) {
-        return Optional.of(query.select(QMember.member.memberId)
+        Long memberId = query.select(QMember.member.memberId)
             .from(QMember.member)
             .where(QMember.member.memberPhone.eq(phone))
-            .fetchFirst());
+            .fetchFirst();
+        if (memberId == null) return Optional.empty();
+        return Optional.of(memberId);
 //        return jpaMemberRepository.findByMemberPhone(phone);
     }
 }

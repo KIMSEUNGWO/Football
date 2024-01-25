@@ -41,9 +41,6 @@ public class RegisterController {
     private final RegisterService registerService;
 
     private final RegisterValidator registerValidator;
-    private final MatchService matchService;
-    private final OrderService orderService;
-    private final MemberService memberService;
 
     @InitBinder
     public void init(WebDataBinder dataBinder) {
@@ -86,72 +83,5 @@ public class RegisterController {
         return AlertUtils.alertAndMove(response, "회원가입이 완료되었습니다.", "/login");
     }
 
-    @GetMapping("/member/create")
-    public String test2() {
-        Member member = Member.builder().memberEmail("t1@n.com").memberPassword("!@#QWEasd1").memberCash(30000).memberName("김김김").grade(GradeEnum.루키).memberGender(GenderEnum.남자).memberBirthday(LocalDate.now()).memberPhone("01066038635").build();
-        Member member2 = Member.builder().memberEmail("t2@n.com").memberPassword("!@#QWEasd1").memberCash(30000).memberName("승승승").grade(GradeEnum.루키).memberGender(GenderEnum.남자).memberBirthday(LocalDate.now()).memberPhone("01066038635").build();
-        Member member3 = Member.builder().memberEmail("t3@n.com").memberPassword("!@#QWEasd1").memberCash(30000).memberName("우우우").grade(GradeEnum.루키).memberGender(GenderEnum.남자).memberBirthday(LocalDate.now()).memberPhone("01066038635").build();
-        Member member4 = Member.builder().memberEmail("t4@n.com").memberPassword("!@#QWEasd1").memberCash(30000).memberName("김김승승우우").grade(GradeEnum.루키).memberGender(GenderEnum.남자).memberBirthday(LocalDate.now()).memberPhone("01066038635").build();
-        Member member5 = Member.builder().memberEmail("t5@n.com").memberPassword("!@#QWEasd1").memberCash(30000).memberName("우승김").grade(GradeEnum.루키).memberGender(GenderEnum.남자).memberBirthday(LocalDate.now()).memberPhone("01066038635").build();
-
-        registerService.save(member);
-        registerService.save(member2);
-        registerService.save(member3);
-        registerService.save(member4);
-        registerService.save(member5);
-
-        return "redirect:/";
-    }
-
-    @GetMapping("w/{matchId}")
-    public String test4(@PathVariable Long matchId) {
-        Optional<Match> byMatch = matchService.findByMatch(matchId);
-        Match match = byMatch.get();
-
-        Member member = memberService.findByMemberId(7L).get();
-        Member member2 = memberService.findByMemberId(3L).get();
-        Member member3 = memberService.findByMemberId(4L).get();
-        Member member4 = memberService.findByMemberId(5L).get();
-        Member member5 = memberService.findByMemberId(6L).get();
-
-
-        Orders orders = Orders.build(match, member);
-        orderService.save(orders, member, Optional.empty(), 10000); // order 저장
-        matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
-
-        Orders orders2 = Orders.build(match, member2);
-        orderService.save(orders2, member2, Optional.empty(), 10000); // order 저장
-        matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
-
-        Orders orders3 = Orders.build(match, member3);
-        orderService.save(orders3, member3, Optional.empty(), 10000); // order 저장
-        matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
-
-        Orders orders4 = Orders.build(match, member4);
-        orderService.save(orders4, member4, Optional.empty(), 10000); // order 저장
-        matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
-
-        Orders orders5 = Orders.build(match, member5);
-        orderService.save(orders5, member5, Optional.empty(), 10000); // order 저장
-        matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
-
-        return "redirect:/";
-    }
-    @GetMapping("/match/start/{matchId}")
-    public String test3(@PathVariable Long matchId) {
-        Optional<Match> byMatch = matchService.findByMatch(matchId);
-        Match match = byMatch.get();
-        match.setMatchStatus(경기시작전);
-        List<Orders> ordersList = match.getOrdersList();
-
-        // team 자동 분배 알고리즘 시작
-        MatchTeamAlgorithms setTeam = new MatchTeamAlgorithms(ordersList);
-        Map<TeamEnum, List<Orders>> result = setTeam.getResult(match.getMatchCount());
-
-        // 결과 Orders TeamEnum 설정
-        orderService.setTeam(result);
-
-        return "redirect:/";
-    }
 
 }

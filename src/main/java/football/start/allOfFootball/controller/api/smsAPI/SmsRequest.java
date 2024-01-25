@@ -9,6 +9,8 @@ import lombok.*;
 @ToString
 public class SmsRequest {
 
+    private String email;
+
     private String phone;
 
     private String certificationNumber;

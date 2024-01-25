@@ -64,4 +64,16 @@ public class MemberService {
         }
         return false;
     }
+
+    public Optional<Member> findByMemberPhone(String phone) {
+        return memberRepository.findByMemberPhone(phone);
+    }
+
+    public Optional<Member> findByMemberEmailAndMemberPhone(String email, String phone) {
+        return memberRepository.findByMemberEmailAndMemberPhone(email, phone);
+    }
+
+    public void changePassword(Member member, String password) {
+        memberRepository.changePassword(member, password);
+    }
 }
