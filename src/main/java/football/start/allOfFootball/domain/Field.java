@@ -24,7 +24,7 @@ import java.util.List;
 @Builder
 @Table(name = "FIELD")
 @SequenceGenerator(name = "SEQ_FIELD", sequenceName = "SEQ_FIELD_ID", allocationSize = 1)
-public class Field extends ImageParent {
+public class Field extends BaseTimeEntity implements ImageParent {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FIELD")
     private Long fieldId;
@@ -48,9 +48,6 @@ public class Field extends ImageParent {
     @Enumerated(EnumType.STRING)
     private ShowerEnum fieldShower;
 
-    @CreatedDate
-    private LocalDateTime createDate;
-
     @OneToMany(mappedBy = "field")
     private List<FieldImage> fieldImages = new ArrayList<>();
 
@@ -63,7 +60,6 @@ public class Field extends ImageParent {
         fieldToilet = form.getToilet();
         fieldShower = form.getShower();
         fieldInformation = form.getFieldDetails();
-        createDate = LocalDateTime.now();
     }
 
     public void setEditField(EditFieldForm form) {

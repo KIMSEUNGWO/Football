@@ -24,7 +24,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @DynamicInsert
 @SequenceGenerator(name = "SEQ_MEMBER", sequenceName = "SEQ_MEMBER_ID", allocationSize = 1)
-public class Member extends ImageParent {
+public class Member implements ImageParent {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER")
     private Long memberId;
