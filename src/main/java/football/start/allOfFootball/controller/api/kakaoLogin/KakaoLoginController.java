@@ -2,11 +2,9 @@ package football.start.allOfFootball.controller.api.kakaoLogin;
 
 import football.start.allOfFootball.SessionConst;
 import football.start.allOfFootball.common.alert.AlertTemplate;
-import football.start.allOfFootball.domain.Admin;
 import football.start.allOfFootball.domain.KakaoToken;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Social;
-import football.start.allOfFootball.enums.SocialEnum;
 import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.RegisterService;
@@ -71,8 +69,7 @@ public class KakaoLoginController {
         loginService.renewLoginTime(loginMember);
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getMemberId());
 
-        Optional<Admin> byMember = adminService.findByMember(loginMember);
-        if (byMember.isPresent()) {
+        if (adminService.isAdmin(loginMember)) {
             execute(response, "admin");
             return null;
         }

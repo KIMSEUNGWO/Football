@@ -39,7 +39,7 @@ public class CouponListService {
         if (couponNum == null) return Optional.empty();
 
         Optional<CouponList> byCouponListId = couponListRepository.findByCouponListId(couponNum);
-        if (byCouponListId.isEmpty() || byCouponListId.get().getCouponListStatus() != 'N') {
+        if (byCouponListId.isEmpty() || byCouponListId.get().isUsedCoupon()) {
             return Optional.empty();
         }
         return byCouponListId;

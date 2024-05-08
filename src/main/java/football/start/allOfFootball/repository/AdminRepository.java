@@ -5,7 +5,6 @@ import football.start.allOfFootball.controller.admin.SearchMatchDto;
 import football.start.allOfFootball.domain.*;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AdminRepository {
 
@@ -15,5 +14,5 @@ public interface AdminRepository {
 
     List<Match> findByAllMatch(SearchMatchDto searchDto);
 
-    Optional<Admin> findByMember(Member member);
+    boolean isAdmin(Member member);
 }

@@ -2,13 +2,10 @@ package football.start.allOfFootball.controller.mypage;
 
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.formatter.DateFormatter;
-import football.start.allOfFootball.formatter.DateType;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Getter
@@ -28,7 +25,7 @@ public class OrderListForm {
         Match match = orders.getMatch();
 
         matchId = match.getMatchId();
-        matchDate = DateFormatter.format(DateType.YYYY년_M월_D일, match.getMatchDate());
+        matchDate = DateFormatter.format("yyyy년 M월 d일", match.getMatchDate());
         matchHour = getHourForm(match.getMatchDate());
         maxPersonAndCount = getMix(match.getMaxPerson(), match.getMatchCount());
         fieldTitle = match.getField().getFieldTitle();

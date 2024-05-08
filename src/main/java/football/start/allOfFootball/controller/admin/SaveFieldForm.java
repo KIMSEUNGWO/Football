@@ -39,4 +39,14 @@ public class SaveFieldForm {
         return null;
     }
 
+    public SaveFieldForm(String fieldName, LocationEnum region, String fieldAddress, String xSize, String ySize, ParkingEnum parking, ToiletEnum toilet, ShowerEnum shower) {
+        this.fieldName = fieldName;
+        this.region = region;
+        this.fieldAddress = fieldAddress;
+        this.xSize = xSize;
+        this.ySize = ySize;
+        this.parking = parking;
+        this.toilet = toilet;
+        this.shower = shower;
+    }
 }

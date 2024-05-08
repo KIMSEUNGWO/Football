@@ -17,7 +17,7 @@ public class Cash extends BaseTimeEntity{
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CASH")
     private Long cashId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
     private Member member;
 

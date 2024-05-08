@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +20,7 @@ public class Manager {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MANAGER")
     private Long managerId;
 
+    @Getter
     @OneToOne
     @JoinColumn(name = "memberId")
     private Member member;
@@ -30,7 +30,11 @@ public class Manager {
     private LocationEnum region; // 활동구역
 
     // Not Columns
-    @OneToMany(mappedBy = "manager")
+    @OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
     private List<Match> matchList;
 
+    public boolean isSameMember(Member compareMember) {
+        if (member == null || compareMember == null) return false;
+        return member.equals(compareMember);
+    }
 }

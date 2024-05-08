@@ -1,11 +1,8 @@
 package football.start.allOfFootball.dto;
 
 import football.start.allOfFootball.domain.CouponList;
-import football.start.allOfFootball.formatter.NumberFormatter;
+import football.start.allOfFootball.formatter.DateFormatter;
 import lombok.*;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,35 +23,9 @@ public class CouponListForm {
         couponListId = couponList.getCouponListId();
         couponName = couponList.getCoupon().getCouponName();
         couponDiscount = couponList.getCoupon().getCouponDiscount();
-        remainingTime = getRemain(couponList.getCouponListExpireDate());
-        couponEndDate = getEndDate(couponList.getCouponListExpireDate());
+        remainingTime = couponList.howToRemaining();
+        couponEndDate = DateFormatter.format("yyyy.MM.dd HH:mm 까지", couponList.getCouponListExpireDate());
     }
 
-    private static String getRemain(LocalDateTime couponListExpireDate) {
-        LocalDateTime now = LocalDateTime.now();
-        Duration duration = Duration.between(now, couponListExpireDate);
-
-        long days = duration.toDays();
-        long hours = duration.toHours() % 24;
-
-        if (days >= 1) {
-            return days + "일 남음";
-        }
-        if (hours >= 1) {
-            return hours + "시간 남음";
-        }
-
-        return "만료임박";
-    }
-
-    private static String getEndDate(LocalDateTime date) {
-        int year = date.getYear();
-        int month = date.getMonthValue();
-        int day = date.getDayOfMonth();
-        int hour = date.getHour();
-        int minute = date.getMinute();
-
-        return String.format("%d.%02d.%02d %02d:%02d까지", year, month, day, hour, minute);
-    }
 
 }

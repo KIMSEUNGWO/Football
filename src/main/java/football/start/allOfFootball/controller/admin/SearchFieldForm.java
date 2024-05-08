@@ -3,7 +3,6 @@ package football.start.allOfFootball.controller.admin;
 import football.start.allOfFootball.domain.Field;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.formatter.DateFormatter;
-import football.start.allOfFootball.formatter.DateType;
 import lombok.*;
 
 @AllArgsConstructor
@@ -25,6 +24,6 @@ public class SearchFieldForm {
         region = form.getFieldLocation();
         fieldName = form.getFieldTitle();
         fieldAddress = form.getFieldAddress();
-        createDate = DateFormatter.format(DateType.YYYY_MM_DD, form.getCreateDate());
+        createDate = DateFormatter.format("yyyy-MM-dd", form.getCreateDate());
     }
 }

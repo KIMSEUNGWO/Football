@@ -26,7 +26,7 @@ public class RefundService {
             CouponList couponList = orders.getCouponList();
 
             if (couponList != null) {
-                couponList.setCouponListStatus('N');
+                couponList.refundCoupon();
                 orders.setCouponList(null);
             }
 

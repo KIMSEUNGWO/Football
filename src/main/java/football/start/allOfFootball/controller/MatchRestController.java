@@ -42,7 +42,7 @@ public class MatchRestController {
         Match match = findMatch.get();
         Manager manager = match.getManager();
 
-        if (manager == null || !manager.getMember().equals(member)) {
+        if (manager == null || manager.isSameMember(member)) {
             return ResponseEntity.badRequest().body(new JsonDefault("fail", "접근권한이 없습니다."));
         }
 
@@ -93,7 +93,7 @@ public class MatchRestController {
         Match match = findMatch.get();
         Manager manager = match.getManager();
 
-        if (member.getManager() == null || !member.equals(manager.getMember())) {
+        if (member.getManager() == null || manager.isSameMember(member)) {
             return ResponseEntity.badRequest().body(new JsonDefault("fail", "권한이 없습니다."));
         }
 
@@ -114,7 +114,7 @@ public class MatchRestController {
         }
         Match match = findMatch.get();
         Manager manager = match.getManager();
-        if (member.getManager() == null || !member.equals(manager.getMember())) {
+        if (member.getManager() == null || !manager.isSameMember(member)) {
             return ResponseEntity.badRequest().body(new JsonDefault("fail", "권한이 없습니다."));
         }
 

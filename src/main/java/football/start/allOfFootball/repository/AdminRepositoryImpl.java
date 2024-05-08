@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import static football.start.allOfFootball.domain.QField.field;
 import static football.start.allOfFootball.domain.QMatch.*;
@@ -67,8 +66,8 @@ public class AdminRepositoryImpl implements AdminRepository{
     }
 
     @Override
-    public Optional<Admin> findByMember(Member member) {
-        return jpaAdminRepository.findByMember(member);
+    public boolean isAdmin(Member member) {
+        return jpaAdminRepository.existsByMember(member);
     }
 
 

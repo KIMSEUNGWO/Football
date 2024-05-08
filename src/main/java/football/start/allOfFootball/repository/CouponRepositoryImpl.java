@@ -11,9 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Repository
 @Slf4j
 @Transactional
@@ -50,11 +47,6 @@ public class CouponRepositoryImpl implements CouponRepository {
 
     @Override
     public void saveCouponListTest(Member member, Coupon coupon) {
-        CouponList couponList = new CouponList();
-        couponList.setMember(member);
-        couponList.setCoupon(coupon);
-        couponList.setCouponListExpireDate(LocalDateTime.now().plusDays(coupon.getCouponLimitDay()));
-        couponList.setCouponListStatus('N');
-        jpaCouponListRepository.save(couponList);
+        jpaCouponListRepository.save(new CouponList(member, coupon));
     }
 }

@@ -1,11 +1,9 @@
 package football.start.allOfFootball.dto;
 
 
-import football.start.allOfFootball.domain.CouponList;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.formatter.DateFormatter;
-import football.start.allOfFootball.formatter.DateType;
 import football.start.allOfFootball.formatter.NumberFormatter;
 import lombok.*;
 
@@ -33,7 +31,7 @@ public class OrderForm {
         matchId = match.getMatchId();
         fieldTitle = match.getField().getFieldTitle();
         fieldAddress = match.getField().getFieldAddress();
-        matchDate = DateFormatter.format(DateType.M월_D일_W요일_HH_00, match.getMatchDate());
+        matchDate = DateFormatter.format("M월 d일 EEEE HH:mm", match.getMatchDate());
         price = NumberFormatter.format(match.getPrice());
         couponList = couponLists;
         cash = member.getMemberCash();

@@ -1,12 +1,10 @@
 package football.start.allOfFootball.repository.domainRepository;
 
-
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.common.BCrypt;
 import football.start.allOfFootball.domain.BeforePassword;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.domain.QMember;
 import football.start.allOfFootball.jpaRepository.JpaBeforePasswordRepository;
 import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
 import jakarta.persistence.EntityManager;
@@ -57,14 +55,12 @@ public class MemberRepository {
     @Transactional
     public void changePassword(Member member, String changePassword) {
         Optional<BeforePassword> findBeforePassword = jpaBeforePasswordRepository.findById(member.getMemberId());
-        if (findBeforePassword.isEmpty()) {
-            BeforePassword build = BeforePassword.builder().beforePassword(member.getMemberPassword()).member(member).passwordChangeDate(LocalDateTime.now()).build();
-            jpaBeforePasswordRepository.save(build);
-        } else {
-            BeforePassword beforePassword = findBeforePassword.get();
-            beforePassword.setBeforePassword(member.getMemberPassword());
-            beforePassword.setPasswordChangeDate(LocalDateTime.now());
-        }
+        findBeforePassword.ifPresentOrElse(
+            // Present
+            beforePassword -> beforePassword.changeBeforePassword(member.getMemberPassword()),
+            // Empty
+            () -> jpaBeforePasswordRepository.save(new BeforePassword(member))
+        );
 
         String newPassword = member.combineSalt(changePassword);
         String encode = bc.encodeBCrypt(newPassword);

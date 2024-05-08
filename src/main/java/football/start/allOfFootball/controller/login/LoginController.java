@@ -3,7 +3,6 @@ package football.start.allOfFootball.controller.login;
 import football.start.allOfFootball.controller.api.smsAPI.SmsRequest;
 import football.start.allOfFootball.controller.api.smsAPI.SmsService;
 import football.start.allOfFootball.customAnnotation.SessionLogin;
-import football.start.allOfFootball.domain.Admin;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Social;
 import football.start.allOfFootball.dto.json.FindEmail;
@@ -76,8 +75,7 @@ public class LoginController {
 
         session.setAttribute(LOGIN_MEMBER, findMember.getMemberId());
 
-        Optional<Admin> byMember = adminService.findByMember(findMember);
-        if (byMember.isPresent()) {
+        if (adminService.isAdmin(findMember)) {
             return "redirect:/admin/ground";
         }
         return "redirect:" + redirectUrl;
