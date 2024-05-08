@@ -12,7 +12,6 @@ import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -65,7 +64,7 @@ public class MypageRestController {
         String memberPhone = member.getMemberPhone();
         String phone = smsRequest.getPhone();
         if (memberPhone.equals(phone)) {
-            return new ResponseEntity<>(new JsonDefault("error", "동일한 번호로 변경할 수 없습니다."),HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(new JsonDefault("error", "동일한 번호로 변경할 수 없습니다."));
         }
 
         try {
@@ -73,7 +72,7 @@ public class MypageRestController {
         } catch (CertificationException e) {
             return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
         }
-        return new ResponseEntity<>(new JsonDefault("ok", "인증이 완료되었습니다."), HttpStatus.OK);
+        return ResponseEntity.ok(new JsonDefault("ok", "인증이 완료되었습니다."));
     }
 
     @Transactional
@@ -84,7 +83,7 @@ public class MypageRestController {
         String memberPhone = member.getMemberPhone();
         String phone = smsRequest.getPhone();
         if (memberPhone.equals(phone)) {
-            return new ResponseEntity<>(new JsonDefault("error", "동일한 번호로 변경할 수 없습니다."),HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(new JsonDefault("error", "동일한 번호로 변경할 수 없습니다."));
         }
 
         try {
@@ -93,7 +92,7 @@ public class MypageRestController {
             return new ResponseEntity<>(e.getJsonDefault(), e.getCode());
         }
         member.setMemberPhone(phone);
-        return new ResponseEntity<>(new JsonDefault("ok", "휴대폰 번호를 변경했습니다."), HttpStatus.OK);
+        return ResponseEntity.ok(new JsonDefault("ok", "휴대폰 번호를 변경했습니다."));
     }
 
 

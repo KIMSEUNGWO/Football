@@ -1,8 +1,6 @@
 package football.start.allOfFootball.dto.match;
 
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

@@ -59,8 +59,8 @@ public class KakaoPayController {
                                HttpServletResponse response,
                                HttpServletRequest request,
                                Model model) {
-        if (tid == null || partner_order_id == null || kakaoMemberId == null || member == null || member.getMemberId().equals(kakaoMemberId)) {
-            return AlertUtils.alertAndMove(response, "잘못된 결제요청입니다.", "/");
+        if (tid == null || partner_order_id == null || kakaoMemberId == null || member == null || !member.getMemberId().equals(kakaoMemberId)) {
+            return AlertUtils.alertAndClose(response, "잘못된 결제요청입니다.");
         }
         log.info("결제승인 요청을 인증하는 토큰 : {}", pg_token);
         log.info("주문정보 : {}", partner_order_id);

@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-
-import static football.start.allOfFootball.enums.FileUploadType.FIELD_IMAGE;
 
 
 @Slf4j

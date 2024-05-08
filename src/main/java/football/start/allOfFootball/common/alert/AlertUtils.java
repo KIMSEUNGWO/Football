@@ -15,4 +15,8 @@ public class AlertUtils {
     public static String alertAndMove(HttpServletResponse response, String text, String nextPage) {
         return template.execute(response, text, "location.href ='" + nextPage + "';");
     }
+
+    public static String alertAndClose(HttpServletResponse response, String text) {
+        return template.execute(response, text, "window.close()");
+    }
 }

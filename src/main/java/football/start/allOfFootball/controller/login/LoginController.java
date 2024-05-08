@@ -2,7 +2,6 @@ package football.start.allOfFootball.controller.login;
 
 import football.start.allOfFootball.controller.api.smsAPI.SmsRequest;
 import football.start.allOfFootball.controller.api.smsAPI.SmsService;
-import football.start.allOfFootball.controller.api.smsAPI.exception.CertificationException;
 import football.start.allOfFootball.customAnnotation.SessionLogin;
 import football.start.allOfFootball.domain.Admin;
 import football.start.allOfFootball.domain.Member;
@@ -17,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -127,11 +125,11 @@ public class LoginController {
 
         Optional<Member> findEmail = memberService.findByMemberPhone(smsRequest.getPhone());
         if (findEmail.isEmpty()) {
-            return new ResponseEntity<>(new FindEmail("ok", "가입 이력이 존재하지 않습니다.", null, null), HttpStatus.OK);
+            return ResponseEntity.ok(new FindEmail("ok", "가입 이력이 존재하지 않습니다.", null, null));
         }
         Member member = findEmail.get();
         Social social = member.getSocial();
-        return new ResponseEntity<>(new FindEmail("ok", "", (social != null) ? social.getSocialType() : null, member.getMemberEmail()), HttpStatus.OK);
+        return ResponseEntity.ok(new FindEmail("ok", "", (social != null) ? social.getSocialType() : null, member.getMemberEmail()));
     }
 
     @GetMapping("/findPassword")
@@ -148,9 +146,9 @@ public class LoginController {
 
         Optional<Member> findEmail = memberService.findByMemberEmailAndMemberPhone(smsRequest.getEmail(), smsRequest.getPhone());
         if (findEmail.isEmpty()) {
-            return new ResponseEntity<>(new JsonDefault("error", "일치하는 회원정보가 없습니다."), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(new JsonDefault("error", "일치하는 회원정보가 없습니다."));
         }
-        return new ResponseEntity<>(new JsonDefault("ok", ""), HttpStatus.OK);
+        return ResponseEntity.ok(new JsonDefault("ok", ""));
     }
 
     @Transactional
@@ -162,20 +160,20 @@ public class LoginController {
 
         Optional<Member> findMember = memberService.findByMemberEmailAndMemberPhone(findPassword.getEmail(), findPassword.getPhone());
         if (findMember.isEmpty()) {
-            return new ResponseEntity<>(new JsonDefault("error", "일치하는 회원정보가 없습니다."), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(new JsonDefault("error", "일치하는 회원정보가 없습니다."));
         }
         Member member = findMember.get();
         if (member.getSocial() != null) {
-            return new ResponseEntity<>(new JsonDefault("error", "소셜로 가입한 회원입니다."), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(new JsonDefault("error", "소셜로 가입한 회원입니다."));
         }
         String password = findPassword.getPassword();
         String passwordCheck = findPassword.getPasswordCheck();
         if (!password.equals(passwordCheck)) {
-            return new ResponseEntity<>(new JsonDefault("error", "변경할 비밀번호가 일치하지 않습니다."), HttpStatus.OK);
+            return ResponseEntity.badRequest().body(new JsonDefault("error", "변경할 비밀번호가 일치하지 않습니다."));
         }
         smsService.isValidFind(findPassword);
         memberService.changePassword(member, password);
 
-        return new ResponseEntity<>(new JsonDefault("ok", ""), HttpStatus.OK);
+        return ResponseEntity.ok(new JsonDefault("ok", ""));
     }
 }

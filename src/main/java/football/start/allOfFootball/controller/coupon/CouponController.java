@@ -57,13 +57,13 @@ public class CouponController {
     public ResponseEntity<Map<String, String>> createCoupon(Coupon coupon) {
         Map<String, String> result = new HashMap<>();
 //        couponService.createCoupon(coupon, result);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/coupon/remove")
     public ResponseEntity<Map<String, String>> removeCoupon(Long couponId) {
         Map<String, String> result = new HashMap<>();
 //        couponService.removeCoupon(couponId);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return ResponseEntity.ok(result);
     }
 }

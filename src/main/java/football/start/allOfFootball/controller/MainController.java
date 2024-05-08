@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor

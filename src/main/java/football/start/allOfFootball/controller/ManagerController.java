@@ -7,7 +7,6 @@ import football.start.allOfFootball.dto.ManagerApplyDto;
 import football.start.allOfFootball.service.domainService.ManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +43,7 @@ public class ManagerController {
     public ResponseEntity<JsonDefault> apply(@SessionLogin Member member, @RequestBody ManagerApplyDto data) {
         managerService.save(member, data);
 
-        return new ResponseEntity<>(new JsonDefault("매니저 신청 완료"), HttpStatus.OK);
+        return ResponseEntity.ok(new JsonDefault("매니저 신청 완료"));
     }
 
 }

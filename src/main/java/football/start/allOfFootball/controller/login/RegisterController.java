@@ -2,14 +2,15 @@ package football.start.allOfFootball.controller.login;
 
 import football.start.allOfFootball.common.MatchTeamAlgorithms;
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
+import football.start.allOfFootball.common.batch.OrderScheduledService;
+import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.start.allOfFootball.exception.NotEnoughCashException;
 import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.RegisterService;
+import football.start.allOfFootball.service.domainService.CashService;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import football.start.allOfFootball.validator.RegisterValidator;
@@ -23,8 +24,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Path;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,6 +44,11 @@ public class RegisterController {
     private final RegisterService registerService;
 
     private final RegisterValidator registerValidator;
+
+    private final MemberService memberService;
+    private final MatchService matchService;
+    private final OrderService orderService;
+    private final OrderScheduledService scheduledService;
 
     @InitBinder
     public void init(WebDataBinder dataBinder) {
@@ -81,6 +89,71 @@ public class RegisterController {
         registerService.save(saveMember);
         httpSession.removeAttribute(REGISTER); // DB 저장 완료 후 회원가입 세션 삭제
         return AlertUtils.alertAndMove(response, "회원가입이 완료되었습니다.", "/login");
+    }
+
+    @GetMapping("/exData/member")
+    public String exDataMember() {
+        String[] names = {"김영","김일","김이","김삼","김사","김오","김육","김칠","김팔","김구","김십","박영","박일","박이","박삼","박사","박오","박육","박칠","박팔","박구","박십"};
+        for (int i = 0; i < 18; i++) {
+            RegisterDto registerDto = getRegisterDto(i, names[i]);
+            Member member = registerDto.builder();
+            member.setMemberCash(30000);
+
+            registerService.save(member);
+
+        }
+        return "main";
+    }
+
+    @GetMapping("/exData/match/{matchId}/{startMemberId}/{count}")
+    public String exDateMatchMember(@PathVariable(name = "matchId") Long matchId, @PathVariable(name = "startMemberId") Integer startNumber, @PathVariable(name = "count") Integer count) {
+        for (int i = startNumber; i <= startNumber + count; i++) {
+            Optional<Member> byMemberId = memberService.findByMemberId((long) i);
+            if (byMemberId.isEmpty()) break;
+
+            Member member = byMemberId.get();
+
+            Match match = matchService.findByMatch(matchId).get();
+
+            List<Orders> ordersList = member.getOrdersList();
+
+
+            int price = 10000;
+
+            Orders orders = Orders.builder()
+                .match(match)
+                .member(member)
+                .payment(price)
+                .build();
+
+            orderService.save(orders, member, Optional.empty(), price); // order 저장
+            matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
+
+            log.info("Orders 정상 처리");
+
+        }
+
+        return "main";
+    }
+
+    @GetMapping("/matchStart/{matchId}")
+    public String exDataMatchStart(@PathVariable Long matchId) {
+        Optional<Match> byMatch = matchService.findByMatch(matchId);
+        if (byMatch.isEmpty()) return "main";
+        scheduledService.matchStart(List.of(byMatch.get()));
+        return "main";
+    }
+
+    private RegisterDto getRegisterDto(int index, String name) {
+        RegisterDto registerDto = new RegisterDto();
+        registerDto.setEmail("ex" + 1 + "@naver.com");
+        registerDto.setPassword("!@#QWEasd1");
+        registerDto.setPasswordCheck("!@#QWEasd1");
+        registerDto.setName(name);
+        registerDto.setGender("남자");
+        registerDto.setBirthday("990101");
+        registerDto.setPhone("010-12" + index + "-5678");
+        return registerDto;
     }
 
 
