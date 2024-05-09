@@ -1,6 +1,6 @@
 package football.batch.repository;
 
-import football.start.allOfFootball.common.MatchTeamAlgorithms;
+import football.batch.component.MatchTeamAlgorithms;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.enums.TeamEnum;
@@ -27,6 +27,8 @@ public class OrderScheduledService {
     private final MatchService matchService;
     private final OrderService orderService;
 
+    private final MatchTeamAlgorithms algorithms;
+
     public void minCheck(List<Match> matchList) {
         List<Match> refundList = matchService.understaffedList(matchList); // 최소 인원 이하인 경우
         for (Match match : refundList) {
@@ -41,8 +43,7 @@ public class OrderScheduledService {
             List<Orders> ordersList = match.getOrdersList();
 
             // team 자동 분배 알고리즘 시작
-            MatchTeamAlgorithms setTeam = new MatchTeamAlgorithms(ordersList);
-            Map<TeamEnum, List<Orders>> result = setTeam.getResult(match.getMatchCount());
+            Map<TeamEnum, List<Orders>> result = algorithms.getResult(ordersList, match.getMatchCount());
 
             // 결과 Orders TeamEnum 설정
             orderService.setTeam(result);

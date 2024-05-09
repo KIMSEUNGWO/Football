@@ -1,24 +1,22 @@
-package football.start.allOfFootball.common;
+package football.batch.component;
 
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.enums.TeamEnum;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class MatchTeamAlgorithms {
 
-    private final List<Orders> score;
 
-    public MatchTeamAlgorithms(List<Orders> orders) {
-        orders.sort((o1, o2) -> o2.getMember().getGrade().getScore() - o1.getMember().getGrade().getScore());
-        this.score = orders;
-    }
+    public Map<TeamEnum, List<Orders>> getResult(List<Orders> score, int teamCount) {
+        score.sort((o1, o2) -> o2.getMember().getGrade().getScore() - o1.getMember().getGrade().getScore());
 
-    public Map<TeamEnum, List<Orders>> getResult(int teamCount) {
         List<TeamEnum> team = TeamEnum.getTeam(teamCount);
         int[] teamSum = new int[team.size()];
 
-        Map<TeamEnum, List<Orders>> result = new HashMap<>();
+        Map<TeamEnum, List<Orders>> result = new HashMap<>(team.size());
         for (TeamEnum teamEnum : team) {
             result.put(teamEnum, new ArrayList<>());
         }
