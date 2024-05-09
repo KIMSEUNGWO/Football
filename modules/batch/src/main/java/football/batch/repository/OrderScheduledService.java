@@ -1,9 +1,10 @@
-package football.start.allOfFootball.common.batch;
+package football.batch.repository;
 
 import football.start.allOfFootball.common.MatchTeamAlgorithms;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.enums.TeamEnum;
+import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.enums.paymentEnums.RefundEnum;
 import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.RefundService;
@@ -15,9 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.경기시작전;
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.취소;
 
 @Service
 @RequiredArgsConstructor
@@ -32,14 +30,14 @@ public class OrderScheduledService {
     public void minCheck(List<Match> matchList) {
         List<Match> refundList = matchService.understaffedList(matchList); // 최소 인원 이하인 경우
         for (Match match : refundList) {
-            match.setMatchStatus(취소);
+            match.setMatchStatus(MatchStatus.취소);
             refundService.refund(match, RefundEnum.전체환불);
         }
     }
 
     public void matchStart(List<Match> matchList) {
         for (Match match : matchList) {
-            match.setMatchStatus(경기시작전);
+            match.setMatchStatus(MatchStatus.경기시작전);
             List<Orders> ordersList = match.getOrdersList();
 
             // team 자동 분배 알고리즘 시작

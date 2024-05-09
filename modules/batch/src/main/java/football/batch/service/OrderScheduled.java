@@ -1,9 +1,10 @@
-package football.start.allOfFootball.common.batch;
+package football.batch.service;
 
+import football.batch.repository.OrderScheduledService;
 import football.redis.service.RankService;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
+import football.start.allOfFootball.repository.domainRepository.MemberRepository;
 import football.start.allOfFootball.service.domainService.MatchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ import java.util.List;
 public class OrderScheduled {
 
     private final MatchService matchService;
-    private final JpaMemberRepository jpaMemberRepository;
+    private final MemberRepository memberRepository;
     private final RankService rankService;
 
     private final OrderScheduledService scheduledService;
@@ -50,12 +51,7 @@ public class OrderScheduled {
     // 결과 집계
     @Scheduled(cron = "0 30 0/2 * * ?") // 2시간 간격으로 30분에 실행 ( 경기 종료 후 30분 후 랭킹최신화 )
     public void matchResult() {
-        List<Member> memberAll = jpaMemberRepository.findAll();
-        for (Member member : memberAll) {
-            Long memberId = member.getMemberId();
-            int score = member.getMemberScore();
-
-            rankService.updateRank(memberId, score);
-        }
+        List<Member> memberAll = memberRepository.findAll();
+        memberAll.forEach(member -> rankService.updateRank(member.getMemberId(), member.getMemberScore()));
     }
 }

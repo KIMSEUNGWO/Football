@@ -1,16 +1,9 @@
 package football.start.allOfFootball.controller.login;
 
-import football.start.allOfFootball.common.MatchTeamAlgorithms;
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.common.batch.OrderScheduledService;
 import football.start.allOfFootball.domain.*;
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
-import football.start.allOfFootball.exception.NotEnoughCashException;
 import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.RegisterService;
-import football.start.allOfFootball.service.domainService.CashService;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import football.start.allOfFootball.validator.RegisterValidator;
@@ -20,20 +13,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import retrofit2.http.Path;
 
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static football.start.allOfFootball.SessionConst.*;
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.경기시작전;
 
 @Slf4j
 @Controller
@@ -48,7 +35,6 @@ public class RegisterController {
     private final MemberService memberService;
     private final MatchService matchService;
     private final OrderService orderService;
-    private final OrderScheduledService scheduledService;
 
     @InitBinder
     public void init(WebDataBinder dataBinder) {
@@ -136,13 +122,6 @@ public class RegisterController {
         return "main";
     }
 
-    @GetMapping("/matchStart/{matchId}")
-    public String exDataMatchStart(@PathVariable Long matchId) {
-        Optional<Match> byMatch = matchService.findByMatch(matchId);
-        if (byMatch.isEmpty()) return "main";
-        scheduledService.matchStart(List.of(byMatch.get()));
-        return "main";
-    }
 
     private RegisterDto getRegisterDto(int index, String name) {
         RegisterDto registerDto = new RegisterDto();

@@ -1,5 +1,6 @@
 rootProject.name = 'allOfFootball'
 
-include 'redis'
+include 'redis', 'batch'
 
 project(':redis').projectDir = new File("./modules/redis");
+project(':batch').projectDir = new File("./modules/batch");

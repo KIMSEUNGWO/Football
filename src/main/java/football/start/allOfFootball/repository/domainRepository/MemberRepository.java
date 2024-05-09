@@ -84,4 +84,8 @@ public class MemberRepository {
     public Optional<Member> findByMemberEmailAndMemberPhone(String email, String phone) {
         return jpaMemberRepository.findByMemberEmailAndMemberPhone(email, phone);
     }
+
+    public List<Member> findAll() {
+        return jpaMemberRepository.findAll();
+    }
 }
