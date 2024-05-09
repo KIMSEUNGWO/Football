@@ -1,6 +1,5 @@
-package football.start.allOfFootball.common.redis;
+package football.redis.service;
 
-import football.start.allOfFootball.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -11,12 +10,10 @@ import java.util.Set;
 @Service
 public class RankService {
 
-    private final RedisTemplate<String, Long> template;
     private final ZSetOperations<String, Long> setOperations;
 
     @Autowired
     public RankService(RedisTemplate<String, Long> template) {
-        this.template = template;
         this.setOperations = template.opsForZSet();
     }
 
@@ -35,12 +32,12 @@ public class RankService {
     public Set<ZSetOperations.TypedTuple<Long>> getGlobalRank() {
         return setOperations.reverseRangeWithScores("rank", 0, -1);
     }
-    public Long getRank(Member member) {
+    public Long getRank(Long memberId, int score) {
         Long rankTemp = 0L;
-        Double rank = setOperations.score("rank", member.getMemberId());
+        Double rank = setOperations.score("rank", memberId);
         if (rank == null) {
-            updateRank(member.getMemberId(), member.getMemberScore());
-            rank = setOperations.score("rank", member.getMemberId());
+            updateRank(memberId, score);
+            rank = setOperations.score("rank", memberId);
         }
         Set<Long> rank1 = setOperations.reverseRangeByScore("rank", rank, rank, 0, 1);
         for (Long l : rank1) {

@@ -1,1 +1,5 @@
 rootProject.name = 'allOfFootball'
+
+include 'redis'
+
+project(':redis').projectDir = new File("./modules/redis");

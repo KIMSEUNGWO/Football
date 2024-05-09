@@ -1,7 +1,6 @@
 package football.start.allOfFootball.service;
 
-import football.start.allOfFootball.common.redis.RankService;
-import football.start.allOfFootball.controller.admin.SearchMatchForm;
+import football.redis.service.RankService;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Orders;
 import football.start.allOfFootball.dto.MainSideInfoForm;
@@ -9,7 +8,6 @@ import football.start.allOfFootball.dto.SearchDto;
 import football.start.allOfFootball.dto.SearchResultForm;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.repository.MainRepository;
-import football.start.allOfFootball.service.domainService.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +39,7 @@ public class MainServiceImpl implements MainService{
 
     @Override
     public MainSideInfoForm getSideInfo(Member member) {
-        Long myRank = rankService.getRank(member);
+        Long myRank = rankService.getRank(member.getMemberId(), member.getMemberScore());
         MainSideInfoForm form = new MainSideInfoForm();
         form.setMyInfo(member, myRank);
 

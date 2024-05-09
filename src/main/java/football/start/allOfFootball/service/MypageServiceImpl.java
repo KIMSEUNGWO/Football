@@ -1,7 +1,7 @@
 package football.start.allOfFootball.service;
 
+import football.redis.service.RankService;
 import football.start.allOfFootball.Constant;
-import football.start.allOfFootball.common.redis.RankService;
 import football.start.allOfFootball.controller.mypage.ManagerDataForm;
 import football.start.allOfFootball.controller.mypage.MatchDataForm;
 import football.start.allOfFootball.controller.mypage.MyProfileDto;
@@ -44,7 +44,7 @@ public class MypageServiceImpl implements MypageService{
             .social(findMember.getSocial())
             .email(findMember.getMemberEmail())
             .score(format(findMember.getMemberScore()))
-            .rank(format(rankService.getRank(findMember)))
+            .rank(format(rankService.getRank(findMember.getMemberId(), findMember.getMemberScore())))
             .grade(findMember.getGrade())
             .cash(format(findMember.getMemberCash()))
             .build();

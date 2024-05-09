@@ -1,24 +1,16 @@
 package football.start.allOfFootball.common.batch;
 
-import football.start.allOfFootball.common.MatchTeamAlgorithms;
-import football.start.allOfFootball.common.redis.RankService;
+import football.redis.service.RankService;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
-import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.domainService.MatchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
-
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.*;
 
 @Component
 @RequiredArgsConstructor
