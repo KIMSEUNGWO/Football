@@ -9,7 +9,6 @@ import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.domain.Payment;
 import football.start.allOfFootball.enums.paymentEnums.CashEnum;
 import football.start.allOfFootball.enums.paymentEnums.PaymentType;
-import football.start.allOfFootball.service.domainService.MemberService;
 import football.start.allOfFootball.service.domainService.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,10 +22,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Optional;
 
-import static football.start.allOfFootball.SessionConst.*;
-import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
+import static football.common.consts.SessionConst.*;
+import static football.common.consts.SessionConst.LOGIN_MEMBER;
 
 @Controller
 @RequiredArgsConstructor

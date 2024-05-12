@@ -5,8 +5,8 @@ import football.start.allOfFootball.enums.TeamEnum;
 import java.util.HashMap;
 import java.util.Map;
 
-import static football.start.allOfFootball.Constant.LOSE_SCORE;
-import static football.start.allOfFootball.Constant.WIN_SCORE;
+import static football.common.consts.Constant.LOSE_SCORE;
+import static football.common.consts.Constant.WIN_SCORE;
 
 public class ScoreCalculator {
 

@@ -2,7 +2,7 @@ package football.start.allOfFootball.controller.admin;
 
 import football.start.allOfFootball.domain.Field;
 import football.start.allOfFootball.enums.LocationEnum;
-import football.start.allOfFootball.formatter.DateFormatter;
+import football.common.formatter.DateFormatter;
 import lombok.*;
 
 @AllArgsConstructor

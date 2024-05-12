@@ -1,6 +1,6 @@
 package football.start.allOfFootball.domain;
 
-import football.start.allOfFootball.formatter.DateFormatter;
+import football.common.formatter.DateFormatter;
 import jakarta.persistence.*;
 import lombok.*;
 

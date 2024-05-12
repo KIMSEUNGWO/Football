@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
+import static football.common.consts.SessionConst.LOGIN_MEMBER;
 
 @Slf4j
 @RequiredArgsConstructor

@@ -1,6 +1,6 @@
 package football.start.allOfFootball.aspect;
 
-import football.start.allOfFootball.SessionConst;
+import football.common.consts.SessionConst;
 import football.start.allOfFootball.controller.mypage.MyProfileDto;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.service.MypageService;

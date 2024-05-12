@@ -1,4 +1,4 @@
-package football.start.allOfFootball.formatter;
+package football.common.formatter;
 
 import org.springframework.stereotype.Component;
 

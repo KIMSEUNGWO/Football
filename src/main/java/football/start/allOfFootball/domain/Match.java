@@ -1,6 +1,5 @@
 package football.start.allOfFootball.domain;
 
-import football.start.allOfFootball.Constant;
 import football.start.allOfFootball.controller.admin.EditMatchForm;
 import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.domain.score.Score;
@@ -9,14 +8,12 @@ import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.ibatis.annotations.One;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static football.start.allOfFootball.Constant.PRICE;
+import static football.common.consts.Constant.PRICE;
 
 @Getter
 @Setter

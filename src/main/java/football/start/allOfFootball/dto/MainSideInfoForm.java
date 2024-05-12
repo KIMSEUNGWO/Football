@@ -3,8 +3,8 @@ package football.start.allOfFootball.dto;
 import football.start.allOfFootball.domain.Match;
 import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
-import football.start.allOfFootball.formatter.DateFormatter;
-import football.start.allOfFootball.formatter.NumberFormatter;
+import football.common.formatter.DateFormatter;
+import football.common.formatter.NumberFormatter;
 import lombok.*;
 
 import java.util.ArrayList;

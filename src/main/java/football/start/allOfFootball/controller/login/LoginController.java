@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static football.start.allOfFootball.SessionConst.*;
+import static football.common.consts.SessionConst.*;
 
 @Slf4j
 @Controller

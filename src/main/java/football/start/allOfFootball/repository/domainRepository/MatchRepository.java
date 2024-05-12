@@ -1,7 +1,7 @@
 package football.start.allOfFootball.repository.domainRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import football.start.allOfFootball.Constant;
+import football.common.consts.Constant;
 import football.start.allOfFootball.controller.mypage.MatchDataForm;
 import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.match.MatchData;
@@ -9,7 +9,6 @@ import football.start.allOfFootball.dto.match.MatchDataCalculator;
 import football.start.allOfFootball.dto.match.TeamInfo;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
 import football.start.allOfFootball.jpaRepository.JpaMatchRepository;
 import jakarta.persistence.EntityManager;

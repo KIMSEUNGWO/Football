@@ -1,6 +1,6 @@
 package football.start.allOfFootball.controller.api.kakaoPay;
 
-import football.start.allOfFootball.SessionConst;
+import football.common.consts.SessionConst;
 import football.start.allOfFootball.controller.api.kakaoPay.dto.ApproveResponse;
 import football.start.allOfFootball.controller.api.kakaoPay.dto.ReadyResponse;
 import jakarta.servlet.http.HttpServletRequest;

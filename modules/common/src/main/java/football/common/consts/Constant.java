@@ -1,4 +1,4 @@
-package football.start.allOfFootball;
+package football.common.consts;
 
 public abstract class Constant {
 

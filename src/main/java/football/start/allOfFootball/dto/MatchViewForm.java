@@ -9,8 +9,8 @@ import football.start.allOfFootball.enums.groundEnums.ParkingEnum;
 import football.start.allOfFootball.enums.groundEnums.ShowerEnum;
 import football.start.allOfFootball.enums.groundEnums.ToiletEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
-import football.start.allOfFootball.formatter.DateFormatter;
-import football.start.allOfFootball.formatter.NumberFormatter;
+import football.common.formatter.DateFormatter;
+import football.common.formatter.NumberFormatter;
 import lombok.*;
 
 import java.util.List;
