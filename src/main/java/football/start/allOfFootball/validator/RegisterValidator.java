@@ -2,7 +2,7 @@ package football.start.allOfFootball.validator;
 
 import football.start.allOfFootball.controller.api.smsAPI.SmsRequest;
 import football.start.allOfFootball.controller.api.smsAPI.SmsService;
-import football.start.allOfFootball.controller.api.smsAPI.exception.CertificationException;
+import football.api.sms.exception.CertificationException;
 import football.start.allOfFootball.controller.login.RegisterDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

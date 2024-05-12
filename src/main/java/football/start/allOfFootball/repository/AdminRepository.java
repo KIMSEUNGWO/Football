@@ -1,8 +1,10 @@
 package football.start.allOfFootball.repository;
 
+import football.internal.database.domain.Field;
+import football.internal.database.domain.Match;
+import football.internal.database.domain.Member;
 import football.start.allOfFootball.controller.admin.SearchFieldDto;
 import football.start.allOfFootball.controller.admin.SearchMatchDto;
-import football.start.allOfFootball.domain.*;
 
 import java.util.List;
 

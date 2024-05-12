@@ -1,7 +1,7 @@
 package football.start.allOfFootball.controller.admin;
 
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.FieldImage;
+import football.internal.database.domain.Field;
+import football.internal.database.domain.FieldImage;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.enums.groundEnums.ParkingEnum;
 import football.start.allOfFootball.enums.groundEnums.ShowerEnum;

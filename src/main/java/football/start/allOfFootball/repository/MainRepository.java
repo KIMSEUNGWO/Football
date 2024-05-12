@@ -1,7 +1,7 @@
 package football.start.allOfFootball.repository;
 
 import football.start.allOfFootball.dto.SearchDto;
-import football.start.allOfFootball.domain.Match;
+import football.internal.database.domain.Match;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package football.start.allOfFootball.service.domainService;
 
+import football.internal.database.domain.*;
 import football.start.allOfFootball.controller.admin.EditMatchForm;
 import football.start.allOfFootball.controller.admin.SaveMatchForm;
-import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.match.*;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;

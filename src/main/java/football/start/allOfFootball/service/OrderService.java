@@ -2,9 +2,9 @@ package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.controller.mypage.OrderDateForm;
 import football.start.allOfFootball.controller.mypage.OrderListForm;
-import football.start.allOfFootball.domain.CouponList;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
+import football.internal.database.domain.CouponList;
+import football.internal.database.domain.Member;
+import football.internal.database.domain.Orders;
 import football.start.allOfFootball.enums.TeamEnum;
 
 import java.util.List;

@@ -1,11 +1,10 @@
 package football.start.allOfFootball.controller.admin;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.domain.Field;
+import football.internal.database.domain.Field;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.domainService.FieldService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

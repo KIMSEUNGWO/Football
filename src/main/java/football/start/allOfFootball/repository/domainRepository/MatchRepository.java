@@ -2,15 +2,15 @@ package football.start.allOfFootball.repository.domainRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.common.consts.Constant;
+import football.internal.database.domain.*;
 import football.start.allOfFootball.controller.mypage.MatchDataForm;
-import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.match.MatchData;
 import football.start.allOfFootball.dto.match.MatchDataCalculator;
 import football.start.allOfFootball.dto.match.TeamInfo;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
-import football.start.allOfFootball.jpaRepository.JpaMatchRepository;
+import football.internal.database.jpaRepository.JpaMatchRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

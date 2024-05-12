@@ -1,12 +1,12 @@
 package football.start.allOfFootball.service;
 
+import football.internal.database.domain.*;
 import football.redis.service.RankService;
 import football.common.consts.Constant;
 import football.start.allOfFootball.controller.mypage.ManagerDataForm;
 import football.start.allOfFootball.controller.mypage.MatchDataForm;
 import football.start.allOfFootball.controller.mypage.MyProfileDto;
 import football.start.allOfFootball.controller.mypage.MypageMainDto;
-import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.ChangePasswordForm;
 import football.start.allOfFootball.dto.match.TeamInfo;
 import football.start.allOfFootball.enums.TeamEnum;

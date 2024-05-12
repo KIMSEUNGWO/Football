@@ -1,8 +1,8 @@
 package football.start.allOfFootball.interceptor;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Member;
+import football.internal.database.domain.Match;
+import football.internal.database.domain.Member;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.service.domainService.MatchService;

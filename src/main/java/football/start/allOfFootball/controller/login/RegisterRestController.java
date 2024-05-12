@@ -1,7 +1,7 @@
 package football.start.allOfFootball.controller.login;
 
 import football.start.allOfFootball.common.MessageConvert;
-import football.start.allOfFootball.dto.json.JsonDefault;
+import football.common.dto.JsonDefault;
 import football.start.allOfFootball.service.RegisterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

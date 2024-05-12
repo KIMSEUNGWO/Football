@@ -1,9 +1,9 @@
 package football.batch.service;
 
 import football.batch.repository.OrderScheduledService;
+import football.internal.database.domain.Match;
+import football.internal.database.domain.Member;
 import football.redis.service.RankService;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Member;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
 import football.start.allOfFootball.service.domainService.MatchService;
 import lombok.RequiredArgsConstructor;

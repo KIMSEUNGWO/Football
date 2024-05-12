@@ -1,8 +1,8 @@
 package football.start.allOfFootball.repository.domainRepository;
 
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Payment;
-import football.start.allOfFootball.jpaRepository.JpaPaymentRepository;
+import football.internal.database.domain.Member;
+import football.internal.database.domain.Payment;
+import football.internal.database.jpaRepository.JpaPaymentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

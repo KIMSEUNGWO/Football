@@ -3,7 +3,7 @@ package football.start.allOfFootball.repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.dto.SearchDto;
-import football.start.allOfFootball.domain.Match;
+import football.internal.database.domain.Match;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;

@@ -2,9 +2,9 @@ package football.start.allOfFootball.repository.domainRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.controller.mypage.OrderDateForm;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.jpaRepository.JpaOrderRepository;
+import football.internal.database.domain.Member;
+import football.internal.database.domain.Orders;
+import football.internal.database.jpaRepository.JpaOrderRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

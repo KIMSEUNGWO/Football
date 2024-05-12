@@ -1,7 +1,7 @@
 package football.start.allOfFootball.repository.domainRepository;
 
-import football.start.allOfFootball.domain.Coupon;
-import football.start.allOfFootball.domain.CouponList;
+import football.internal.database.domain.Coupon;
+import football.internal.database.domain.CouponList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package football.start.allOfFootball.controller.admin;
 
-import football.start.allOfFootball.domain.Field;
+import football.internal.database.domain.Field;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.common.formatter.DateFormatter;
 import lombok.*;

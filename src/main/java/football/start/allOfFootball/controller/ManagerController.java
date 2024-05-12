@@ -1,8 +1,8 @@
 package football.start.allOfFootball.controller;
 
 import football.start.allOfFootball.customAnnotation.SessionLogin;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.dto.json.JsonDefault;
+import football.internal.database.domain.Member;
+import football.common.dto.JsonDefault;
 import football.start.allOfFootball.dto.ManagerApplyDto;
 import football.common.formatter.DateFormatter;
 import football.start.allOfFootball.service.domainService.ManagerService;

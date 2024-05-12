@@ -2,12 +2,12 @@ package football.start.allOfFootball.controller.mypage;
 
 import football.start.allOfFootball.controller.api.smsAPI.SmsRequest;
 import football.start.allOfFootball.controller.api.smsAPI.SmsService;
-import football.start.allOfFootball.controller.api.smsAPI.exception.CertificationException;
+import football.api.sms.exception.CertificationException;
 import football.start.allOfFootball.customAnnotation.SessionLogin;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
+import football.internal.database.domain.Member;
+import football.internal.database.domain.Orders;
 import football.start.allOfFootball.dto.ChangePasswordForm;
-import football.start.allOfFootball.dto.json.JsonDefault;
+import football.common.dto.JsonDefault;
 import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.OrderService;
 import lombok.RequiredArgsConstructor;

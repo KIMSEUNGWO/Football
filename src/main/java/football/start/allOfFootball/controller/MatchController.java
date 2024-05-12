@@ -1,7 +1,8 @@
 package football.start.allOfFootball.controller;
 
+import football.internal.database.domain.Match;
+import football.internal.database.domain.Member;
 import football.start.allOfFootball.customAnnotation.SessionLogin;
-import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.match.MatchCollection;
 import football.start.allOfFootball.dto.MatchViewForm;
 import football.start.allOfFootball.service.domainService.MatchService;

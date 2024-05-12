@@ -2,9 +2,9 @@ package football.start.allOfFootball.controller.api.kakaoLogin;
 
 import football.common.consts.SessionConst;
 import football.start.allOfFootball.common.alert.AlertTemplate;
-import football.start.allOfFootball.domain.KakaoToken;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Social;
+import football.internal.database.domain.KakaoToken;
+import football.internal.database.domain.Member;
+import football.internal.database.domain.Social;
 import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.RegisterService;

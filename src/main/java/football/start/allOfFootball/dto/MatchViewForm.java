@@ -1,8 +1,8 @@
 package football.start.allOfFootball.dto;
 
-import football.start.allOfFootball.domain.FieldImage;
-import football.start.allOfFootball.domain.Manager;
-import football.start.allOfFootball.domain.Match;
+import football.internal.database.domain.FieldImage;
+import football.internal.database.domain.Manager;
+import football.internal.database.domain.Match;
 import football.start.allOfFootball.enums.GenderEnum;
 import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.enums.groundEnums.ParkingEnum;

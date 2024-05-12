@@ -1,7 +1,7 @@
 package football.start.allOfFootball.controller;
 
 import football.start.allOfFootball.customAnnotation.SessionLogin;
-import football.start.allOfFootball.domain.Member;
+import football.internal.database.domain.Member;
 import football.common.formatter.NumberFormatter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

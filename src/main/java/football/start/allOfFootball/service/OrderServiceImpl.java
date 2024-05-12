@@ -1,8 +1,11 @@
 package football.start.allOfFootball.service;
 
+import football.internal.database.domain.CouponList;
+import football.internal.database.domain.Member;
+import football.internal.database.domain.Orders;
+import football.internal.database.domain.Payment;
 import football.start.allOfFootball.controller.mypage.OrderDateForm;
 import football.start.allOfFootball.controller.mypage.OrderListForm;
-import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.paymentEnums.CashEnum;
 import football.start.allOfFootball.repository.domainRepository.OrderRepository;

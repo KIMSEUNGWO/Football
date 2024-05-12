@@ -1,7 +1,7 @@
 package football.start.allOfFootball.interceptor;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.domain.Match;
+import football.internal.database.domain.Match;
 import football.start.allOfFootball.service.domainService.MatchService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

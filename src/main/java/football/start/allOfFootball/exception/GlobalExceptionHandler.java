@@ -1,6 +1,6 @@
 package football.start.allOfFootball.exception;
 
-import football.start.allOfFootball.dto.json.JsonDefault;
+import football.common.dto.JsonDefault;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.http.ResponseEntity;

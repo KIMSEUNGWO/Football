@@ -7,4 +7,7 @@ public abstract class Constant {
     public static final int WIN_SCORE = 5;
     public static final int LOSE_SCORE = -5;
 
+    public static final String OK = "ok";
+    public static final String ERROR = "error";
+
 }

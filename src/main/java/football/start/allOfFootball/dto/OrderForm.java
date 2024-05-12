@@ -1,8 +1,8 @@
 package football.start.allOfFootball.dto;
 
 
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Member;
+import football.internal.database.domain.Match;
+import football.internal.database.domain.Member;
 import football.common.formatter.DateFormatter;
 import football.common.formatter.NumberFormatter;
 import lombok.*;

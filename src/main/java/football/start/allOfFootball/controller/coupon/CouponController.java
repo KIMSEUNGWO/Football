@@ -1,8 +1,8 @@
 package football.start.allOfFootball.controller.coupon;
 
 import football.common.consts.SessionConst;
-import football.start.allOfFootball.domain.Coupon;
-import football.start.allOfFootball.domain.Member;
+import football.internal.database.domain.Coupon;
+import football.internal.database.domain.Member;
 import football.start.allOfFootball.service.CouponService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import lombok.RequiredArgsConstructor;

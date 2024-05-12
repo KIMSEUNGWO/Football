@@ -1,6 +1,6 @@
 package football.start.allOfFootball.repository;
 
-import football.start.allOfFootball.domain.Member;
+import football.internal.database.domain.Member;
 
 import java.util.Optional;
 

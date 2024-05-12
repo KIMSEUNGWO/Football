@@ -1,11 +1,11 @@
 package football.start.allOfFootball.common.file;
 
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.FieldImage;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Profile;
-import football.start.allOfFootball.jpaRepository.JpaFieldImageRepository;
-import football.start.allOfFootball.jpaRepository.JpaProfileRepository;
+import football.internal.database.domain.Field;
+import football.internal.database.domain.FieldImage;
+import football.internal.database.domain.Member;
+import football.internal.database.domain.Profile;
+import football.internal.database.jpaRepository.JpaFieldImageRepository;
+import football.internal.database.jpaRepository.JpaProfileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

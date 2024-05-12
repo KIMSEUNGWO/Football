@@ -1,16 +1,16 @@
 package football.start.allOfFootball.repository.domainRepository;
 
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.domain.score.Goal;
-import football.start.allOfFootball.domain.score.Score;
-import football.start.allOfFootball.domain.score.Team;
+import football.internal.database.domain.Orders;
+import football.internal.database.domain.score.Goal;
+import football.internal.database.domain.score.Score;
+import football.internal.database.domain.score.Team;
 import football.start.allOfFootball.dto.match.MatchGoalForm;
 import football.start.allOfFootball.dto.match.MatchTeamForm;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.ResultEnum;
-import football.start.allOfFootball.jpaRepository.JpaGoalRepository;
-import football.start.allOfFootball.jpaRepository.JpaScoreRepository;
-import football.start.allOfFootball.jpaRepository.JpaTeamRepository;
+import football.internal.database.jpaRepository.JpaGoalRepository;
+import football.internal.database.jpaRepository.JpaScoreRepository;
+import football.internal.database.jpaRepository.JpaTeamRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

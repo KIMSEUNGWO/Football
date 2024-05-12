@@ -1,11 +1,11 @@
 package football.start.allOfFootball.controller;
 
 import football.start.allOfFootball.customAnnotation.SessionLogin;
-import football.start.allOfFootball.domain.Manager;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.dto.json.JsonDefault;
+import football.internal.database.domain.Manager;
+import football.internal.database.domain.Match;
+import football.internal.database.domain.Member;
+import football.internal.database.domain.Orders;
+import football.common.dto.JsonDefault;
 import football.start.allOfFootball.dto.matchRecordForm.RecordForm;
 import football.start.allOfFootball.dto.matchRecordForm.ScoreResultForm;
 import football.start.allOfFootball.enums.matchEnums.RequestTeam;

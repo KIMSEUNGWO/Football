@@ -1,6 +1,6 @@
 package football.start.allOfFootball.interceptor;
 
-import football.start.allOfFootball.domain.Member;
+import football.internal.database.domain.Member;
 import football.start.allOfFootball.service.domainService.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

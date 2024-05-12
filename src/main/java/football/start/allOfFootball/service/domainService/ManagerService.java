@@ -1,7 +1,7 @@
 package football.start.allOfFootball.service.domainService;
 
-import football.start.allOfFootball.domain.Manager;
-import football.start.allOfFootball.domain.Member;
+import football.internal.database.domain.Manager;
+import football.internal.database.domain.Member;
 import football.start.allOfFootball.dto.ManagerApplyDto;
 import football.start.allOfFootball.repository.domainRepository.ManagerRepository;
 import lombok.RequiredArgsConstructor;

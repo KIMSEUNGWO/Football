@@ -1,7 +1,6 @@
 package football.start.allOfFootball.dto;
 
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.Match;
+import football.internal.database.domain.Match;
 import football.start.allOfFootball.enums.LocationEnum;
 import lombok.*;
 

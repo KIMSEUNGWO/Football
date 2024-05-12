@@ -1,8 +1,8 @@
 package football.batch.repository;
 
 import football.batch.component.MatchTeamAlgorithms;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Orders;
+import football.internal.database.domain.Match;
+import football.internal.database.domain.Orders;
 import football.start.allOfFootball.enums.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.enums.paymentEnums.RefundEnum;

@@ -1,7 +1,7 @@
 package football.start.allOfFootball.repository;
 
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Social;
+import football.internal.database.domain.Member;
+import football.internal.database.domain.Social;
 
 import java.util.Optional;
 

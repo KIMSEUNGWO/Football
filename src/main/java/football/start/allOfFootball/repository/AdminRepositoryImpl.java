@@ -2,9 +2,13 @@ package football.start.allOfFootball.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import football.internal.database.domain.Field;
+import football.internal.database.domain.Match;
+import football.internal.database.domain.Member;
+import football.internal.database.jpaRepository.JpaAdminRepository;
+import football.internal.database.jpaRepository.JpaOrderRepository;
 import football.start.allOfFootball.controller.admin.SearchFieldDto;
 import football.start.allOfFootball.controller.admin.SearchMatchDto;
-import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.enums.LocationEnum;
 import football.start.allOfFootball.jpaRepository.*;
 import jakarta.persistence.EntityManager;
