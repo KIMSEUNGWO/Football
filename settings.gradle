@@ -1,6 +1,9 @@
 rootProject.name = 'allOfFootball'
 
-include 'redis', 'batch'
+include 'redis', 'batch', 'common', 'sms'
 
+project(':common').projectDir = new File("./modules/common");
 project(':redis').projectDir = new File("./modules/redis");
 project(':batch').projectDir = new File("./modules/batch");
+
+project(':sms').projectDir = new File("./modules/api/sms");
