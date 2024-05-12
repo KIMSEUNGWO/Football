@@ -1,10 +1,10 @@
 package football.start.allOfFootball.dto;
 
 import football.internal.database.domain.Match;
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.LocationEnum;
-import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
+import football.internal.database.enums.matchEnums.GenderEnum;
+import football.internal.database.enums.LocationEnum;
+import football.internal.database.enums.matchEnums.MatchEnum;
+import football.internal.database.enums.matchEnums.MatchStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;

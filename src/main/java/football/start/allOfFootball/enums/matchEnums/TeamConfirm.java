@@ -1,6 +1,6 @@
 package football.start.allOfFootball.enums.matchEnums;
 
-import football.start.allOfFootball.enums.TeamEnum;
+import football.internal.database.enums.matchEnums.TeamEnum;
 import lombok.*;
 
 import java.util.List;

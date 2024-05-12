@@ -2,7 +2,7 @@ package football.start.allOfFootball.controller.admin;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
 import football.internal.database.domain.Field;
-import football.start.allOfFootball.enums.LocationEnum;
+import football.internal.database.enums.LocationEnum;
 import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.domainService.FieldService;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,8 +1,7 @@
-package football.start.allOfFootball.enums;
+package football.internal.database.enums.matchEnums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.catalina.LifecycleState;
 
 import java.util.Arrays;
 import java.util.List;

@@ -9,7 +9,7 @@ import football.internal.database.jpaRepository.JpaAdminRepository;
 import football.internal.database.jpaRepository.JpaOrderRepository;
 import football.start.allOfFootball.controller.admin.SearchFieldDto;
 import football.start.allOfFootball.controller.admin.SearchMatchDto;
-import football.start.allOfFootball.enums.LocationEnum;
+import football.internal.database.enums.LocationEnum;
 import football.start.allOfFootball.jpaRepository.*;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ import java.util.List;
 
 import static football.start.allOfFootball.domain.QField.field;
 import static football.start.allOfFootball.domain.QMatch.*;
-import static football.start.allOfFootball.enums.LocationEnum.전체;
+import static football.internal.database.enums.LocationEnum.전체;
 
 @Slf4j
 @Repository

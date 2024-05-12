@@ -1,11 +1,10 @@
 package football.start.allOfFootball.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.LocationEnum;
-import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
+import football.internal.database.enums.matchEnums.GenderEnum;
+import football.internal.database.enums.LocationEnum;
+import football.internal.database.enums.matchEnums.MatchEnum;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 

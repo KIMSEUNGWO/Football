@@ -1,10 +1,9 @@
 package football.start.allOfFootball.controller.mypage;
 
 import football.start.allOfFootball.dto.match.TeamInfo;
-import football.start.allOfFootball.enums.TeamEnum;
+import football.internal.database.enums.matchEnums.TeamEnum;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 

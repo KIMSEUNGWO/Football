@@ -7,7 +7,7 @@ import football.internal.database.domain.Member;
 import football.internal.database.domain.Social;
 import football.start.allOfFootball.dto.json.FindEmail;
 import football.common.dto.JsonDefault;
-import football.start.allOfFootball.enums.SocialEnum;
+import football.internal.database.enums.SocialEnum;
 import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.domainService.MemberService;

@@ -1,12 +1,11 @@
 package football.start.allOfFootball.controller.admin;
 
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
+import football.internal.database.enums.matchEnums.GenderEnum;
+import football.internal.database.enums.matchEnums.MatchEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 

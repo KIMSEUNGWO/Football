@@ -1,8 +1,7 @@
 package football.internal.database.domain;
 
-import football.start.allOfFootball.enums.paymentEnums.CashEnum;
-import football.start.allOfFootball.enums.paymentEnums.PaymentType;
-import football.start.allOfFootball.service.domainService.PaymentService;
+import football.internal.database.enums.paymentEnums.CashEnum;
+import football.internal.database.enums.paymentEnums.PaymentType;
 import jakarta.persistence.*;
 import lombok.*;
 

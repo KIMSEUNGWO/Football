@@ -1,4 +1,4 @@
-package football.start.allOfFootball.enums.groundEnums;
+package football.internal.database.enums.groundEnums;
 
 public enum ShowerEnum {
 

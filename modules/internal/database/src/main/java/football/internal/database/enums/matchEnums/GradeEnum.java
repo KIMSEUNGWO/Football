@@ -1,4 +1,4 @@
-package football.start.allOfFootball.enums.gradeEnums;
+package football.internal.database.enums.matchEnums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

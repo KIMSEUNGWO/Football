@@ -1,12 +1,9 @@
-package football.start.allOfFootball.enums.gradeEnums;
-
-import org.w3c.dom.stylesheets.LinkStyle;
+package football.internal.database.enums.matchEnums;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static football.start.allOfFootball.enums.gradeEnums.GradeEnum.*;
+import static football.internal.database.enums.matchEnums.GradeEnum.*;
 
 public enum MatchEnum {
 

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 import static football.start.allOfFootball.domain.QMatch.match;
 import static football.start.allOfFootball.domain.QOrders.orders;
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.*;
+import static football.internal.database.enums.matchEnums.MatchStatus.*;
 
 @Repository
 @Slf4j

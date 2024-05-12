@@ -1,7 +1,7 @@
 package football.start.allOfFootball.controller.api.kakaoLogin;
 
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.SocialEnum;
+import football.internal.database.enums.matchEnums.GenderEnum;
+import football.internal.database.enums.SocialEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

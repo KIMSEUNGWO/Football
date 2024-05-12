@@ -5,7 +5,7 @@ import football.start.allOfFootball.controller.mypage.OrderListForm;
 import football.internal.database.domain.CouponList;
 import football.internal.database.domain.Member;
 import football.internal.database.domain.Orders;
-import football.start.allOfFootball.enums.TeamEnum;
+import football.internal.database.enums.matchEnums.TeamEnum;
 
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
+import football.internal.database.enums.matchEnums.MatchStatus;
 import lombok.*;
 
 @Getter

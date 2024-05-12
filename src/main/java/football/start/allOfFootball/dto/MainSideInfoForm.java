@@ -2,7 +2,7 @@ package football.start.allOfFootball.dto;
 
 import football.internal.database.domain.Match;
 import football.internal.database.domain.Member;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.internal.database.enums.matchEnums.GradeEnum;
 import football.common.formatter.DateFormatter;
 import football.common.formatter.NumberFormatter;
 import lombok.*;

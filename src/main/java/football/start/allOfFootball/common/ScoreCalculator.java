@@ -1,6 +1,6 @@
 package football.start.allOfFootball.common;
 
-import football.start.allOfFootball.enums.TeamEnum;
+import football.internal.database.enums.matchEnums.TeamEnum;
 
 import java.util.HashMap;
 import java.util.Map;

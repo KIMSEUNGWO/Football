@@ -1,8 +1,8 @@
 package football.start.allOfFootball.controller.login;
 
 import football.internal.database.domain.Member;
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.internal.database.enums.matchEnums.GenderEnum;
+import football.internal.database.enums.matchEnums.GradeEnum;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;

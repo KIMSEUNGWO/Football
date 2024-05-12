@@ -1,7 +1,7 @@
 package football.internal.database.domain;
 
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.internal.database.enums.matchEnums.GenderEnum;
+import football.internal.database.enums.matchEnums.GradeEnum;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;

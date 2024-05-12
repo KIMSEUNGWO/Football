@@ -6,7 +6,7 @@ import football.internal.database.domain.score.Score;
 import football.internal.database.domain.score.Team;
 import football.start.allOfFootball.dto.match.MatchGoalForm;
 import football.start.allOfFootball.dto.match.MatchTeamForm;
-import football.start.allOfFootball.enums.TeamEnum;
+import football.internal.database.enums.matchEnums.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.ResultEnum;
 import football.internal.database.jpaRepository.JpaGoalRepository;
 import football.internal.database.jpaRepository.JpaScoreRepository;

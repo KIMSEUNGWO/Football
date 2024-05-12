@@ -1,7 +1,7 @@
 package football.start.allOfFootball.controller.admin;
 
 import football.internal.database.domain.Match;
-import football.start.allOfFootball.enums.LocationEnum;
+import football.internal.database.enums.LocationEnum;
 import lombok.*;
 
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
 package football.internal.database.domain;
 
-import football.start.allOfFootball.enums.LocationEnum;
+import football.internal.database.enums.LocationEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package football.start.allOfFootball.dto.match;
 
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.internal.database.enums.matchEnums.GradeEnum;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -4,8 +4,8 @@ import football.internal.database.domain.*;
 import football.start.allOfFootball.controller.admin.EditMatchForm;
 import football.start.allOfFootball.controller.admin.SaveMatchForm;
 import football.start.allOfFootball.dto.match.*;
-import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
+import football.internal.database.enums.matchEnums.TeamEnum;
+import football.internal.database.enums.matchEnums.MatchStatus;
 import football.start.allOfFootball.enums.matchEnums.RequestTeam;
 import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.*;
+import static football.internal.database.enums.matchEnums.MatchStatus.*;
 
 @Service
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package football.start.allOfFootball.enums.matchEnums;
+package football.internal.database.enums.matchEnums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package football.start.allOfFootball.dto;
 
-import football.start.allOfFootball.enums.LocationEnum;
+import football.internal.database.enums.LocationEnum;
 import lombok.*;
 
 @Getter

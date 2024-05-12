@@ -1,4 +1,4 @@
-package football.start.allOfFootball.enums.paymentEnums;
+package football.internal.database.enums.paymentEnums;
 
 public enum PaymentType {
 

@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
-import static football.start.allOfFootball.enums.SocialEnum.*;
+import static football.internal.database.enums.SocialEnum.*;
 
 @Controller
 @RequiredArgsConstructor

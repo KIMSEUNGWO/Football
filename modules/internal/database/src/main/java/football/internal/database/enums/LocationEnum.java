@@ -1,4 +1,4 @@
-package football.start.allOfFootball.enums;
+package football.internal.database.enums;
 
 public enum LocationEnum {
 

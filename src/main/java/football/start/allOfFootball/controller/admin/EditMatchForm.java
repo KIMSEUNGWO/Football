@@ -1,8 +1,8 @@
 package football.start.allOfFootball.controller.admin;
 
 import football.internal.database.domain.Match;
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
+import football.internal.database.enums.matchEnums.GenderEnum;
+import football.internal.database.enums.matchEnums.MatchEnum;
 import lombok.*;
 
 import java.time.LocalDateTime;

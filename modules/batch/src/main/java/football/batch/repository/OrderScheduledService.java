@@ -3,9 +3,8 @@ package football.batch.repository;
 import football.batch.component.MatchTeamAlgorithms;
 import football.internal.database.domain.Match;
 import football.internal.database.domain.Orders;
-import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
-import football.start.allOfFootball.enums.paymentEnums.RefundEnum;
+import football.internal.database.enums.matchEnums.TeamEnum;
+import football.internal.database.enums.paymentEnums.RefundEnum;
 import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.RefundService;
 import football.start.allOfFootball.service.domainService.MatchService;
@@ -16,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+
+import static football.internal.database.enums.matchEnums.MatchStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -32,14 +33,14 @@ public class OrderScheduledService {
     public void minCheck(List<Match> matchList) {
         List<Match> refundList = matchService.understaffedList(matchList); // 최소 인원 이하인 경우
         for (Match match : refundList) {
-            match.setMatchStatus(MatchStatus.취소);
+            match.setMatchStatus(취소);
             refundService.refund(match, RefundEnum.전체환불);
         }
     }
 
     public void matchStart(List<Match> matchList) {
         for (Match match : matchList) {
-            match.setMatchStatus(MatchStatus.경기시작전);
+            match.setMatchStatus(경기시작전);
             List<Orders> ordersList = match.getOrdersList();
 
             // team 자동 분배 알고리즘 시작

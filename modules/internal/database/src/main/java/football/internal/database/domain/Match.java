@@ -1,11 +1,9 @@
 package football.internal.database.domain;
 
 import football.internal.database.domain.score.Score;
-import football.start.allOfFootball.controller.admin.EditMatchForm;
-import football.start.allOfFootball.controller.admin.SaveMatchForm;
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
+import football.internal.database.enums.matchEnums.GenderEnum;
+import football.internal.database.enums.matchEnums.MatchEnum;
+import football.internal.database.enums.matchEnums.MatchStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

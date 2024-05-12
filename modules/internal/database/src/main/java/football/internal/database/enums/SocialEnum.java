@@ -1,4 +1,4 @@
-package football.start.allOfFootball.enums;
+package football.internal.database.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

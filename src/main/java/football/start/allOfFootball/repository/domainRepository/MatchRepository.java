@@ -7,8 +7,8 @@ import football.start.allOfFootball.controller.mypage.MatchDataForm;
 import football.start.allOfFootball.dto.match.MatchData;
 import football.start.allOfFootball.dto.match.MatchDataCalculator;
 import football.start.allOfFootball.dto.match.TeamInfo;
-import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.internal.database.enums.matchEnums.TeamEnum;
+import football.internal.database.enums.matchEnums.GradeEnum;
 import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
 import football.internal.database.jpaRepository.JpaMatchRepository;
 import jakarta.persistence.EntityManager;
@@ -20,8 +20,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static football.start.allOfFootball.domain.QMatch.match;
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.종료;
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.취소;
+import static football.internal.database.enums.matchEnums.MatchStatus.종료;
+import static football.internal.database.enums.matchEnums.MatchStatus.취소;
 
 @Repository
 @Slf4j

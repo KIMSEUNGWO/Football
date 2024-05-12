@@ -2,10 +2,10 @@ package football.start.allOfFootball.controller.admin;
 
 import football.internal.database.domain.Field;
 import football.internal.database.domain.FieldImage;
-import football.start.allOfFootball.enums.LocationEnum;
-import football.start.allOfFootball.enums.groundEnums.ParkingEnum;
-import football.start.allOfFootball.enums.groundEnums.ShowerEnum;
-import football.start.allOfFootball.enums.groundEnums.ToiletEnum;
+import football.internal.database.enums.LocationEnum;
+import football.internal.database.enums.groundEnums.ParkingEnum;
+import football.internal.database.enums.groundEnums.ShowerEnum;
+import football.internal.database.enums.groundEnums.ToiletEnum;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
