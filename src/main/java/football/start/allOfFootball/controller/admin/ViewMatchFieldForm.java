@@ -1,8 +1,8 @@
 package football.start.allOfFootball.controller.admin;
 
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.FieldImage;
-import football.start.allOfFootball.enums.LocationEnum;
+import football.common.domain.Field;
+import football.common.domain.FieldImage;
+import football.common.enums.domainenum.LocationEnum;
 import lombok.*;
 
 @Getter

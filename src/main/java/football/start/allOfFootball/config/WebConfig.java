@@ -1,6 +1,6 @@
 package football.start.allOfFootball.config;
 
-import football.start.allOfFootball.customAnnotation.argumentresolver.LoginMemberArgumentResolver;
+import football.start.allOfFootball.argumentresolver.LoginMemberArgumentResolver;
 import football.start.allOfFootball.interceptor.AdminInterceptor;
 import football.start.allOfFootball.interceptor.LoginInterceptor;
 import football.start.allOfFootball.interceptor.MatchInterceptor;

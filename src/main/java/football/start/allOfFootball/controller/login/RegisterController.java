@@ -1,12 +1,13 @@
 package football.start.allOfFootball.controller.login;
 
+import football.common.domain.Match;
+import football.common.domain.Member;
+import football.common.domain.Orders;
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.RegisterService;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
-import football.start.allOfFootball.validator.RegisterValidator;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static football.start.allOfFootball.SessionConst.*;
+import static football.common.consts.SessionConst.*;
 
 @Slf4j
 @Controller

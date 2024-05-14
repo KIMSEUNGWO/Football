@@ -1,8 +1,8 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.formatter.DateFormatter;
+import football.common.domain.Match;
+import football.common.domain.Orders;
+import football.common.formatter.DateFormatter;
 import lombok.*;
 
 import java.time.LocalDateTime;

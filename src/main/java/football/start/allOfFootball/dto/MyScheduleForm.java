@@ -1,8 +1,7 @@
 package football.start.allOfFootball.dto;
 
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.enums.LocationEnum;
+import football.common.domain.Match;
+import football.common.enums.domainenum.LocationEnum;
 import lombok.*;
 
 import java.time.LocalDateTime;

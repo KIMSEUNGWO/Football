@@ -1,10 +1,13 @@
 package football.start.allOfFootball.service;
 
+import football.common.domain.CouponList;
+import football.common.domain.Member;
+import football.common.domain.Orders;
+import football.common.domain.Payment;
 import football.start.allOfFootball.controller.mypage.OrderDateForm;
 import football.start.allOfFootball.controller.mypage.OrderListForm;
-import football.start.allOfFootball.domain.*;
-import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.paymentEnums.CashEnum;
+import football.common.enums.domainenum.TeamEnum;
+import football.common.enums.paymentEnums.CashEnum;
 import football.start.allOfFootball.repository.domainRepository.OrderRepository;
 import football.start.allOfFootball.service.domainService.PaymentService;
 import lombok.RequiredArgsConstructor;

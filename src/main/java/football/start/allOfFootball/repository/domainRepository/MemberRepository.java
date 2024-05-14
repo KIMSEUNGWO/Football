@@ -2,11 +2,11 @@ package football.start.allOfFootball.repository.domainRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.common.BCrypt;
-import football.start.allOfFootball.domain.BeforePassword;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.jpaRepository.JpaBeforePasswordRepository;
-import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
+import football.common.domain.BeforePassword;
+import football.common.domain.Member;
+import football.common.domain.Orders;
+import football.common.jpaRepository.JpaBeforePasswordRepository;
+import football.common.jpaRepository.JpaMemberRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static football.start.allOfFootball.domain.QOrders.orders;
+import static football.common.domain.QOrders.orders;
+
 
 @Repository
 @Slf4j

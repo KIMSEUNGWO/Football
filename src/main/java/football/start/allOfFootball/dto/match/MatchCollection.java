@@ -1,6 +1,6 @@
 package football.start.allOfFootball.dto.match;
 
-import football.start.allOfFootball.enums.TeamEnum;
+import football.common.enums.domainenum.TeamEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package football.start.allOfFootball.dto.match;
 
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.common.enums.gradeEnums.GradeEnum;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

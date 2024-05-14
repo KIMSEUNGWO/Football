@@ -1,9 +1,11 @@
 package football.start.allOfFootball.controller.admin;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.enums.LocationEnum;
+import football.common.domain.Field;
+import football.common.domain.Match;
+import football.common.enums.domainenum.LocationEnum;
+import football.common.dto.match.EditMatchForm;
+import football.common.dto.match.SaveMatchForm;
 import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.domainService.FieldService;
 import football.start.allOfFootball.service.domainService.MatchService;

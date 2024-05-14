@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class, scanBasePackages = "football")
 @EnableJpaAuditing
 @EnableAspectJAutoProxy
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = "football")
 @EnableScheduling
 public class AllOfFootballApplication {
 

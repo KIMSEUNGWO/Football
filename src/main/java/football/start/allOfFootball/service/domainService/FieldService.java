@@ -1,11 +1,10 @@
 package football.start.allOfFootball.service.domainService;
 
 import football.start.allOfFootball.common.file.FileService;
-import football.start.allOfFootball.controller.admin.EditFieldForm;
-import football.start.allOfFootball.controller.admin.SaveFieldForm;
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.FieldImage;
-import football.start.allOfFootball.enums.FileUploadType;
+import football.common.dto.field.EditFieldForm;
+import football.common.dto.field.SaveFieldForm;
+import football.common.domain.Field;
+import football.common.domain.FieldImage;
 import football.start.allOfFootball.repository.domainRepository.FieldRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+
+import static football.start.allOfFootball.enums.FileUploadType.FIELD_IMAGE;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class FieldService {
 
         // fieldImage 파일로 저장 - DB 저장
         List<MultipartFile> images = saveGroundForm.getImages();
-        int res = fileService.saveFile(images, field, FileUploadType.FIELD_IMAGE);
+        int res = fileService.saveFile(images, field, FIELD_IMAGE);
     }
 
     public void editField(Field field, EditFieldForm form) {
@@ -50,12 +51,12 @@ public class FieldService {
             // FieldImage DB에서 삭제
             fieldRepository.deleteByFieldImage(deleteImage);
             // 파일 삭제
-            fileService.removeFile(deleteImage, FileUploadType.FIELD_IMAGE);
+            fileService.removeFile(deleteImage, FIELD_IMAGE);
         }
 
         // 새로 추가될 사진 저장
         List<MultipartFile> saveImages = form.getImages();
-        fileService.saveFile(saveImages, field, FileUploadType.FIELD_IMAGE);
+        fileService.saveFile(saveImages, field, FIELD_IMAGE);
     }
 
     public EditFieldForm getEditFieldForm(Field field) {

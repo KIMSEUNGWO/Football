@@ -1,7 +1,7 @@
 package football.batch.component;
 
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.enums.TeamEnum;
+import football.common.domain.Orders;
+import football.common.enums.domainenum.TeamEnum;
 import org.springframework.stereotype.Component;
 
 import java.util.*;

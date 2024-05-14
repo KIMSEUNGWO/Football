@@ -1,8 +1,8 @@
 package football.start.allOfFootball.controller;
 
+import football.common.domain.*;
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.customAnnotation.SessionLogin;
-import football.start.allOfFootball.domain.*;
+import football.common.customAnnotation.SessionLogin;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.dto.OrderForm;
 import football.start.allOfFootball.dto.OrderPostForm;

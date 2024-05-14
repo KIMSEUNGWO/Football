@@ -1,8 +1,8 @@
 package football.start.allOfFootball.service;
 
-import football.start.allOfFootball.domain.*;
-import football.start.allOfFootball.enums.paymentEnums.CashEnum;
-import football.start.allOfFootball.enums.paymentEnums.RefundEnum;
+import football.common.domain.*;
+import football.common.enums.paymentEnums.CashEnum;
+import football.common.enums.paymentEnums.RefundEnum;
 import football.start.allOfFootball.service.domainService.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package football.start.allOfFootball.service.domainService;
 
-import football.start.allOfFootball.domain.CouponList;
-import football.start.allOfFootball.domain.Member;
+import football.common.domain.CouponList;
+import football.common.domain.Member;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.repository.domainRepository.CouponListRepository;
 import lombok.RequiredArgsConstructor;

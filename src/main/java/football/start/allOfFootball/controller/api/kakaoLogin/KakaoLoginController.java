@@ -1,10 +1,10 @@
 package football.start.allOfFootball.controller.api.kakaoLogin;
 
-import football.start.allOfFootball.SessionConst;
+import football.common.consts.SessionConst;
 import football.start.allOfFootball.common.alert.AlertTemplate;
-import football.start.allOfFootball.domain.KakaoToken;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Social;
+import football.common.domain.KakaoToken;
+import football.common.domain.Member;
+import football.common.domain.Social;
 import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.RegisterService;
@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
-import static football.start.allOfFootball.enums.SocialEnum.*;
+import static football.common.enums.SocialEnum.*;
 
 @Controller
 @RequiredArgsConstructor

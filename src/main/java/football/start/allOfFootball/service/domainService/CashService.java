@@ -1,8 +1,8 @@
 package football.start.allOfFootball.service.domainService;
 
-import football.start.allOfFootball.domain.CouponList;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Member;
+import football.common.domain.CouponList;
+import football.common.domain.Match;
+import football.common.domain.Member;
 import football.start.allOfFootball.repository.domainRepository.CashRepository;
 import football.start.allOfFootball.exception.NotEnoughCashException;
 import lombok.RequiredArgsConstructor;

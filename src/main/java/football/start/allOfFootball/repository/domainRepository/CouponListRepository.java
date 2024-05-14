@@ -1,9 +1,10 @@
 package football.start.allOfFootball.repository.domainRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import football.start.allOfFootball.domain.CouponList;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.jpaRepository.JpaCouponListRepository;
+import football.common.domain.CouponList;
+import football.common.domain.Member;
+import football.common.domain.QCouponList;
+import football.common.jpaRepository.JpaCouponListRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static football.start.allOfFootball.domain.QCouponList.couponList;
+import static football.common.domain.QCouponList.couponList;
+
 
 @Repository
 @Slf4j

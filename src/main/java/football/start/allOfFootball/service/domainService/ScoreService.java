@@ -1,19 +1,19 @@
 package football.start.allOfFootball.service.domainService;
 
 import football.start.allOfFootball.common.ScoreCalculator;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.domain.score.Goal;
-import football.start.allOfFootball.domain.score.Score;
-import football.start.allOfFootball.domain.score.Team;
+import football.common.domain.Match;
+import football.common.domain.Member;
+import football.common.domain.Orders;
+import football.common.domain.score.Goal;
+import football.common.domain.score.Score;
+import football.common.domain.score.Team;
 import football.start.allOfFootball.dto.match.MatchScoreForm;
 import football.start.allOfFootball.dto.match.MatchTeamForm;
 import football.start.allOfFootball.dto.match.ScoreResult;
 import football.start.allOfFootball.dto.matchRecordForm.Player;
 import football.start.allOfFootball.dto.matchRecordForm.RecordForm;
-import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
+import football.common.enums.domainenum.TeamEnum;
+import football.common.enums.matchenum.MatchStatus;
 import football.start.allOfFootball.enums.matchEnums.ResultEnum;
 import football.start.allOfFootball.repository.domainRepository.OrderRepository;
 import football.start.allOfFootball.repository.domainRepository.ScoreRepository;

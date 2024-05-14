@@ -1,11 +1,12 @@
 package football.start.allOfFootball.controller.admin;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.enums.LocationEnum;
+import football.common.domain.Field;
+import football.common.enums.domainenum.LocationEnum;
+import football.common.dto.field.EditFieldForm;
+import football.common.dto.field.SaveFieldForm;
 import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.domainService.FieldService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class AdminGroundController {
     }
 
     @GetMapping("/add")
-    public String groundAdd(@ModelAttribute SaveFieldForm saveFieldForm, Model model) {
+    public String groundAdd(Model model) {
         model.addAttribute("locations", LocationEnum.values());
         return "/admin/admin_ground_add";
     }

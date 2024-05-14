@@ -1,12 +1,9 @@
 package football.start.allOfFootball.controller.admin;
 
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.enums.LocationEnum;
-import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
+import football.common.domain.Match;
+import football.common.enums.domainenum.LocationEnum;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter

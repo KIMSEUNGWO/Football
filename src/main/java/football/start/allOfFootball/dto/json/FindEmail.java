@@ -1,9 +1,10 @@
 package football.start.allOfFootball.dto.json;
 
-import football.start.allOfFootball.enums.SocialEnum;
+import football.common.dto.json.JsonDefault;
+import football.common.enums.SocialEnum;
 
 
-public class FindEmail extends JsonDefault{
+public class FindEmail extends JsonDefault {
 
     private SocialEnum social;
     private String email;

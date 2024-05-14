@@ -1,6 +1,6 @@
 package football.start.allOfFootball.service;
 
-import football.start.allOfFootball.domain.Member;
+import football.common.domain.Member;
 import football.start.allOfFootball.repository.LoginRepository;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
 import lombok.RequiredArgsConstructor;

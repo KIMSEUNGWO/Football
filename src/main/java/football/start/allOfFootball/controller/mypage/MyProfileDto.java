@@ -1,8 +1,7 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.start.allOfFootball.domain.Social;
-import football.start.allOfFootball.enums.SocialEnum;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
+import football.common.domain.Social;
+import football.common.enums.gradeEnums.GradeEnum;
 import lombok.*;
 
 @Getter

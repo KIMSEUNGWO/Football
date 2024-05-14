@@ -1,9 +1,9 @@
 package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.controller.admin.*;
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Member;
+import football.common.domain.Field;
+import football.common.domain.Match;
+import football.common.domain.Member;
 import football.start.allOfFootball.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

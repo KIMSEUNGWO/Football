@@ -2,9 +2,9 @@ package football.start.allOfFootball.repository.domainRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.controller.mypage.OrderDateForm;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.jpaRepository.JpaOrderRepository;
+import football.common.domain.Member;
+import football.common.domain.Orders;
+import football.common.jpaRepository.JpaOrderRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -15,9 +15,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static football.start.allOfFootball.domain.QMatch.match;
-import static football.start.allOfFootball.domain.QOrders.orders;
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.*;
+import static football.common.domain.QMatch.match;
+import static football.common.domain.QOrders.orders;
+import static football.common.enums.matchenum.MatchStatus.*;
 
 @Repository
 @Slf4j
@@ -49,7 +49,7 @@ public class OrderRepository {
 
         return query.selectFrom(orders)
             .where(orders.member.eq(member).and(
-                    match.matchDate.between(
+                match.matchDate.between(
                         LocalDateTime.of(start.getYear(), start.getMonthValue(), start.getDayOfMonth(), 0, 0),
                         LocalDateTime.of(end.getYear(), end.getMonthValue(), end.getDayOfMonth(), 23, 59))
             ))

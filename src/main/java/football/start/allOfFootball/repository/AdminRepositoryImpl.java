@@ -2,11 +2,12 @@ package football.start.allOfFootball.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import football.common.domain.*;
+import football.common.jpaRepository.JpaAdminRepository;
+import football.common.jpaRepository.JpaOrderRepository;
 import football.start.allOfFootball.controller.admin.SearchFieldDto;
 import football.start.allOfFootball.controller.admin.SearchMatchDto;
-import football.start.allOfFootball.domain.*;
-import football.start.allOfFootball.enums.LocationEnum;
-import football.start.allOfFootball.jpaRepository.*;
+import football.common.enums.domainenum.LocationEnum;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -15,9 +16,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static football.start.allOfFootball.domain.QField.field;
-import static football.start.allOfFootball.domain.QMatch.*;
-import static football.start.allOfFootball.enums.LocationEnum.전체;
+import static football.common.domain.QField.field;
+import static football.common.domain.QMatch.match;
+import static football.common.enums.domainenum.LocationEnum.전체;
 
 @Slf4j
 @Repository

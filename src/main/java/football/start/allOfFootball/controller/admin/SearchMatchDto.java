@@ -1,12 +1,10 @@
 package football.start.allOfFootball.controller.admin;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import football.start.allOfFootball.enums.LocationEnum;
+import football.common.enums.domainenum.LocationEnum;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter

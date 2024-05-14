@@ -1,10 +1,10 @@
 package football.start.allOfFootball.controller;
 
-import football.start.allOfFootball.customAnnotation.SessionLogin;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.dto.json.JsonDefault;
+import football.common.customAnnotation.SessionLogin;
+import football.common.domain.Member;
+import football.common.dto.json.JsonDefault;
 import football.start.allOfFootball.dto.ManagerApplyDto;
-import football.start.allOfFootball.formatter.DateFormatter;
+import football.common.formatter.DateFormatter;
 import football.start.allOfFootball.service.domainService.ManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

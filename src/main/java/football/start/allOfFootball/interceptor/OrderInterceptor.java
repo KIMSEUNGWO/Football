@@ -1,23 +1,19 @@
 package football.start.allOfFootball.interceptor;
 
 import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.domain.Match;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.enums.GenderEnum;
-import football.start.allOfFootball.enums.gradeEnums.MatchEnum;
+import football.common.domain.Match;
+import football.common.domain.Member;
+import football.common.enums.matchenum.GenderEnum;
+import football.common.enums.gradeEnums.MatchEnum;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.util.Optional;
-
-import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
-import static football.start.allOfFootball.SessionConst.REDIRECT_URL;
+import static football.common.consts.SessionConst.LOGIN_MEMBER;
 
 @RequiredArgsConstructor
 @Slf4j

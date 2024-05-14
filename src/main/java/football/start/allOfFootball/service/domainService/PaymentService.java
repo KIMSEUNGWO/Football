@@ -1,12 +1,12 @@
 package football.start.allOfFootball.service.domainService;
 
 import football.start.allOfFootball.controller.mypage.CashListForm;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Payment;
-import football.start.allOfFootball.enums.paymentEnums.CashEnum;
-import football.start.allOfFootball.enums.paymentEnums.PaymentType;
-import football.start.allOfFootball.formatter.DateFormatter;
-import football.start.allOfFootball.formatter.NumberFormatter;
+import football.common.domain.Member;
+import football.common.domain.Payment;
+import football.common.enums.paymentEnums.CashEnum;
+import football.common.enums.paymentEnums.PaymentType;
+import football.common.formatter.DateFormatter;
+import football.common.formatter.NumberFormatter;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
 import football.start.allOfFootball.repository.domainRepository.PaymentRepository;
 import lombok.RequiredArgsConstructor;

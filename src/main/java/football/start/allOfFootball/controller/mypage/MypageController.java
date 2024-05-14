@@ -1,6 +1,6 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.start.allOfFootball.domain.Member;
+import football.common.domain.Member;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.domainService.CouponListService;

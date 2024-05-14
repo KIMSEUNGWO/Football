@@ -1,6 +1,6 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.start.allOfFootball.enums.paymentEnums.CashEnum;
+import football.common.enums.paymentEnums.CashEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

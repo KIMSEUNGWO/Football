@@ -1,7 +1,7 @@
 package football.start.allOfFootball.dto;
 
-import football.start.allOfFootball.domain.CouponList;
-import football.start.allOfFootball.formatter.DateFormatter;
+import football.common.domain.CouponList;
+import football.common.formatter.DateFormatter;
 import lombok.*;
 
 @Getter

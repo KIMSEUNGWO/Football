@@ -1,7 +1,7 @@
 package football.start.allOfFootball.common.file;
 
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.dto.ImageParent;
+import football.common.domain.Member;
+import football.common.domain.ImageParent;
 import football.start.allOfFootball.enums.FileUploadType;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;

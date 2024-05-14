@@ -1,11 +1,11 @@
 package football.start.allOfFootball.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import football.start.allOfFootball.domain.Coupon;
-import football.start.allOfFootball.domain.CouponList;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.jpaRepository.JpaCouponListRepository;
-import football.start.allOfFootball.jpaRepository.JpaCouponRepository;
+import football.common.domain.Coupon;
+import football.common.domain.CouponList;
+import football.common.domain.Member;
+import football.common.jpaRepository.JpaCouponListRepository;
+import football.common.jpaRepository.JpaCouponRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
