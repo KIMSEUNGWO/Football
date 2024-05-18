@@ -1,5 +1,10 @@
 package football.common.enums.domainenum;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum LocationEnum {
 
     전체("regionAll"),
@@ -21,15 +26,7 @@ public enum LocationEnum {
     전남("jeonnam"),
     제주("jeju");
 
-    private String regionId;
-
-    LocationEnum(String regionId) {
-        this.regionId = regionId;
-    }
-
-    public String getRegionId() {
-        return regionId;
-    }
+    private final String regionId;
 
 
 }

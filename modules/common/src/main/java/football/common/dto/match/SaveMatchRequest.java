@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaveMatchForm extends MatchForm {
+public class SaveMatchRequest extends MatchForm {
 
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate matchDate;

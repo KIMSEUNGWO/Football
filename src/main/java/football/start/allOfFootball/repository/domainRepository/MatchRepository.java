@@ -150,4 +150,7 @@ public class MatchRepository {
         return String.format("%02d:00", hour);
     }
 
+    public boolean existsByMatchId(Long matchId) {
+        return jpaMatchRepository.existsById(matchId);
+    }
 }

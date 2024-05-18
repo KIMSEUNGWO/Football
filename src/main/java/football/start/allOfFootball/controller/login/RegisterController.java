@@ -4,6 +4,7 @@ import football.common.domain.Match;
 import football.common.domain.Member;
 import football.common.domain.Orders;
 import football.common.common.alert.AlertUtils;
+import football.common.exception.match.NotExistsMatchException;
 import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.RegisterService;
 import football.start.allOfFootball.service.domainService.MatchService;
@@ -93,14 +94,14 @@ public class RegisterController {
     }
 
     @GetMapping("/exData/match/{matchId}/{startMemberId}/{count}")
-    public String exDateMatchMember(@PathVariable(name = "matchId") Long matchId, @PathVariable(name = "startMemberId") Integer startNumber, @PathVariable(name = "count") Integer count) {
+    public String exDateMatchMember(@PathVariable(name = "matchId") Long matchId, @PathVariable(name = "startMemberId") Integer startNumber, @PathVariable(name = "count") Integer count) throws NotExistsMatchException {
         for (int i = startNumber; i <= startNumber + count; i++) {
             Optional<Member> byMemberId = memberService.findByMemberId((long) i);
             if (byMemberId.isEmpty()) break;
 
             Member member = byMemberId.get();
 
-            Match match = matchService.findByMatch(matchId).get();
+            Match match = matchService.findByMatch(matchId, "/");
 
             List<Orders> ordersList = member.getOrdersList();
 

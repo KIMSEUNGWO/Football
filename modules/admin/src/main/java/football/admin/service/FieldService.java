@@ -1,13 +1,13 @@
-package football.start.allOfFootball.service.domainService;
+package football.admin.service;
 
+import football.admin.exception.NotExistsFieldException;
 import football.start.allOfFootball.common.file.FileService;
 import football.common.dto.field.EditFieldForm;
-import football.common.dto.field.SaveFieldForm;
+import football.common.dto.field.SaveFieldRequest;
 import football.common.domain.Field;
 import football.common.domain.FieldImage;
 import football.start.allOfFootball.repository.domainRepository.FieldRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,18 +19,18 @@ import static football.start.allOfFootball.enums.FileUploadType.FIELD_IMAGE;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class FieldService {
 
     private final FieldRepository fieldRepository;
     private final FileService fileService;
 
-    public Optional<Field> findByField(Long fieldId) {
-        return fieldRepository.findByField(fieldId);
+    public Field findByField(Long fieldId) throws NotExistsFieldException {
+        Optional<Field> findField = fieldRepository.findByField(fieldId);
+        return findField.orElseThrow(NotExistsFieldException::new);
     }
 
     @Transactional
-    public void saveField(SaveFieldForm saveGroundForm) {
+    public void saveField(SaveFieldRequest saveGroundForm) {
 
         // field 객체 저장
         Field field = new Field(saveGroundForm);
@@ -38,7 +38,7 @@ public class FieldService {
 
         // fieldImage 파일로 저장 - DB 저장
         List<MultipartFile> images = saveGroundForm.getImages();
-        int res = fileService.saveFile(images, field, FIELD_IMAGE);
+        fileService.saveFile(images, field, FIELD_IMAGE);
     }
 
     public void editField(Field field, EditFieldForm form) {

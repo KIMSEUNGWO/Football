@@ -17,17 +17,11 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaveFieldForm extends FieldForm {
+public class SaveFieldRequest extends FieldForm {
 
     private List<MultipartFile> images;
 
-
-    public static SaveFieldForm build(Field field, FieldImage fieldImage) {
-
-        return null;
-    }
-
-    public SaveFieldForm(String fieldName, LocationEnum region, String fieldAddress, String xSize, String ySize, ParkingEnum parking, ToiletEnum toilet, ShowerEnum shower, String fieldDetails) {
+    public SaveFieldRequest(String fieldName, LocationEnum region, String fieldAddress, String xSize, String ySize, ParkingEnum parking, ToiletEnum toilet, ShowerEnum shower, String fieldDetails) {
         super(fieldName, region, fieldAddress, xSize, ySize, parking, toilet, shower, fieldDetails);
     }
 }

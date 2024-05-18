@@ -1,4 +1,4 @@
-package football.start.allOfFootball.controller.admin;
+package football.admin.dto;
 
 import football.common.domain.Match;
 import football.common.enums.domainenum.LocationEnum;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SearchMatchForm {
+public class SearchMatchResponse {
 
     private Long matchId;
     private String matchDate;
@@ -23,7 +23,7 @@ public class SearchMatchForm {
     private String matchStatus;
 
 
-    public SearchMatchForm(Match match, Integer orderPerson) {
+    public SearchMatchResponse(Match match, Integer orderPerson) {
         matchId = match.getMatchId();
         matchDate = getDateForm(match.getMatchDate());
         matchTime = getTimeForm(match.getMatchDate());

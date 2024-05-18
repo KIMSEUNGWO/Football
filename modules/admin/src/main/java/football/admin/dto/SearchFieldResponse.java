@@ -1,4 +1,4 @@
-package football.start.allOfFootball.controller.admin;
+package football.admin.dto;
 
 import football.common.domain.Field;
 import football.common.enums.domainenum.LocationEnum;
@@ -11,7 +11,7 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class SearchFieldForm {
+public class SearchFieldResponse {
 
     private Long fieldId;
     private LocationEnum region;
@@ -19,7 +19,7 @@ public class SearchFieldForm {
     private String fieldAddress;
     private String createDate;
 
-    public SearchFieldForm(Field form) {
+    public SearchFieldResponse(Field form) {
         fieldId = form.getFieldId();
         region = form.getFieldLocation();
         fieldName = form.getFieldTitle();

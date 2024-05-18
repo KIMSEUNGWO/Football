@@ -18,7 +18,7 @@ public class MatchInterceptor implements HandlerInterceptor {
     private final MatchService matchService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String requestURI = request.getRequestURI();
         log.info("Match 인터셉터 실행 {}", requestURI);
 
@@ -28,8 +28,9 @@ public class MatchInterceptor implements HandlerInterceptor {
             AlertUtils.alertAndMove(response, "잘못된 경로입니다.", "/");
             return false;
         }
-        Optional<Match> byMatch = matchService.findByMatch(matchId);
-        if (byMatch.isEmpty()) {
+
+        boolean exists = matchService.existsByMatchId(matchId);
+        if (!exists) {
             log.info("존재하지 않는 매치");
             AlertUtils.alertAndMove(response, "존재하지 않는 경기입니다.", "/");
             return false;

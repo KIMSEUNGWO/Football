@@ -1,10 +1,13 @@
-package football.start.allOfFootball.service;
+package football.admin.service;
 
-import football.start.allOfFootball.controller.admin.*;
+import football.admin.dto.SearchFieldRequest;
+import football.admin.dto.SearchFieldResponse;
+import football.admin.dto.SearchMatchRequest;
+import football.admin.dto.SearchMatchResponse;
 import football.common.domain.Field;
 import football.common.domain.Match;
 import football.common.domain.Member;
-import football.start.allOfFootball.repository.AdminRepository;
+import football.admin.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,25 +26,25 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
 
     @Override
-    public List<SearchFieldForm> getSearchFieldResult(SearchFieldDto searchDto) {
+    public List<SearchFieldResponse> getSearchFieldResult(SearchFieldRequest searchDto) {
         List<Field> list = adminRepository.findByAllField(searchDto);
 
-        List<SearchFieldForm> result = new ArrayList<>();
+        List<SearchFieldResponse> result = new ArrayList<>();
         for (Field field : list) {
-            SearchFieldForm form = new SearchFieldForm(field);
+            SearchFieldResponse form = new SearchFieldResponse(field);
             result.add(form);
         }
         return result;
     }
 
     @Override
-    public List<SearchMatchForm> getSearchMatchResult(SearchMatchDto searchDto) {
+    public List<SearchMatchResponse> getSearchMatchResult(SearchMatchRequest searchDto) {
         List<Match> list = adminRepository.findByAllMatch(searchDto);
 
-        List<SearchMatchForm> result = new ArrayList<>();
+        List<SearchMatchResponse> result = new ArrayList<>();
         for (Match match : list) {
             Integer orderPerson = adminRepository.findByMatchCount(match);
-            SearchMatchForm form = new SearchMatchForm(match, orderPerson);
+            SearchMatchResponse form = new SearchMatchResponse(match, orderPerson);
             result.add(form);
         }
         return result;

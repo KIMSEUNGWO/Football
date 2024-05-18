@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EditMatchForm extends MatchForm {
+public class EditMatchRequest extends MatchForm {
 
     private Long matchId;
     private String matchDate;
@@ -19,7 +19,7 @@ public class EditMatchForm extends MatchForm {
 
     private boolean isExit;
 
-    public EditMatchForm(Match form) {
+    public EditMatchRequest(Match form) {
         super(form.getMaxPerson(), form.getMatchCount(), form.getMatchGender(), form.getMatchGrade());
         matchId = form.getMatchId();
         matchDate = getDateForm(form.getMatchDate());

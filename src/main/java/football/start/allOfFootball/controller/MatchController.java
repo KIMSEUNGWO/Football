@@ -3,6 +3,7 @@ package football.start.allOfFootball.controller;
 import football.common.domain.Match;
 import football.common.domain.Member;
 import football.common.customAnnotation.SessionLogin;
+import football.common.exception.match.NotExistsMatchException;
 import football.start.allOfFootball.dto.match.MatchCollection;
 import football.start.allOfFootball.dto.MatchViewForm;
 import football.start.allOfFootball.service.domainService.MatchService;
@@ -23,8 +24,8 @@ public class MatchController {
     @GetMapping("/match/{matchId}")
     public String match(@PathVariable Long matchId,
                         @SessionLogin Member member,
-                        Model model) {
-        Match match = matchService.findByMatch(matchId).get();
+                        Model model) throws NotExistsMatchException {
+        Match match = matchService.findByMatch(matchId, "/");
 
         MatchViewForm matchForm = new MatchViewForm(match); // 기본 데이터
         model.addAttribute("matchForm", matchForm);

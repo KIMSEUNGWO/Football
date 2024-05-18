@@ -55,15 +55,11 @@ public class Field extends BaseTimeEntity implements ImageParent {
         fieldTitle = form.getFieldName();
         fieldLocation = form.getRegion();
         fieldAddress = form.getFieldAddress();
-        fieldSize = getSize(form.getXSize(), form.getYSize());
+        fieldSize = String.format("%sm x %sm", form.getXSize(), form.getYSize());
         fieldParking = form.getParking();
         fieldToilet = form.getToilet();
         fieldShower = form.getShower();
         fieldInformation = form.getFieldDetails();
-    }
-
-    private static String getSize(String xSize, String ySize) {
-        return String.format("%sm x %sm", xSize, ySize);
     }
 
 }

@@ -1,8 +1,8 @@
 package football.common.domain;
 
 import football.common.domain.score.Score;
-import football.common.dto.match.EditMatchForm;
-import football.common.dto.match.SaveMatchForm;
+import football.common.dto.match.EditMatchRequest;
+import football.common.dto.match.SaveMatchRequest;
 import football.common.enums.gradeEnums.MatchEnum;
 import football.common.enums.matchenum.GenderEnum;
 import football.common.enums.matchenum.MatchStatus;
@@ -61,7 +61,7 @@ public class Match {
     @OneToMany(mappedBy = "match", fetch = FetchType.LAZY)
     private List<Score> scoreList;
 
-    public static Match build(Field field, SaveMatchForm form) {
+    public static Match build(Field field, SaveMatchRequest form) {
         return Match.builder()
             .field(field)
             .matchDate(LocalDateTime.of(form.getMatchDate(), LocalTime.of(form.getMatchHour(), 0)))
@@ -74,7 +74,7 @@ public class Match {
             .build();
     }
 
-    public void setEditMatch(EditMatchForm editMatchForm) {
+    public void setEditMatch(EditMatchRequest editMatchForm) {
         matchDate = getLocalDate(editMatchForm.getMatchDate(), editMatchForm.getMatchHour());
         matchCount = editMatchForm.getMatchCount();
         matchGender = editMatchForm.getGender();

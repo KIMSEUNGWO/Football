@@ -1,15 +1,18 @@
-package football.start.allOfFootball.repository;
+package football.admin.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.EnumPath;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import football.admin.dto.SearchFieldRequest;
+import football.admin.dto.SearchMatchRequest;
 import football.common.domain.*;
 import football.common.jpaRepository.JpaAdminRepository;
 import football.common.jpaRepository.JpaOrderRepository;
-import football.start.allOfFootball.controller.admin.SearchFieldDto;
-import football.start.allOfFootball.controller.admin.SearchMatchDto;
 import football.common.enums.domainenum.LocationEnum;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -22,12 +25,13 @@ import static football.common.enums.domainenum.LocationEnum.전체;
 
 @Slf4j
 @Repository
-public class AdminRepositoryImpl implements AdminRepository{
+public class AdminRepositoryImpl implements AdminRepository {
 
     private final JpaOrderRepository jpaOrderRepository;
     private final JpaAdminRepository jpaAdminRepository;
     private final JPAQueryFactory query;
 
+    @Autowired
     public AdminRepositoryImpl(JpaOrderRepository jpaOrderRepository, JpaAdminRepository jpaAdminRepository, EntityManager em) {
         this.jpaOrderRepository = jpaOrderRepository;
         this.jpaAdminRepository = jpaAdminRepository;
@@ -35,10 +39,10 @@ public class AdminRepositoryImpl implements AdminRepository{
     }
 
     @Override
-    public List<Field> findByAllField(SearchFieldDto searchDto) {
+    public List<Field> findByAllField(SearchFieldRequest searchDto) {
         return query.select(field)
             .from(field)
-            .where(region(searchDto.getRegion()), word(searchDto.getWord()))
+            .where(region(field.fieldLocation, searchDto.getRegion()), word(field.fieldTitle, searchDto.getWord()))
             .orderBy(field.fieldLocation.asc())
             .orderBy(field.fieldTitle.asc())
             .fetch();
@@ -47,12 +51,12 @@ public class AdminRepositoryImpl implements AdminRepository{
 
     @Override
     public Integer findByMatchCount(Match match) {
-        return jpaOrderRepository.findByMatch(match).size();
+        return jpaOrderRepository.countByMatch(match);
     }
 
 
     @Override
-    public List<Match> findByAllMatch(SearchMatchDto searchDto) {
+    public List<Match> findByAllMatch(SearchMatchRequest searchDto) {
         LocalDate start = searchDto.getStartDate();
         LocalDate end = searchDto.getEndDate();
         return query.selectFrom(match)
@@ -60,8 +64,8 @@ public class AdminRepositoryImpl implements AdminRepository{
             .where(match.matchDate.between(
                     LocalDateTime.of(start.getYear(), start.getMonthValue(), start.getDayOfMonth(), 0, 0),
                     LocalDateTime.of(end.getYear(), end.getMonthValue(), end.getDayOfMonth(), 23, 59))
-                ,joinWord(searchDto.getWord())
-                ,joinRegion(searchDto.getRegion()))
+                ,word(match.field.fieldTitle, searchDto.getWord())
+                ,region(match.field.fieldLocation, searchDto.getRegion()))
             .orderBy(match.matchDate.desc())
             .fetch();
     }
@@ -72,38 +76,18 @@ public class AdminRepositoryImpl implements AdminRepository{
     }
 
 
-    private BooleanExpression word(String word) {
-        if (word == null || word.equals("") || word.equals(" ")) {
-            return null;
-        }
-        return field.fieldTitle.like("%" + word + "%");
-    }
-    private BooleanExpression joinWord(String word) {
-        if (word == null || word.equals("") || word.equals(" ")) {
-            return null;
-        }
-        return match.field.fieldTitle.like("%" + word + "%");
+    private BooleanExpression word(StringPath stringPath, String word) {
+        if (word == null || word.isEmpty() || word.isBlank()) return null;
+        return stringPath.like(String.format("%%%s%%", word));
     }
 
-    private BooleanExpression region(List<LocationEnum> region) {
+    private BooleanExpression region(EnumPath<LocationEnum> enumPath, List<LocationEnum> region) {
         if (region.contains(전체)) {
             return null;
         }
         BooleanExpression be = null;
         for (LocationEnum location : region) {
-            BooleanExpression locationBe = field.fieldLocation.eq(location);
-
-            be = (be == null) ? locationBe : be.or(locationBe);
-        }
-        return be;
-    }
-    private BooleanExpression joinRegion(List<LocationEnum> region) {
-        if (region.contains(전체)) {
-            return null;
-        }
-        BooleanExpression be = null;
-        for (LocationEnum location : region) {
-            BooleanExpression locationBe = match.field.fieldLocation.eq(location);
+            BooleanExpression locationBe = enumPath.eq(location);
 
             be = (be == null) ? locationBe : be.or(locationBe);
         }

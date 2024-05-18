@@ -1,4 +1,4 @@
-package football.start.allOfFootball.controller.admin;
+package football.admin.dto;
 
 import football.common.domain.Field;
 import football.common.domain.FieldImage;

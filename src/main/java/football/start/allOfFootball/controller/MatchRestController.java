@@ -6,6 +6,7 @@ import football.common.domain.Match;
 import football.common.domain.Member;
 import football.common.domain.Orders;
 import football.common.dto.json.JsonDefault;
+import football.common.exception.match.NotExistsMatchException;
 import football.start.allOfFootball.dto.matchRecordForm.RecordForm;
 import football.start.allOfFootball.dto.matchRecordForm.ScoreResultForm;
 import football.start.allOfFootball.enums.matchEnums.RequestTeam;
@@ -36,13 +37,9 @@ public class MatchRestController {
     @PostMapping("/team/{matchId}")
     public ResponseEntity<JsonDefault> teamConfirm(@SessionLogin Member member,
                                       @PathVariable Long matchId,
-                                      @RequestBody RequestTeam team) {
+                                      @RequestBody RequestTeam team) throws NotExistsMatchException {
 
-        Optional<Match> findMatch = matchService.findByMatch(matchId);
-        if (findMatch.isEmpty()) {
-            return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "매치정보가 잘못되었습니다."));
-        }
-        Match match = findMatch.get();
+        Match match = matchService.findByMatch(matchId, null);
         Manager manager = match.getManager();
 
         if (manager == null || manager.isSameMember(member)) {
@@ -54,13 +51,8 @@ public class MatchRestController {
     }
 
     @PostMapping("/apply")
-    public ResponseEntity<JsonDefault> managerApply(@SessionLogin Member member, @RequestBody Long matchId) {
-
-        Optional<Match> findMatch = matchService.findByMatch(matchId);
-        if (findMatch.isEmpty()) {
-            return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "매치정보가 잘못되었습니다."));
-        }
-        Match match = findMatch.get();
+    public ResponseEntity<JsonDefault> managerApply(@SessionLogin Member member, @RequestBody Long matchId) throws NotExistsMatchException {
+        Match match = matchService.findByMatch(matchId, null);
         Manager manager = match.getManager();
 
         if (manager != null) {
@@ -87,13 +79,8 @@ public class MatchRestController {
 
     @PostMapping("/end/{matchId}")
     public ResponseEntity<JsonDefault> matchEnd(@PathVariable Long matchId,
-                                        @SessionLogin Member member) {
-
-        Optional<Match> findMatch = matchService.findByMatch(matchId);
-        if (findMatch.isEmpty() || findMatch.get().getManager() == null) {
-            return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "매치정보가 잘못되었습니다."));
-        }
-        Match match = findMatch.get();
+                                        @SessionLogin Member member) throws NotExistsMatchException {
+        Match match = matchService.findByMatch(matchId, null);
         Manager manager = match.getManager();
 
         if (member.getManager() == null || manager.isSameMember(member)) {
@@ -109,13 +96,8 @@ public class MatchRestController {
     @PostMapping("/record/{matchId}")
     public ResponseEntity<JsonDefault> scoreRecord(@PathVariable Long matchId,
                                            @SessionLogin Member member,
-                                           @RequestBody ScoreResultForm score) {
-
-        Optional<Match> findMatch = matchService.findByMatch(matchId);
-        if (findMatch.isEmpty() || findMatch.get().getManager() == null) {
-            return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "매치정보가 잘못되었습니다."));
-        }
-        Match match = findMatch.get();
+                                           @RequestBody ScoreResultForm score) throws NotExistsMatchException {
+        Match match = matchService.findByMatch(matchId, null);
         Manager manager = match.getManager();
         if (member.getManager() == null || !manager.isSameMember(member)) {
             return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "권한이 없습니다."));

@@ -3,6 +3,7 @@ package football.start.allOfFootball.controller;
 import football.common.domain.*;
 import football.common.common.alert.AlertUtils;
 import football.common.customAnnotation.SessionLogin;
+import football.common.exception.match.NotExistsMatchException;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.dto.OrderForm;
 import football.start.allOfFootball.dto.OrderPostForm;
@@ -39,9 +40,9 @@ public class OrderController {
     @GetMapping("/order/{matchId}")
     public String order(@PathVariable Long matchId,
                         @SessionLogin Member member,
-                        Model model) {
+                        Model model) throws NotExistsMatchException {
 
-        Match match = matchService.findByMatch(matchId).get();
+        Match match = matchService.findByMatch(matchId, "/");
 
         List<CouponListForm> couponList = couponListService.getCouponList(member);
 
@@ -55,13 +56,13 @@ public class OrderController {
     public String orderPost(@PathVariable Long matchId,
                             @SessionLogin Member member,
                             HttpServletResponse response,
-                            @ModelAttribute OrderPostForm form) {
+                            @ModelAttribute OrderPostForm form) throws NotExistsMatchException {
 
         if (form.getPolicy() == null) {
             return AlertUtils.alertAndMove(response, "모든 약관에 동의해주세요.", "/order/" + matchId);
         }
 
-        Match match = matchService.findByMatch(matchId).get();
+        Match match = matchService.findByMatch(matchId, "/");
 
         List<Orders> ordersList = member.getOrdersList();
 

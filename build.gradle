@@ -105,6 +105,12 @@ project(":payment") {
 		implementation(project(":common"))
 	}
 }
+project(":admin") {
+	dependencies {
+		implementation(project(":common"))
+		implementation(rootProject)
+	}
+}
 
 project(":sms") {
 	dependencies {

@@ -31,7 +31,7 @@ public class OrderInterceptor implements HandlerInterceptor {
         log.info("Order 체크 인터셉터 실행 {}", requestURI);
 
         Long matchId = getMatchId(requestURI);
-        Match match = matchService.findByMatch(matchId).get();
+        Match match = matchService.findByMatch(matchId, "/admin/ground").get();
 
         Long memberId = (Long) request.getSession().getAttribute(LOGIN_MEMBER);
         Member member = memberService.findByMemberId(memberId).get();

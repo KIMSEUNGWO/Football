@@ -1,13 +1,18 @@
-package football.start.allOfFootball.controller.admin;
+package football.admin.controller;
 
+import football.admin.dto.SearchMatchRequest;
+import football.admin.dto.SearchMatchResponse;
+import football.admin.dto.ViewMatchFieldForm;
+import football.admin.exception.NotExistsFieldException;
 import football.common.common.alert.AlertUtils;
 import football.common.domain.Field;
 import football.common.domain.Match;
 import football.common.enums.domainenum.LocationEnum;
-import football.common.dto.match.EditMatchForm;
-import football.common.dto.match.SaveMatchForm;
-import football.start.allOfFootball.service.AdminService;
-import football.start.allOfFootball.service.domainService.FieldService;
+import football.common.dto.match.EditMatchRequest;
+import football.common.dto.match.SaveMatchRequest;
+import football.admin.service.AdminService;
+import football.admin.service.FieldService;
+import football.common.exception.match.NotExistsMatchException;
 import football.start.allOfFootball.service.domainService.MatchService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +36,7 @@ public class AdminMatchController {
 
     @ResponseBody
     @PostMapping("/get")
-    public List<SearchMatchForm> matchGet(@RequestBody SearchMatchDto searchDto) {
+    public List<SearchMatchResponse> matchGet(@RequestBody SearchMatchRequest searchDto) {
         return adminService.getSearchMatchResult(searchDto);
     }
     @GetMapping
@@ -42,12 +47,8 @@ public class AdminMatchController {
     }
 
     @GetMapping("/{fieldId}/add")
-    public String matchAdd(@PathVariable Long fieldId, @ModelAttribute SaveMatchForm saveMatchForm, Model model, HttpServletResponse response) {
-        Optional<Field> findField = fieldService.findByField(fieldId);
-        if (findField.isEmpty()) {
-            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
-        }
-        Field field = findField.get();
+    public String matchAdd(@PathVariable Long fieldId, @ModelAttribute SaveMatchRequest saveMatchForm, Model model, HttpServletResponse response) throws NotExistsFieldException {
+        Field field = fieldService.findByField(fieldId);
         ViewMatchFieldForm fieldForm = new ViewMatchFieldForm(field);
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("fieldId", fieldId);
@@ -55,27 +56,19 @@ public class AdminMatchController {
     }
 
     @PostMapping("/{fieldId}/add")
-    public String matchAddPost(@PathVariable Long fieldId, @ModelAttribute SaveMatchForm saveMatchForm, HttpServletResponse response) {
-        Optional<Field> findField = fieldService.findByField(fieldId);
-        if (findField.isEmpty()) {
-            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
-        }
-        Field field = findField.get();
+    public String matchAddPost(@PathVariable Long fieldId, @ModelAttribute SaveMatchRequest saveMatchForm, HttpServletResponse response) throws NotExistsFieldException {
+        Field field = fieldService.findByField(fieldId);
         matchService.saveMatch(field, saveMatchForm);
 
         return "redirect:/admin/match";
     }
 
     @GetMapping("/{matchId}")
-    public String matchView(@PathVariable Long matchId, HttpServletResponse response, Model model) {
-        Optional<Match> findMatch = matchService.findByMatch(matchId);
-        if (findMatch.isEmpty()) {
-            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
-        }
-        Match match = findMatch.get();
+    public String matchView(@PathVariable Long matchId, HttpServletResponse response, Model model) throws NotExistsMatchException {
+        Match match = matchService.findByMatch(matchId, "/admin/ground");
         Field field = match.getField();
         ViewMatchFieldForm fieldForm = new ViewMatchFieldForm(field);
-        EditMatchForm editMatchForm = new EditMatchForm(match);
+        EditMatchRequest editMatchForm = new EditMatchRequest(match);
 
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("editMatchForm", editMatchForm);
@@ -84,15 +77,11 @@ public class AdminMatchController {
 
 
     @GetMapping("/{matchId}/edit")
-    public String matchEdit(@PathVariable Long matchId, HttpServletResponse response, Model model) {
-        Optional<Match> findMatch = matchService.findByMatch(matchId);
-        if (findMatch.isEmpty()) {
-            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
-        }
-        Match match = findMatch.get();
+    public String matchEdit(@PathVariable Long matchId, HttpServletResponse response, Model model) throws NotExistsMatchException {
+        Match match = matchService.findByMatch(matchId, "/admin/ground");
         Field field = match.getField();
         ViewMatchFieldForm fieldForm = new ViewMatchFieldForm(field);
-        EditMatchForm editMatchForm = new EditMatchForm(match);
+        EditMatchRequest editMatchForm = new EditMatchRequest(match);
 
         if (editMatchForm.isExit()) {
             return AlertUtils.alertAndMove(response, "이미 경기가 진행된 경기입니다.", "/admin/match");
@@ -104,13 +93,9 @@ public class AdminMatchController {
     }
 
     @PostMapping("/{matchId}/edit")
-    public String matchEditPost(@PathVariable Long matchId, @ModelAttribute EditMatchForm editMatchForm, HttpServletResponse response) {
+    public String matchEditPost(@PathVariable Long matchId, @ModelAttribute EditMatchRequest editMatchForm, HttpServletResponse response) throws NotExistsMatchException {
         System.out.println("editMatchForm = " + editMatchForm);
-        Optional<Match> findMatch = matchService.findByMatch(matchId);
-        if (findMatch.isEmpty()) {
-            return AlertUtils.alertAndMove(response, "존재하지 않는 구장입니다.", "/admin/ground");
-        }
-        Match match = findMatch.get();
+        Match match = matchService.findByMatch(matchId, "/admin/ground");
 
         matchService.editMatch(match, editMatchForm);
 

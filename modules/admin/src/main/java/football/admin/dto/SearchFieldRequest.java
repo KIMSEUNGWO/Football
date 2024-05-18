@@ -1,4 +1,4 @@
-package football.start.allOfFootball.controller.admin;
+package football.admin.dto;
 
 import football.common.enums.domainenum.LocationEnum;
 import lombok.*;
@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class SearchFieldDto {
+public class SearchFieldRequest {
 
     private List<LocationEnum> region;
     private String word;

@@ -1,4 +1,4 @@
-package football.start.allOfFootball.controller.admin;
+package football.admin.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import football.common.enums.domainenum.LocationEnum;
@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchMatchDto {
+public class SearchMatchRequest {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
     private LocalDate startDate;
