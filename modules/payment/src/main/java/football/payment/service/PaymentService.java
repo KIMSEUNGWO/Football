@@ -12,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,22 +43,15 @@ public class PaymentService {
     public List<CashListForm> findByAllMemberCacheList(Member findMember) {
         List<Payment> list = paymentRepository.findByAllMemberCashList(findMember);
 
-        List<CashListForm> result = new ArrayList<>();
-        for (Payment payment : list) {
-            CashListForm build = CashListForm.builder()
+        return list.stream().map(payment -> CashListForm.builder()
                 .cashDate(DateFormatter.format("yyyy년 M월 d일 (E)", payment.getCreateDate()))
-                .cashTime(getTime(payment.getCreateDate()))
+                .cashTime(DateFormatter.format("HH:mm", payment.getCreateDate()))
                 .cashEnum(payment.getCashType())
                 .cash(payment.getCharge())
                 .cashStr(NumberFormatter.format(payment.getCharge()))
                 .nowCash(NumberFormatter.format(payment.getResultCash()))
-                .build();
-            result.add(build);
-        }
-        return result;
+                .build())
+            .toList();
     }
 
-    private String getTime(LocalDateTime createDate) {
-        return String.format("%02d:%02d", createDate.getHour(), createDate.getMinute());
-    }
 }
