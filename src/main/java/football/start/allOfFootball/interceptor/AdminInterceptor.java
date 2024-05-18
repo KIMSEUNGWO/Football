@@ -2,7 +2,6 @@ package football.start.allOfFootball.interceptor;
 
 import football.common.domain.Member;
 import football.common.jpaRepository.JpaAdminRepository;
-import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
