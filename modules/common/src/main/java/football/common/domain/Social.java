@@ -34,4 +34,8 @@ public class Social {
 
     @OneToOne(mappedBy = "social")
     private KakaoToken kakaoToken;
+
+    public boolean isType(SocialEnum socialEnum) {
+        return socialType == socialEnum;
+    }
 }

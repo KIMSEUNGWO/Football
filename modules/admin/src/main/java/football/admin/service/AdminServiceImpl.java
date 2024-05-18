@@ -29,7 +29,7 @@ public class AdminServiceImpl implements AdminService {
     public List<SearchFieldResponse> getSearchFieldResult(SearchFieldRequest searchDto) {
         List<Field> list = adminRepository.findByAllField(searchDto);
 
-        List<SearchFieldResponse> result = new ArrayList<>();
+        List<SearchFieldResponse> result = new ArrayList<>(list.size());
         for (Field field : list) {
             SearchFieldResponse form = new SearchFieldResponse(field);
             result.add(form);
@@ -41,7 +41,7 @@ public class AdminServiceImpl implements AdminService {
     public List<SearchMatchResponse> getSearchMatchResult(SearchMatchRequest searchDto) {
         List<Match> list = adminRepository.findByAllMatch(searchDto);
 
-        List<SearchMatchResponse> result = new ArrayList<>();
+        List<SearchMatchResponse> result = new ArrayList<>(list.size());
         for (Match match : list) {
             Integer orderPerson = adminRepository.findByMatchCount(match);
             SearchMatchResponse form = new SearchMatchResponse(match, orderPerson);

@@ -5,14 +5,12 @@ import football.api.sms.exception.CertificationException;
 import football.api.sms.service.SmsService;
 import football.common.customAnnotation.SessionLogin;
 import football.common.domain.Member;
-import football.common.domain.Social;
+import football.common.jpaRepository.JpaAdminRepository;
 import football.start.allOfFootball.dto.json.FindEmail;
 import football.common.dto.json.JsonDefault;
 import football.common.enums.SocialEnum;
-import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.domainService.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +35,7 @@ public class LoginController {
 
     private final MemberService memberService;
     private final LoginService loginService;
-    private final AdminService adminService;
+    private final JpaAdminRepository adminService;
     private final SmsService smsService;
 
 
@@ -59,8 +57,7 @@ public class LoginController {
     public String loginAction(@Validated @ModelAttribute LoginDto loginDto,
                               BindingResult bindingResult,
                               @RequestParam(required = false) String url,
-                              HttpSession session,
-                              Model model) {
+                              HttpSession session) {
         String redirectUrl = getRedirectUrl(url);
 
         if (bindingResult.hasErrors()) {
@@ -77,7 +74,9 @@ public class LoginController {
 
         session.setAttribute(LOGIN_MEMBER, findMember.getMemberId());
 
-        if (adminService.isAdmin(findMember)) {
+        // TODO
+        // adminService.isAdmin(findMember) 로 다시 변경해야함
+        if (adminService.existsByMember(findMember)) {
             return "redirect:/admin/ground";
         }
         return "redirect:" + redirectUrl;
@@ -89,10 +88,9 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpServletRequest request) {
+    public String logout(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpSession session) {
         if (memberId == null) return "redirect:/";
 
-        HttpSession session = request.getSession();
         session.removeAttribute(LOGIN_MEMBER);
 
         Optional<Member> byMemberId = memberService.findByMemberId(memberId);
@@ -100,12 +98,11 @@ public class LoginController {
 
         // 소셜 로그아웃
         Member member = byMemberId.get();
-        Social social = member.getSocial();
-        if (social == null) return "redirect:/";
 
-        SocialEnum type = social.getSocialType();
-        if (type == SocialEnum.KAKAO) {
-            return "redirect:/logout/kakao/" + memberId;
+        if (member.isSocial()) {
+            if (member.socialTypeIs(SocialEnum.KAKAO)) {
+                return "redirect:/logout/kakao/" + memberId;
+            }
         }
 
         return "redirect:/";
@@ -113,7 +110,6 @@ public class LoginController {
 
     @GetMapping("/findEmail")
     public String findEmail() {
-
         return "/login/findEmail";
     }
 
@@ -128,8 +124,7 @@ public class LoginController {
             return ResponseEntity.ok(new FindEmail(OK, "가입 이력이 존재하지 않습니다.", null, null));
         }
         Member member = findEmail.get();
-        Social social = member.getSocial();
-        return ResponseEntity.ok(new FindEmail(OK, "", (social != null) ? social.getSocialType() : null, member.getMemberEmail()));
+        return ResponseEntity.ok(new FindEmail(OK, "", member.isSocial() ? member.getSocialType() : null, member.getMemberEmail()));
     }
 
     @GetMapping("/findPassword")
@@ -146,7 +141,7 @@ public class LoginController {
 
         Optional<Member> findEmail = memberService.findByMemberEmailAndMemberPhone(smsRequest.getEmail(), smsRequest.getPhone());
         if (findEmail.isEmpty()) {
-            return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "일치하는 회원정보가 없습니다."));
+            return ResponseEntity.ok().body(new JsonDefault(ERROR, "일치하는 회원정보가 없습니다."));
         }
         return ResponseEntity.ok(new JsonDefault(OK, ""));
     }
@@ -163,13 +158,14 @@ public class LoginController {
             return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "일치하는 회원정보가 없습니다."));
         }
         Member member = findMember.get();
-        if (member.getSocial() != null) {
+
+        if (member.isSocial()) {
             return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "소셜로 가입한 회원입니다."));
         }
         String password = findPassword.getPassword();
         String passwordCheck = findPassword.getPasswordCheck();
         if (!password.equals(passwordCheck)) {
-            return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "변경할 비밀번호가 일치하지 않습니다."));
+            return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "비밀번호가 일치하지 않습니다."));
         }
         smsService.isValidFind(findPassword.getPhone(), findPassword.getCertificationNumber());
         memberService.changePassword(member, password);

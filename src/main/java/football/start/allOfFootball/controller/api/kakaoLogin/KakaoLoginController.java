@@ -5,7 +5,6 @@ import football.common.common.alert.AlertTemplate;
 import football.common.domain.KakaoToken;
 import football.common.domain.Member;
 import football.common.domain.Social;
-import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.RegisterService;
 import football.start.allOfFootball.service.domainService.MemberService;
@@ -32,7 +31,6 @@ public class KakaoLoginController {
     private final KakaoLoginService kakaoLoginService;
     private final LoginService loginService;
     private final RegisterService registerService;
-    private final AdminService adminService;
 
 
     @ResponseBody
@@ -45,6 +43,7 @@ public class KakaoLoginController {
 
         Optional<Member> findMember =  loginService.findByEmail(userInfo.getEmail());
         Member loginMember = null;
+
         if (findMember.isEmpty()) {
             boolean phoneDistinct = loginService.findByPhone(userInfo.getPhone());
             if (phoneDistinct) {
@@ -69,10 +68,6 @@ public class KakaoLoginController {
         loginService.renewLoginTime(loginMember);
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getMemberId());
 
-        if (adminService.isAdmin(loginMember)) {
-            execute(response, "admin");
-            return null;
-        }
         execute(response, null);
         return null;
 

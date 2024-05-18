@@ -1,5 +1,6 @@
 package football.common.domain;
 
+import football.common.enums.SocialEnum;
 import football.common.enums.gradeEnums.GradeEnum;
 import football.common.enums.matchenum.GenderEnum;
 import jakarta.annotation.Nullable;
@@ -96,5 +97,17 @@ public class Member implements ImageParent {
 
     public void setMemberPhone(String memberPhone) {
         this.memberPhone = memberPhone;
+    }
+
+    public boolean isSocial() {
+        return social != null;
+    }
+
+    public boolean socialTypeIs(SocialEnum socialEnum) {
+        return isSocial() && social.isType(socialEnum);
+    }
+
+    public SocialEnum getSocialType() {
+        return isSocial() ? social.getSocialType() : null;
     }
 }
