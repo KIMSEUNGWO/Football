@@ -70,8 +70,8 @@ public class KakaoPayController {
 
         Payment payment = Payment.builder()
             .member(member)
-            .charge(approve.getAmount().getTotal())
-            .resultCash(member.getMemberCash() + approve.getAmount().getTotal())
+            .charge(approve.getTotal())
+            .resultCash(member.getMemberCash() + approve.getTotal())
             .cashType(CashEnum.충전)
             .paymentType(PaymentType.카카오페이)
             .build();

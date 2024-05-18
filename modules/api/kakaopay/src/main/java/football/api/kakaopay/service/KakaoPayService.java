@@ -22,11 +22,9 @@ public class KakaoPayService {
 
     private final RequestTo requestTo;
 
-
     private final KakaoPayRepository kakaoPayRepository;
 
     public void saveSessionTid(HttpSession session, ReadyResponse response, String partner_order_id, Long memberId, KakaoPayDto kakaoPayDto) {
-
         session.setAttribute(TID, response.getTid());
         session.setAttribute(KAKAO_ORDER_ID, partner_order_id);
         session.setAttribute(KAKAO_MEMBER_ID, memberId);
@@ -41,13 +39,11 @@ public class KakaoPayService {
     }
 
     public ReadyResponse payReady(Long memberId, KakaoPayDto kakaoPayDto, String partnerOrderId) {
-
-        MultiValueMap<String, String> body = kakaoPayRepository.getPayReadyBody(memberId, kakaoPayDto, partnerOrderId);
+        MultiValueMap<String, String> body = kakaoPayRepository.getPayReadyBody(memberId, kakaoPayDto.getPrice(), partnerOrderId);
         return requestTo.post(PAY_READY_URI, body, ReadyResponse.class);
     }
 
     public ApproveResponse payApprove(String tid, String pgToken, String partnerOrderId, Long memberId) {
-
         MultiValueMap<String, String> body = kakaoPayRepository.getPayApproveBody(tid, pgToken, partnerOrderId, memberId);
         return requestTo.post(APPROVE_URI, body, ApproveResponse.class);
     }

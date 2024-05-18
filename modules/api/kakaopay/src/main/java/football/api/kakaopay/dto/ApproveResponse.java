@@ -24,4 +24,7 @@ public class ApproveResponse {
     private Amount amount;
 
 
+    public int getTotal() {
+        return amount.getTotal();
+    }
 }
