@@ -3,7 +3,7 @@ package football.start.allOfFootball.controller.login;
 import football.common.domain.Match;
 import football.common.domain.Member;
 import football.common.domain.Orders;
-import football.start.allOfFootball.common.alert.AlertUtils;
+import football.common.common.alert.AlertUtils;
 import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.RegisterService;
 import football.start.allOfFootball.service.domainService.MatchService;

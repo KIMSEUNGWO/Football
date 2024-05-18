@@ -49,9 +49,6 @@ public class MemberRepository {
         return jpaMemberRepository.findById(memberId);
     }
 
-    public void refreshMemberCash(Member member, Integer resultCash) {
-        member.setMemberCash(resultCash);
-    }
 
     @Transactional
     public void changePassword(Member member, String changePassword) {

@@ -5,6 +5,7 @@ import football.batch.repository.ScheduledRepository;
 import football.common.domain.Match;
 import football.common.domain.Orders;
 import football.common.enums.domainenum.TeamEnum;
+import football.payment.service.RefundService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,14 @@ import static football.common.enums.paymentEnums.RefundEnum.전체환불;
 public class OrderScheduledService {
 
     private final ScheduledRepository scheduledRepository;
+    private final RefundService refundService;
     private final MatchTeamAlgorithms algorithms;
 
     public void minCheck(List<Match> matchList) {
         List<Match> refundList = scheduledRepository.understaffedList(matchList); // 최소 인원 이하인 경우
         for (Match match : refundList) {
             match.setMatchStatus(취소);
-            scheduledRepository.refund(match, 전체환불);
+            refundService.refund(match, 전체환불);
         }
     }
 
