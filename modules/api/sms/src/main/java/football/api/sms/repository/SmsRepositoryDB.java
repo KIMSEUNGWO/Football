@@ -25,7 +25,7 @@ public class SmsRepositoryDB implements SmsRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Sms findSms(String phone, String certificationNumber) throws NotFoundCertificationNumberException {
         Optional<Sms> findSms = jpaSmsRepository.findByPhoneAndCertificationNumber(phone, certificationNumber);
         return findSms.orElseThrow(NotFoundCertificationNumberException::new);
@@ -38,7 +38,6 @@ public class SmsRepositoryDB implements SmsRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public boolean existsByMemberPhone(String phone) {
         return jpaMemberRepository.existsByMemberPhone(phone);
     }
@@ -49,10 +48,9 @@ public class SmsRepositoryDB implements SmsRepository {
         LocalDateTime expireDate = sms.getExpireDate();
 
         boolean isExpire = LocalDateTime.now().isAfter(expireDate);
-        if (!isExpire) return;
-
-        jpaSmsRepository.deleteAllByPhone(sms.getPhone());
-        throw new ExpireCertificationException();
-
+        if (isExpire) {
+            jpaSmsRepository.deleteAllByPhone(sms.getPhone());
+            throw new ExpireCertificationException();
+        }
     }
 }
