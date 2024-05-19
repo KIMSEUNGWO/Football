@@ -1,7 +1,7 @@
-package football.start.allOfFootball.common.file;
+package football.file.dto;
 
 import football.common.domain.ImageParent;
-import football.start.allOfFootball.enums.FileUploadType;
+import football.file.enums.FileUploadType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

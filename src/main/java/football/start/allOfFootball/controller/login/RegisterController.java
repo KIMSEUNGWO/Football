@@ -66,7 +66,7 @@ public class RegisterController {
         }
         if (bindingResult.hasErrors()) {
             System.out.println("bindingResult = " + bindingResult);
-            return "/login/register";
+            return "redirect:/login/register";
         }
         boolean distinct = registerService.distinctEmail(registerDto.getEmail());
         if (distinct) {

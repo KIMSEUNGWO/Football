@@ -1,8 +1,11 @@
-package football.start.allOfFootball.common.file;
+package football.file.service;
 
+import football.common.domain.ImageChild;
 import football.common.domain.Member;
 import football.common.domain.ImageParent;
-import football.start.allOfFootball.enums.FileUploadType;
+import football.file.dto.FileUploadDto;
+import football.file.enums.FileUploadType;
+import football.file.repository.FileRepository;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +17,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,19 +27,18 @@ import java.util.UUID;
 public class FileService {
 
     @Value("${file.dir}")
-    private String fileDir;
+    private String FILE_DIR;
 
-    private final TypeConvert typeConvert;
+    private final FileRepository fileRepository;
 
     public int saveFile(List<MultipartFile> files, ImageParent parent, FileUploadType type) {
 
-        int res = 0;
+        List<ImageChild> images = new ArrayList<>(files.size());
 
         for (MultipartFile file : files) {
-            byte[] fileBytes = getBytes(file);
             String contentType = file.getContentType();
 
-            if (fileBytes == null || contentType == null || !contentType.startsWith("image/") || file.isEmpty()) {
+            if (getBytes(file) == null || contentType == null || !contentType.startsWith("image/") || file.isEmpty()) {
                 continue;
             }
 
@@ -50,22 +53,16 @@ public class FileService {
                 continue;
             }
 
-            FileUploadDto fileDto = FileUploadDto.builder()
-                                    .parent(parent)
-                                    .imageUploadName(originalFileName)
-                                    .imageStoreName(storeFileName)
-                                    .type(type)
-                                    .build();
-
-            res += typeConvert.saveFile(fileDto);
-
+            ImageChild entity = type.createEntity(parent, originalFileName, storeFileName);
+            if (entity != null) {
+                images.add(entity);
+            }
         }
-
-        return res;
+        fileRepository.saveAll(images);
+        return images.size();
     }
 
-    public int saveImage(String imageUrl, Member member, FileUploadType type) {
-        int res = 0;
+    public void saveImage(String imageUrl, Member member, FileUploadType type) {
         try {
             URL url = new URL(imageUrl);
             ReadableByteChannel rbc = Channels.newChannel(url.openStream());
@@ -78,20 +75,12 @@ public class FileService {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             fos.close();
 
-            FileUploadDto fileDto = FileUploadDto.builder()
-                                    .parent(member)
-                                    .imageUploadName(originalFileName)
-                                    .imageStoreName(storeFileName)
-                                    .type(type)
-                                    .build();
-
-            res += typeConvert.saveFile(fileDto);
+            ImageChild entity = type.createEntity(member, originalFileName, storeFileName);
+            fileRepository.save(entity);
 
         } catch (IOException e) {
             log.error("링크 파일 저장 실패 : ", imageUrl);
         }
-
-        return res;
     }
 
     public boolean removeFile(String fileStoreName, FileUploadType type) {
@@ -102,10 +91,9 @@ public class FileService {
     }
 
     @Nullable
-    private static byte[] getBytes(MultipartFile file) {
+    private byte[] getBytes(MultipartFile file) {
         try {
-            byte[] bytes = file.getBytes();
-            return bytes;
+            return file.getBytes();
         } catch (IOException e) {
             log.error("saveFile getBytes error = {}", file.getName());
             return null;
@@ -113,7 +101,7 @@ public class FileService {
     }
 
     public String getFullPath(String fileName, FileUploadType type) {
-        StringBuffer sb = new StringBuffer(fileDir);
+        StringBuffer sb = new StringBuffer(FILE_DIR);
 
         if (type == null) {
             return sb.append("/").append(fileName).toString();

@@ -54,7 +54,7 @@ public class MypageServiceImpl implements MypageService{
 
     private String getProfileImage(Profile profile) {
         if (profile == null) return Constant.BASE_IMG;
-        return profile.getProfileStoreName();
+        return profile.getStoreName();
     }
 
     @Override

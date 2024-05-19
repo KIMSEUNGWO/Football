@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface JpaFieldImageRepository extends JpaRepository<FieldImage, Long> {
     List<FieldImage> findAllByField(Field field);
-
-    void deleteByFieldImageStoreName(String fieldImageStoreName);
+    void deleteByStoreName(String fieldImageStoreName);
 }

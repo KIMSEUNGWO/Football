@@ -27,6 +27,8 @@ public class SmsRepositoryDB implements SmsRepository {
     @Override
     @Transactional
     public Sms findSms(String phone, String certificationNumber) throws NotFoundCertificationNumberException {
+        System.out.println("phone = " + phone);
+        System.out.println("certificationNumber = " + certificationNumber);
         Optional<Sms> findSms = jpaSmsRepository.findByPhoneAndCertificationNumber(phone, certificationNumber);
         return findSms.orElseThrow(NotFoundCertificationNumberException::new);
     }

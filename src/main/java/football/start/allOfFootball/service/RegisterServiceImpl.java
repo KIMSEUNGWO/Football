@@ -1,14 +1,14 @@
 package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.common.BCrypt;
-import football.start.allOfFootball.common.file.FileService;
+import football.file.service.FileService;
 import football.start.allOfFootball.controller.api.kakaoLogin.LoginResponse;
 import football.start.allOfFootball.controller.login.EmailDto;
 import football.common.domain.KakaoToken;
 import football.common.domain.Member;
 import football.common.domain.Social;
 import football.common.dto.json.JsonDefault;
-import football.start.allOfFootball.enums.FileUploadType;
+import football.file.enums.FileUploadType;
 import football.common.enums.SocialEnum;
 import football.common.enums.gradeEnums.GradeEnum;
 import football.common.jpaRepository.JpaKakaoTokenRepository;

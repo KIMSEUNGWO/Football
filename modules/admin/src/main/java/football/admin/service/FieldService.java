@@ -1,7 +1,7 @@
 package football.admin.service;
 
 import football.admin.exception.NotExistsFieldException;
-import football.start.allOfFootball.common.file.FileService;
+import football.file.service.FileService;
 import football.common.dto.field.EditFieldForm;
 import football.common.dto.field.SaveFieldRequest;
 import football.common.domain.Field;
@@ -15,7 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 
-import static football.start.allOfFootball.enums.FileUploadType.FIELD_IMAGE;
+import static football.file.enums.FileUploadType.*;
+
 
 @Service
 @RequiredArgsConstructor

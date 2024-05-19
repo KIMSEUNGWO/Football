@@ -27,7 +27,7 @@
                 </button>
             </div>
             <div class="slider">
-                <img th:each="image : ${matchForm.fieldImages}" th:src="|/images/fieldImage/${image.fieldImageStoreName}|" th:alt="${image.fieldImageName}">
+                <img th:each="image : ${matchForm.fieldImages}" th:src="|/images/fieldImage/${image.storeName}|" th:alt="${image.originalName}">
             </div>
             <ul class="slide_pagination"></ul>
             <div id="maps" class="disabled">

@@ -70,6 +70,7 @@ dependencies {
 
 	implementation(project(":redis"))
 	implementation(project(":common"))
+	implementation(project(":file"))
 	implementation(project(":payment"))
 	implementation(project(":sms"))
 
@@ -99,6 +100,11 @@ project(":batch") {
 		testImplementation 'org.springframework.batch:spring-batch-test'
 	}
 }
+project(":file") {
+	dependencies {
+		implementation(project(":common"))
+	}
+}
 
 project(":payment") {
 	dependencies {
@@ -108,6 +114,7 @@ project(":payment") {
 project(":admin") {
 	dependencies {
 		implementation(project(":common"))
+		implementation(project(":file"))
 		implementation(rootProject)
 	}
 }

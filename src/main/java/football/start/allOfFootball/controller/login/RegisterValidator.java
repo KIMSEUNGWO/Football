@@ -35,9 +35,10 @@ public class RegisterValidator implements Validator {
 
     private void validCertification(RegisterDto dto, Errors errors) {
         try {
+            dto.setPhone(dto.getPhone().replace("-", ""));
             smsService.isValid(dto.getPhone(), dto.getPhoneCheck());
         } catch (CertificationException e) {
-            errors.rejectValue("phoneCheck", "NotFound", "인증번호가 일치하지않습니다.");
+            errors.rejectValue("phoneCheck", "NotFound", "인증번호가 일치하지 않습니다.");
         }
     }
 

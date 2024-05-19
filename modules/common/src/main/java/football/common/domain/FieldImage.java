@@ -12,7 +12,7 @@ import lombok.*;
 @SequenceGenerator(name = "SEQ_FIELD_IMAGE", sequenceName = "SEQ_FIELD_IMAGE_ID")
 @AllArgsConstructor
 @NoArgsConstructor
-public class FieldImage {
+public class FieldImage extends ImageChild {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FIELD_IMAGE")
     private Long fieldImageId;
@@ -20,8 +20,9 @@ public class FieldImage {
     @ManyToOne
     @JoinColumn(name = "fieldId")
     private Field field;
-    private String fieldImageName;
-    private String fieldImageStoreName;
 
-
+    public FieldImage(Field field, String originalName, String storeName) {
+        super(originalName, storeName);
+        this.field = field;
+    }
 }

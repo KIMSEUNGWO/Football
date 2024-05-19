@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public abstract class ImageFileEntityChild {
+public abstract class ImageChild {
 
     private String originalName;
     private String storeName;

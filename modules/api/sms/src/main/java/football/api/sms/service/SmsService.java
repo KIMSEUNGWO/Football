@@ -26,9 +26,8 @@ public class SmsService {
 
         String certificationNumber = smsRepositoryAPI.createCertificationNumber();
 
-        Message message = smsRepositoryAPI.createMessage(smsRequest.getPhone(), certificationNumber);
-
-        smsRepositoryAPI.send(message);
+//        Message message = smsRepositoryAPI.createMessage(smsRequest.getPhone(), certificationNumber);
+//        smsRepositoryAPI.send(message);
 
         return certificationNumber;
     }

@@ -33,6 +33,6 @@ public class FieldRepository {
         return jpaFieldImageRepository.findAllByField(field);
     }
     public void deleteByFieldImage(String deleteImage) {
-        jpaFieldImageRepository.deleteByFieldImageStoreName(deleteImage);
+        jpaFieldImageRepository.deleteByStoreName(deleteImage);
     }
 }

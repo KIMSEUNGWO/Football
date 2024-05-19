@@ -17,7 +17,6 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
-@Builder
 @Table(name = "FIELD")
 @SequenceGenerator(name = "SEQ_FIELD", sequenceName = "SEQ_FIELD_ID", allocationSize = 1)
 public class Field extends BaseTimeEntity implements ImageParent {
