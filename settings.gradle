@@ -1,6 +1,6 @@
 rootProject.name = 'allOfFootball'
 
-include 'redis', 'batch', 'common', 'sms', "admin", 'file', 'kakaopay', 'payment'
+include 'redis', 'batch', 'common', 'sms', "admin", 'file', 'kakaopay', 'payment', 'manager'
 
 project(':common').projectDir = new File("./modules/common");
 project(':redis').projectDir = new File("./modules/redis");
@@ -8,6 +8,7 @@ project(':batch').projectDir = new File("./modules/batch");
 project(':payment').projectDir = new File("./modules/payment");
 project(':admin').projectDir = new File("./modules/admin");
 project(':file').projectDir = new File("./modules/file");
+project(':manager').projectDir = new File("./modules/manager");
 
 project(':sms').projectDir = new File("./modules/api/sms");
 project(':kakaopay').projectDir = new File("./modules/api/kakaopay");

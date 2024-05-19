@@ -1,11 +1,11 @@
-package football.start.allOfFootball.controller;
+package football.manager.controller;
 
 import football.common.customAnnotation.SessionLogin;
 import football.common.domain.Member;
 import football.common.dto.json.JsonDefault;
-import football.start.allOfFootball.dto.ManagerApplyDto;
+import football.manager.dto.ManagerApplyDto;
+import football.manager.service.ManagerService;
 import football.common.formatter.DateFormatter;
-import football.start.allOfFootball.service.domainService.ManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

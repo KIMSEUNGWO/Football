@@ -1,4 +1,4 @@
-package football.start.allOfFootball.dto;
+package football.manager.dto;
 
 import football.common.enums.domainenum.LocationEnum;
 import lombok.*;

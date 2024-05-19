@@ -1,4 +1,4 @@
-package football.common.jpaRepository;
+package football.manager.repository;
 
 import football.common.domain.Manager;
 import org.springframework.data.jpa.repository.JpaRepository;

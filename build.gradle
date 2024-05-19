@@ -105,6 +105,11 @@ project(":file") {
 		implementation(project(":common"))
 	}
 }
+project(":manager") {
+	dependencies {
+		implementation(project(":common"))
+	}
+}
 
 project(":payment") {
 	dependencies {

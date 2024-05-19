@@ -1,9 +1,9 @@
-package football.start.allOfFootball.service.domainService;
+package football.manager.service;
 
 import football.common.domain.Manager;
 import football.common.domain.Member;
-import football.start.allOfFootball.dto.ManagerApplyDto;
-import football.start.allOfFootball.repository.domainRepository.ManagerRepository;
+import football.manager.dto.ManagerApplyDto;
+import football.manager.repository.ManagerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

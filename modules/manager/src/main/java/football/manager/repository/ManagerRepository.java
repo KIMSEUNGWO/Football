@@ -1,7 +1,6 @@
-package football.start.allOfFootball.repository.domainRepository;
+package football.manager.repository;
 
 import football.common.domain.Manager;
-import football.common.jpaRepository.JpaManagerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
