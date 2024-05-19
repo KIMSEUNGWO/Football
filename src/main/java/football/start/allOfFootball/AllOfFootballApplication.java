@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class, scanBasePackages = "football")
 @EnableJpaAuditing
 @EnableAspectJAutoProxy
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = "football")
 @EnableScheduling
 public class AllOfFootballApplication {
 

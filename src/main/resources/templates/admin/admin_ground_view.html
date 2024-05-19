@@ -21,7 +21,7 @@
                     <h3>구장이미지</h3>
                     <div class="preview">
                         <div class="imgBox" th:each="image : ${editFieldForm.savedImages}">
-                            <img th:src="|/images/fieldImage/${image.fieldImageStoreName}|" th:alt="${image.fieldImageName}"/>
+                            <img th:src="|/images/fieldImage/${image.storeName}|" th:alt="${image.originalName}"/>
                         </div>
                     </div>
                     <table>

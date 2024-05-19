@@ -1,20 +1,16 @@
 package football.start.allOfFootball.controller.coupon;
 
-import football.start.allOfFootball.SessionConst;
-import football.start.allOfFootball.domain.Coupon;
-import football.start.allOfFootball.domain.CouponList;
-import football.start.allOfFootball.domain.Member;
+import football.common.consts.SessionConst;
+import football.common.domain.Coupon;
+import football.common.domain.Member;
 import football.start.allOfFootball.service.CouponService;
 import football.start.allOfFootball.service.domainService.MemberService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -57,13 +53,13 @@ public class CouponController {
     public ResponseEntity<Map<String, String>> createCoupon(Coupon coupon) {
         Map<String, String> result = new HashMap<>();
 //        couponService.createCoupon(coupon, result);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/coupon/remove")
     public ResponseEntity<Map<String, String>> removeCoupon(Long couponId) {
         Map<String, String> result = new HashMap<>();
 //        couponService.removeCoupon(couponId);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return ResponseEntity.ok(result);
     }
 }

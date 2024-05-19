@@ -1,6 +1,5 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.start.allOfFootball.enums.SocialEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

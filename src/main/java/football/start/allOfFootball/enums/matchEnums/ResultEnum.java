@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public enum ResultEnum {
 
     승("WIN", "win"),
@@ -13,4 +12,9 @@ public enum ResultEnum {
 
     private final String display;
     private final String className;
+
+    ResultEnum(String display, String className) {
+        this.display = display;
+        this.className = className;
+    }
 }

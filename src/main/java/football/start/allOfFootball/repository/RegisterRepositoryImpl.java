@@ -1,9 +1,9 @@
 package football.start.allOfFootball.repository;
 
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Social;
-import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
-import football.start.allOfFootball.jpaRepository.JpaSocialRepository;
+import football.common.domain.Member;
+import football.common.domain.Social;
+import football.common.jpaRepository.JpaMemberRepository;
+import football.common.jpaRepository.JpaSocialRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

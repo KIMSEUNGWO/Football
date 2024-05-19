@@ -1,13 +1,10 @@
 package football.start.allOfFootball.controller.api.kakaoLogin;
 
-import football.start.allOfFootball.SessionConst;
-import football.start.allOfFootball.common.alert.AlertTemplate;
-import football.start.allOfFootball.domain.Admin;
-import football.start.allOfFootball.domain.KakaoToken;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Social;
-import football.start.allOfFootball.enums.SocialEnum;
-import football.start.allOfFootball.service.AdminService;
+import football.common.consts.SessionConst;
+import football.common.common.alert.AlertTemplate;
+import football.common.domain.KakaoToken;
+import football.common.domain.Member;
+import football.common.domain.Social;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.RegisterService;
 import football.start.allOfFootball.service.domainService.MemberService;
@@ -23,7 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
-import static football.start.allOfFootball.enums.SocialEnum.*;
+import static football.common.enums.SocialEnum.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,7 +31,6 @@ public class KakaoLoginController {
     private final KakaoLoginService kakaoLoginService;
     private final LoginService loginService;
     private final RegisterService registerService;
-    private final AdminService adminService;
 
 
     @ResponseBody
@@ -47,6 +43,7 @@ public class KakaoLoginController {
 
         Optional<Member> findMember =  loginService.findByEmail(userInfo.getEmail());
         Member loginMember = null;
+
         if (findMember.isEmpty()) {
             boolean phoneDistinct = loginService.findByPhone(userInfo.getPhone());
             if (phoneDistinct) {
@@ -71,11 +68,6 @@ public class KakaoLoginController {
         loginService.renewLoginTime(loginMember);
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getMemberId());
 
-        Optional<Admin> byMember = adminService.findByMember(loginMember);
-        if (byMember.isPresent()) {
-            execute(response, "admin");
-            return null;
-        }
         execute(response, null);
         return null;
 

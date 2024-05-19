@@ -1,9 +1,9 @@
 package football.start.allOfFootball.repository.domainRepository;
 
-import football.start.allOfFootball.domain.Field;
-import football.start.allOfFootball.domain.FieldImage;
-import football.start.allOfFootball.jpaRepository.JpaFieldImageRepository;
-import football.start.allOfFootball.jpaRepository.JpaFieldRepository;
+import football.common.domain.Field;
+import football.common.domain.FieldImage;
+import football.common.jpaRepository.JpaFieldImageRepository;
+import football.common.jpaRepository.JpaFieldRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -33,6 +33,6 @@ public class FieldRepository {
         return jpaFieldImageRepository.findAllByField(field);
     }
     public void deleteByFieldImage(String deleteImage) {
-        jpaFieldImageRepository.deleteByFieldImageStoreName(deleteImage);
+        jpaFieldImageRepository.deleteByStoreName(deleteImage);
     }
 }

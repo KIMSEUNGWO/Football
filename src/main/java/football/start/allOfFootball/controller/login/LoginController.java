@@ -1,23 +1,19 @@
 package football.start.allOfFootball.controller.login;
 
-import football.start.allOfFootball.controller.api.smsAPI.SmsRequest;
-import football.start.allOfFootball.controller.api.smsAPI.SmsService;
-import football.start.allOfFootball.controller.api.smsAPI.exception.CertificationException;
-import football.start.allOfFootball.customAnnotation.SessionLogin;
-import football.start.allOfFootball.domain.Admin;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Social;
+import football.api.sms.dto.SmsRequest;
+import football.api.sms.exception.CertificationException;
+import football.api.sms.service.SmsService;
+import football.common.customAnnotation.SessionLogin;
+import football.common.domain.Member;
+import football.common.jpaRepository.JpaAdminRepository;
 import football.start.allOfFootball.dto.json.FindEmail;
-import football.start.allOfFootball.dto.json.JsonDefault;
-import football.start.allOfFootball.enums.SocialEnum;
-import football.start.allOfFootball.service.AdminService;
+import football.common.dto.json.JsonDefault;
+import football.common.enums.SocialEnum;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.domainService.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +24,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static football.start.allOfFootball.SessionConst.*;
+import static football.common.consts.Constant.ERROR;
+import static football.common.consts.Constant.OK;
+import static football.common.consts.SessionConst.*;
 
 @Slf4j
 @Controller
@@ -37,9 +35,8 @@ public class LoginController {
 
     private final MemberService memberService;
     private final LoginService loginService;
-    private final AdminService adminService;
+    private final JpaAdminRepository adminService;
     private final SmsService smsService;
-
 
 
     @GetMapping("/login")
@@ -60,8 +57,7 @@ public class LoginController {
     public String loginAction(@Validated @ModelAttribute LoginDto loginDto,
                               BindingResult bindingResult,
                               @RequestParam(required = false) String url,
-                              HttpSession session,
-                              Model model) {
+                              HttpSession session) {
         String redirectUrl = getRedirectUrl(url);
 
         if (bindingResult.hasErrors()) {
@@ -78,8 +74,9 @@ public class LoginController {
 
         session.setAttribute(LOGIN_MEMBER, findMember.getMemberId());
 
-        Optional<Admin> byMember = adminService.findByMember(findMember);
-        if (byMember.isPresent()) {
+        // TODO
+        // adminService.isAdmin(findMember) 로 다시 변경해야함
+        if (adminService.existsByMember(findMember)) {
             return "redirect:/admin/ground";
         }
         return "redirect:" + redirectUrl;
@@ -91,10 +88,9 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpServletRequest request) {
+    public String logout(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpSession session) {
         if (memberId == null) return "redirect:/";
 
-        HttpSession session = request.getSession();
         session.removeAttribute(LOGIN_MEMBER);
 
         Optional<Member> byMemberId = memberService.findByMemberId(memberId);
@@ -102,12 +98,11 @@ public class LoginController {
 
         // 소셜 로그아웃
         Member member = byMemberId.get();
-        Social social = member.getSocial();
-        if (social == null) return "redirect:/";
 
-        SocialEnum type = social.getSocialType();
-        if (type == SocialEnum.KAKAO) {
-            return "redirect:/logout/kakao/" + memberId;
+        if (member.isSocial()) {
+            if (member.socialTypeIs(SocialEnum.KAKAO)) {
+                return "redirect:/logout/kakao/" + memberId;
+            }
         }
 
         return "redirect:/";
@@ -115,23 +110,21 @@ public class LoginController {
 
     @GetMapping("/findEmail")
     public String findEmail() {
-
         return "/login/findEmail";
     }
 
     @ResponseBody
     @PostMapping("/findEmail")
-    public ResponseEntity<JsonDefault> postEmail(@RequestBody SmsRequest smsRequest) {
+    public ResponseEntity<JsonDefault> postEmail(@RequestBody SmsRequest smsRequest) throws CertificationException {
 
-        smsService.isValidFind(smsRequest);
+        smsService.isValidFind(smsRequest.getPhone(), smsRequest.getCertificationNumber());
 
         Optional<Member> findEmail = memberService.findByMemberPhone(smsRequest.getPhone());
         if (findEmail.isEmpty()) {
-            return new ResponseEntity<>(new FindEmail("ok", "가입 이력이 존재하지 않습니다.", null, null), HttpStatus.OK);
+            return ResponseEntity.ok(new FindEmail(OK, "가입 이력이 존재하지 않습니다.", null, null));
         }
         Member member = findEmail.get();
-        Social social = member.getSocial();
-        return new ResponseEntity<>(new FindEmail("ok", "", (social != null) ? social.getSocialType() : null, member.getMemberEmail()), HttpStatus.OK);
+        return ResponseEntity.ok(new FindEmail(OK, "", member.isSocial() ? member.getSocialType() : null, member.getMemberEmail()));
     }
 
     @GetMapping("/findPassword")
@@ -142,40 +135,41 @@ public class LoginController {
 
     @ResponseBody
     @PostMapping("/findPassword")
-    public ResponseEntity<JsonDefault> postPassword(@RequestBody SmsRequest smsRequest) {
+    public ResponseEntity<JsonDefault> postPassword(@RequestBody SmsRequest smsRequest) throws CertificationException {
 
         smsService.checkCertificationFind(smsRequest);
 
         Optional<Member> findEmail = memberService.findByMemberEmailAndMemberPhone(smsRequest.getEmail(), smsRequest.getPhone());
         if (findEmail.isEmpty()) {
-            return new ResponseEntity<>(new JsonDefault("error", "일치하는 회원정보가 없습니다."), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.ok().body(new JsonDefault(ERROR, "일치하는 회원정보가 없습니다."));
         }
-        return new ResponseEntity<>(new JsonDefault("ok", ""), HttpStatus.OK);
+        return ResponseEntity.ok(new JsonDefault(OK, ""));
     }
 
     @Transactional
     @ResponseBody
     @PostMapping("/changePassword")
-    public ResponseEntity<JsonDefault> postPassword(@RequestBody FindPassword findPassword) {
+    public ResponseEntity<JsonDefault> postPassword(@RequestBody FindPassword findPassword) throws CertificationException {
 
         smsService.checkCertificationFind(findPassword);
 
         Optional<Member> findMember = memberService.findByMemberEmailAndMemberPhone(findPassword.getEmail(), findPassword.getPhone());
         if (findMember.isEmpty()) {
-            return new ResponseEntity<>(new JsonDefault("error", "일치하는 회원정보가 없습니다."), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "일치하는 회원정보가 없습니다."));
         }
         Member member = findMember.get();
-        if (member.getSocial() != null) {
-            return new ResponseEntity<>(new JsonDefault("error", "소셜로 가입한 회원입니다."), HttpStatus.BAD_REQUEST);
+
+        if (member.isSocial()) {
+            return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "소셜로 가입한 회원입니다."));
         }
         String password = findPassword.getPassword();
         String passwordCheck = findPassword.getPasswordCheck();
         if (!password.equals(passwordCheck)) {
-            return new ResponseEntity<>(new JsonDefault("error", "변경할 비밀번호가 일치하지 않습니다."), HttpStatus.OK);
+            return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "비밀번호가 일치하지 않습니다."));
         }
-        smsService.isValidFind(findPassword);
+        smsService.isValidFind(findPassword.getPhone(), findPassword.getCertificationNumber());
         memberService.changePassword(member, password);
 
-        return new ResponseEntity<>(new JsonDefault("ok", ""), HttpStatus.OK);
+        return ResponseEntity.ok(new JsonDefault(OK, ""));
     }
 }

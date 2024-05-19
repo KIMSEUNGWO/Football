@@ -1,17 +1,16 @@
 package football.start.allOfFootball.repository.domainRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import football.start.allOfFootball.Constant;
+import football.common.consts.Constant;
+import football.common.domain.*;
 import football.start.allOfFootball.controller.mypage.MatchDataForm;
-import football.start.allOfFootball.domain.*;
 import football.start.allOfFootball.dto.match.MatchData;
 import football.start.allOfFootball.dto.match.MatchDataCalculator;
 import football.start.allOfFootball.dto.match.TeamInfo;
-import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
+import football.common.enums.domainenum.TeamEnum;
+import football.common.enums.gradeEnums.GradeEnum;
 import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
-import football.start.allOfFootball.jpaRepository.JpaMatchRepository;
+import football.common.jpaRepository.JpaMatchRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -20,9 +19,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static football.start.allOfFootball.domain.QMatch.match;
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.종료;
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.취소;
+import static football.common.domain.QMatch.match;
+import static football.common.enums.matchenum.MatchStatus.종료;
+import static football.common.enums.matchenum.MatchStatus.취소;
 
 @Repository
 @Slf4j
@@ -151,4 +150,7 @@ public class MatchRepository {
         return String.format("%02d:00", hour);
     }
 
+    public boolean existsByMatchId(Long matchId) {
+        return jpaMatchRepository.existsById(matchId);
+    }
 }

@@ -1,6 +1,6 @@
 package football.start.allOfFootball.controller.login;
 
-import football.start.allOfFootball.controller.api.smsAPI.SmsRequest;
+import football.api.sms.dto.SmsRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

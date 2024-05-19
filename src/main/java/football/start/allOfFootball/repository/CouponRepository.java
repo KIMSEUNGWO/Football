@@ -1,7 +1,7 @@
 package football.start.allOfFootball.repository;
 
-import football.start.allOfFootball.domain.Coupon;
-import football.start.allOfFootball.domain.Member;
+import football.common.domain.Coupon;
+import football.common.domain.Member;
 
 public interface CouponRepository {
     void createCoupon(Coupon coupon);

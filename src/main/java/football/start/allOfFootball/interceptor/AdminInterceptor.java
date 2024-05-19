@@ -1,11 +1,7 @@
 package football.start.allOfFootball.interceptor;
 
-import football.start.allOfFootball.SessionConst;
-import football.start.allOfFootball.domain.Admin;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.jpaRepository.JpaAdminRepository;
-import football.start.allOfFootball.service.AdminService;
-import football.start.allOfFootball.service.AdminServiceImpl;
+import football.common.domain.Member;
+import football.common.jpaRepository.JpaAdminRepository;
 import football.start.allOfFootball.service.domainService.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,16 +10,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.util.Optional;
-
-import static football.start.allOfFootball.SessionConst.LOGIN_MEMBER;
+import static football.common.consts.SessionConst.LOGIN_MEMBER;
 
 @Slf4j
 @RequiredArgsConstructor
 public class AdminInterceptor implements HandlerInterceptor {
 
     private final MemberService memberService;
-    private final AdminService adminService;
+    private final JpaAdminRepository jpaAdminRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -40,8 +34,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         Long memberId = (Long) session.getAttribute(LOGIN_MEMBER);
         Member member = memberService.findByMemberId(memberId).get(); // LoginInterceptor 이후 로직이라 검증 X
 
-        Optional<Admin> findAdmin = adminService.findByMember(member);
-        if (findAdmin.isEmpty()) {
+        if (!jpaAdminRepository.existsByMember(member)) {
             log.info("관리자 권한이 없는 사용자 요청");
             response.sendRedirect("/");
             return false;

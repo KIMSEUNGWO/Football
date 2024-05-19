@@ -1,11 +1,12 @@
 package football.start.allOfFootball.service.domainService;
 
-import football.start.allOfFootball.controller.admin.EditMatchForm;
-import football.start.allOfFootball.controller.admin.SaveMatchForm;
-import football.start.allOfFootball.domain.*;
+import football.common.domain.*;
+import football.common.dto.match.EditMatchRequest;
+import football.common.dto.match.SaveMatchRequest;
+import football.common.exception.match.NotExistsMatchException;
 import football.start.allOfFootball.dto.match.*;
-import football.start.allOfFootball.enums.TeamEnum;
-import football.start.allOfFootball.enums.matchEnums.MatchStatus;
+import football.common.enums.domainenum.TeamEnum;
+import football.common.enums.matchenum.MatchStatus;
 import football.start.allOfFootball.enums.matchEnums.RequestTeam;
 import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-import static football.start.allOfFootball.enums.matchEnums.MatchStatus.*;
+import static football.common.enums.matchenum.MatchStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,19 +28,17 @@ public class MatchService {
     private final MatchRepository matchRepository;
     private final ScoreService scoreService;
 
-    public Optional<Match> findByMatch(Long matchId) {
-        if (matchId == null) {
-            return Optional.empty();
-        }
-        return matchRepository.findByMatch(matchId);
+    public Match findByMatch(Long matchId, String redirectURI) throws NotExistsMatchException {
+        Optional<Match> findMatch = matchRepository.findByMatch(matchId);
+        return findMatch.orElseThrow(() -> new NotExistsMatchException(redirectURI));
     }
 
-    public void saveMatch(Field field, SaveMatchForm saveMatchForm) {
+    public void saveMatch(Field field, SaveMatchRequest saveMatchForm) {
         Match saveMatch = Match.build(field, saveMatchForm);
         matchRepository.saveMatch(saveMatch);
     }
 
-    public void editMatch(Match match, EditMatchForm editMatchForm) {
+    public void editMatch(Match match, EditMatchRequest editMatchForm) {
         match.setEditMatch(editMatchForm);
     }
 
@@ -146,5 +145,9 @@ public class MatchService {
 
     public void matchFinal(Match match) {
         match.setMatchStatus(종료);
+    }
+
+    public boolean existsByMatchId(Long matchId) {
+        return matchRepository.existsByMatchId(matchId);
     }
 }

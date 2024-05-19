@@ -1,14 +1,12 @@
 package football.start.allOfFootball.repository.domainRepository;
 
-
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.start.allOfFootball.common.BCrypt;
-import football.start.allOfFootball.domain.BeforePassword;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Orders;
-import football.start.allOfFootball.domain.QMember;
-import football.start.allOfFootball.jpaRepository.JpaBeforePasswordRepository;
-import football.start.allOfFootball.jpaRepository.JpaMemberRepository;
+import football.common.domain.BeforePassword;
+import football.common.domain.Member;
+import football.common.domain.Orders;
+import football.common.jpaRepository.JpaBeforePasswordRepository;
+import football.common.jpaRepository.JpaMemberRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static football.start.allOfFootball.domain.QOrders.orders;
+import static football.common.domain.QOrders.orders;
+
 
 @Repository
 @Slf4j
@@ -50,21 +49,16 @@ public class MemberRepository {
         return jpaMemberRepository.findById(memberId);
     }
 
-    public void refreshMemberCash(Member member, Integer resultCash) {
-        member.setMemberCash(resultCash);
-    }
 
     @Transactional
     public void changePassword(Member member, String changePassword) {
         Optional<BeforePassword> findBeforePassword = jpaBeforePasswordRepository.findById(member.getMemberId());
-        if (findBeforePassword.isEmpty()) {
-            BeforePassword build = BeforePassword.builder().beforePassword(member.getMemberPassword()).member(member).passwordChangeDate(LocalDateTime.now()).build();
-            jpaBeforePasswordRepository.save(build);
-        } else {
-            BeforePassword beforePassword = findBeforePassword.get();
-            beforePassword.setBeforePassword(member.getMemberPassword());
-            beforePassword.setPasswordChangeDate(LocalDateTime.now());
-        }
+        findBeforePassword.ifPresentOrElse(
+            // Present
+            beforePassword -> beforePassword.changeBeforePassword(member.getMemberPassword()),
+            // Empty
+            () -> jpaBeforePasswordRepository.save(new BeforePassword(member))
+        );
 
         String newPassword = member.combineSalt(changePassword);
         String encode = bc.encodeBCrypt(newPassword);
@@ -87,5 +81,9 @@ public class MemberRepository {
 
     public Optional<Member> findByMemberEmailAndMemberPhone(String email, String phone) {
         return jpaMemberRepository.findByMemberEmailAndMemberPhone(email, phone);
+    }
+
+    public List<Member> findAll() {
+        return jpaMemberRepository.findAll();
     }
 }

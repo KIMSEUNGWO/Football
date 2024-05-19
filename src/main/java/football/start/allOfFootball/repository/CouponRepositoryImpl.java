@@ -1,18 +1,15 @@
 package football.start.allOfFootball.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import football.start.allOfFootball.domain.Coupon;
-import football.start.allOfFootball.domain.CouponList;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.jpaRepository.JpaCouponListRepository;
-import football.start.allOfFootball.jpaRepository.JpaCouponRepository;
+import football.common.domain.Coupon;
+import football.common.domain.CouponList;
+import football.common.domain.Member;
+import football.common.jpaRepository.JpaCouponListRepository;
+import football.common.jpaRepository.JpaCouponRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Repository
 @Slf4j
@@ -50,11 +47,6 @@ public class CouponRepositoryImpl implements CouponRepository {
 
     @Override
     public void saveCouponListTest(Member member, Coupon coupon) {
-        CouponList couponList = new CouponList();
-        couponList.setMember(member);
-        couponList.setCoupon(coupon);
-        couponList.setCouponListExpireDate(LocalDateTime.now().plusDays(coupon.getCouponLimitDay()));
-        couponList.setCouponListStatus('N');
-        jpaCouponListRepository.save(couponList);
+        jpaCouponListRepository.save(new CouponList(member, coupon));
     }
 }

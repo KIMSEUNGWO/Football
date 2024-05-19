@@ -1,8 +1,9 @@
 package football.start.allOfFootball.controller;
 
-import football.start.allOfFootball.common.alert.AlertUtils;
-import football.start.allOfFootball.customAnnotation.SessionLogin;
-import football.start.allOfFootball.domain.*;
+import football.common.domain.*;
+import football.common.common.alert.AlertUtils;
+import football.common.customAnnotation.SessionLogin;
+import football.common.exception.match.NotExistsMatchException;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.dto.OrderForm;
 import football.start.allOfFootball.dto.OrderPostForm;
@@ -12,7 +13,6 @@ import football.start.allOfFootball.service.domainService.CouponListService;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import football.start.allOfFootball.exception.NotEnoughCashException;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,20 +29,18 @@ import java.util.Optional;
 public class OrderController {
 
     private final OrderService orderService;
-
     private final MatchService matchService;
     private final MemberService memberService;
     private final CouponListService couponListService;
-
     private final CashService cashService;
 
 
     @GetMapping("/order/{matchId}")
     public String order(@PathVariable Long matchId,
                         @SessionLogin Member member,
-                        Model model) {
+                        Model model) throws NotExistsMatchException {
 
-        Match match = matchService.findByMatch(matchId).get();
+        Match match = matchService.findByMatch(matchId, "/");
 
         List<CouponListForm> couponList = couponListService.getCouponList(member);
 
@@ -56,13 +54,13 @@ public class OrderController {
     public String orderPost(@PathVariable Long matchId,
                             @SessionLogin Member member,
                             HttpServletResponse response,
-                            @ModelAttribute OrderPostForm form) {
+                            @ModelAttribute OrderPostForm form) throws NotExistsMatchException, NotEnoughCashException {
 
         if (form.getPolicy() == null) {
             return AlertUtils.alertAndMove(response, "모든 약관에 동의해주세요.", "/order/" + matchId);
         }
 
-        Match match = matchService.findByMatch(matchId).get();
+        Match match = matchService.findByMatch(matchId, "/");
 
         List<Orders> ordersList = member.getOrdersList();
 
@@ -73,23 +71,19 @@ public class OrderController {
         Optional<CouponList> couponList = couponListService.findByCouponListId(form.getCouponNum());
 
 
-        try {
-            int price = cashService.calculate(match, member, couponList);
+        int price = cashService.calculate(matchId, match, member, couponList);
 
-            Orders orders = Orders.builder()
-                                .match(match)
-                                .member(member)
-                                .payment(price)
-                                .build();
+        Orders orders = Orders.builder()
+                            .match(match)
+                            .member(member)
+                            .payment(price)
+                            .build();
 
-            orderService.save(orders, member, couponList, price); // order 저장
-            matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
+        orderService.save(orders, member, couponList, price); // order 저장
+        matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
 
-            log.info("Orders 정상 처리");
-            return "redirect:/match/" + matchId;
+        log.info("Orders 정상 처리");
 
-        } catch (NotEnoughCashException e) {
-            return AlertUtils.alertAndMove(response, "잔액이 부족합니다.", "/cash/charge?url=" + "/order/" + matchId);
-        }
+        return "redirect:/match/" + matchId;
     }
 }

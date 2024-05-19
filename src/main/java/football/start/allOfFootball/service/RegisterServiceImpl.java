@@ -1,17 +1,17 @@
 package football.start.allOfFootball.service;
 
 import football.start.allOfFootball.common.BCrypt;
-import football.start.allOfFootball.common.file.FileService;
+import football.file.service.FileService;
 import football.start.allOfFootball.controller.api.kakaoLogin.LoginResponse;
 import football.start.allOfFootball.controller.login.EmailDto;
-import football.start.allOfFootball.domain.KakaoToken;
-import football.start.allOfFootball.domain.Member;
-import football.start.allOfFootball.domain.Social;
-import football.start.allOfFootball.dto.json.JsonDefault;
-import football.start.allOfFootball.enums.FileUploadType;
-import football.start.allOfFootball.enums.SocialEnum;
-import football.start.allOfFootball.enums.gradeEnums.GradeEnum;
-import football.start.allOfFootball.jpaRepository.JpaKakaoTokenRepository;
+import football.common.domain.KakaoToken;
+import football.common.domain.Member;
+import football.common.domain.Social;
+import football.common.dto.json.JsonDefault;
+import football.file.enums.FileUploadType;
+import football.common.enums.SocialEnum;
+import football.common.enums.gradeEnums.GradeEnum;
+import football.common.jpaRepository.JpaKakaoTokenRepository;
 import football.start.allOfFootball.repository.LoginRepository;
 import football.start.allOfFootball.repository.RegisterRepository;
 import lombok.RequiredArgsConstructor;

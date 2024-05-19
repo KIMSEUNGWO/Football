@@ -1,10 +1,11 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.start.allOfFootball.domain.Member;
+import football.common.domain.Member;
+import football.payment.dto.CashListForm;
+import football.payment.service.PaymentService;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.domainService.CouponListService;
-import football.start.allOfFootball.service.domainService.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

@@ -1,11 +1,11 @@
 package football.start.allOfFootball.config;
 
-import football.start.allOfFootball.customAnnotation.argumentresolver.LoginMemberArgumentResolver;
+import football.common.jpaRepository.JpaAdminRepository;
+import football.start.allOfFootball.argumentresolver.LoginMemberArgumentResolver;
 import football.start.allOfFootball.interceptor.AdminInterceptor;
 import football.start.allOfFootball.interceptor.LoginInterceptor;
 import football.start.allOfFootball.interceptor.MatchInterceptor;
 import football.start.allOfFootball.interceptor.OrderInterceptor;
-import football.start.allOfFootball.service.AdminService;
 import football.start.allOfFootball.service.domainService.MatchService;
 import football.start.allOfFootball.service.domainService.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     private final MatchService matchService;
     private final MemberService memberService;
-    private final AdminService adminService;
+    private final JpaAdminRepository jpaAdminRepository;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
@@ -44,7 +44,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(3)
                 .addPathPatterns("/order/**");
 
-        registry.addInterceptor(new AdminInterceptor(memberService, adminService))
+        registry.addInterceptor(new AdminInterceptor(memberService, jpaAdminRepository))
                 .order(4)
                 .addPathPatterns("/admin", "/admin/**");
 
