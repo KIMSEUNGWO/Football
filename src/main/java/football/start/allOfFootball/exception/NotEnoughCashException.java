@@ -1,6 +1,13 @@
 package football.start.allOfFootball.exception;
 
-import java.io.IOException;
+import lombok.Getter;
 
-public class NotEnoughCashException extends IOException {
+@Getter
+public class NotEnoughCashException extends Exception {
+
+    private final String redirectURI;
+
+    public NotEnoughCashException(String redirectURI) {
+        this.redirectURI = redirectURI;
+    }
 }

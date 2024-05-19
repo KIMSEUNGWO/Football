@@ -29,11 +29,9 @@ import java.util.Optional;
 public class OrderController {
 
     private final OrderService orderService;
-
     private final MatchService matchService;
     private final MemberService memberService;
     private final CouponListService couponListService;
-
     private final CashService cashService;
 
 
@@ -56,7 +54,7 @@ public class OrderController {
     public String orderPost(@PathVariable Long matchId,
                             @SessionLogin Member member,
                             HttpServletResponse response,
-                            @ModelAttribute OrderPostForm form) throws NotExistsMatchException {
+                            @ModelAttribute OrderPostForm form) throws NotExistsMatchException, NotEnoughCashException {
 
         if (form.getPolicy() == null) {
             return AlertUtils.alertAndMove(response, "모든 약관에 동의해주세요.", "/order/" + matchId);
@@ -73,23 +71,19 @@ public class OrderController {
         Optional<CouponList> couponList = couponListService.findByCouponListId(form.getCouponNum());
 
 
-        try {
-            int price = cashService.calculate(match, member, couponList);
+        int price = cashService.calculate(matchId, match, member, couponList);
 
-            Orders orders = Orders.builder()
-                                .match(match)
-                                .member(member)
-                                .payment(price)
-                                .build();
+        Orders orders = Orders.builder()
+                            .match(match)
+                            .member(member)
+                            .payment(price)
+                            .build();
 
-            orderService.save(orders, member, couponList, price); // order 저장
-            matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
+        orderService.save(orders, member, couponList, price); // order 저장
+        matchService.refreshMatchStatus(match); // MatchStatus 상태 변경
 
-            log.info("Orders 정상 처리");
-            return "redirect:/match/" + matchId;
+        log.info("Orders 정상 처리");
 
-        } catch (NotEnoughCashException e) {
-            return AlertUtils.alertAndMove(response, "잔액이 부족합니다.", "/cash/charge?url=" + "/order/" + matchId);
-        }
+        return "redirect:/match/" + matchId;
     }
 }

@@ -17,13 +17,14 @@ import java.util.Optional;
 public class CashService {
 
     private final CashRepository cashRepository;
-    public int calculate(Match match, Member member, Optional<CouponList> couponList) throws NotEnoughCashException {
+
+    public int calculate(Long matchId, Match match, Member member, Optional<CouponList> couponList) throws NotEnoughCashException {
         int price = match.getPrice();
         price -= cashRepository.couponApply(couponList, price);
 
         int cash = member.getMemberCash();
         if (cash < price) {
-            throw new NotEnoughCashException();
+            throw new NotEnoughCashException("/order/" + matchId);
         }
         return price;
     }
