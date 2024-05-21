@@ -27,7 +27,7 @@ public class Social {
     @JoinColumn(name = "memberId")
     private Member member;
 
-    private Integer socialNum; // 고유번호
+    private int socialNum; // 고유번호
 
     @Enumerated(EnumType.STRING)
     private SocialEnum socialType;
@@ -37,5 +37,9 @@ public class Social {
 
     public boolean isType(SocialEnum socialEnum) {
         return socialType == socialEnum;
+    }
+
+    public boolean isCorrect(int socialNum) {
+        return this.socialNum == socialNum;
     }
 }

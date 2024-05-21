@@ -29,5 +29,12 @@ public class KakaoToken{
     private String refresh_token;
 
 
+    public void logout() {
+        access_token = refresh_token = null;
+    }
 
+    public void updateToken(KakaoToken newToken) {
+        if (this.access_token == null) this.access_token = newToken.access_token;
+        if (this.refresh_token == null) this.refresh_token = newToken.refresh_token;
+    }
 }

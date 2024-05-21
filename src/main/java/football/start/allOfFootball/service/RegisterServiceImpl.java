@@ -58,8 +58,7 @@ public class RegisterServiceImpl implements RegisterService{
 
     @Override
     public boolean distinctEmail(String email) {
-        Optional<Member> byMember = loginRepository.findByMemberEmail(email);
-        return byMember.isPresent();
+        return loginRepository.existsByPhone(email);
     }
 
     @Override
