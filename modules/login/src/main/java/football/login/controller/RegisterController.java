@@ -5,9 +5,7 @@ import football.common.common.alert.AlertUtils;
 import football.login.dto.RegisterDto;
 import football.login.service.RegisterService;
 import football.login.validator.RegisterValidator;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -35,13 +33,7 @@ public class RegisterController {
     @GetMapping
     public String registerPage(@ModelAttribute RegisterDto registerDto, HttpServletResponse response) {
         // 회원가입 쿠키 생성
-        Cookie cookie = new Cookie(REGISTER, REGISTER);
-
-        cookie.setMaxAge(60 * 10); // 쿠키 유효기간: 10분
-        cookie.setHttpOnly(true); // HttpOnly 속성 설정
-        cookie.setPath("/register");
-
-        response.addCookie(cookie);
+        response.addCookie(registerService.createCertCookie());
         return "/login/register";
     }
 
@@ -50,33 +42,22 @@ public class RegisterController {
                                  @CookieValue(name = REGISTER, required = false) String registerCookie,
                                  HttpServletResponse response) {
         if (registerCookie == null) {
-            AlertUtils.alert(response, "회원가입 세션이 만료되었습니다.");
+            AlertUtils.alert(response, "회원가입 세션이 만료되었습니다. 다시 시도해주세요.");
             return "redirect:/";
         }
         System.out.println("registerDto = " + registerDto);
-        if (!registerDto.getPassword().equals(registerDto.getPasswordCheck())) {
-            bindingResult.rejectValue("passwordCheck", null, "비밀번호가 일치하지 않습니다.");
-        }
+
         if (bindingResult.hasFieldErrors("phoneCheck")) {
             return AlertUtils.alertAndMove(response, bindingResult.getFieldError("phoneCheck").getDefaultMessage(), "/register");
         }
         if (bindingResult.hasErrors()) {
             System.out.println("bindingResult = " + bindingResult);
-            return "redirect:/login/register";
-        }
-        boolean distinct = registerService.distinctEmail(registerDto.getEmail());
-        if (distinct) {
-            bindingResult.rejectValue("email", null, "중복된 이메일입니다.");
             return "/login/register";
         }
         Member saveMember = registerDto.builder();
         registerService.save(saveMember);
 
-        Cookie cookie = new Cookie(REGISTER, REGISTER);
-        cookie.setMaxAge(0); // 쿠키 유효기간: 10분
-        cookie.setHttpOnly(true); // HttpOnly 속성 설정
-        cookie.setPath("/register");
-        response.addCookie(cookie); // DB 저장 완료 후 회원가입 쿠키 삭제
+        response.addCookie(registerService.removeCertCookie()); // DB 저장 완료 후 회원가입 쿠키 삭제
 
         return AlertUtils.alertAndMove(response, "회원가입이 완료되었습니다.", "/login");
     }

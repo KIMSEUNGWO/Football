@@ -2,13 +2,17 @@ package football.login.validator;
 
 import football.api.sms.service.SmsService;
 import football.api.sms.exception.CertificationException;
+import football.common.formatter.DateFormatter;
 import football.login.dto.RegisterDto;
+import football.login.service.RegisterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.web.servlet.View;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 
 @Slf4j
@@ -17,6 +21,8 @@ import java.time.LocalDate;
 public class RegisterValidator implements Validator {
 
     private final SmsService smsService;
+    private final RegisterService registerService;
+    private final View error;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -29,9 +35,24 @@ public class RegisterValidator implements Validator {
         log.info("RegisterValidator.validate 실행");
         System.out.println("dto = " + dto);
 
+        validEmail(dto, errors);
+        validPassword(dto, errors);
         validBirthday(dto, errors);
         validCertification(dto, errors);
 
+    }
+
+    private void validEmail(RegisterDto dto, Errors errors) {
+        boolean distinct = registerService.distinctEmail(dto.getEmail());
+        if (distinct) {
+            errors.rejectValue("email", null, "중복된 이메일입니다.");
+        }
+    }
+
+    private void validPassword(RegisterDto dto, Errors errors) {
+        if (!dto.getPassword().equals(dto.getPasswordCheck())) {
+            errors.rejectValue("passwordCheck", null, "비밀번호가 일치하지 않습니다.");
+        }
     }
 
     private void validCertification(RegisterDto dto, Errors errors) {
@@ -46,39 +67,18 @@ public class RegisterValidator implements Validator {
     private void validBirthday(RegisterDto dto, Errors errors) {
         String birthday = dto.getBirthday();
 
-        if (birthday == null || birthday.length() != 6) {
+        try {
+            LocalDate now = LocalDate.now();
+            LocalDate birth = DateFormatter.toLocalDate(birthday, "yyyyMMdd");
+            if (birth.isAfter(now)) {
+                invalidBirthday(errors);
+            }
+        } catch (DateTimeException e) {
             invalidBirthday(errors);
-            return;
-        }
-
-        int year = Integer.parseInt(birthday.substring(0, 2));
-        int month = Integer.parseInt(birthday.substring(2, 4));
-        int day = Integer.parseInt(birthday.substring(4, 6));
-
-        LocalDate now = LocalDate.now();
-
-        int nowYear = now.getYear();
-        int compareYear = nowYear % 100;
-        year += (year <= compareYear) ? 2000 : 1900;
-
-        if (nowYear < year || (month < 1 || month > 12)) {
-            invalidBirthday(errors);
-            return;
-        }
-
-        int lastDay = LocalDate.of(year, month, 1).lengthOfMonth();
-        if (day < 1 || day > lastDay) {
-            invalidBirthday(errors);
-            return;
-        }
-        LocalDate birth = LocalDate.of(year, month, day);
-        if (birth.isAfter(now)) {
-            invalidBirthday(errors);
-            return;
         }
     }
 
     private void invalidBirthday(Errors errors) {
-        errors.rejectValue("birthday", "Pattern", "잘못된 생년월일입니다.");
+        errors.rejectValue("birthday", "Pattern", "유효하지 않은 생년월일입니다.");
     }
 }

@@ -76,4 +76,8 @@ public class MemberService {
     public void changePassword(Member member, String password) {
         memberRepository.changePassword(member, password);
     }
+
+    public boolean existsByEmailAndPhone(String email, String phone) {
+        return memberRepository.existsByEmailAndPhone(email, phone);
+    }
 }

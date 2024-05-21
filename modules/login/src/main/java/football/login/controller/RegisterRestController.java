@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static football.common.consts.Constant.ERROR;
+import static football.common.consts.Constant.*;
 
 @Slf4j
 @RestController
@@ -31,6 +31,11 @@ public class RegisterRestController {
             FieldError fieldError = bindingResult.getFieldError();
             return ResponseEntity.badRequest().body(new JsonDefault(ERROR, messageConvert.getErrorMessage(fieldError)));
         }
-        return registerService.validEmail(emailDto);
+
+        boolean exists = registerService.existsByEmail(emailDto.getEmail());
+        return ResponseEntity.ok(
+            exists  ?    new JsonDefault(ERROR, "중복된 이메일입니다.")
+                    :    new JsonDefault(OK, "사용가능한 이메일입니다.")
+        );
     }
 }

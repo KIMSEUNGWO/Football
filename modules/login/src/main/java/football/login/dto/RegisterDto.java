@@ -3,13 +3,12 @@ package football.login.dto;
 import football.common.domain.Member;
 import football.common.enums.matchenum.GenderEnum;
 import football.common.enums.gradeEnums.GradeEnum;
+import football.common.formatter.DateFormatter;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
-import java.util.regex.Matcher;
 
 @ToString
 @Getter
@@ -36,7 +35,7 @@ public class RegisterDto{
     private String gender;
 
 //    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}$", message = "생년월일 정보가 잘못입력되었습니다.") // 1999-01-01
-    @Pattern(regexp = "[0-9]{6}", message = "생년월일 정보가 잘못입력되었습니다.")
+    @Pattern(regexp = "[0-9]{8}", message = "유효하지 않은 생년월일입니다.")
     private String birthday;
 
     @Pattern(regexp = "(010|011)-[0-9]{3,4}-[0-9]{4}", message = "휴대폰 정보가 잘못입력되었습니다.")
@@ -54,20 +53,8 @@ public class RegisterDto{
             .memberName(name)
             .grade(GradeEnum.루키)
             .memberGender(GenderEnum.valueOf(gender))
-            .memberBirthday(getLocalDate(birthday))
+            .memberBirthday(DateFormatter.toLocalDate(birthday, "yyyyMMdd"))
             .memberPhone(phone.replace("-", ""))
             .build();
-    }
-
-    private LocalDate getLocalDate(String birthday) {
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile("[0-9]{2}");
-        Matcher m = p.matcher(birthday);
-        m.find();
-        int year = Integer.parseInt(m.group());
-        m.find();
-        int month = Integer.parseInt(m.group());
-        m.find();
-        int day = Integer.parseInt(m.group());
-        return LocalDate.of(year, month, day);
     }
 }

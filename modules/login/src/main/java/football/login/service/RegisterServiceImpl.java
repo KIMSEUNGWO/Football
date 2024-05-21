@@ -4,24 +4,21 @@ import football.common.common.BCrypt;
 import football.common.domain.KakaoToken;
 import football.common.domain.Member;
 import football.common.domain.Social;
-import football.common.dto.json.JsonDefault;
 import football.common.enums.SocialEnum;
 import football.common.enums.gradeEnums.GradeEnum;
 import football.common.jpaRepository.JpaKakaoTokenRepository;
 import football.file.enums.FileUploadType;
 import football.file.service.FileService;
-import football.login.dto.EmailDto;
 import football.login.dto.LoginResponse;
 import football.login.repository.LoginRepository;
 import football.login.repository.RegisterRepository;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import static football.common.consts.SessionConst.REGISTER;
 
 @Service
 @Slf4j
@@ -35,13 +32,8 @@ public class RegisterServiceImpl implements RegisterService{
     private final BCrypt bc;
 
     @Override
-    public ResponseEntity<JsonDefault> validEmail(EmailDto emailDto) {
-        String email = emailDto.getEmail();
-        Optional<Member> findMember = registerRepository.findByMemberEmail(email);
-        if (findMember.isPresent()) {
-            return new ResponseEntity<>(new JsonDefault("error", "중복된 이메일입니다."), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(new JsonDefault("ok", "사용가능한 이메일입니다."), HttpStatus.OK);
+    public boolean existsByEmail(String email) {
+        return loginRepository.existsByEmail(email);
     }
 
     @Override
@@ -51,7 +43,6 @@ public class RegisterServiceImpl implements RegisterService{
         String memberPassword = member.combineSalt(member.getMemberPassword());
         String encodePassword = bc.encodeBCrypt(memberPassword);
         member.setMemberPassword(encodePassword);
-
 
         registerRepository.save(member);
     }
@@ -91,5 +82,23 @@ public class RegisterServiceImpl implements RegisterService{
 
         fileService.saveImage(profile, saveMember, FileUploadType.PROFILE);
         return saveMember;
+    }
+
+    @Override
+    public Cookie createCertCookie() {
+        return createCookie(10);
+    }
+
+    @Override
+    public Cookie removeCertCookie() {
+        return createCookie(0);
+    }
+
+    private Cookie createCookie(int minute) {
+        Cookie cookie = new Cookie(REGISTER, REGISTER);
+        cookie.setHttpOnly(true); // HttpOnly 속성 설정
+        cookie.setPath("/register");
+        cookie.setMaxAge(60 * minute); // 쿠키 유효기간: 10분
+        return cookie;
     }
 }

@@ -54,7 +54,7 @@ public class KakaoLoginController {
             kakaoLoginService.updateKakaoToken(nowKakaoToken, newKakaoToken);
         }
 
-        loginService.renewLoginTime(loginMember);
+        loginMember.renewLoginTime();
         session.setAttribute(LOGIN_MEMBER, loginMember.getMemberId());
 
         String redirect = "const urlParams = new URLSearchParams(opener.location.search); " +

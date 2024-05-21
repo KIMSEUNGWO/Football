@@ -12,6 +12,4 @@ public interface LoginService {
     Member socialLogin(String email, SocialEnum socialEnum, int loginUser_id);
 
     boolean existsByPhone(String phone);
-
-    void renewLoginTime(Member loginMember);
 }
