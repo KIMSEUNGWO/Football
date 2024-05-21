@@ -59,7 +59,7 @@
             </div>
             <div class="login_box">
                 <h5>생년월일</h5>
-                <input type="text" maxlength='6' minlength="6" th:errorclass="field-error" th:field="*{birthday}" placeholder="990101"  onfocusout="validBirth()" inputmode="numeric">
+                <input type="text" maxlength='8' minlength="8" th:errorclass="field-error" th:field="*{birthday}" placeholder="19990101"  onfocusout="validBirth()" inputmode="numeric">
                 <div class="errorMsg errorBirth field-error" th:errors="*{birthday}">[[${errorMsg}]]</div>
                 <div class="confirmMsg confirmBirth disabled">생일검증란</div>
             </div>

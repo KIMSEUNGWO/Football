@@ -3,7 +3,6 @@ package football.login.controller;
 import football.api.sms.dto.SmsRequest;
 import football.api.sms.exception.CertificationException;
 import football.api.sms.service.SmsService;
-import football.common.customAnnotation.SessionLogin;
 import football.common.domain.Member;
 import football.common.jpaRepository.JpaAdminRepository;
 import football.common.service.MemberService;
@@ -26,8 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static football.common.consts.Constant.ERROR;
-import static football.common.consts.Constant.OK;
+import static football.common.consts.Constant.*;
 import static football.common.consts.SessionConst.*;
 
 @Slf4j
@@ -42,15 +40,13 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String startLogin(@SessionLogin Member member,
+    public String startLogin(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
                              @ModelAttribute LoginDto loginDto,
                              @RequestParam(required = false) String url,
                              Model model) {
-        if (member != null) return "redirect:/";
+        if (memberId != null) return "redirect:/";
 
-        if (url != null && !url.equals("null")) {
-            model.addAttribute("url", url);
-        }
+        if (url != null && !url.equals("null")) model.addAttribute("url", url);
         return "/login/login";
     }
 
@@ -60,7 +56,6 @@ public class LoginController {
                               BindingResult bindingResult,
                               @RequestParam(required = false) String url,
                               HttpSession session) {
-        String redirectUrl = getRedirectUrl(url);
 
         if (bindingResult.hasErrors()) {
             log.info("errors={} ", bindingResult);
@@ -81,7 +76,7 @@ public class LoginController {
         if (adminService.existsByMember(findMember)) {
             return "redirect:/admin/ground";
         }
-        return "redirect:" + redirectUrl;
+        return "redirect:" + getRedirectUrl(url);
     }
 
     private String getRedirectUrl(String url) {
@@ -131,7 +126,6 @@ public class LoginController {
 
     @GetMapping("/findPassword")
     public String findPassword() {
-
         return "/login/findPassword";
     }
 
@@ -140,12 +134,10 @@ public class LoginController {
     public ResponseEntity<JsonDefault> postPassword(@RequestBody SmsRequest smsRequest) throws CertificationException {
 
         smsService.checkCertificationFind(smsRequest);
-
-        Optional<Member> findEmail = memberService.findByMemberEmailAndMemberPhone(smsRequest.getEmail(), smsRequest.getPhone());
-        if (findEmail.isEmpty()) {
-            return ResponseEntity.ok().body(new JsonDefault(ERROR, "일치하는 회원정보가 없습니다."));
-        }
-        return ResponseEntity.ok(new JsonDefault(OK, ""));
+        boolean exists = memberService.existsByEmailAndPhone(smsRequest.getEmail(), smsRequest.getPhone());
+        return ResponseEntity.ok(
+            exists ?    new JsonDefault(OK, "")
+                   :    new JsonDefault(ERROR, "일치하는 회원정보가 없습니다."));
     }
 
     @Transactional

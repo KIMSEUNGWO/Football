@@ -2,15 +2,14 @@ package football.login.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.common.domain.Member;
-import football.common.domain.QMember;
 import football.common.enums.SocialEnum;
 import football.common.jpaRepository.JpaMemberRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static football.common.domain.QMember.member;
@@ -23,9 +22,9 @@ import static football.common.domain.QSocial.social;
 public class LoginRepositoryImpl implements LoginRepository {
 
     private final JpaMemberRepository jpaMemberRepository;
-
     private final JPAQueryFactory query;
 
+    @Autowired
     public LoginRepositoryImpl(JpaMemberRepository jpaMemberRepository, EntityManager em) {
         this.jpaMemberRepository = jpaMemberRepository;
         this.query = new JPAQueryFactory(em);
@@ -45,13 +44,6 @@ public class LoginRepositoryImpl implements LoginRepository {
                 .and(social.socialType.eq(socialEnum))
                 .and(social.socialNum.eq(loginUser_id))
             ).fetchFirst();
-    }
-
-    @Override
-    public void renewLoginTime(Member member) {
-        query.update(QMember.member)
-            .set(QMember.member.memberRecentlyDate, LocalDateTime.now())
-            .where(QMember.member.memberId.eq(member.getMemberId()));
     }
 
     @Override

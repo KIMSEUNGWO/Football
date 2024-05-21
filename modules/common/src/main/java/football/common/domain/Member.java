@@ -28,6 +28,7 @@ public class Member implements ImageParent {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER")
     private Long memberId;
     private String memberEmail;
+    @Setter
     private String memberPassword;
     private String memberSalt;
     private String memberName;
@@ -35,7 +36,9 @@ public class Member implements ImageParent {
     @Enumerated(EnumType.STRING)
     private GenderEnum memberGender;
     private LocalDate memberBirthday;
+    @Setter
     private String memberPhone;
+    @Setter
     private int memberCash;
 
     @Column(nullable = false)
@@ -79,24 +82,12 @@ public class Member implements ImageParent {
         this.memberSalt = createSalt();
     }
 
-    public void renewLoginTime(LocalDateTime now) {
-        memberRecentlyDate = now;
+    public void renewLoginTime() {
+        memberRecentlyDate = LocalDateTime.now();
     }
 
     public void addScore(int score) {
         memberScore += score;
-    }
-
-    public void setMemberCash(int resultCash) {
-        memberCash = resultCash;
-    }
-
-    public void setMemberPassword(String changePassword) {
-        memberPassword = changePassword;
-    }
-
-    public void setMemberPhone(String memberPhone) {
-        this.memberPhone = memberPhone;
     }
 
     public boolean isSocial() {

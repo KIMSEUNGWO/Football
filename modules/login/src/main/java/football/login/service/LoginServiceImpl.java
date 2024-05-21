@@ -21,17 +21,17 @@ public class LoginServiceImpl implements LoginService{
     @Override
     public Optional<Member> login(String email, String password) {
         Optional<Member> loginMember = loginRepository.findByEmail(email);
-        if (loginMember.isEmpty()) return Optional.empty();
 
-        Member findMember = loginMember.get();
-        boolean isLogin = memberRepository.isExactPassword(findMember, password);
-        if (!isLogin) {
-            return Optional.empty();
+        if (loginMember.isPresent()) {
+            Member findMember = loginMember.get();
+            boolean isLogin = memberRepository.isExactPassword(findMember, password);
+            if (isLogin) {
+                // 최근 로그인 시간 갱신
+                findMember.renewLoginTime();
+                return loginMember;
+            }
         }
-        // 최근 로그인 시간 갱신
-        loginRepository.renewLoginTime(findMember);
-
-        return loginMember;
+        return Optional.empty();
     }
 
 
@@ -43,10 +43,5 @@ public class LoginServiceImpl implements LoginService{
     @Override
     public boolean existsByPhone(String phone) {
         return loginRepository.existsByPhone(phone);
-    }
-
-    @Override
-    public void renewLoginTime(Member loginMember) {
-        loginRepository.renewLoginTime(loginMember);
     }
 }

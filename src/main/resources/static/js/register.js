@@ -418,6 +418,6 @@ function checkPhone() {
 
 function checkBirth() {
     var validBirth = document.querySelector('input[name="birthday"]');
-    var birthRegex = /^[0-9]{6}$/;
+    var birthRegex = /^[0-9]{8}$/;
     return birthRegex.test(validBirth.value);
 }

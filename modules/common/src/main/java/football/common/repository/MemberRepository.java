@@ -83,7 +83,7 @@ public class MemberRepository {
         return jpaMemberRepository.findByMemberEmailAndMemberPhone(email, phone);
     }
 
-    public List<Member> findAll() {
-        return jpaMemberRepository.findAll();
+    public boolean existsByEmailAndPhone(String email, String phone) {
+        return jpaMemberRepository.existsByMemberEmailAndMemberPhone(email, phone);
     }
 }
