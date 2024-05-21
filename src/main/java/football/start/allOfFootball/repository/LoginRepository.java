@@ -1,14 +1,18 @@
 package football.start.allOfFootball.repository;
 
 import football.common.domain.Member;
+import football.common.enums.SocialEnum;
 
 import java.util.Optional;
 
 public interface LoginRepository {
 
-    Optional<Member> findByMemberEmail(String email);
+    Optional<Member> findByEmail(String email);
+    Member socialLogin(String email, SocialEnum socialEnum, int loginUser_id);
 
     void renewLoginTime(Member member);
 
-    Optional<Member> findByPhone(String phone);
+    boolean existsByPhone(String phone);
+    boolean existsByEmail(String email);
+
 }

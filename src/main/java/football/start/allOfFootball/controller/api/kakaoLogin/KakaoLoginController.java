@@ -1,6 +1,5 @@
 package football.start.allOfFootball.controller.api.kakaoLogin;
 
-import football.common.consts.SessionConst;
 import football.common.common.alert.AlertTemplate;
 import football.common.domain.KakaoToken;
 import football.common.domain.Member;
@@ -8,7 +7,6 @@ import football.common.domain.Social;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.RegisterService;
 import football.start.allOfFootball.service.domainService.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
+import static football.common.consts.SessionConst.LOGIN_MEMBER;
 import static football.common.enums.SocialEnum.*;
 
 @Controller
@@ -36,37 +35,30 @@ public class KakaoLoginController {
     @ResponseBody
     @GetMapping("/login/kakao")
     public LoginResponse kakaoLogin(@RequestParam(required = false) String code,
-                                    HttpServletRequest request, HttpServletResponse response) {
+                                    HttpSession session, HttpServletResponse response) throws DistinctRegisterException {
 
         KakaoToken kakaoToken = kakaoLoginService.getKakaoAccessToken(code);
         LoginResponse userInfo = kakaoLoginService.getUserInfo(kakaoToken.getAccess_token());
 
-        Optional<Member> findMember =  loginService.findByEmail(userInfo.getEmail());
-        Member loginMember = null;
+        Member loginMember =  loginService.socialLogin(userInfo.getEmail(), KAKAO, userInfo.getId());
 
-        if (findMember.isEmpty()) {
-            boolean phoneDistinct = loginService.findByPhone(userInfo.getPhone());
-            if (phoneDistinct) {
-                execute(response, "이미 가입한 계정이 존재합니다.");
-                return null;
-            }
+        // 로그인시도 (이메일, 소셜타입, 소셜고유번호)
+        // 있으면 token 업데이트
+
+        // 없으면 휴대폰 확인
+        // 휴대폰정보가 있으면 DistinctRegisterException
+        // 없으면 회원가입
+
+        if (loginMember == null) {
+            boolean phoneDistinct = loginService.existsByPhone(userInfo.getPhone());
+            if (phoneDistinct) throw new DistinctRegisterException();
+
             loginMember = registerService.socialSave(userInfo, kakaoToken);
             System.out.println("loginMember = " + loginMember);
-        } else {
-            Member member = findMember.get();
-            Social social = member.getSocial();
-            if (social != null && social.getSocialType() == KAKAO && social.getSocialNum().equals(userInfo.getId())) {
-                loginMember = findMember.get();
-                kakaoLoginService.updateKakaoToken(loginMember, kakaoToken);
-            } else {
-                execute(response, "이미 가입한 계정이 존재합니다.");
-                return null;
-            }
         }
 
-        HttpSession session = request.getSession();
         loginService.renewLoginTime(loginMember);
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getMemberId());
+        session.setAttribute(LOGIN_MEMBER, loginMember.getMemberId());
 
         execute(response, null);
         return null;
@@ -80,9 +72,8 @@ public class KakaoLoginController {
 
         Member member = byMemberId.get();
         Social social = member.getSocial();
-        if (social == null || social.getSocialType() != KAKAO) return "redirect:/";
-        KakaoToken kakaoToken = social.getKakaoToken();
-        kakaoLoginService.logout(kakaoToken);
+        if (!member.socialTypeIs(KAKAO)) return "redirect:/";
+        kakaoLoginService.logout(social.getKakaoToken());
         return "redirect:" + kakaoLoginService.serviceLogout();
 
     }
@@ -110,9 +101,6 @@ public class KakaoLoginController {
                     "let redirect = urlParams.get('url');" +
                     "if (redirect == null) redirect = '/';" +
                     "opener.location.href=redirect;";
-        }
-        if ("admin".equals(option)) {
-            return "opener.location.href='/admin/ground';";
         }
         return String.format("alert('%s');", option);
     }

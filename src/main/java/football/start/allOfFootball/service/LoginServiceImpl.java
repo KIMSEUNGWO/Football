@@ -1,6 +1,7 @@
 package football.start.allOfFootball.service;
 
 import football.common.domain.Member;
+import football.common.enums.SocialEnum;
 import football.start.allOfFootball.repository.LoginRepository;
 import football.start.allOfFootball.repository.domainRepository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public Optional<Member> login(String email, String password) {
-        Optional<Member> loginMember = loginRepository.findByMemberEmail(email);
+        Optional<Member> loginMember = loginRepository.findByEmail(email);
         if (loginMember.isEmpty()) return Optional.empty();
 
         Member findMember = loginMember.get();
@@ -35,14 +36,13 @@ public class LoginServiceImpl implements LoginService{
 
 
     @Override
-    public Optional<Member> findByEmail(String email) {
-        return loginRepository.findByMemberEmail(email);
+    public Member socialLogin(String email, SocialEnum socialEnum, int loginUser_id) {
+        return loginRepository.socialLogin(email, socialEnum, loginUser_id);
     }
 
     @Override
-    public boolean findByPhone(String phone) {
-        Optional<Member> findMember = loginRepository.findByPhone(phone);
-        return findMember.isPresent();
+    public boolean existsByPhone(String phone) {
+        return loginRepository.existsByPhone(phone);
     }
 
     @Override
