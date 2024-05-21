@@ -4,7 +4,7 @@ import football.common.consts.SessionConst;
 import football.common.domain.Coupon;
 import football.common.domain.Member;
 import football.start.allOfFootball.service.CouponService;
-import football.start.allOfFootball.service.domainService.MemberService;
+import football.common.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

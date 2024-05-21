@@ -11,7 +11,7 @@ import football.start.allOfFootball.dto.matchRecordForm.RecordForm;
 import football.start.allOfFootball.dto.matchRecordForm.ScoreResultForm;
 import football.start.allOfFootball.enums.matchEnums.RequestTeam;
 import football.start.allOfFootball.service.domainService.MatchService;
-import football.start.allOfFootball.service.domainService.MemberService;
+import football.common.service.MemberService;
 import football.start.allOfFootball.service.domainService.ScoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

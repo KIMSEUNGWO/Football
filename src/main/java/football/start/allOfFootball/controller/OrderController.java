@@ -11,7 +11,7 @@ import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.domainService.CashService;
 import football.start.allOfFootball.service.domainService.CouponListService;
 import football.start.allOfFootball.service.domainService.MatchService;
-import football.start.allOfFootball.service.domainService.MemberService;
+import football.common.service.MemberService;
 import football.start.allOfFootball.exception.NotEnoughCashException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

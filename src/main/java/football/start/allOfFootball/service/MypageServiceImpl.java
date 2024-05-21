@@ -14,7 +14,7 @@ import football.common.enums.matchenum.MatchStatus;
 import football.common.formatter.DateFormatter;
 import football.start.allOfFootball.repository.MypageRepository;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
-import football.start.allOfFootball.repository.domainRepository.MemberRepository;
+import football.common.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

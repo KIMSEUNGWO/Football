@@ -1,6 +1,6 @@
 package football.start.allOfFootball.repository;
 
-import football.start.allOfFootball.common.MessageConvert;
+import football.common.common.MessageConvert;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
