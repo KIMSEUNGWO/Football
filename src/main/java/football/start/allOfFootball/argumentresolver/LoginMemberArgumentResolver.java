@@ -3,7 +3,7 @@ package football.start.allOfFootball.argumentresolver;
 import football.common.consts.SessionConst;
 import football.common.customAnnotation.SessionLogin;
 import football.common.domain.Member;
-import football.start.allOfFootball.service.domainService.MemberService;
+import football.common.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

@@ -7,7 +7,7 @@ import football.start.allOfFootball.interceptor.LoginInterceptor;
 import football.start.allOfFootball.interceptor.MatchInterceptor;
 import football.start.allOfFootball.interceptor.OrderInterceptor;
 import football.start.allOfFootball.service.domainService.MatchService;
-import football.start.allOfFootball.service.domainService.MemberService;
+import football.common.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

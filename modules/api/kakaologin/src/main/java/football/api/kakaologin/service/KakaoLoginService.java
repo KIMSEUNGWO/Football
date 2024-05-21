@@ -4,7 +4,7 @@ import com.nimbusds.jose.shaded.gson.JsonElement;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import football.api.kakaologin.dto.KakaoRequestTo;
-import football.start.allOfFootball.dto.LoginResponse;
+import football.login.dto.LoginResponse;
 import football.api.kakaologin.repository.KakaoLoginRepository;
 import football.common.domain.KakaoToken;
 import football.common.enums.matchenum.GenderEnum;

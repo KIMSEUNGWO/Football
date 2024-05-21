@@ -2,11 +2,11 @@ package football.api.kakaologin.controller;
 
 import football.api.kakaologin.exception.DistinctRegisterException;
 import football.api.kakaologin.service.KakaoLoginService;
-import football.start.allOfFootball.dto.LoginResponse;
+import football.login.dto.LoginResponse;
+import football.login.service.LoginService;
+import football.login.service.RegisterService;
 import football.common.domain.KakaoToken;
 import football.common.domain.Member;
-import football.start.allOfFootball.service.LoginService;
-import football.start.allOfFootball.service.RegisterService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

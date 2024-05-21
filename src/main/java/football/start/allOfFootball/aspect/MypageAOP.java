@@ -4,7 +4,7 @@ import football.common.consts.SessionConst;
 import football.start.allOfFootball.controller.mypage.MyProfileDto;
 import football.common.domain.Member;
 import football.start.allOfFootball.service.MypageService;
-import football.start.allOfFootball.service.domainService.MemberService;
+import football.common.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
