@@ -1,4 +1,4 @@
-package football.start.allOfFootball.controller.api.kakaoLogin;
+package football.start.allOfFootball.dto;
 
 import football.common.enums.matchenum.GenderEnum;
 import football.common.enums.SocialEnum;

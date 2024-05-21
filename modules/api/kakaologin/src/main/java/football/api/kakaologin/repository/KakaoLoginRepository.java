@@ -1,4 +1,4 @@
-package football.start.allOfFootball.controller.api.kakaoLogin;
+package football.api.kakaologin.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.common.domain.KakaoToken;

@@ -1,8 +1,11 @@
-package football.start.allOfFootball.controller.api.kakaoLogin;
+package football.api.kakaologin.service;
 
 import com.nimbusds.jose.shaded.gson.JsonElement;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
+import football.api.kakaologin.dto.KakaoRequestTo;
+import football.start.allOfFootball.dto.LoginResponse;
+import football.api.kakaologin.repository.KakaoLoginRepository;
 import football.common.domain.KakaoToken;
 import football.common.enums.matchenum.GenderEnum;
 import football.common.enums.SocialEnum;

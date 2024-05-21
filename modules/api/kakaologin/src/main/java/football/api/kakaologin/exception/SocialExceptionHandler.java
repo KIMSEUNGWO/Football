@@ -1,4 +1,4 @@
-package football.start.allOfFootball.controller.api.kakaoLogin;
+package football.api.kakaologin.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -1,5 +1,8 @@
-package football.start.allOfFootball.controller.api.kakaoLogin;
+package football.api.kakaologin.controller;
 
+import football.api.kakaologin.exception.DistinctRegisterException;
+import football.api.kakaologin.service.KakaoLoginService;
+import football.start.allOfFootball.dto.LoginResponse;
 import football.common.domain.KakaoToken;
 import football.common.domain.Member;
 import football.start.allOfFootball.service.LoginService;

@@ -1,5 +1,6 @@
-package football.start.allOfFootball.controller.api.kakaoLogin;
+package football.api.kakaologin.config;
 
+import football.api.kakaologin.dto.KakaoRequestTo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;

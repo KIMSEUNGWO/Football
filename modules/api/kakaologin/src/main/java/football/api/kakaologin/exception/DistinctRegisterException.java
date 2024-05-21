@@ -1,4 +1,4 @@
-package football.start.allOfFootball.controller.api.kakaoLogin;
+package football.api.kakaologin.exception;
 
 public class DistinctRegisterException extends SocialLoginException{
 

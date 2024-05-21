@@ -1,10 +1,10 @@
 package football.start.allOfFootball.service;
 
-import football.start.allOfFootball.controller.api.kakaoLogin.LoginResponse;
 import football.start.allOfFootball.controller.login.EmailDto;
 import football.common.domain.KakaoToken;
 import football.common.domain.Member;
 import football.common.dto.json.JsonDefault;
+import football.start.allOfFootball.dto.LoginResponse;
 import org.springframework.http.ResponseEntity;
 
 public interface RegisterService {

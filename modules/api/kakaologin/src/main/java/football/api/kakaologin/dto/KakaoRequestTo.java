@@ -1,4 +1,4 @@
-package football.start.allOfFootball.controller.api.kakaoLogin;
+package football.api.kakaologin.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
