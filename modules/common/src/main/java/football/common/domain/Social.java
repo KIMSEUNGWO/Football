@@ -15,13 +15,10 @@ import org.hibernate.annotations.DynamicInsert;
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicInsert
-@SequenceGenerator(name = "SEQ_SOCIAL", sequenceName = "SEQ_SOCIAL_ID", allocationSize = 1)
 public class Social {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SOCIAL")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long socialId;
-
 
     @OneToOne
     @JoinColumn(name = "memberId")

@@ -11,10 +11,9 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "CASH")
-@SequenceGenerator(name = "SEQ_CASH", sequenceName = "SEQ_CASH_ID", allocationSize = 1)
 public class Cash extends BaseTimeEntity{
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CASH")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cashId;
 
     @ManyToOne(fetch = FetchType.LAZY)

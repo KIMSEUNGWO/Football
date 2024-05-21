@@ -8,10 +8,9 @@ import lombok.Setter;
 @Setter // 잠시 테스트용
 @Entity
 @Table(name = "COUPON")
-@SequenceGenerator(name = "SEQ_COUPON", sequenceName = "SEQ_COUPON_ID", allocationSize = 1)
 public class Coupon {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COUPON")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long couponId;
 
     private String couponName;

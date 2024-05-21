@@ -15,11 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "TEAM")
-@SequenceGenerator(name = "SEQ_TEAM", sequenceName = "SEQ_TEAM_ID", allocationSize = 1)
 public class Team {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TEAM")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long teamId;
 
     @ManyToOne

@@ -8,11 +8,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "BEFORE_PASSWORD")
-@SequenceGenerator(name = "SEQ_BEFORE_PASSWORD", sequenceName = "SEQ_BEFORE_PASSWORD_ID", allocationSize = 1)
 @NoArgsConstructor
 public class BeforePassword {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BEFORE_PASSWORD")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long beforePasswordId;
 
     @OneToOne(fetch = FetchType.LAZY)

@@ -10,10 +10,9 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "MATCH_CANCEL")
-@SequenceGenerator(name = "SEQ_MATCH_CANCEL", sequenceName = "SEQ_MATCH_CANCEL", allocationSize = 1)
 public class MatchCancel {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MATCH_CANCEL")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long matchCancelId;
 
     private String playCancelReason;

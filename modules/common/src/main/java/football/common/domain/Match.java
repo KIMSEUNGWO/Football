@@ -18,23 +18,21 @@ import static football.common.consts.Constant.PRICE;
 @Getter
 @Setter
 @Entity
-@Table(name = "MATCH")
-@SequenceGenerator(name = "SEQ_MATCH", sequenceName = "SEQ_MATCH_ID", allocationSize = 1)
+@Table(name = "MATCHS")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Match {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MATCH")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long matchId;
 
     @ManyToOne
-    @JoinColumn(name = "fieldID")
+    @JoinColumn(name = "fieldId")
     private Field field;
 
     @ManyToOne
-    @JoinColumn(name = "managerId")
+    @JoinColumn(name = "manager_id")
     private Manager manager;
 
     private LocalDateTime matchDate; // 경기날짜

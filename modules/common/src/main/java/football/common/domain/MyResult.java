@@ -11,11 +11,9 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "MYRESULT")
-@SequenceGenerator(name = "SEQ_MYRESULT", sequenceName = "SEQ_MYRESULT_ID", allocationSize = 1)
 public class MyResult {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MYRESULT")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long myResultId;
 
     @ManyToOne
