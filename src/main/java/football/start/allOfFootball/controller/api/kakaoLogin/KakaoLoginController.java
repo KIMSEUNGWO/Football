@@ -2,19 +2,14 @@ package football.start.allOfFootball.controller.api.kakaoLogin;
 
 import football.common.domain.KakaoToken;
 import football.common.domain.Member;
-import football.common.domain.Social;
 import football.start.allOfFootball.service.LoginService;
 import football.start.allOfFootball.service.RegisterService;
-import football.start.allOfFootball.service.domainService.MemberService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 import static football.common.consts.SessionConst.LOGIN_MEMBER;
 import static football.common.enums.SocialEnum.*;
@@ -24,7 +19,6 @@ import static football.common.enums.SocialEnum.*;
 @Slf4j
 public class KakaoLoginController {
 
-    private final MemberService memberService;
     private final KakaoLoginService kakaoLoginService;
     private final LoginService loginService;
     private final RegisterService registerService;

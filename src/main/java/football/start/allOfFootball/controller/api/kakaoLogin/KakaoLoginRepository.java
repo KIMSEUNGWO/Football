@@ -2,15 +2,10 @@ package football.start.allOfFootball.controller.api.kakaoLogin;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.common.domain.KakaoToken;
-import football.common.domain.QKakaoToken;
-import football.common.domain.QMember;
-import football.common.domain.QSocial;
 import football.common.enums.SocialEnum;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 import static football.common.domain.QKakaoToken.kakaoToken;
 import static football.common.domain.QMember.*;

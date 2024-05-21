@@ -26,8 +26,4 @@ public class KakaoRequestTo {
         return restTemplate.postForObject(url, new HttpEntity<>(header), String.class);
     }
 
-
-
-
-
 }
