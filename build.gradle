@@ -70,8 +70,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
 
 	implementation(project(":redis"))
+	implementation(project(":admin"))
 	implementation(project(":common"))
-	implementation(project(":file"))
 	implementation(project(":payment"))
 	implementation(project(":sms"))
 	implementation(project(":login"))
@@ -130,7 +130,6 @@ project(":admin") {
 	dependencies {
 		implementation(project(":common"))
 		implementation(project(":file"))
-		implementation(rootProject)
 	}
 }
 

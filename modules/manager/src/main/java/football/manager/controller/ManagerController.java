@@ -1,8 +1,10 @@
 package football.manager.controller;
 
 import football.common.config.auth.PrincipalDetails;
+import football.common.config.auth.UserRefreshProvider;
 import football.common.domain.Member;
 import football.common.dto.json.JsonDefault;
+import football.common.enums.Role;
 import football.manager.dto.ManagerApplyDto;
 import football.manager.service.ManagerService;
 import football.common.formatter.DateFormatter;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class ManagerController {
 
     private final ManagerService managerService;
-
+    private final UserRefreshProvider provider;
 
     @GetMapping("/manager")
     public String manager(@AuthenticationPrincipal PrincipalDetails user, Model model) {
@@ -37,7 +39,8 @@ public class ManagerController {
     public ResponseEntity<JsonDefault> apply(@AuthenticationPrincipal PrincipalDetails user, @RequestBody ManagerApplyDto data) {
         Member member = user.getMember();
         managerService.save(member, data);
-
+        member.setRole(Role.MANAGER);
+        provider.refresh(user);
         return ResponseEntity.ok(new JsonDefault("매니저 신청 완료"));
     }
 

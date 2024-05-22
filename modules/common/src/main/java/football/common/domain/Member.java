@@ -48,6 +48,7 @@ public class Member implements ImageParent {
     @Nullable
     private GradeEnum grade;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -89,5 +90,9 @@ public class Member implements ImageParent {
 
     public SocialEnum getSocialType() {
         return isSocial() ? social.getSocialType() : null;
+    }
+
+    public boolean isManager() {
+        return manager != null;
     }
 }

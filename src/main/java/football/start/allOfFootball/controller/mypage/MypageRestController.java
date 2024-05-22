@@ -1,5 +1,7 @@
 package football.start.allOfFootball.controller.mypage;
 
+import football.common.config.auth.PrincipalDetails;
+import football.common.config.auth.UserRefreshProvider;
 import football.common.customAnnotation.SessionLogin;
 import football.common.domain.Member;
 import football.common.domain.Orders;
@@ -8,6 +10,7 @@ import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -23,11 +26,14 @@ public class MypageRestController {
 
     private final MypageService mypageService;
     private final OrderService orderService;
+    private final UserRefreshProvider provider;
+
 
 
     @PostMapping("/mypage/order/get")
-    public List<OrderListForm> orderList(@SessionLogin Member member,
+    public List<OrderListForm> orderList(@AuthenticationPrincipal PrincipalDetails user,
                                          @RequestBody OrderDateForm form) {
+        Member member = user.getMember();
         System.out.println("orderList 시작");
 
         System.out.println("form = " + form);
@@ -38,7 +44,8 @@ public class MypageRestController {
 
     @PostMapping("/change/password")
     public Map<String, String> changePassword(@Validated @RequestBody ChangePasswordForm form, BindingResult bindingResult,
-                                              @SessionLogin Member member) {
+                                              @AuthenticationPrincipal PrincipalDetails user) {
+        Member member = user.getMember();
         System.out.println("form = " + form);
         List<ObjectError> allErrors = bindingResult.getAllErrors();
         for (ObjectError allError : allErrors) {
@@ -46,6 +53,7 @@ public class MypageRestController {
         }
         Map<String, String> result = mypageService.changePassword(member, form, bindingResult);
 
+        provider.refresh(user);
         return result;
 
     }

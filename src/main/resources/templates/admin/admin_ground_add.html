@@ -20,7 +20,7 @@
             <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
             <div class="mainBox box">
                 <h2>구장등록</h2>
-                <form th:action action="/admin/ground/add" method="post" th:object="${saveFieldForm}" enctype="multipart/form-data">
+                <form th:action action="/admin/ground/add" method="post" th:object="${saveFieldRequest}" enctype="multipart/form-data">
                     <h3>구장이미지</h3>
                     <div class="preview">
                         <button type="button" class='imgBox' id="addImage">

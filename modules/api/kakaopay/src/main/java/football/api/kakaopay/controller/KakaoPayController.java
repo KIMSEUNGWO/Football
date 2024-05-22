@@ -6,7 +6,7 @@ import football.common.common.alert.AlertTemplate;
 import football.api.kakaopay.dto.ApproveResponse;
 import football.api.kakaopay.dto.ReadyResponse;
 import football.common.common.alert.AlertUtils;
-import football.common.customAnnotation.SessionLogin;
+import football.common.config.auth.PrincipalDetails;
 import football.common.domain.Member;
 import football.common.domain.Payment;
 import football.common.enums.paymentEnums.CashEnum;
@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,6 @@ import java.io.PrintWriter;
 
 import static football.api.kakaopay.consts.KakaoPayConst.*;
 import static football.api.kakaopay.consts.KakaoPayConst.KAKAO_ORDER_ID;
-import static football.common.consts.SessionConst.LOGIN_MEMBER;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,9 +37,11 @@ public class KakaoPayController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public @ResponseBody ReadyResponse requestPay(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
+    public @ResponseBody ReadyResponse requestPay(@AuthenticationPrincipal PrincipalDetails user,
                                                   @RequestBody KakaoPayDto kakaoPayDto,
                                                   HttpSession session) {
+        Member member = user.getMember();
+        Long memberId = member.getMemberId();
         String partner_order_id = memberId + "cash";
 
         ReadyResponse response = kakaoPayService.payReady(memberId, kakaoPayDto, partner_order_id);
@@ -56,10 +58,11 @@ public class KakaoPayController {
                                @SessionAttribute(name = TID, required = false) String tid,
                                @SessionAttribute(name = KAKAO_ORDER_ID, required = false) String partner_order_id,
                                @SessionAttribute(name = KAKAO_MEMBER_ID, required = false) Long kakaoMemberId,
-                               @SessionLogin Member member,
+                               @AuthenticationPrincipal PrincipalDetails user,
                                HttpServletResponse response,
                                HttpSession session) {
-        if (tid == null || partner_order_id == null || kakaoMemberId == null || member == null || !member.getMemberId().equals(kakaoMemberId)) {
+        Member member = user.getMember();
+        if (tid == null || partner_order_id == null || member == null || !member.getMemberId().equals(kakaoMemberId)) {
             return AlertUtils.alertAndClose(response, "잘못된 결제요청입니다.");
         }
         log.info("결제승인 요청을 인증하는 토큰 : {}", pg_token);

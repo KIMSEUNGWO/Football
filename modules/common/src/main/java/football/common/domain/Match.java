@@ -85,4 +85,8 @@ public class Match {
         String[] split = matchDate.split("/");
         return LocalDateTime.of(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]), matchHour, 0);
     }
+
+    public boolean hasManager() {
+        return manager != null;
+    }
 }

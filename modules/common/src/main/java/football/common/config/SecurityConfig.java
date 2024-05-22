@@ -1,6 +1,8 @@
 package football.common.config;
 
+import football.common.config.auth.PrincipalDetailsService;
 import football.common.config.auth.SocialLogoutHandler;
+import football.common.config.auth.UserRefreshProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,12 @@ import static football.common.enums.Role.*;
 public class SecurityConfig {
 
     private final SocialLogoutHandler socialLogoutHandler;
+    private final PrincipalDetailsService principalDetailsService;
+
+    @Bean
+    UserRefreshProvider provider() {
+        return new UserRefreshProvider(principalDetailsService);
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -32,7 +40,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests( request ->
                 request
-                    .requestMatchers("/mypage/**", "/order/**").authenticated()
+                    .requestMatchers("/mypage/**", "/order/**", "/cash/charge/**").authenticated()
                     .requestMatchers("/manager/**").hasAnyRole(MANAGER.name(), ADMIN.name())
                     .requestMatchers("/admin/**").hasRole(ADMIN.name())
                     .anyRequest().permitAll()
