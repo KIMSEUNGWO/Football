@@ -1,6 +1,8 @@
 package football.start.allOfFootball.controller.mypage;
 
+import football.common.config.auth.UserRefreshProvider;
 import football.common.domain.Member;
+import football.common.config.auth.PrincipalDetails;
 import football.payment.dto.CashListForm;
 import football.payment.service.PaymentService;
 import football.start.allOfFootball.dto.CouponListForm;
@@ -8,6 +10,7 @@ import football.start.allOfFootball.service.MypageService;
 import football.start.allOfFootball.service.domainService.CouponListService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +30,8 @@ public class MypageController {
     private final PaymentService paymentService;
 
     @GetMapping
-    public String mainPage(Model model) {
-        Member member = (Member) model.getAttribute("member");
+    public String mainPage(@AuthenticationPrincipal PrincipalDetails user, Model model) {
+        Member member = user.getMember();
 
         MypageMainDto mypageMainDto = mypageService.getMypageMain(member);
         model.addAttribute("main", mypageMainDto);
@@ -41,16 +44,16 @@ public class MypageController {
         return "/mypage/mypage_order";
     }
     @GetMapping("/cash")
-    public String cashList(Model model) {
-        Member member = (Member) model.getAttribute("member");
+    public String cashList(@AuthenticationPrincipal PrincipalDetails user, Model model) {
+        Member member = user.getMember();
 
         List<CashListForm> cashList = paymentService.findByAllMemberCacheList(member);
         model.addAttribute("cashList", cashList);
         return "/mypage/mypage_cash";
     }
     @GetMapping("/coupon")
-    public String couponList(Model model) {
-        Member member = (Member) model.getAttribute("member");
+    public String couponList(@AuthenticationPrincipal PrincipalDetails user, Model model) {
+        Member member = user.getMember();
 
         List<CouponListForm> couponList = couponListService.getCouponList(member);
         model.addAttribute("couponList", couponList);
@@ -58,8 +61,8 @@ public class MypageController {
     }
 
     @GetMapping("/manager")
-    public String manager(Model model) {
-        Member member = (Member) model.getAttribute("member");
+    public String manager(@AuthenticationPrincipal PrincipalDetails user, Model model) {
+        Member member = user.getMember();
         if (member.getManager() == null) return "redirect:/mypage";
 
         Map<String, List<ManagerDataForm>> list = mypageService.getManagerList(member);

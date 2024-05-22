@@ -10,13 +10,11 @@ import lombok.*;
 @ToString
 @Entity
 @Table(name = "PAYMENT")
-@SequenceGenerator(name = "SEQ_PAYMENT", sequenceName = "SEQ_PAYMENT_ID", allocationSize = 1)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Payment extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PAYMENT")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
     @ManyToOne

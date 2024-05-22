@@ -1,13 +1,13 @@
 package football.start.allOfFootball.controller;
 
-import football.common.customAnnotation.SessionLogin;
-import football.common.domain.Member;
+import football.common.config.auth.PrincipalDetails;
 import football.start.allOfFootball.dto.MainSideInfoForm;
 import football.start.allOfFootball.dto.SearchDto;
 import football.start.allOfFootball.dto.SearchResultForm;
 import football.start.allOfFootball.service.MainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +22,11 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping
-    public String main(@SessionLogin Member member, Model model) {
-        if (member != null) {
-            MainSideInfoForm form = mainService.getSideInfo(member);
+    public String mainPage(Model model, @AuthenticationPrincipal PrincipalDetails user) {
+        System.out.println("user = " + user);
+        if (user != null) {
+            MainSideInfoForm form = mainService.getSideInfo(user.getMember());
+            model.addAttribute("logined", user.getMember().getMemberId());
             model.addAttribute("side", form);
         }
         return "main";

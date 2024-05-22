@@ -1,5 +1,6 @@
 package football.common.domain;
 
+import football.common.enums.Role;
 import football.common.enums.SocialEnum;
 import football.common.enums.gradeEnums.GradeEnum;
 import football.common.enums.matchenum.GenderEnum;
@@ -22,15 +23,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicInsert
-@SequenceGenerator(name = "SEQ_MEMBER", sequenceName = "SEQ_MEMBER_ID", allocationSize = 1)
 public class Member implements ImageParent {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
     private String memberEmail;
     @Setter
     private String memberPassword;
-    private String memberSalt;
     private String memberName;
 
     @Enumerated(EnumType.STRING)
@@ -49,6 +48,10 @@ public class Member implements ImageParent {
     @Nullable
     private GradeEnum grade;
 
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private LocalDateTime memberRecentlyDate;
     private LocalDateTime memberExpireDate;
 
@@ -58,29 +61,16 @@ public class Member implements ImageParent {
     // Not Columns
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Profile profile;
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<CouponList> couponList;
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Orders> ordersList;
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private BeforePassword beforePassword;
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Manager manager;
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Social social;
-
-    public String combineSalt(String password) {
-        return memberSalt + password;
-    }
-
-    public static String createSalt() {
-        UUID uuid = UUID.randomUUID();
-        return uuid.toString().substring(0, 4);
-    }
-
-    public void setMemberSalt() {
-        this.memberSalt = createSalt();
-    }
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<CouponList> couponList;
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Orders> ordersList;
 
     public void renewLoginTime() {
         memberRecentlyDate = LocalDateTime.now();
@@ -100,5 +90,9 @@ public class Member implements ImageParent {
 
     public SocialEnum getSocialType() {
         return isSocial() ? social.getSocialType() : null;
+    }
+
+    public boolean isManager() {
+        return manager != null;
     }
 }

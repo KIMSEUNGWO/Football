@@ -38,10 +38,8 @@ public class RegisterServiceImpl implements RegisterService{
 
     @Override
     public void save(Member member) {
-        member.setMemberSalt();
 
-        String memberPassword = member.combineSalt(member.getMemberPassword());
-        String encodePassword = bc.encodeBCrypt(memberPassword);
+        String encodePassword = bc.encodeBCrypt(member.getMemberPassword());
         member.setMemberPassword(encodePassword);
 
         registerRepository.save(member);

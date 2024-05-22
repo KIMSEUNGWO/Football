@@ -1,5 +1,7 @@
 package football.start.allOfFootball.controller;
 
+import football.common.config.auth.PrincipalDetails;
+import football.common.config.auth.UserRefreshProvider;
 import football.common.customAnnotation.SessionLogin;
 import football.common.domain.Manager;
 import football.common.domain.Match;
@@ -16,6 +18,7 @@ import football.start.allOfFootball.service.domainService.ScoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,12 +36,13 @@ public class MatchRestController {
     private final MatchService matchService;
     private final MemberService memberService;
     private final ScoreService scoreService;
+    private final UserRefreshProvider provider;
 
     @PostMapping("/team/{matchId}")
-    public ResponseEntity<JsonDefault> teamConfirm(@SessionLogin Member member,
-                                      @PathVariable Long matchId,
-                                      @RequestBody RequestTeam team) throws NotExistsMatchException {
-
+    public ResponseEntity<JsonDefault> teamConfirm(@AuthenticationPrincipal PrincipalDetails user,
+                                                   @PathVariable Long matchId,
+                                                   @RequestBody RequestTeam team) throws NotExistsMatchException {
+        Member member = user.getMember();
         Match match = matchService.findByMatch(matchId, null);
         Manager manager = match.getManager();
 
@@ -51,11 +55,11 @@ public class MatchRestController {
     }
 
     @PostMapping("/apply")
-    public ResponseEntity<JsonDefault> managerApply(@SessionLogin Member member, @RequestBody Long matchId) throws NotExistsMatchException {
+    public ResponseEntity<JsonDefault> managerApply(@AuthenticationPrincipal PrincipalDetails user, @RequestBody Long matchId) throws NotExistsMatchException {
+        Member member = user.getMember();
         Match match = matchService.findByMatch(matchId, null);
-        Manager manager = match.getManager();
 
-        if (manager != null) {
+        if (match.hasManager()) {
             return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "이미 매니저가 배정되었습니다."));
         }
         List<Orders> ordersList = match.getOrdersList();
@@ -73,33 +77,35 @@ public class MatchRestController {
         }
 
         matchService.saveManager(member, match);
-
+        provider.refresh(user);
         return ResponseEntity.ok(new JsonDefault(OK, "신청이 완료되었습니다."));
     }
 
     @PostMapping("/end/{matchId}")
     public ResponseEntity<JsonDefault> matchEnd(@PathVariable Long matchId,
-                                        @SessionLogin Member member) throws NotExistsMatchException {
+                                                @AuthenticationPrincipal PrincipalDetails user) throws NotExistsMatchException {
+        Member member = user.getMember();
         Match match = matchService.findByMatch(matchId, null);
         Manager manager = match.getManager();
 
-        if (member.getManager() == null || manager.isSameMember(member)) {
+        if (!member.isManager() || manager.isSameMember(member)) {
             return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "권한이 없습니다."));
         }
 
         matchService.matchEnd(match);
-
+        provider.refresh(user);
         return ResponseEntity.ok(new JsonDefault(OK, "종료신청이 완료되었습니다."));
     }
 
     @Transactional
     @PostMapping("/record/{matchId}")
     public ResponseEntity<JsonDefault> scoreRecord(@PathVariable Long matchId,
-                                           @SessionLogin Member member,
+                                                   @AuthenticationPrincipal PrincipalDetails user,
                                            @RequestBody ScoreResultForm score) throws NotExistsMatchException {
+        Member member = user.getMember();
         Match match = matchService.findByMatch(matchId, null);
         Manager manager = match.getManager();
-        if (member.getManager() == null || !manager.isSameMember(member)) {
+        if (!member.isManager() || !manager.isSameMember(member)) {
             return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "권한이 없습니다."));
         }
 
@@ -116,7 +122,7 @@ public class MatchRestController {
         }
         scoreService.applyScore(match, playList);
         matchService.matchFinal(match);
-
+        provider.refresh(user);
         return ResponseEntity.ok(new JsonDefault(OK, "기록을 확정했습니다."));
     }
 }

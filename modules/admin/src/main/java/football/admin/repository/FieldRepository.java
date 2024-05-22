@@ -1,4 +1,4 @@
-package football.start.allOfFootball.repository.domainRepository;
+package football.admin.repository;
 
 import football.common.domain.Field;
 import football.common.domain.FieldImage;

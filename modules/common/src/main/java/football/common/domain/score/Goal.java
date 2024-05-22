@@ -13,11 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "GOAL")
-@SequenceGenerator(name = "SEQ_GOAL", sequenceName = "SEQ_GOAL_ID", allocationSize = 1)
 public class Goal {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GOAL")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long goalId;
 
     @ManyToOne

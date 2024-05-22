@@ -10,12 +10,11 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "COUPON_LIST")
-@SequenceGenerator(name = "SEQ_COUPON_LIST", sequenceName = "SEQ_COUPON_LIST_ID", allocationSize = 1)
 @NoArgsConstructor
 @AllArgsConstructor
 public class CouponList extends BaseTimeEntity{
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COUPON_LIST")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long couponListId;
 
     @ManyToOne(fetch = FetchType.LAZY)

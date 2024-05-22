@@ -9,16 +9,10 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "KAKAO_TOKEN")
-@SequenceGenerator(name = "SEQ_KAKAO_TOKEN", sequenceName = "SEQ_KAKAO_TOKEN_ID", allocationSize = 1)
 @NoArgsConstructor
 public class KakaoToken{
 
-    public KakaoToken(String access_token, String refresh_token) {
-        this.access_token = access_token;
-        this.refresh_token = refresh_token;
-    }
-
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_KAKAO_TOKEN")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long kakaoTokenId;
 
     @OneToOne
@@ -28,6 +22,10 @@ public class KakaoToken{
     private String access_token;
     private String refresh_token;
 
+    public KakaoToken(String access_token, String refresh_token) {
+        this.access_token = access_token;
+        this.refresh_token = refresh_token;
+    }
 
     public void logout() {
         access_token = refresh_token = null;

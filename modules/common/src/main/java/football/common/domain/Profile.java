@@ -10,10 +10,9 @@ import lombok.*;
 @Getter
 @Setter
 @Table(name = "PROFILE")
-@SequenceGenerator(name = "SEQ_PROFILE", sequenceName = "SEQ_PROFILE_ID", allocationSize = 1)
 public class Profile extends ImageChild {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PROFILE")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long profileId;
 
     @OneToOne

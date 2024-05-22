@@ -9,12 +9,11 @@ import lombok.*;
 @Entity
 @Builder
 @Table(name = "FIELD_IMAGE")
-@SequenceGenerator(name = "SEQ_FIELD_IMAGE", sequenceName = "SEQ_FIELD_IMAGE_ID")
 @AllArgsConstructor
 @NoArgsConstructor
 public class FieldImage extends ImageChild {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FIELD_IMAGE")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fieldImageId;
 
     @ManyToOne

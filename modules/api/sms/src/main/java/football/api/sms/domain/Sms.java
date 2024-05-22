@@ -14,10 +14,9 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "SMS")
-@SequenceGenerator(name = "SEQ_SMS", sequenceName = "SEQ_SMS_ID", allocationSize = 1)
 public class Sms {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SMS")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long smsId;
     private String phone;
     private String certificationNumber;

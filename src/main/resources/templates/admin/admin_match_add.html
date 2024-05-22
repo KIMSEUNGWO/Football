@@ -41,7 +41,7 @@
                         </table>
                     </div>
                 </a>
-                <form th:action="@{/admin/match/} + ${fieldId} + @{/add}" method="post" th:object="${saveMatchForm}">
+                <form th:action="@{/admin/match/} + ${fieldId} + @{/add}" method="post" th:object="${saveMatchRequest}">
                     <table>
                         <tr>
                             <th>경기날짜</th>

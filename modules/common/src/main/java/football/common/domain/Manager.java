@@ -13,11 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@SequenceGenerator(name = "SEQ_MANAGER", sequenceName = "SEQ_MANAGER_ID", allocationSize = 1)
 public class Manager {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MANAGER")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long managerId;
 
     @Getter

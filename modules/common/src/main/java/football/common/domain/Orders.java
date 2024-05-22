@@ -9,14 +9,12 @@ import lombok.*;
 @ToString
 @Entity
 @Table(name = "ORDERS")
-@SequenceGenerator(name = "SEQ_ORDERS", sequenceName = "SEQ_ORDERS_ID", allocationSize = 1)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Orders {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ORDERS")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ordersId;
 
     @ManyToOne

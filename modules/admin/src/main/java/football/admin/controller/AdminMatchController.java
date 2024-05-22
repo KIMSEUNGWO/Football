@@ -4,6 +4,7 @@ import football.admin.dto.SearchMatchRequest;
 import football.admin.dto.SearchMatchResponse;
 import football.admin.dto.ViewMatchFieldForm;
 import football.admin.exception.NotExistsFieldException;
+import football.admin.service.AdminMatchService;
 import football.common.common.alert.AlertUtils;
 import football.common.domain.Field;
 import football.common.domain.Match;
@@ -11,9 +12,8 @@ import football.common.enums.domainenum.LocationEnum;
 import football.common.dto.match.EditMatchRequest;
 import football.common.dto.match.SaveMatchRequest;
 import football.admin.service.AdminService;
-import football.admin.service.FieldService;
+import football.admin.service.AdminFieldService;
 import football.common.exception.match.NotExistsMatchException;
-import football.start.allOfFootball.service.domainService.MatchService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,8 +29,8 @@ import java.util.Optional;
 @RequestMapping("/admin/match")
 public class AdminMatchController {
 
-    private final MatchService matchService;
-    private final FieldService fieldService;
+    private final AdminMatchService matchService;
+    private final AdminFieldService adminFieldService;
     private final AdminService adminService;
 
     @ResponseBody
@@ -47,8 +46,8 @@ public class AdminMatchController {
     }
 
     @GetMapping("/{fieldId}/add")
-    public String matchAdd(@PathVariable Long fieldId, @ModelAttribute SaveMatchRequest saveMatchForm, Model model, HttpServletResponse response) throws NotExistsFieldException {
-        Field field = fieldService.findByField(fieldId);
+    public String matchAdd(@PathVariable Long fieldId, @ModelAttribute SaveMatchRequest saveMatchRequest, Model model, HttpServletResponse response) throws NotExistsFieldException {
+        Field field = adminFieldService.findByField(fieldId);
         ViewMatchFieldForm fieldForm = new ViewMatchFieldForm(field);
         model.addAttribute("fieldInfo", fieldForm);
         model.addAttribute("fieldId", fieldId);
@@ -56,22 +55,22 @@ public class AdminMatchController {
     }
 
     @PostMapping("/{fieldId}/add")
-    public String matchAddPost(@PathVariable Long fieldId, @ModelAttribute SaveMatchRequest saveMatchForm, HttpServletResponse response) throws NotExistsFieldException {
-        Field field = fieldService.findByField(fieldId);
-        matchService.saveMatch(field, saveMatchForm);
+    public String matchAddPost(@PathVariable Long fieldId, @ModelAttribute SaveMatchRequest saveMatchRequest, HttpServletResponse response) throws NotExistsFieldException {
+        Field field = adminFieldService.findByField(fieldId);
+        matchService.saveMatch(field, saveMatchRequest);
 
         return "redirect:/admin/match";
     }
 
     @GetMapping("/{matchId}")
-    public String matchView(@PathVariable Long matchId, HttpServletResponse response, Model model) throws NotExistsMatchException {
+    public String matchView(@PathVariable Long matchId, Model model) throws NotExistsMatchException {
         Match match = matchService.findByMatch(matchId, "/admin/ground");
         Field field = match.getField();
         ViewMatchFieldForm fieldForm = new ViewMatchFieldForm(field);
-        EditMatchRequest editMatchForm = new EditMatchRequest(match);
+        EditMatchRequest editMatchRequest = new EditMatchRequest(match);
 
         model.addAttribute("fieldInfo", fieldForm);
-        model.addAttribute("editMatchForm", editMatchForm);
+        model.addAttribute("editMatchRequest", editMatchRequest);
         return "/admin/admin_match_view";
     }
 

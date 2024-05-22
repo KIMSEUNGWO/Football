@@ -17,11 +17,10 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
-@Table(name = "FIELD")
-@SequenceGenerator(name = "SEQ_FIELD", sequenceName = "SEQ_FIELD_ID", allocationSize = 1)
+@Table(name = "FIELDS")
 public class Field extends BaseTimeEntity implements ImageParent {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FIELD")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fieldId;
     private String fieldTitle;
     @Enumerated(EnumType.STRING)
@@ -31,7 +30,7 @@ public class Field extends BaseTimeEntity implements ImageParent {
     private String fieldSize;
 
     @Lob
-    @Column(columnDefinition = "CLOB")
+    @Column(columnDefinition = "TEXT")
     private String fieldInformation;
 
     @Enumerated(EnumType.STRING)

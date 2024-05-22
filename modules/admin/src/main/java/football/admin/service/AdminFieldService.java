@@ -1,12 +1,12 @@
 package football.admin.service;
 
 import football.admin.exception.NotExistsFieldException;
+import football.admin.repository.FieldRepository;
+import football.common.dto.field.EditFieldRequest;
 import football.file.service.FileService;
-import football.common.dto.field.EditFieldForm;
 import football.common.dto.field.SaveFieldRequest;
 import football.common.domain.Field;
 import football.common.domain.FieldImage;
-import football.start.allOfFootball.repository.domainRepository.FieldRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ import static football.file.enums.FileUploadType.*;
 
 @Service
 @RequiredArgsConstructor
-public class FieldService {
+public class AdminFieldService {
 
     private final FieldRepository fieldRepository;
     private final FileService fileService;
@@ -42,7 +42,7 @@ public class FieldService {
         fileService.saveFile(images, field, FIELD_IMAGE);
     }
 
-    public void editField(Field field, EditFieldForm form) {
+    public void editField(Field field, EditFieldRequest form) {
         // field 수정된 내용 저장
         field.setEditField(form);
 
@@ -60,8 +60,8 @@ public class FieldService {
         fileService.saveFile(saveImages, field, FIELD_IMAGE);
     }
 
-    public EditFieldForm getEditFieldForm(Field field) {
+    public EditFieldRequest getEditFieldRequest(Field field) {
         List<FieldImage> findFieldImage = fieldRepository.findByAllFieldImage(field);
-        return new EditFieldForm(field, findFieldImage);
+        return new EditFieldRequest(field, findFieldImage);
     }
 }

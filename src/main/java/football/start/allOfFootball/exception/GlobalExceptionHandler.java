@@ -29,7 +29,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidDataAccessResourceUsageException.class)
     public ResponseEntity<JsonDefault> invalidData(InvalidDataAccessResourceUsageException ex) {
         log.error("DB InvalidData Exception : {}", ex.getMessage());
-        return ResponseEntity.internalServerError().body(new JsonDefault("저장 실패! 관리자에게 문의해주세요."));
+        ex.printStackTrace();
+        return ResponseEntity.internalServerError().body(new JsonDefault("알수없는 DB 에러가 발생했습니다. 관리자에게 문의해주세요."));
     }
 
 }

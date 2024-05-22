@@ -20,7 +20,7 @@
                 <h2>구장정보</h2>
                     <h3>구장이미지</h3>
                     <div class="preview">
-                        <div class="imgBox" th:each="image : ${editFieldForm.savedImages}">
+                        <div class="imgBox" th:each="image : ${editFieldRequest.savedImages}">
                             <img th:src="|/images/fieldImage/${image.storeName}|" th:alt="${image.originalName}"/>
                         </div>
                     </div>
@@ -28,24 +28,24 @@
                         <tr>
                             <th>구장이름</th>
                             <td>
-                                <input type="text" th:field="${editFieldForm.fieldName}" class="inputForm" disabled>
+                                <input type="text" th:field="${editFieldRequest.fieldName}" class="inputForm" disabled>
                             </td>
                         </tr>
                         <tr>
                             <th>구장위치</th>
                             <td>
                                 <div class="regionBox">
-                                    <span id="regionName" th:text="${editFieldForm.region}">지역</span>
+                                    <span id="regionName" th:text="${editFieldRequest.region}">지역</span>
                                 </div>
-                                <input type="text" th:field="${editFieldForm.fieldAddress}" class="inputForm" disabled>
+                                <input type="text" th:field="${editFieldRequest.fieldAddress}" class="inputForm" disabled>
                             </td>
                         </tr>
                         <tr>
                             <th>구장크기</th>
                             <td class="sizeBox">
-                                <input type="text" th:field="${editFieldForm.xSize}" placeholder="가로m" class="inputForm size" inputmode="numeric" disabled>
+                                <input type="text" th:field="${editFieldRequest.xSize}" placeholder="가로m" class="inputForm size" inputmode="numeric" disabled>
                                 <span>X</span>
-                                <input type="text" th:field="${editFieldForm.ySize}" placeholder="세로m" class="inputForm size" inputmode="numeric" disabled>
+                                <input type="text" th:field="${editFieldRequest.ySize}" placeholder="세로m" class="inputForm size" inputmode="numeric" disabled>
                             </td>
                         </tr>
                         <tr>
@@ -55,23 +55,23 @@
                                     <div class="options">
                                         <h4>주차장</h4>
                                         <ul class="radioBox">
-                                            <li><input type="radio" th:field="${editFieldForm.parking}" id="free" value="무료" disabled><label for="free">무료</label></li>
-                                            <li><input type="radio" th:field="${editFieldForm.parking}" id="notFree" value="유료" disabled><label for="notFree">유료</label></li>
-                                            <li><input type="radio" th:field="${editFieldForm.parking}" id="not" value="불가" disabled><label for="not">불가</label></li>
+                                            <li><input type="radio" th:field="${editFieldRequest.parking}" id="free" value="무료" disabled><label for="free">무료</label></li>
+                                            <li><input type="radio" th:field="${editFieldRequest.parking}" id="notFree" value="유료" disabled><label for="notFree">유료</label></li>
+                                            <li><input type="radio" th:field="${editFieldRequest.parking}" id="not" value="불가" disabled><label for="not">불가</label></li>
                                         </ul>
                                     </div>
                                     <div class="options">
                                         <h4>화장실</h4>
                                         <ul class="radioBox">
-                                            <li><input type="radio" th:field="${editFieldForm.toilet}" id="oToilet" value="있음" disabled><label for="oToilet">있음</label></li>
-                                            <li><input type="radio" th:field="${editFieldForm.toilet}" id="xToilet" value="없음" disabled><label for="xToilet">없음</label></li>
+                                            <li><input type="radio" th:field="${editFieldRequest.toilet}" id="oToilet" value="있음" disabled><label for="oToilet">있음</label></li>
+                                            <li><input type="radio" th:field="${editFieldRequest.toilet}" id="xToilet" value="없음" disabled><label for="xToilet">없음</label></li>
                                         </ul>
                                     </div>
                                     <div class="options">
                                         <h4>샤워장</h4>
                                         <ul class="radioBox">
-                                            <li><input type="radio" th:field="${editFieldForm.shower}" id="oShower" value="있음" disabled><label for="oShower">있음</label></li>
-                                            <li><input type="radio" th:field="${editFieldForm.shower}" id="xShower" value="없음" disabled><label for="xShower">없음</label></li>
+                                            <li><input type="radio" th:field="${editFieldRequest.shower}" id="oShower" value="있음" disabled><label for="oShower">있음</label></li>
+                                            <li><input type="radio" th:field="${editFieldRequest.shower}" id="xShower" value="없음" disabled><label for="xShower">없음</label></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                         <tr>
                             <th>구장 특이사항</th>
                             <td>
-                                <textarea th:field="${editFieldForm.fieldDetails}" cols="30" rows="10" class="inputForm" disabled></textarea>
+                                <textarea th:field="${editFieldRequest.fieldDetails}" cols="30" rows="10" class="inputForm" disabled></textarea>
                             </td>
                         </tr>
                     </table>

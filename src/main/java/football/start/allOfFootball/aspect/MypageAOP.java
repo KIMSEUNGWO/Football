@@ -1,8 +1,8 @@
 package football.start.allOfFootball.aspect;
 
-import football.common.consts.SessionConst;
-import football.start.allOfFootball.controller.mypage.MyProfileDto;
 import football.common.domain.Member;
+import football.common.config.auth.PrincipalDetails;
+import football.start.allOfFootball.controller.mypage.MyProfileDto;
 import football.start.allOfFootball.service.MypageService;
 import football.common.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -35,17 +37,23 @@ public class MypageAOP {
         HttpServletRequest request = attributes.getRequest();
         HttpSession session = request.getSession();
 
-        Long memberId = (Long) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        Model model = getModel(joinPoint.getArgs());
+        SecurityContext securityContext = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
+        if (securityContext != null) {
+            Authentication authentication = securityContext.getAuthentication();
+            if (authentication != null) {
+                PrincipalDetails user = (PrincipalDetails) authentication.getPrincipal();
+                Member member = user.getMember();
+                Model model = getModel(joinPoint.getArgs());
 
-        Member member = memberService.findByMemberId(memberId).get();
-        MyProfileDto myProfileDto = mypageService.getMyProfile(member);
-        String location = getMenu(request);
+                MyProfileDto myProfileDto = mypageService.getMyProfile(member);
+                String location = getMenu(request);
 
-        if (model != null) {
-            model.addAttribute("member", member);
-            model.addAttribute("profile", myProfileDto);
-            model.addAttribute("menu", location);
+                if (model != null) {
+                    model.addAttribute("member", member);
+                    model.addAttribute("profile", myProfileDto);
+                    model.addAttribute("menu", location);
+                }
+            }
         }
     }
 

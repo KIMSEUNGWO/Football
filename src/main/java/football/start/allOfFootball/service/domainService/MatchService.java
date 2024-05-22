@@ -33,15 +33,6 @@ public class MatchService {
         return findMatch.orElseThrow(() -> new NotExistsMatchException(redirectURI));
     }
 
-    public void saveMatch(Field field, SaveMatchRequest saveMatchForm) {
-        Match saveMatch = Match.build(field, saveMatchForm);
-        matchRepository.saveMatch(saveMatch);
-    }
-
-    public void editMatch(Match match, EditMatchRequest editMatchForm) {
-        match.setEditMatch(editMatchForm);
-    }
-
     public List<Orders> getOrders(Match match) {
         return match.getOrdersList();
     }
