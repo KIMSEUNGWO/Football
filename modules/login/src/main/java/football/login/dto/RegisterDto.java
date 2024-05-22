@@ -1,6 +1,7 @@
 package football.login.dto;
 
 import football.common.domain.Member;
+import football.common.enums.Role;
 import football.common.enums.matchenum.GenderEnum;
 import football.common.enums.gradeEnums.GradeEnum;
 import football.common.formatter.DateFormatter;
@@ -55,6 +56,7 @@ public class RegisterDto{
             .memberGender(GenderEnum.valueOf(gender))
             .memberBirthday(DateFormatter.toLocalDate(birthday, "yyyyMMdd"))
             .memberPhone(phone.replace("-", ""))
+            .role(Role.USER)
             .build();
     }
 }

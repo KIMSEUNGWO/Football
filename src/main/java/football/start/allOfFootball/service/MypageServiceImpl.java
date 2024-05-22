@@ -89,8 +89,7 @@ public class MypageServiceImpl implements MypageService{
         BeforePassword beforePassword = member.getBeforePassword();
         if (beforePassword != null) {
             String bfPassword = beforePassword.getBeforePassword();
-            String addSalt = member.combineSalt(changePassword);
-            boolean isSame = memberRepository.isExactPassword(bfPassword, addSalt);
+            boolean isSame = memberRepository.isExactPassword(bfPassword, changePassword);
             if (isSame) {
                 result.put("changePwError", "이전 비밀번호와 일치합니다. 다른 비밀번호를 사용해주세요");
                 result.put("result", "fail");

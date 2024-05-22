@@ -11,16 +11,12 @@ import football.login.dto.FindPassword;
 import football.login.dto.LoginDto;
 import football.login.service.LoginService;
 import football.common.dto.json.JsonDefault;
-import football.common.enums.SocialEnum;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -47,63 +43,9 @@ public class LoginController {
         if (memberId != null) return "redirect:/";
 
         if (url != null && !url.equals("null")) model.addAttribute("url", url);
-        return "/login/login";
+        return "/login";
     }
 
-
-    @PostMapping("/login")
-    public String loginAction(@Validated @ModelAttribute LoginDto loginDto,
-                              BindingResult bindingResult,
-                              @RequestParam(required = false) String url,
-                              HttpSession session) {
-
-        if (bindingResult.hasErrors()) {
-            log.info("errors={} ", bindingResult);
-            return "/login/login";
-        }
-
-        Optional<Member> loginMember = loginService.login(loginDto.getEmail(), loginDto.getPassword());
-        if (loginMember.isEmpty()) {
-            bindingResult.reject("loginReject");
-            return "/login/login";
-        }
-        Member findMember = loginMember.get();
-
-        session.setAttribute(LOGIN_MEMBER, findMember.getMemberId());
-
-        // TODO
-        // adminService.isAdmin(findMember) 로 다시 변경해야함
-        if (adminService.existsByMember(findMember)) {
-            return "redirect:/admin/ground";
-        }
-        return "redirect:" + getRedirectUrl(url);
-    }
-
-    private String getRedirectUrl(String url) {
-        if (url == null || url.equals("null")) return "/";
-        return url;
-    }
-
-    @GetMapping("/logout")
-    public String logout(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId, HttpSession session) {
-        if (memberId == null) return "redirect:/";
-
-        session.removeAttribute(LOGIN_MEMBER);
-
-        Optional<Member> byMemberId = memberService.findByMemberId(memberId);
-        if (byMemberId.isEmpty()) return "redirect:/";
-
-        // 소셜 로그아웃
-        Member member = byMemberId.get();
-
-        if (member.isSocial()) {
-            if (member.socialTypeIs(SocialEnum.KAKAO)) {
-                return "redirect:/logout/kakao/" + memberId;
-            }
-        }
-
-        return "redirect:/";
-    }
 
     @GetMapping("/findEmail")
     public String findEmail() {

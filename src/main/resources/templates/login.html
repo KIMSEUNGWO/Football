@@ -14,29 +14,20 @@
     <header th:replace="~{/common/header :: header}"></header>
     <div class='container'>
         
-        <form class='login_form' method="post" th:object="${loginDto}" th:action="'/login' + (${url} ? '?url=' + ${url} : '')">
+        <form class='login_form' method="post" action="/login">
             <div class='login_logo'>
                 <img src="/images/login_logo.svg" alt="logo" width="100%" height="100%">
             </div>
             <div class='login_box email'>
                 <h5>이메일</h5>
-                <input type="text" th:field="*{email}" placeholder="email@gmail.com" th:errorclass="field-error">
-                <div class="errorMsgBox">
-                    <div class="errorMsg" th:errors="*{email}">[[${errorMsg}]]</div>
-                </div>
+                <input type="text" name="email" id="email" placeholder="email@gmail.com">
             </div>
             <div class='login_box password'>
                 <h5>비밀번호</h5>
-                <input type="password" maxlength='15' minlength="8" th:field="*{password}" placeholder="대,소문자 특수문자 포함 8~15자" th:errorclass="field-error">
-                <div class="errorMsgBox">
-                    <div class="errorMsg" th:errors="*{password}">[[${errorMsg}]]</div>
-                </div>
+                <input type="password" maxlength='15' minlength="8" id="password" name="password" placeholder="대,소문자 특수문자 포함 8~15자">
             </div>
             
             <input type="submit" value="로그인" class="login_button">
-            <div class="errorMsgBox" th:if="${#fields.hasGlobalErrors()}">
-                <div class="errorMsg" th:each="err : ${#fields.globalErrors()}" th:text="${err}">[[${errorMsg}]]</div>
-            </div>
             <div class='login_look'>
                 <a href="/register">회원가입</a>
                 <a id="findEmail">이메일 찾기</a>

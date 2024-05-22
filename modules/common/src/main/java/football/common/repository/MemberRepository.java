@@ -38,7 +38,7 @@ public class MemberRepository {
     }
 
     public boolean isExactPassword(Member member, String password) {
-        return bc.matchBCrypt(member.combineSalt(password), member.getMemberPassword());
+        return bc.matchBCrypt(password, member.getMemberPassword());
     }
     public boolean isExactPassword(String myPassword, String inputPassword) {
         return bc.matchBCrypt(inputPassword, myPassword);
@@ -60,8 +60,7 @@ public class MemberRepository {
             () -> jpaBeforePasswordRepository.save(new BeforePassword(member))
         );
 
-        String newPassword = member.combineSalt(changePassword);
-        String encode = bc.encodeBCrypt(newPassword);
+        String encode = bc.encodeBCrypt(changePassword);
         member.setMemberPassword(encode);
     }
 

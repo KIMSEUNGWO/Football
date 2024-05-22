@@ -71,6 +71,9 @@ header .menu .menuTitle {
         }
     }
 }
+.flexR .logout {
+    cursor: pointer;
+}
 
 
 .flexR a * {

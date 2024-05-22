@@ -31,22 +31,22 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor(memberService))
-                .order(1)
-                .addPathPatterns("/mypage", "/mypage/**", "/admin", "/admin/**", "/cash/charge", "/order/**", "/manager", "/manager/**")
-                .excludePathPatterns("/css/**", "/js/**", "/fonts/**", "/images/**");
-
-        registry.addInterceptor(new MatchInterceptor(matchService))
-                .order(2)
-                .addPathPatterns("/match/**", "/order/**");
-
-        registry.addInterceptor(new OrderInterceptor(memberService, matchService))
-                .order(3)
-                .addPathPatterns("/order/**");
-
-        registry.addInterceptor(new AdminInterceptor(memberService, jpaAdminRepository))
-                .order(4)
-                .addPathPatterns("/admin", "/admin/**");
+//        registry.addInterceptor(new LoginInterceptor(memberService))
+//                .order(1)
+//                .addPathPatterns("/mypage", "/mypage/**", "/admin", "/admin/**", "/cash/charge", "/order/**", "/manager", "/manager/**")
+//                .excludePathPatterns("/css/**", "/js/**", "/fonts/**", "/images/**");
+//
+//        registry.addInterceptor(new MatchInterceptor(matchService))
+//                .order(2)
+//                .addPathPatterns("/match/**", "/order/**");
+//
+//        registry.addInterceptor(new OrderInterceptor(memberService, matchService))
+//                .order(3)
+//                .addPathPatterns("/order/**");
+//
+//        registry.addInterceptor(new AdminInterceptor(memberService, jpaAdminRepository))
+//                .order(4)
+//                .addPathPatterns("/admin", "/admin/**");
 
     }
 
