@@ -1,20 +1,12 @@
 package football.api.kakaologin.controller;
 
-import football.api.kakaologin.exception.DistinctRegisterException;
 import football.api.kakaologin.service.KakaoLoginService;
 import football.common.domain.Token;
-import football.login.dto.LoginResponse;
-import football.login.service.LoginService;
-import football.login.service.RegisterService;
-import football.common.domain.Member;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import static football.common.consts.SessionConst.LOGIN_MEMBER;
 import static football.common.enums.SocialEnum.*;
 
 @Controller
@@ -23,47 +15,6 @@ import static football.common.enums.SocialEnum.*;
 public class KakaoLoginController {
 
     private final KakaoLoginService kakaoLoginService;
-    private final LoginService loginService;
-    private final RegisterService registerService;
-
-
-    @ResponseBody
-    @GetMapping("/login/kakao")
-    public ResponseEntity<String> kakaoLogin(@RequestParam(required = false) String code, HttpSession session) throws DistinctRegisterException {
-
-        Token newToken = kakaoLoginService.getKakaoAccessToken(code);
-        LoginResponse userInfo = kakaoLoginService.getUserInfo(newToken.getAccess_token());
-
-        Member loginMember =  loginService.socialLogin(userInfo.getEmail(), KAKAO, userInfo.getId());
-
-        // 로그인시도 (이메일, 소셜타입, 소셜고유번호)
-        // 있으면 token 업데이트
-
-        // 없으면 휴대폰 확인
-        // 휴대폰정보가 있으면 DistinctRegisterException
-        // 없으면 회원가입
-
-        if (loginMember == null) {
-            boolean phoneDistinct = loginService.existsByPhone(userInfo.getPhone());
-            if (phoneDistinct) throw new DistinctRegisterException();
-
-            loginMember = registerService.socialSave(userInfo, newToken);
-            System.out.println("loginMember = " + loginMember);
-        } else {
-            Token nowToken = loginMember.getSocial().getToken();
-            kakaoLoginService.updateKakaoToken(nowToken, newToken);
-        }
-
-        loginMember.renewLoginTime();
-        session.setAttribute(LOGIN_MEMBER, loginMember.getMemberId());
-
-        String redirect = "const urlParams = new URLSearchParams(opener.location.search); " +
-            "let redirect = urlParams.get('url'); " +
-            "if (redirect == null) redirect = '/';" +
-            "opener.location.href=redirect;";
-        return ResponseEntity.ok(String.format("<script> %s window.self.close(); </script>", redirect));
-
-    }
 
     @GetMapping("/logout/kakao/{memberId}")
     public String kakaoLogout(@PathVariable Long memberId) {

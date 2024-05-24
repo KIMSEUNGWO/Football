@@ -1,7 +1,6 @@
 package football.api.kakaologin.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import football.common.domain.QToken;
 import football.common.domain.Token;
 import football.common.enums.SocialEnum;
 import jakarta.persistence.EntityManager;
@@ -21,7 +20,6 @@ public class KakaoLoginRepository {
     public KakaoLoginRepository(EntityManager em) {
         this.query = new JPAQueryFactory(em);
     }
-
 
     public Token findByKakaoToken(Long memberId, SocialEnum socialEnum) {
         return query.select(token)
