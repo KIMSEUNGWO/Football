@@ -28,15 +28,14 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void save(Orders orders, Member member, Optional<CouponList> couponList, int price) {
-        Payment payment = paymentService.buildPayment(member, -1 * price, CashEnum.사용, null);
+    public void save(Orders orders, Optional<CouponList> couponList) {
+        Payment payment = paymentService.buildPayment(orders.getMember(), -1 * orders.getAmountPayment(), CashEnum.사용, null);
         paymentService.save(payment);
 
-        if (couponList.isPresent()) {
-            CouponList couponList1 = couponList.get();
+        couponList.ifPresent(couponList1 -> {
             couponList1.useCoupon();
             orders.setCouponList(couponList1);
-        }
+        });
 
         orderRepository.save(orders);
     }
@@ -53,24 +52,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderListForm> getMatchResultForm(List<Orders> orderList) {
-        List<OrderListForm> list = new ArrayList<>();
-
-        for (Orders orders : orderList) {
-            OrderListForm form = new OrderListForm();
-            form.build(orders);
-            list.add(form);
-        }
+        List<OrderListForm> list = new ArrayList<>(orderList.size());
+        orderList.forEach(order -> list.add(new OrderListForm(order)));
         return list;
     }
 
     @Override
     public void setTeam(Map<TeamEnum, List<Orders>> result) {
-        for (TeamEnum teamEnum : result.keySet()) {
-            List<Orders> ordersList = result.get(teamEnum);
-            for (Orders orders : ordersList) {
-                orders.setTeam(teamEnum);
-            }
-        }
+        result.forEach((teamEnum, orders) -> orders.forEach(order -> order.setTeam(teamEnum)));
     }
 
 }

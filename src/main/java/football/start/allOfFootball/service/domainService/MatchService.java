@@ -1,12 +1,9 @@
 package football.start.allOfFootball.service.domainService;
 
 import football.common.domain.*;
-import football.common.dto.match.EditMatchRequest;
-import football.common.dto.match.SaveMatchRequest;
 import football.common.exception.match.NotExistsMatchException;
 import football.start.allOfFootball.dto.match.*;
 import football.common.enums.domainenum.TeamEnum;
-import football.common.enums.matchenum.MatchStatus;
 import football.start.allOfFootball.enums.matchEnums.RequestTeam;
 import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
@@ -28,69 +25,27 @@ public class MatchService {
     private final MatchRepository matchRepository;
     private final ScoreService scoreService;
 
-    public Match findByMatch(Long matchId, String redirectURI) throws NotExistsMatchException {
+    public Match findByMatchOrRedirect(Long matchId, String redirectURI) throws NotExistsMatchException {
         Optional<Match> findMatch = matchRepository.findByMatch(matchId);
         return findMatch.orElseThrow(() -> new NotExistsMatchException(redirectURI));
     }
 
-    public List<Orders> getOrders(Match match) {
-        return match.getOrdersList();
-    }
-
-    public boolean distinctCheck(Match match, Long memberId) {
-        List<Orders> ordersList = match.getOrdersList();
-        return ordersList.stream().filter(x -> x.getMember().getMemberId() == memberId).findFirst().isPresent();
+    public boolean distinctCheck(Match match, Member member) {
+        return matchRepository.existsByMatch(match, member);
     }
 
     public void refreshMatchStatus(Match match) {
         int max = match.getMaxPerson() * match.getMatchCount(); // 참여할 수 있는 최대 인원 수
 
-        int nowPerson = match.getOrdersList().size() + 1; // + 1 인거 주의해서 사용할 것
+        int nowPerson = match.getOrdersList().size() + 1; // + 1 인거 주의해서 사용할 것 (본인포함이기때문에 +1임)
 
         int line = (int) (max * 0.8);
-        if (max == nowPerson) {
+        if (nowPerson == max) {
             match.setMatchStatus(마감);
-            return;
-        }
-        if (nowPerson >= line) {
-            match.setMatchStatus(MatchStatus.마감임박);
+        } else if (nowPerson >= line) {
+            match.setMatchStatus(마감임박);
         }
 
-    }
-
-    public boolean maxCheck(Match match) {
-        int max = match.getMaxPerson() * match.getMatchCount(); // 참여할 수 있는 최대 인원 수
-
-        int nowPerson = match.getOrdersList().size();
-
-        return max <= nowPerson;
-    }
-
-
-    public List<Match> getMatchDeadLine() {
-        return matchRepository.getMatchDeadLine();
-    }
-
-    public List<Match> understaffedList(List<Match> matchList) {
-        List<Match> refundMatchList = new ArrayList<>();
-
-        for (Match match : matchList) {
-            MatchStatus status = match.getMatchStatus();
-            if (status != 모집중 && status != 마감임박) continue;
-
-            List<Orders> ordersList = match.getOrdersList();
-            int maxPerson = match.getMaxPerson();
-
-            if (ordersList.size() <= maxPerson) {
-                refundMatchList.add(match);
-            }
-        }
-
-        for (Match match : refundMatchList) {
-            matchList.remove(match);
-        }
-
-        return refundMatchList;
     }
 
     public MatchCollection getMatchCollection(Match match, Member member) {
@@ -125,10 +80,6 @@ public class MatchService {
         match.setManager(manager);
     }
 
-
-    public List<Match> findAllMatchBefore(Manager manager) {
-        return matchRepository.findAllMatchBefore(manager);
-    }
 
     public void matchEnd(Match match) {
         match.setMatchStatus(기록중);

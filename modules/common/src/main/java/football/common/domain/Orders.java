@@ -18,32 +18,25 @@ public class Orders {
     private Long ordersId;
 
     @ManyToOne
-    @JoinColumn(name = "matchId")
+    @JoinColumn(name = "MATCH_ID")
     private Match match;
 
     @ManyToOne
-    @JoinColumn(name = "memberId")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    private Integer payment; // 결제한 금액
+    private Integer amountPayment; // 결제한 금액
 
     @Enumerated(EnumType.STRING)
     private TeamEnum team;
 
     @OneToOne
-    @JoinColumn(name = "matchCancelId")
+    @JoinColumn(name = "MATCH_CANCEL_ID")
     private MatchCancel matchCancel;
 
     @OneToOne
-    @JoinColumn(name = "couponListId")
+    @JoinColumn(name = "COUPON_LIST_ID")
     private CouponList couponList;
 
     private Integer score;
-
-    public static Orders build(Match match, Member member) {
-        return Orders.builder()
-            .match(match)
-            .member(member)
-            .build();
-    }
 }

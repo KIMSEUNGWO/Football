@@ -1,10 +1,10 @@
 package football.start.allOfFootball.aspect;
 
+import football.common.consts.SessionConst;
 import football.common.domain.Member;
 import football.login.config.auth.PrincipalDetails;
 import football.start.allOfFootball.controller.mypage.MyProfileDto;
 import football.start.allOfFootball.service.MypageService;
-import football.common.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @RequiredArgsConstructor
 public class MypageAOP {
 
-    private final MemberService memberService;
     private final MypageService mypageService;
 
     @Before("execution(public * football.start.allOfFootball.controller.mypage.MypageController.*(..))")
@@ -37,7 +36,7 @@ public class MypageAOP {
         HttpServletRequest request = attributes.getRequest();
         HttpSession session = request.getSession();
 
-        SecurityContext securityContext = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
+        SecurityContext securityContext = (SecurityContext) session.getAttribute(SessionConst.SPRING_SECURITY_CONTEXT);
         if (securityContext != null) {
             Authentication authentication = securityContext.getAuthentication();
             if (authentication != null) {

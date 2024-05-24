@@ -20,7 +20,7 @@ public class Manager {
 
     @Getter
     @OneToOne
-    @JoinColumn(name = "memberId")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     private String name; // 본명

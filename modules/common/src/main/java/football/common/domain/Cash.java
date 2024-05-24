@@ -16,8 +16,8 @@ public class Cash extends BaseTimeEntity{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cashId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberId")
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     @Enumerated(EnumType.STRING)

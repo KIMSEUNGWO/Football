@@ -1,13 +1,13 @@
 package football.start.allOfFootball.react;
 
+import football.common.domain.Member;
+import football.login.config.auth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
-
-import static football.common.consts.SessionConst.LOGIN_MEMBER;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,9 +17,10 @@ public class ReactController {
     private final ReactService reactService;
 
     @GetMapping("/member/get")
-    public ResponseEntity<MemberInfo> getMember(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId) {
-        System.out.println("React Test Code : " + memberId);
-        MemberInfo memberInfo = reactService.getMemberInfo(memberId);
+    public ResponseEntity<MemberInfo> getMember(@AuthenticationPrincipal PrincipalDetails user) {
+        Member member = user.getMember();
+        System.out.println("React Test Code : " + member.getMemberId());
+        MemberInfo memberInfo = reactService.getMemberInfo(member.getMemberId());
         return ResponseEntity.ok(memberInfo);
     }
 }

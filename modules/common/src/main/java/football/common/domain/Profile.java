@@ -16,7 +16,7 @@ public class Profile extends ImageChild {
     private Long profileId;
 
     @OneToOne
-    @JoinColumn(name = "memberId")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     public Profile(Member member, String originalName, String storeName) {

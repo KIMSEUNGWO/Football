@@ -17,7 +17,7 @@ public class FieldImage extends ImageChild {
     private Long fieldImageId;
 
     @ManyToOne
-    @JoinColumn(name = "fieldId")
+    @JoinColumn(name = "FIELD_ID")
     private Field field;
 
     public FieldImage(Field field, String originalName, String storeName) {

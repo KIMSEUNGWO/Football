@@ -17,12 +17,12 @@ public class CouponList extends BaseTimeEntity{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long couponListId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberId")
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "couponId")
+    @ManyToOne
+    @JoinColumn(name = "COUPON_ID")
     private Coupon coupon;
     private LocalDateTime couponListExpireDate;
 

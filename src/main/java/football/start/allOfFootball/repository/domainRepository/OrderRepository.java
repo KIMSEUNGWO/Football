@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,9 @@ public class OrderRepository {
     private final JpaOrderRepository jpaOrderRepository;
     private final JPAQueryFactory query;
 
+    private final LocalTime startTime = LocalTime.of(0, 0);
+    private final LocalTime endTime = LocalTime.of(23, 59);
+
     public OrderRepository(JpaOrderRepository jpaOrderRepository, EntityManager em) {
         this.jpaOrderRepository = jpaOrderRepository;
         this.query = new JPAQueryFactory(em);
@@ -37,8 +41,11 @@ public class OrderRepository {
 
     public List<Orders> findByBefore(Member member) {
         return query.selectFrom(orders)
-            .where(orders.member.eq(member).and(orders.match.matchStatus.in(모집중, 마감임박, 마감)).and(orders.match.matchDate.after(LocalDateTime.now())))
-            .fetch();
+            .where(
+                orders.member.eq(member)
+                .and(orders.match.matchStatus.in(모집중, 마감임박, 마감))
+                .and(orders.match.matchDate.after(LocalDateTime.now()))
+            ).fetch();
     }
 
     public List<Orders> findByMatchAll(Member member, OrderDateForm form) {
@@ -48,11 +55,10 @@ public class OrderRepository {
         LocalDate end = form.getEndDate();
 
         return query.selectFrom(orders)
-            .where(orders.member.eq(member).and(
-                match.matchDate.between(
-                        LocalDateTime.of(start.getYear(), start.getMonthValue(), start.getDayOfMonth(), 0, 0),
-                        LocalDateTime.of(end.getYear(), end.getMonthValue(), end.getDayOfMonth(), 23, 59))
-            ))
+            .where(
+                orders.member.eq(member)
+                .and(match.matchDate.between(LocalDateTime.of(start, startTime), LocalDateTime.of(end,  endTime)))
+            )
             .orderBy(orders.match.matchDate.desc())
             .fetch();
     }

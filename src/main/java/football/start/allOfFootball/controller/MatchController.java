@@ -26,7 +26,7 @@ public class MatchController {
                         @AuthenticationPrincipal PrincipalDetails user,
                         Model model) throws NotExistsMatchException {
 
-        Match match = matchService.findByMatch(matchId, "/");
+        Match match = matchService.findByMatchOrRedirect(matchId, "/");
 
         MatchViewForm matchForm = new MatchViewForm(match); // 기본 데이터
         model.addAttribute("matchForm", matchForm);

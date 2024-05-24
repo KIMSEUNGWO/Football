@@ -45,7 +45,6 @@ public class Member implements ImageParent {
     private Integer memberScore;
 
     @Enumerated(EnumType.STRING)
-    @Nullable
     private GradeEnum grade;
 
     @Setter
@@ -82,10 +81,6 @@ public class Member implements ImageParent {
 
     public boolean isSocial() {
         return social != null;
-    }
-
-    public boolean socialTypeIs(SocialEnum socialEnum) {
-        return isSocial() && social.isType(socialEnum);
     }
 
     public SocialEnum getSocialType() {

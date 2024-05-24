@@ -14,8 +14,8 @@ public class BeforePassword {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long beforePasswordId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberId")
+    @OneToOne
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     @Getter

@@ -15,18 +15,14 @@ public class FindPassword extends SmsRequest {
     private String password;
     private String passwordCheck;
 
-
-    public String getPassword() {
-        return password;
-    }
-    public String getPasswordCheck() {
-        return passwordCheck;
-    }
-
     public FindPassword(String email, String phone, String certificationNumber, String password, String passwordCheck) {
         super(email, phone, certificationNumber);
         this.password = password;
         this.passwordCheck = passwordCheck;
+    }
+
+    public boolean comparePassword() {
+        return password != null && password.equals(passwordCheck);
     }
 
 }

@@ -1,15 +1,12 @@
 package football.start.allOfFootball.interceptor;
 
 import football.common.common.alert.AlertUtils;
-import football.common.domain.Match;
 import football.start.allOfFootball.service.domainService.MatchService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -44,9 +41,8 @@ public class MatchInterceptor implements HandlerInterceptor {
         int index = requestURI.lastIndexOf("/");
         if (index == -1 || requestURI.length() == index + 1) return null;
 
-        String matchIdStr = requestURI.substring(index + 1);
         try {
-            return Long.parseLong(matchIdStr);
+            return Long.parseLong(requestURI.substring(index + 1));
         } catch (NumberFormatException e) {
             return null;
         }

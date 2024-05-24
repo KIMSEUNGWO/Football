@@ -3,6 +3,7 @@ package football.start.allOfFootball.repository.domainRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.common.consts.Constant;
 import football.common.domain.*;
+import football.common.jpaRepository.JpaOrderRepository;
 import football.start.allOfFootball.controller.mypage.MatchDataForm;
 import football.start.allOfFootball.dto.match.MatchData;
 import football.start.allOfFootball.dto.match.MatchDataCalculator;
@@ -20,27 +21,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static football.common.domain.QMatch.match;
-import static football.common.enums.matchenum.MatchStatus.종료;
-import static football.common.enums.matchenum.MatchStatus.취소;
+import static football.common.enums.matchenum.MatchStatus.*;
 
 @Repository
 @Slf4j
 public class MatchRepository {
 
     private final JpaMatchRepository jpaMatchRepository;
+    private final JpaOrderRepository jpaOrderRepository;
     private final JPAQueryFactory query;
 
-    public MatchRepository(JpaMatchRepository jpaMatchRepository, EntityManager em) {
+    public MatchRepository(JpaMatchRepository jpaMatchRepository, JpaOrderRepository jpaOrderRepository, EntityManager em) {
         this.jpaMatchRepository = jpaMatchRepository;
+        this.jpaOrderRepository = jpaOrderRepository;
         this.query = new JPAQueryFactory(em);
     }
 
     public Optional<Match> findByMatch(Long matchId) {
         return jpaMatchRepository.findById(matchId);
-    }
-
-    public void saveMatch(Match saveMatch) {
-        jpaMatchRepository.save(saveMatch);
     }
 
     public Optional<Orders> isContainsMember(List<Orders> ordersList, Member member) {
@@ -52,15 +50,6 @@ public class MatchRepository {
             }
         }
         return Optional.empty();
-    }
-
-    public List<Match> getMatchDeadLine() {
-        LocalDateTime now = LocalDateTime.now().plusMinutes(80);
-        LocalDateTime after = LocalDateTime.now().plusMinutes(100); // 1시간 30분 전 마감처리 시작 +- 10분
-
-        return query.selectFrom(match)
-            .where(match.matchDate.between(now, after))
-            .fetch();
     }
 
     public List<MatchData> getMatchData(Match match, List<Orders> ordersList) {
@@ -152,5 +141,9 @@ public class MatchRepository {
 
     public boolean existsByMatchId(Long matchId) {
         return jpaMatchRepository.existsById(matchId);
+    }
+
+    public boolean existsByMatch(Match match, Member member) {
+        return jpaOrderRepository.existsByMatchAndMember(match, member);
     }
 }

@@ -13,12 +13,9 @@ import java.util.Optional;
 
 public interface OrderService {
 
-    void save(Orders orders, Member member, Optional<CouponList> couponList, int price);
-
+    void save(Orders orders, Optional<CouponList> couponList);
     List<Orders> findByMatchBefore(Member member);
     List<Orders> findByMatchAll(Member member, OrderDateForm form);
-
     List<OrderListForm> getMatchResultForm(List<Orders> orderList);
-
     void setTeam(Map<TeamEnum, List<Orders>> result);
 }

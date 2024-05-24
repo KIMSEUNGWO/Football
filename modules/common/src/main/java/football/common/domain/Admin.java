@@ -9,7 +9,7 @@ public class Admin {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long adminId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberId")
+    @OneToOne
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 }

@@ -17,11 +17,11 @@ public class MyResult {
     private Long myResultId;
 
     @ManyToOne
-    @JoinColumn(name = "ordersId")
+    @JoinColumn(name = "ORDERS_ID")
     private Orders orders;
 
     @ManyToOne
-    @JoinColumn(name = "scoreId")
+    @JoinColumn(name = "SCORE_ID")
     private Score score;
 
 
