@@ -15,5 +15,5 @@ import java.util.List;
 public class RecordForm {
 
     private TeamEnum team;
-    private List<Player> goalList;
+    private int score;
 }

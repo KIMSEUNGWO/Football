@@ -93,6 +93,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="team-detail left-team-detail">
+                                                        <div class="arrow">
+                                                            <button type="button" class="inc">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" style="rotate: 270deg;" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                                            </button>
+                                                            <button type="button" class="dec">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" style="rotate: 90deg;" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                                            </button>
+                                                        </div>
                                                         <span class="match-score left-score">0</span>
                                                     </div>
                                                 </div>
@@ -102,6 +110,14 @@
                                                 <div class="match-team right-team">
                                                     <div class="team-detail right-team-detail">
                                                         <div class="match-score right-score">0</div>
+                                                        <div class="arrow">
+                                                            <button type="button" class="inc">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" style="rotate: 270deg;" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                                            </button>
+                                                            <button type="button" class="dec">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" style="rotate: 90deg;" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                     <div class="team-name">
                                                         <div class="selectColor">
@@ -110,49 +126,6 @@
                                                             <button type="button" class="selector yellow">Y</button>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="match-result-detail">
-                                                <ul class="score-record left-score-record">
-                                                    <li class="goal left-goal">
-                                                        <button type="button" class="addBtn addPlayer" disabled>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
-                                                            선수추가
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                                <ul class="score-record right-score-record">
-                                                    <li class="goal right-goal">
-                                                        <button type="button" class="addBtn addPlayer" disabled>선수추가
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="matchPlayer">
-                                        <div class="playerWrap disabled">
-                                            <div class="playerColor disabled" th:each="team : ${dataForm.teamInfo}">
-                                                <div th:class="'color ' + ${team.key.className}" th:text="${team.key}"></div>
-                                                <ul class="colorPlayerList">
-                                                    <label th:each="player : ${team.value}" th:for="${player.orderId}" class="colorPlayer" aria-pressed="false">
-                                                        <input type="radio" th:name="${team.key.className}" th:id="${player.orderId}"  th:value="${player.orderId}" hidden>
-                                                        <div class="colorPlayerImg">
-                                                            <img th:src="|/images/profile/${player.profileImage}|" alt="${player.memberName}" src="">
-                                                        </div>
-                                                        <strong class="colorPlayerName" th:text="${player.memberName}"></strong>
-                                                        <div class="colorPlayerInfo">
-                                                            <span class="colorPlayerGrade" th:text="${player.memberGrade}"></span>
-                                                        </div>
-                                                    </label>
-                                                </ul>
-                                                <div class="colorBottom">
-                                                    <div class="inputBox">
-                                                        <input type="text" name="time" inputmode="numeric" value="">
-                                                        <span>분</span>
-                                                    </div>
-                                                    <button type="button" class="applyGoal">적용</button>
                                                 </div>
                                             </div>
                                         </div>

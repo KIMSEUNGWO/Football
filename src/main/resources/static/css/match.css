@@ -122,56 +122,6 @@
 .match-result-wrap {
     width: 100%;
     margin-bottom: 2rem;
-
-    .match-result-detail {
-        display: flex;
-        gap: 2.5rem;
-        min-height: 4rem;
-
-        .score-record {
-            margin-top: 0.5rem;
-            width: 50%;
-            height: 100%;
-            display: flex;
-            flex-direction: column; 
-            flex-wrap: wrap;
-            row-gap: 0.2rem;
-            column-gap: 1rem;
-            .goal {
-                margin: 0;
-                font-size: 0.9rem;
-                display: flex;
-                align-items: center;
-                gap: 0.35rem;
-                .goal-player {
-                    color: gray;
-                }
-                svg {
-                    width: 0.9rem;
-                    height: 0.9rem;
-                    fill: gray;
-                }
-            }
-            .goal > * {
-                margin: 0;
-            }
-            .left-goal {
-                justify-content: right;
-            }
-            .right-goal {
-                justify-content: left;
-            }
-        }
-        .left-score-record {
-            text-align: right;
-        }
-        .right-score-record {
-            text-align: left;
-        }
-    }
-    .match-result-detail > * {
-        margin: 0;
-    }
     
     .match-result {
         display: flex;
