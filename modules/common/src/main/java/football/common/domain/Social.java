@@ -24,13 +24,13 @@ public class Social {
     @JoinColumn(name = "memberId")
     private Member member;
 
-    private int socialNum; // 고유번호
+    private Long socialNum; // 고유번호
 
     @Enumerated(EnumType.STRING)
     private SocialEnum socialType;
 
     @OneToOne(mappedBy = "social")
-    private KakaoToken kakaoToken;
+    private Token token;
 
     public boolean isType(SocialEnum socialEnum) {
         return socialType == socialEnum;

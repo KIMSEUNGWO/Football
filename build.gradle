@@ -110,6 +110,7 @@ project(":file") {
 }
 project(":manager") {
 	dependencies {
+		implementation(project(":login"))
 		implementation(project(":common"))
 	}
 }
@@ -123,11 +124,13 @@ project(":login") {
 
 project(":payment") {
 	dependencies {
+		implementation(project(":login"))
 		implementation(project(":common"))
 	}
 }
 project(":admin") {
 	dependencies {
+		implementation(project(":login"))
 		implementation(project(":common"))
 		implementation(project(":file"))
 	}
@@ -142,12 +145,14 @@ project(":sms") {
 }
 project(":kakaopay") {
 	dependencies {
+		implementation(project(":login"))
 		implementation(project(":common"))
 		implementation(project(":payment"))
 	}
 }
 project(":kakaologin") {
 	dependencies {
+		implementation(project(":login"))
 		implementation(project(":common"))
 		implementation(project(":login"))
 	}

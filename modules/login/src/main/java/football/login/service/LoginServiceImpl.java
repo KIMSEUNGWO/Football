@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService{
 
 
     @Override
-    public Member socialLogin(String email, SocialEnum socialEnum, int loginUser_id) {
+    public Member socialLogin(String email, SocialEnum socialEnum, Long loginUser_id) {
         return loginRepository.socialLogin(email, socialEnum, loginUser_id);
     }
 

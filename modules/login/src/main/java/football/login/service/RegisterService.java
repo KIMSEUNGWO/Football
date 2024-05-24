@@ -1,6 +1,6 @@
 package football.login.service;
 
-import football.common.domain.KakaoToken;
+import football.common.domain.Token;
 import football.common.domain.Member;
 import football.login.dto.LoginResponse;
 import jakarta.servlet.http.Cookie;
@@ -11,7 +11,7 @@ public interface RegisterService {
 
     boolean distinctEmail(String email);
 
-    Member socialSave(LoginResponse userInfo, KakaoToken kakaoToken);
+    Member socialSave(LoginResponse userInfo, Token token);
 
     Cookie createCertCookie();
 

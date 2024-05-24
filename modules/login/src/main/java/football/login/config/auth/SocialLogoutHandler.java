@@ -1,4 +1,4 @@
-package football.common.config.auth;
+package football.login.config.auth;
 
 import football.common.domain.Member;
 import jakarta.servlet.http.HttpServletRequest;

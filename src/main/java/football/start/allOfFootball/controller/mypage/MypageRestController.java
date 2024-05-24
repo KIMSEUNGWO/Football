@@ -1,8 +1,7 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.common.config.auth.PrincipalDetails;
-import football.common.config.auth.UserRefreshProvider;
-import football.common.customAnnotation.SessionLogin;
+import football.login.config.auth.PrincipalDetails;
+import football.login.config.auth.UserRefreshProvider;
 import football.common.domain.Member;
 import football.common.domain.Orders;
 import football.start.allOfFootball.dto.ChangePasswordForm;

@@ -1,7 +1,7 @@
 package football.start.allOfFootball.aspect;
 
 import football.common.domain.Member;
-import football.common.config.auth.PrincipalDetails;
+import football.login.config.auth.PrincipalDetails;
 import football.start.allOfFootball.controller.mypage.MyProfileDto;
 import football.start.allOfFootball.service.MypageService;
 import football.common.service.MemberService;

@@ -1,8 +1,7 @@
 package football.start.allOfFootball.controller.mypage;
 
-import football.common.config.auth.UserRefreshProvider;
 import football.common.domain.Member;
-import football.common.config.auth.PrincipalDetails;
+import football.login.config.auth.PrincipalDetails;
 import football.payment.dto.CashListForm;
 import football.payment.service.PaymentService;
 import football.start.allOfFootball.dto.CouponListForm;

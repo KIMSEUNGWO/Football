@@ -1,4 +1,4 @@
-package football.common.config.auth;
+package football.login.config.auth;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -3,26 +3,14 @@ package football.api.kakaologin.config;
 import football.api.kakaologin.dto.KakaoRequestTo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class KakaoLoginConfig {
 
     @Bean
-    KakaoRequestTo requestTo() {
-        return new KakaoRequestTo(restTemplate(), httpHeaders());
-    }
+    KakaoRequestTo requestTo() { return new KakaoRequestTo(restTemplate()); }
 
     @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-    @Bean
-    HttpHeaders httpHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        return headers;
-    }
+    RestTemplate restTemplate() { return new RestTemplate(); }
 }
