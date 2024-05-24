@@ -5,9 +5,6 @@ import football.common.domain.Orders;
 import football.common.formatter.DateFormatter;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
-
 @Getter
 @Setter
 @ToString
@@ -21,23 +18,19 @@ public class OrderListForm {
     private String matchStatus;
     private Integer resultScore;
 
-    public void build(Orders orders) {
+    public OrderListForm(Orders orders) {
         Match match = orders.getMatch();
 
         matchId = match.getMatchId();
         matchDate = DateFormatter.format("yyyy년 M월 d일", match.getMatchDate());
-        matchHour = getHourForm(match.getMatchDate());
+        matchHour = DateFormatter.format("HH:mm",match.getMatchDate());
         maxPersonAndCount = getMix(match.getMaxPerson(), match.getMatchCount());
         fieldTitle = match.getField().getFieldTitle();
         matchStatus = match.getMatchStatus().name();
         resultScore = orders.getScore();
     }
 
-    private static String getMix(Integer maxPerson, Integer matchCount) {
-        return maxPerson + " vs " + maxPerson + " " + matchCount + "파전";
-    }
-
-    private static String getHourForm(LocalDateTime matchHour) {
-        return String.format("%02d:00", matchHour.getHour());
+    private String getMix(int maxPerson, int matchCount) {
+        return String.format("%d vs %d %d파전", maxPerson, maxPerson, matchCount);
     }
 }

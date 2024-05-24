@@ -1,18 +1,18 @@
 package football.start.allOfFootball.controller.coupon;
 
-import football.common.consts.SessionConst;
 import football.common.domain.Coupon;
 import football.common.domain.Member;
+import football.login.config.auth.PrincipalDetails;
+import football.login.config.auth.UserRefreshProvider;
 import football.start.allOfFootball.service.CouponService;
-import football.common.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class CouponController {
 
     private final CouponService couponService;
-    private final MemberService memberService;
+    private final UserRefreshProvider provider;
 
     @GetMapping("/coupon/test")
     public String test() {
@@ -38,14 +38,14 @@ public class CouponController {
     }
 
     @GetMapping("/couponList/test")
-    public String listTest(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId) {
-        Optional<Member> findMember = memberService.findByMemberId(memberId);
-        Member member = findMember.get();
+    public String listTest(@AuthenticationPrincipal PrincipalDetails user) {
+        Member member = user.getMember();
         Coupon coupon = couponService.getCoupon(1L);
         couponService.saveCouponListTest(member, coupon);
         Coupon coupon2 = couponService.getCoupon(2L);
         couponService.saveCouponListTest(member, coupon2);
 
+        provider.refresh(user);
         return "redirect:/";
     }
 

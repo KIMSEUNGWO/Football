@@ -21,12 +21,12 @@ public class Score {
     private Long scoreId;
 
     @ManyToOne
-    @JoinColumn(name = "matchId")
+    @JoinColumn(name = "MATCH_ID")
     private Match match;
 
     // Not Columns
 
-    @OneToMany(mappedBy = "score")
+    @OneToMany(mappedBy = "score", fetch = FetchType.LAZY)
     private List<Team> teamList;
 
 

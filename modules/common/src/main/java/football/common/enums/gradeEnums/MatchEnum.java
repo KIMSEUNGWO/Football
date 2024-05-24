@@ -28,4 +28,8 @@ public enum MatchEnum {
     public String getMatchInfo() {
         return matchInfo;
     }
+
+    public boolean contains(GradeEnum memberGrade) {
+        return this.gradeList.contains(memberGrade);
+    }
 }

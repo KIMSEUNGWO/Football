@@ -42,7 +42,7 @@ public class Field extends BaseTimeEntity implements ImageParent {
     @Enumerated(EnumType.STRING)
     private ShowerEnum fieldShower;
 
-    @OneToMany(mappedBy = "field")
+    @OneToMany(mappedBy = "field", fetch = FetchType.LAZY)
     private List<FieldImage> fieldImages = new ArrayList<>();
 
     public Field(FieldForm form) {

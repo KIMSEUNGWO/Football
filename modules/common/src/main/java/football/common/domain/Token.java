@@ -16,7 +16,7 @@ public class Token {
     private Long tokenId;
 
     @OneToOne
-    @JoinColumn(name = "socialId")
+    @JoinColumn(name = "SOCIAL_ID")
     private Social social;
 
     private String access_token;

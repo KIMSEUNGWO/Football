@@ -21,7 +21,7 @@ public class RefundService {
         List<Orders> ordersList = match.getOrdersList();
         for (Orders orders : ordersList) {
 
-            Integer expectedPrice = orders.getPayment();
+            Integer expectedPrice = orders.getAmountPayment();
             CouponList couponList = orders.getCouponList();
 
             if (couponList != null) {

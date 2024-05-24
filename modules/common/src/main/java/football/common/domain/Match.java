@@ -3,6 +3,7 @@ package football.common.domain;
 import football.common.domain.score.Score;
 import football.common.dto.match.EditMatchRequest;
 import football.common.dto.match.SaveMatchRequest;
+import football.common.enums.gradeEnums.GradeEnum;
 import football.common.enums.gradeEnums.MatchEnum;
 import football.common.enums.matchenum.GenderEnum;
 import football.common.enums.matchenum.MatchStatus;
@@ -28,11 +29,11 @@ public class Match {
     private Long matchId;
 
     @ManyToOne
-    @JoinColumn(name = "fieldId")
+    @JoinColumn(name = "FIELD_ID")
     private Field field;
 
     @ManyToOne
-    @JoinColumn(name = "manager_id")
+    @JoinColumn(name = "MANAGER_ID")
     private Manager manager;
 
     private LocalDateTime matchDate; // 경기날짜
@@ -88,5 +89,17 @@ public class Match {
 
     public boolean hasManager() {
         return manager != null;
+    }
+
+    public boolean isFull() {
+        return matchStatus == MatchStatus.마감;
+    }
+
+    public boolean isPossibleGender(GenderEnum memberGender) {
+        return matchGender == GenderEnum.전체 || matchGender == memberGender;
+    }
+
+    public boolean isPossibleGrade(GradeEnum memberGrade) {
+        return matchGrade == MatchEnum.전체 || matchGrade.contains(memberGrade);
     }
 }

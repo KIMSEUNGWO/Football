@@ -42,7 +42,7 @@ public class MatchRestController {
                                                    @PathVariable Long matchId,
                                                    @RequestBody RequestTeam team) throws NotExistsMatchException {
         Member member = user.getMember();
-        Match match = matchService.findByMatch(matchId, null);
+        Match match = matchService.findByMatchOrRedirect(matchId, null);
         Manager manager = match.getManager();
 
         if (manager == null || manager.isSameMember(member)) {
@@ -56,7 +56,7 @@ public class MatchRestController {
     @PostMapping("/apply")
     public ResponseEntity<JsonDefault> managerApply(@AuthenticationPrincipal PrincipalDetails user, @RequestBody Long matchId) throws NotExistsMatchException {
         Member member = user.getMember();
-        Match match = matchService.findByMatch(matchId, null);
+        Match match = matchService.findByMatchOrRedirect(matchId, null);
 
         if (match.hasManager()) {
             return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "이미 매니저가 배정되었습니다."));
@@ -84,10 +84,10 @@ public class MatchRestController {
     public ResponseEntity<JsonDefault> matchEnd(@PathVariable Long matchId,
                                                 @AuthenticationPrincipal PrincipalDetails user) throws NotExistsMatchException {
         Member member = user.getMember();
-        Match match = matchService.findByMatch(matchId, null);
+        Match match = matchService.findByMatchOrRedirect(matchId, null);
         Manager manager = match.getManager();
 
-        if (!member.isManager() || manager.isSameMember(member)) {
+        if (!member.isManager() || !manager.isSameMember(member)) {
             return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "권한이 없습니다."));
         }
 
@@ -102,7 +102,7 @@ public class MatchRestController {
                                                    @AuthenticationPrincipal PrincipalDetails user,
                                            @RequestBody ScoreResultForm score) throws NotExistsMatchException {
         Member member = user.getMember();
-        Match match = matchService.findByMatch(matchId, null);
+        Match match = matchService.findByMatchOrRedirect(matchId, null);
         Manager manager = match.getManager();
         if (!member.isManager() || !manager.isSameMember(member)) {
             return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "권한이 없습니다."));

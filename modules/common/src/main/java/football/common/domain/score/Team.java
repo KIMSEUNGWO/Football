@@ -21,13 +21,13 @@ public class Team {
     private Long teamId;
 
     @ManyToOne
-    @JoinColumn(name = "scoreId")
+    @JoinColumn(name = "SCORE_ID")
     private Score score;
 
     @Enumerated(EnumType.STRING)
     private TeamEnum teamEnum;
 
     // Not Columns
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
     private List<Goal> goalList;
 }

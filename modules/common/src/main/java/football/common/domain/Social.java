@@ -21,7 +21,7 @@ public class Social {
     private Long socialId;
 
     @OneToOne
-    @JoinColumn(name = "memberId")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     private Long socialNum; // 고유번호
@@ -32,11 +32,4 @@ public class Social {
     @OneToOne(mappedBy = "social")
     private Token token;
 
-    public boolean isType(SocialEnum socialEnum) {
-        return socialType == socialEnum;
-    }
-
-    public boolean isCorrect(int socialNum) {
-        return this.socialNum == socialNum;
-    }
 }

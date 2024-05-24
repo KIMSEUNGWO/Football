@@ -4,25 +4,20 @@ import football.api.sms.dto.SmsRequest;
 import football.api.sms.exception.CertificationException;
 import football.api.sms.service.SmsService;
 import football.common.domain.Member;
-import football.common.jpaRepository.JpaAdminRepository;
 import football.common.service.MemberService;
 import football.login.dto.FindEmail;
 import football.login.dto.FindPassword;
-import football.login.dto.LoginDto;
-import football.login.service.LoginService;
 import football.common.dto.json.JsonDefault;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 import static football.common.consts.Constant.*;
-import static football.common.consts.SessionConst.*;
 
 @Slf4j
 @Controller
@@ -30,27 +25,16 @@ import static football.common.consts.SessionConst.*;
 public class LoginController {
 
     private final MemberService memberService;
-    private final LoginService loginService;
-    private final JpaAdminRepository adminService;
     private final SmsService smsService;
 
-
     @GetMapping("/login")
-    public String startLogin(@SessionAttribute(name = LOGIN_MEMBER, required = false) Long memberId,
-                             @ModelAttribute LoginDto loginDto,
-                             @RequestParam(required = false) String url,
-                             Model model) {
-        if (memberId != null) return "redirect:/";
-
-        if (url != null && !url.equals("null")) model.addAttribute("url", url);
-        return "/login";
-    }
-
+    public String startLogin() { return "/login"; }
 
     @GetMapping("/findEmail")
-    public String findEmail() {
-        return "/login/findEmail";
-    }
+    public String findEmail() { return "/login/findEmail"; }
+
+    @GetMapping("/findPassword")
+    public String findPassword() { return "/login/findPassword"; }
 
     @ResponseBody
     @PostMapping("/findEmail")
@@ -58,18 +42,13 @@ public class LoginController {
 
         smsService.isValidFind(smsRequest.getPhone(), smsRequest.getCertificationNumber());
 
-        Optional<Member> findEmail = memberService.findByMemberPhone(smsRequest.getPhone());
-        if (findEmail.isEmpty()) {
-            return ResponseEntity.ok(new FindEmail(OK, "가입 이력이 존재하지 않습니다.", null, null));
-        }
-        Member member = findEmail.get();
-        return ResponseEntity.ok(new FindEmail(OK, "", member.isSocial() ? member.getSocialType() : null, member.getMemberEmail()));
+        return ResponseEntity.ok(
+                memberService.findByMemberPhone(smsRequest.getPhone())
+                .map(member -> new FindEmail(OK, "", member.getSocialType(), member.getMemberEmail()))
+                .orElseGet(() -> new FindEmail(OK, "가입 이력이 존재하지 않습니다.", null, null))
+        );
     }
 
-    @GetMapping("/findPassword")
-    public String findPassword() {
-        return "/login/findPassword";
-    }
 
     @ResponseBody
     @PostMapping("/findPassword")
@@ -90,21 +69,19 @@ public class LoginController {
         smsService.checkCertificationFind(findPassword);
 
         Optional<Member> findMember = memberService.findByMemberEmailAndMemberPhone(findPassword.getEmail(), findPassword.getPhone());
-        if (findMember.isEmpty()) {
-            return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "일치하는 회원정보가 없습니다."));
-        }
-        Member member = findMember.get();
 
-        if (member.isSocial()) {
+        if (findMember.isEmpty()) {
+            return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "회원정보가 일치하지 않습니다."));
+        }
+        if (findMember.get().isSocial()) {
             return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "소셜로 가입한 회원입니다."));
         }
-        String password = findPassword.getPassword();
-        String passwordCheck = findPassword.getPasswordCheck();
-        if (!password.equals(passwordCheck)) {
+        if (!findPassword.comparePassword()) {
             return ResponseEntity.badRequest().body(new JsonDefault(ERROR, "비밀번호가 일치하지 않습니다."));
         }
+
         smsService.isValidFind(findPassword.getPhone(), findPassword.getCertificationNumber());
-        memberService.changePassword(member, password);
+        memberService.changePassword(findMember.get(), findPassword.getPassword());
 
         return ResponseEntity.ok(new JsonDefault(OK, ""));
     }

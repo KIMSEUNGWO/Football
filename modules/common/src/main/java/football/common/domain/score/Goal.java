@@ -19,11 +19,11 @@ public class Goal {
     private Long goalId;
 
     @ManyToOne
-    @JoinColumn(name = "teamId")
+    @JoinColumn(name = "TEAM_ID")
     private Team team;
 
     @ManyToOne
-    @JoinColumn(name = "ordersId")
+    @JoinColumn(name = "ORDERS_ID")
     private Orders orders;
 
     private Integer time;

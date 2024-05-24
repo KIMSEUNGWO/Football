@@ -18,7 +18,7 @@ public class Payment extends BaseTimeEntity {
     private Long paymentId;
 
     @ManyToOne
-    @JoinColumn(name = "memberId")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     private Integer charge;
