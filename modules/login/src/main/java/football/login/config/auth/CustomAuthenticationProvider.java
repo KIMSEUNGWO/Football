@@ -1,4 +1,4 @@
-package football.common.config.auth;
+package football.login.config.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;

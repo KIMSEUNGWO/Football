@@ -4,9 +4,9 @@ import com.nimbusds.jose.shaded.gson.JsonElement;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import football.api.kakaologin.dto.KakaoRequestTo;
+import football.common.domain.Token;
 import football.login.dto.LoginResponse;
 import football.api.kakaologin.repository.KakaoLoginRepository;
-import football.common.domain.KakaoToken;
 import football.common.enums.matchenum.GenderEnum;
 import football.common.enums.SocialEnum;
 import football.common.formatter.DateFormatter;
@@ -36,7 +36,7 @@ public class KakaoLoginService {
 
     private final KakaoLoginRepository kakaoLoginRepository;
 
-    public KakaoToken getKakaoAccessToken(String code) {
+    public Token getKakaoAccessToken(String code) {
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
@@ -54,7 +54,7 @@ public class KakaoLoginService {
         System.out.println("accessToken : " + accessToken);
         System.out.println("refreshToken : " + refreshToken);
 
-        return new KakaoToken(accessToken, refreshToken);
+        return new Token(accessToken, refreshToken);
     }
 
     public LoginResponse getUserInfo(String accessToken) {
@@ -80,7 +80,7 @@ public class KakaoLoginService {
 
         return LoginResponse.builder()
             .socialType(SocialEnum.KAKAO)
-            .id(Integer.parseInt(id.replaceAll("^[0-9]", "")))
+            .id(Long.parseLong(id.replaceAll("^[0-9]", "")))
             .nickName(nickname)
             .profile(profile)
             .email(email)
@@ -97,7 +97,7 @@ public class KakaoLoginService {
     }
 
     @Transactional
-    public void updateKakaoToken(KakaoToken nowToken, KakaoToken newToken) {
+    public void updateKakaoToken(Token nowToken, Token newToken) {
         nowToken.updateToken(newToken);
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -132,17 +132,17 @@ public class KakaoLoginService {
     }
 
     @Transactional
-    public void logout(KakaoToken kakaoToken) {
+    public void logout(Token token) {
         log.info("카카오 로그아웃 시작");
-        requestTo.postRequireAccessToken(KAKAO_LOGOUT_URI, kakaoToken.getAccess_token());
-        kakaoToken.logout();
+        requestTo.postRequireAccessToken(KAKAO_LOGOUT_URI, token.getAccess_token());
+        token.logout();
     }
 
     public String serviceLogout() {
         return String.format("https://kauth.kakao.com/oauth/logout?logout_redirect_uri=http://localhost:8080&client_id=%s", REST_API_KEY);
     }
 
-    public KakaoToken findByKakaoToken(Long memberId, SocialEnum socialEnum) {
+    public Token findByKakaoToken(Long memberId, SocialEnum socialEnum) {
         return kakaoLoginRepository.findByKakaoToken(memberId, socialEnum);
     }
 }

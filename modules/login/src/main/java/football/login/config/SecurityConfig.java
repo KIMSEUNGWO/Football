@@ -1,8 +1,10 @@
-package football.common.config;
+package football.login.config;
 
-import football.common.config.auth.PrincipalDetailsService;
-import football.common.config.auth.SocialLogoutHandler;
-import football.common.config.auth.UserRefreshProvider;
+import football.login.config.auth.PrincipalDetailsService;
+import football.login.config.auth.SocialLogoutHandler;
+import football.login.config.auth.UserRefreshProvider;
+import football.login.config.oauth.CustomAuthenticationSuccessHandler;
+import football.login.config.oauth.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +25,9 @@ public class SecurityConfig {
 
     private final SocialLogoutHandler socialLogoutHandler;
     private final PrincipalDetailsService principalDetailsService;
+    private final PrincipalOauth2UserService principalOauth2UserService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Bean
     UserRefreshProvider provider() {
@@ -34,14 +39,16 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(10);
     }
 
+
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests( request ->
                 request
                     .requestMatchers("/mypage/**", "/order/**", "/cash/charge/**").authenticated()
-                    .requestMatchers("/manager/**").hasAnyRole(MANAGER.name(), ADMIN.name())
+                    .requestMatchers("/manager/**", "/mypage/manager").hasAnyRole(MANAGER.name(), ADMIN.name())
                     .requestMatchers("/admin/**").hasRole(ADMIN.name())
                     .anyRequest().permitAll()
         );
@@ -60,6 +67,15 @@ public class SecurityConfig {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
                 .addLogoutHandler(socialLogoutHandler)
+        );
+
+        http.oauth2Login( login ->
+            login
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .userInfoEndpoint(endPoint -> endPoint.userService(principalOauth2UserService))
+                .successHandler(customAuthenticationSuccessHandler)
+                .failureHandler(customAuthenticationFailureHandler)
         );
 
         return http.build();

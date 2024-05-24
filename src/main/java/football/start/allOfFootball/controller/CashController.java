@@ -1,6 +1,6 @@
 package football.start.allOfFootball.controller;
 
-import football.common.config.auth.PrincipalDetails;
+import football.login.config.auth.PrincipalDetails;
 import football.common.domain.Member;
 import football.common.formatter.NumberFormatter;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,12 +1,12 @@
 package football.login.service;
 
 import football.common.common.BCrypt;
-import football.common.domain.KakaoToken;
+import football.common.domain.Token;
 import football.common.domain.Member;
 import football.common.domain.Social;
 import football.common.enums.SocialEnum;
 import football.common.enums.gradeEnums.GradeEnum;
-import football.common.jpaRepository.JpaKakaoTokenRepository;
+import football.common.jpaRepository.JpaTokenRepository;
 import football.file.enums.FileUploadType;
 import football.file.service.FileService;
 import football.login.dto.LoginResponse;
@@ -25,7 +25,7 @@ import static football.common.consts.SessionConst.REGISTER;
 @RequiredArgsConstructor
 public class RegisterServiceImpl implements RegisterService{
 
-    private final JpaKakaoTokenRepository jpaKakaoTokenRepository;
+    private final JpaTokenRepository jpaTokenRepository;
     private final RegisterRepository registerRepository;
     private final LoginRepository loginRepository;
     private final FileService fileService;
@@ -52,9 +52,9 @@ public class RegisterServiceImpl implements RegisterService{
 
     @Override
     @Transactional
-    public Member socialSave(LoginResponse userInfo, KakaoToken kakaoToken) {
+    public Member socialSave(LoginResponse userInfo, Token token) {
         SocialEnum type = userInfo.getSocialType();
-        Integer id = userInfo.getId();
+        Long id = userInfo.getId();
         String profile = userInfo.getProfile();
 
         Member saveMember = Member.builder()
@@ -75,8 +75,8 @@ public class RegisterServiceImpl implements RegisterService{
             .build();
         registerRepository.saveSocial(saveSocial);
 
-        kakaoToken.setSocial(saveSocial);
-        jpaKakaoTokenRepository.save(kakaoToken);
+        token.setSocial(saveSocial);
+        jpaTokenRepository.save(token);
 
         fileService.saveImage(profile, saveMember, FileUploadType.PROFILE);
         return saveMember;

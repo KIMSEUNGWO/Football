@@ -36,7 +36,7 @@ public class LoginRepositoryImpl implements LoginRepository {
     }
 
     @Override
-    public Member socialLogin(String email, SocialEnum socialEnum, int loginUser_id) {
+    public Member socialLogin(String email, SocialEnum socialEnum, Long loginUser_id) {
         return query.select(member)
             .from(member)
             .join(social).on(member.memberId.eq(social.member.memberId))

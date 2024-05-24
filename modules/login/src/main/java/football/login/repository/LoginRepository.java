@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface LoginRepository {
 
     Optional<Member> findByEmail(String email);
-    Member socialLogin(String email, SocialEnum socialEnum, int loginUser_id);
+    Member socialLogin(String email, SocialEnum socialEnum, Long loginUser_id);
 
     boolean existsByPhone(String phone);
     boolean existsByEmail(String email);

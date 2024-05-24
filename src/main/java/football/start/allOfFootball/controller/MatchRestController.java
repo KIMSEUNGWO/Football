@@ -1,8 +1,7 @@
 package football.start.allOfFootball.controller;
 
-import football.common.config.auth.PrincipalDetails;
-import football.common.config.auth.UserRefreshProvider;
-import football.common.customAnnotation.SessionLogin;
+import football.login.config.auth.PrincipalDetails;
+import football.login.config.auth.UserRefreshProvider;
 import football.common.domain.Manager;
 import football.common.domain.Match;
 import football.common.domain.Member;

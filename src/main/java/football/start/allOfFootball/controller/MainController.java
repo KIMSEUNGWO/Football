@@ -1,6 +1,6 @@
 package football.start.allOfFootball.controller;
 
-import football.common.config.auth.PrincipalDetails;
+import football.login.config.auth.PrincipalDetails;
 import football.start.allOfFootball.dto.MainSideInfoForm;
 import football.start.allOfFootball.dto.SearchDto;
 import football.start.allOfFootball.dto.SearchResultForm;

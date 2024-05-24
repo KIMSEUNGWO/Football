@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class LoginResponse {
 
     private SocialEnum socialType;
-    private Integer id;
+    private Long id;
     private String nickName;
     private String profile;
     private String email;

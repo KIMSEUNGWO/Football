@@ -2,10 +2,10 @@ package football.api.kakaologin.controller;
 
 import football.api.kakaologin.exception.DistinctRegisterException;
 import football.api.kakaologin.service.KakaoLoginService;
+import football.common.domain.Token;
 import football.login.dto.LoginResponse;
 import football.login.service.LoginService;
 import football.login.service.RegisterService;
-import football.common.domain.KakaoToken;
 import football.common.domain.Member;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +31,8 @@ public class KakaoLoginController {
     @GetMapping("/login/kakao")
     public ResponseEntity<String> kakaoLogin(@RequestParam(required = false) String code, HttpSession session) throws DistinctRegisterException {
 
-        KakaoToken newKakaoToken = kakaoLoginService.getKakaoAccessToken(code);
-        LoginResponse userInfo = kakaoLoginService.getUserInfo(newKakaoToken.getAccess_token());
+        Token newToken = kakaoLoginService.getKakaoAccessToken(code);
+        LoginResponse userInfo = kakaoLoginService.getUserInfo(newToken.getAccess_token());
 
         Member loginMember =  loginService.socialLogin(userInfo.getEmail(), KAKAO, userInfo.getId());
 
@@ -47,11 +47,11 @@ public class KakaoLoginController {
             boolean phoneDistinct = loginService.existsByPhone(userInfo.getPhone());
             if (phoneDistinct) throw new DistinctRegisterException();
 
-            loginMember = registerService.socialSave(userInfo, newKakaoToken);
+            loginMember = registerService.socialSave(userInfo, newToken);
             System.out.println("loginMember = " + loginMember);
         } else {
-            KakaoToken nowKakaoToken = loginMember.getSocial().getKakaoToken();
-            kakaoLoginService.updateKakaoToken(nowKakaoToken, newKakaoToken);
+            Token nowToken = loginMember.getSocial().getToken();
+            kakaoLoginService.updateKakaoToken(nowToken, newToken);
         }
 
         loginMember.renewLoginTime();
@@ -67,10 +67,10 @@ public class KakaoLoginController {
 
     @GetMapping("/logout/kakao/{memberId}")
     public String kakaoLogout(@PathVariable Long memberId) {
-        KakaoToken findKakaoToken = kakaoLoginService.findByKakaoToken(memberId, KAKAO);
-        if (findKakaoToken == null) return "redirect:/";
+        Token findToken = kakaoLoginService.findByKakaoToken(memberId, KAKAO);
+        if (findToken == null) return "redirect:/";
 
-        kakaoLoginService.logout(findKakaoToken);
+        kakaoLoginService.logout(findToken);
         return "redirect:" + kakaoLoginService.serviceLogout();
     }
 }

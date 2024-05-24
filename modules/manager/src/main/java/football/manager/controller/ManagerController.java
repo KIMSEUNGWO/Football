@@ -1,10 +1,10 @@
 package football.manager.controller;
 
-import football.common.config.auth.PrincipalDetails;
-import football.common.config.auth.UserRefreshProvider;
 import football.common.domain.Member;
 import football.common.dto.json.JsonDefault;
 import football.common.enums.Role;
+import football.login.config.auth.PrincipalDetails;
+import football.login.config.auth.UserRefreshProvider;
 import football.manager.dto.ManagerApplyDto;
 import football.manager.service.ManagerService;
 import football.common.formatter.DateFormatter;

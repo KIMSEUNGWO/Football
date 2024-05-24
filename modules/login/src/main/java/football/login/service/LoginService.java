@@ -9,7 +9,7 @@ public interface LoginService {
 
     Optional<Member> login(String email, String password);
 
-    Member socialLogin(String email, SocialEnum socialEnum, int loginUser_id);
+    Member socialLogin(String email, SocialEnum socialEnum, Long loginUser_id);
 
     boolean existsByPhone(String phone);
 }
