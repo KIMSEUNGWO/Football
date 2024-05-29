@@ -50,6 +50,9 @@ window.addEventListener('load', () => {
             let array = [];
             for (let i=0;i<resultWrap.length;i++) {
                 let form = getForm(resultWrap[i]);
+
+                if (form == null) return;
+
                 array.push(form);
             }
             let resultJson = {playList : array};
@@ -64,36 +67,25 @@ window.addEventListener('load', () => {
 
 })
 
+const team = ['RED', 'BLUE', 'YELLOW'];
+
 function getForm(parent) {
     
     let leftTeam = parent.querySelector('.left-team .team-name').textContent;
     let rightTeam = parent.querySelector('.right-team .team-name').textContent;
 
-    if ((leftTeam != 'RED' && leftTeam != 'BLUE' && leftTeam != 'YELLOW') || (rightTeam != 'RED' && rightTeam != 'BLUE' && rightTeam != 'YELLOW')) {
+    if (!team.includes(leftTeam) || !team.includes(rightTeam)) {
+        alert('팀을 모두 설정해주세요.');
         return null;
     }
 
-    let leftGoalPlayer = parent.querySelectorAll('.left-goal');
-    let rightGoalPlayer = parent.querySelectorAll('.right-goal');
+    let leftScore = parent.querySelector('.left-score').textContent;
+    let rightScore = parent.querySelector('.right-score').textContent;
 
-    let leftGoalList = getGoalList(leftGoalPlayer);
-    let rightGoalList = getGoalList(rightGoalPlayer);
-
-    let array = [];
-    array.push({team : leftTeam, goalList : leftGoalList});
-    array.push({team : rightTeam, goalList : rightGoalList});
-
-    return array;
-}
-function getGoalList(players) {
-    let array = [];
-    for (let i=0;i<players.length-1;i++){
-        let name = players[i].querySelector('input[name="player"]').value.replace(/[^0-9]/g, '');
-        let time = players[i].querySelector('b').textContent.replace(/[^0-9]/g, '');
-        let temp = {orderId : Number(name), time : Number(time)};
-        array.push(temp);
-    }
-    return array;
+    return {
+        leftTeam : leftTeam, leftScore : Number(leftScore),
+        rightTeam : rightTeam, rightScore : Number(rightScore),
+    };
 }
 
 function checkTime(matchId) {

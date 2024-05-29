@@ -33,6 +33,6 @@ public class Manager {
 
     public boolean isSameMember(Member compareMember) {
         if (member == null || compareMember == null) return false;
-        return member.equals(compareMember);
+        return member.getMemberId().equals(compareMember.getMemberId());
     }
 }

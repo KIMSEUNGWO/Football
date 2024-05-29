@@ -1,5 +1,6 @@
 package football.start.allOfFootball.dto.match;
 
+import football.common.enums.domainenum.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.ResultEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MatchScoreForm {
 
-    private MatchTeamForm leftTeam;
-    private MatchTeamForm rightTeam;
+    private TeamEnum leftTeam;
+    private int leftScore;
+    private TeamEnum rightTeam;
+    private int rightScore;
     private ResultEnum resultEnum;
 }

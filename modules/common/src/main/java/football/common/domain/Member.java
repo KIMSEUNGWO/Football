@@ -13,6 +13,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,8 +69,8 @@ public class Member implements ImageParent {
     private Social social;
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<CouponList> couponList;
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Orders> ordersList;
+    @OneToMany(mappedBy = "member")
+    private List<Orders> ordersList = new ArrayList<>();
 
     public void renewLoginTime() {
         memberRecentlyDate = LocalDateTime.now();
