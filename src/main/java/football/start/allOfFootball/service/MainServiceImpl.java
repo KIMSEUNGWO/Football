@@ -1,5 +1,6 @@
 package football.start.allOfFootball.service;
 
+import football.common.enums.domainenum.TeamEnum;
 import football.redis.service.RankService;
 import football.common.domain.Member;
 import football.common.domain.Orders;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +51,15 @@ public class MainServiceImpl implements MainService{
             form.setMySchedule(orders.getMatch());
         }
         return form;
+    }
+
+    @Override
+    public void setTeam(Map<TeamEnum, List<Orders>> result) {
+        for (TeamEnum teamEnum : result.keySet()) {
+            List<Orders> ordersList = result.get(teamEnum);
+            for (Orders orders : ordersList) {
+                orders.setTeam(teamEnum);
+            }
+        }
     }
 }

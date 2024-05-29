@@ -14,6 +14,12 @@ import java.util.List;
 @ToString
 public class RecordForm {
 
-    private TeamEnum team;
-    private int score;
+    private TeamEnum leftTeam;
+    private Integer leftScore;
+    private TeamEnum rightTeam;
+    private Integer rightScore;
+
+    public boolean isValid() {
+        return !(leftTeam == null || rightTeam == null || leftScore == null || rightScore == null);
+    }
 }

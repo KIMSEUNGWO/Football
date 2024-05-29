@@ -13,5 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ScoreResultForm {
 
-    private List<List<RecordForm>> playList;
+    private List<RecordForm> playList;
 }

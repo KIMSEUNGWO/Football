@@ -4,18 +4,13 @@ import football.start.allOfFootball.common.ScoreCalculator;
 import football.common.domain.Match;
 import football.common.domain.Member;
 import football.common.domain.Orders;
-import football.common.domain.score.Goal;
 import football.common.domain.score.Score;
-import football.common.domain.score.Team;
 import football.start.allOfFootball.dto.match.MatchScoreForm;
-import football.start.allOfFootball.dto.match.MatchTeamForm;
 import football.start.allOfFootball.dto.match.ScoreResult;
-import football.start.allOfFootball.dto.matchRecordForm.Player;
 import football.start.allOfFootball.dto.matchRecordForm.RecordForm;
 import football.common.enums.domainenum.TeamEnum;
 import football.common.enums.matchenum.MatchStatus;
 import football.start.allOfFootball.enums.matchEnums.ResultEnum;
-import football.start.allOfFootball.repository.domainRepository.OrderRepository;
 import football.start.allOfFootball.repository.domainRepository.ScoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,58 +25,44 @@ import java.util.*;
 public class ScoreService {
 
     private final ScoreRepository scoreRepository;
-    private final OrderRepository orderRepository;
 
 
     @Transactional
     public boolean saveScore(Match match, List<RecordForm> recordList) {
-        List<Orders> ordersList = match.getOrdersList();
-        List<Long> orderIdList = ordersList.stream().map(Orders::getOrdersId).toList();
 
-        Score saveScore = Score.builder().match(match).build();
-        scoreRepository.saveScore(saveScore);
+        List<Score> scoreList = recordList.stream().map(record -> {
+            TeamEnum leftTeam = record.getLeftTeam();
+            Integer leftScore = record.getLeftScore();
+            TeamEnum rightTeam = record.getRightTeam();
+            Integer rightScore = record.getRightScore();
 
-        for (RecordForm form : recordList) {
-            TeamEnum team = form.getTeam();
-            Team saveTeam = Team.builder().score(saveScore).teamEnum(team).build();
-            scoreRepository.saveTeam(saveTeam);
+            TeamEnum winTeam = null;
+            if (leftScore > rightScore) winTeam = leftTeam;
+            else if (leftScore < rightScore) winTeam = rightTeam;
+            return Score.builder()
+                .match(match)
+                .team1(leftTeam)
+                .team1Score(leftScore)
+                .team2(rightTeam)
+                .team2Score(rightScore)
+                .winTeam(winTeam)
+                .build();
+        }).toList();
 
-            List<Player> goalList = form.getGoalList();
-
-            for (Player player : goalList) {
-                boolean orderIdIsNumber = scoreRepository.isNumber(player.getOrderId());
-                boolean timeIsNumber = scoreRepository.isNumber(player.getTime());
-                if (!orderIdIsNumber || !timeIsNumber) return false;
-
-                Long playerOrderId = Long.parseLong(player.getOrderId());
-                Integer playerTime = Integer.parseInt(player.getTime());
-                Optional<Orders> findOrders = orderRepository.findById(playerOrderId);
-                if (findOrders.isEmpty()) return false;
-
-                Orders orders = findOrders.get();
-                boolean contains = orderIdList.contains(playerOrderId);
-                if (!contains) return false;
-
-                Goal saveGoal = Goal.builder().team(saveTeam).orders(orders).time(playerTime).build();
-                scoreRepository.saveGoal(saveGoal);
-            }
-        }
+        scoreRepository.saveAllScore(scoreList);
         return true;
     }
 
-    public void applyScore(Match match, List<List<RecordForm>> playList) {
+    public void applyScore(Match match, List<RecordForm> playList) {
         ScoreCalculator calculator = new ScoreCalculator();
 
-        for (List<RecordForm> recordForms : playList) {
-            RecordForm leftForm = recordForms.get(0);
-            RecordForm rightForm = recordForms.get(1);
+        for (RecordForm record : playList) {
+            TeamEnum leftTeam = record.getLeftTeam();
+            Integer leftScore = record.getLeftScore();
+            TeamEnum rightTeam = record.getRightTeam();
+            Integer rightScore = record.getRightScore();
 
-            TeamEnum leftTeam = leftForm.getTeam();
-            int leftGoal = leftForm.getGoalList().size();
-            TeamEnum rightTeam = rightForm.getTeam();
-            int rightGoal = rightForm.getGoalList().size();
-
-            calculator.put(leftTeam, leftGoal, rightTeam, rightGoal);
+            calculator.put(leftTeam, leftScore, rightTeam, rightScore);
         }
 
         List<Orders> ordersList = match.getOrdersList();
@@ -97,25 +78,32 @@ public class ScoreService {
     }
 
     public ScoreResult getScore(Match match, Orders orders) {
-        List<MatchScoreForm> result = new LinkedList<>();
+        List<MatchScoreForm> result = new ArrayList<>();
         TeamEnum myTeam = orders.getTeam();
-        if (match.getMatchStatus() == MatchStatus.기록중) return ScoreResult.builder().myTeam(myTeam).scoreList(Collections.emptyList()).build();
+        if (match.getMatchStatus() == MatchStatus.기록중) return ScoreResult.builder().myTeam(myTeam).scoreList(new ArrayList<>()).build();
         if (match.getMatchStatus() != MatchStatus.종료) return null;
 
         List<Score> scoreList = match.getScoreList();
+        System.out.println("scoreList = " + scoreList);
         if (scoreList.isEmpty()) return ScoreResult.builder().myTeam(myTeam).build();;
 
         for (Score score : scoreList) {
-            List<Team> teamList = score.getTeamList();
 
-            Team leftTeam = teamList.get(0);
-            Team rightTeam = teamList.get(1);
+            TeamEnum leftTeam = score.getTeam1();
+            int leftScore = score.getTeam1Score();
+            TeamEnum rightTeam = score.getTeam2();
+            int rightScore = score.getTeam2Score();
+            TeamEnum winTeam = score.getWinTeam();
 
-            MatchTeamForm leftTeamForm = scoreRepository.getTeamForm(leftTeam);
-            MatchTeamForm rightTeamForm = scoreRepository.getTeamForm(rightTeam);
-            ResultEnum resultScore = scoreRepository.getResultScore(myTeam, leftTeamForm, rightTeamForm);
+            ResultEnum resultScore = scoreRepository.getResultScore(myTeam, winTeam);
 
-            MatchScoreForm build = MatchScoreForm.builder().leftTeam(leftTeamForm).rightTeam(rightTeamForm).resultEnum(resultScore).build();
+            MatchScoreForm build = MatchScoreForm.builder()
+                .leftTeam(leftTeam)
+                .leftScore(leftScore)
+                .rightTeam(rightTeam)
+                .rightScore(rightScore)
+                .resultEnum(resultScore)
+                .build();
 
             result.add(build);
         }

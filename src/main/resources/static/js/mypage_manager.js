@@ -50,10 +50,9 @@ window.addEventListener('load', () => {
             let array = [];
             for (let i=0;i<resultWrap.length;i++) {
                 let form = getForm(resultWrap[i]);
-                if (form == null) {
-                    alert('팀을 모두 설정해주세요.');
-                    return;
-                }
+
+                if (form == null) return;
+
                 array.push(form);
             }
             let resultJson = {playList : array};
@@ -68,23 +67,25 @@ window.addEventListener('load', () => {
 
 })
 
+const team = ['RED', 'BLUE', 'YELLOW'];
+
 function getForm(parent) {
     
     let leftTeam = parent.querySelector('.left-team .team-name').textContent;
     let rightTeam = parent.querySelector('.right-team .team-name').textContent;
 
-    if ((leftTeam != 'RED' && leftTeam != 'BLUE' && leftTeam != 'YELLOW') || (rightTeam != 'RED' && rightTeam != 'BLUE' && rightTeam != 'YELLOW')) {
+    if (!team.includes(leftTeam) || !team.includes(rightTeam)) {
+        alert('팀을 모두 설정해주세요.');
         return null;
     }
 
     let leftScore = parent.querySelector('.left-score').textContent;
     let rightScore = parent.querySelector('.right-score').textContent;
 
-    let array = [];
-    array.push({team : leftTeam, score : Number(leftScore)});
-    array.push({team : rightTeam, score : Number(rightScore)});
-
-    return array;
+    return {
+        leftTeam : leftTeam, leftScore : Number(leftScore),
+        rightTeam : rightTeam, rightScore : Number(rightScore),
+    };
 }
 
 function checkTime(matchId) {

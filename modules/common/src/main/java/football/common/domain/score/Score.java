@@ -1,6 +1,7 @@
 package football.common.domain.score;
 
 import football.common.domain.Match;
+import football.common.enums.domainenum.TeamEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,10 +25,12 @@ public class Score {
     @JoinColumn(name = "MATCH_ID")
     private Match match;
 
-    // Not Columns
+    private TeamEnum team1;
+    private int team1Score;
+    private TeamEnum team2;
+    private int team2Score;
 
-    @OneToMany(mappedBy = "score", fetch = FetchType.LAZY)
-    private List<Team> teamList;
+    private TeamEnum winTeam;
 
 
 }

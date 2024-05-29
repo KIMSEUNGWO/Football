@@ -51,12 +51,12 @@ public class MatchService {
     public MatchCollection getMatchCollection(Match match, Member member) {
         List<Orders> ordersList = match.getOrdersList();
         Optional<Orders> byOrders = matchRepository.isContainsMember(ordersList, member);
-        if (byOrders.isEmpty()) return null;
 
-        ScoreResult scoreList = scoreService.getScore(match, byOrders.get());
+        ScoreResult scoreList = byOrders.map(orders -> scoreService.getScore(match, orders)).orElse(null);
         List<MatchData> data = matchRepository.getMatchData(match, ordersList); // 매치 데이터
         Map<TeamEnum, List<TeamInfo>> teamInfo = matchRepository.getTeamInfo(match, ordersList); // 참가자
 
+        System.out.println("scoreList = " + scoreList);
         return MatchCollection.builder()
             .scoreResult(scoreList)
             .matchData(data)

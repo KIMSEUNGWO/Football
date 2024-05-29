@@ -45,7 +45,7 @@ public class MatchRepository {
 
         for (Orders orders : ordersList) {
             Member inMember = orders.getMember();
-            if (inMember.equals(member)) {
+            if (inMember.getMemberId().equals(member.getMemberId())) {
                 return Optional.of(orders);
             }
         }
