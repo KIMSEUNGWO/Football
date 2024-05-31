@@ -3,7 +3,9 @@ package football.start.allOfFootball.aspect;
 import football.common.consts.SessionConst;
 import football.common.domain.Member;
 import football.login.config.auth.PrincipalDetails;
+import football.redis.service.RankService;
 import football.start.allOfFootball.controller.mypage.MyProfileDto;
+import football.start.allOfFootball.mapper.Mapper;
 import football.start.allOfFootball.service.MypageService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +28,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class MypageAOP {
 
     private final MypageService mypageService;
+    private final RankService rankService;
 
     @Before("execution(public * football.start.allOfFootball.controller.mypage.MypageController.*(..))")
     public void footerMyPageAspect(JoinPoint joinPoint) {
@@ -44,7 +47,8 @@ public class MypageAOP {
                 Member member = user.getMember();
                 Model model = getModel(joinPoint.getArgs());
 
-                MyProfileDto myProfileDto = mypageService.getMyProfile(member);
+                long myRank = rankService.getRank(member.getMemberId(), member.getMemberScore());
+                MyProfileDto myProfileDto = Mapper.getMyProfileDto(member, myRank);
                 String location = getMenu(request);
 
                 if (model != null) {

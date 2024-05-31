@@ -6,6 +6,7 @@ import football.common.domain.Member;
 import football.common.exception.match.NotExistsMatchException;
 import football.start.allOfFootball.dto.match.MatchCollection;
 import football.start.allOfFootball.dto.MatchViewForm;
+import football.start.allOfFootball.mapper.Mapper;
 import football.start.allOfFootball.service.domainService.MatchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class MatchController {
 
         Match match = matchService.findByMatchOrRedirect(matchId, "/");
 
-        MatchViewForm matchForm = new MatchViewForm(match); // 기본 데이터
+        MatchViewForm matchForm = Mapper.toMatchViewForm(match); // 기본 데이터
         model.addAttribute("matchForm", matchForm);
 
         if (user == null) return "match";

@@ -1,80 +1,27 @@
 package football.start.allOfFootball.dto;
 
 import football.common.domain.FieldImage;
-import football.common.domain.Manager;
-import football.common.domain.Match;
-import football.common.enums.matchenum.GenderEnum;
+import football.common.enums.matchenum.*;
 import football.common.enums.gradeEnums.MatchEnum;
-import football.common.enums.groundEnums.ParkingEnum;
-import football.common.enums.groundEnums.ShowerEnum;
-import football.common.enums.groundEnums.ToiletEnum;
-import football.common.enums.matchenum.MatchStatus;
-import football.common.formatter.DateFormatter;
-import football.common.formatter.NumberFormatter;
-import lombok.*;
+import football.common.enums.groundEnums.*;
 
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class MatchViewForm {
-
-    private Long matchId;
-
-    private List<FieldImage> fieldImages;
-
-    private MatchEnum matchGrade;
-    private GenderEnum matchGender;
-    private String maxPersonAndMatchCount;
-    private String managerName;
-
-    private String fieldSize;
-    private ParkingEnum fieldParking;
-    private ShowerEnum fieldShower;
-    private ToiletEnum fieldToilet;
-
-    private String fieldInfo;
-
-    private String matchDate;
-    private String fieldTitle;
-    private String fieldAddress;
-
-    private String price;
-    private MatchStatus matchStatus;
-
-    public MatchViewForm(Match match) {
-        matchId = match.getMatchId();
-        fieldImages = match.getField().getFieldImages();
-        matchGrade = match.getMatchGrade();
-        matchGender = match.getMatchGender();
-        maxPersonAndMatchCount = getPersonAndCount(match.getMaxPerson(), match.getMatchCount());
-        managerName = getManager(match.getManager());
-        fieldSize = match.getField().getFieldSize();
-        fieldParking = match.getField().getFieldParking();
-        fieldShower = match.getField().getFieldShower();
-        fieldToilet = match.getField().getFieldToilet();
-        fieldInfo = match.getField().getFieldInformation();
-        matchDate = DateFormatter.format("M월 d일 EEEE HH:mm", match.getMatchDate());
-        fieldTitle = match.getField().getFieldTitle();
-        fieldAddress = match.getField().getFieldAddress();
-        price = NumberFormatter.format(match.getPrice());
-        matchStatus = match.getMatchStatus();
-    }
-
-    private static String getManager(Manager manager) {
-        if (manager == null) {
-            return null;
-        }
-        return manager.getMember().getMemberName();
-    }
-
-    private static String getPersonAndCount(Integer maxPerson, Integer matchCount) {
-        return String.format("%dm vs %dm %d파전", maxPerson, maxPerson, matchCount);
-    }
-
-
+public record MatchViewForm(
+                            Long matchId,
+                            List<FieldImage> fieldImages,
+                            MatchEnum matchGrade,
+                            GenderEnum matchGender,
+                            String maxPersonAndMatchCount,
+                            String managerName,
+                            String fieldSize,
+                            ParkingEnum fieldParking,
+                            ShowerEnum fieldShower,
+                            ToiletEnum fieldToilet,
+                            String fieldInfo,
+                            String matchDate,
+                            String fieldTitle,
+                            String fieldAddress,
+                            String price,
+                            MatchStatus matchStatus) {
 }

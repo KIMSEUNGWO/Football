@@ -1,47 +1,15 @@
 package football.start.allOfFootball.dto;
 
-import football.common.domain.Match;
-import football.common.enums.matchenum.GenderEnum;
+import football.common.enums.matchenum.*;
 import football.common.enums.domainenum.LocationEnum;
 import football.common.enums.gradeEnums.MatchEnum;
-import football.common.enums.matchenum.MatchStatus;
-import lombok.*;
 
-import java.time.LocalDateTime;
-
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class SearchResultForm {
-
-    private Long matchId;
-    private String matchHour;
-    private LocationEnum matchRegion;
-    private String matchTitle;
-    private GenderEnum matchGender;
-    private MatchEnum matchGrade;
-    private String matchMaxPerson;
-    private MatchStatus matchStatus;
-
-    public SearchResultForm(Match form) {
-        matchId = form.getMatchId();
-        matchHour = getTimeForm(form.getMatchDate());
-        matchRegion = form.getField().getFieldLocation();
-        matchTitle = form.getField().getFieldTitle();
-        matchGender = form.getMatchGender();
-        matchGrade = form.getMatchGrade();
-        matchMaxPerson = getMaxPersonForm(form.getMaxPerson());
-        matchStatus = form.getMatchStatus();
-    }
-
-    private static String getMaxPersonForm(Integer maxPerson) {
-        return maxPerson + " vs " + maxPerson;
-    }
-
-    private static String getTimeForm(LocalDateTime date) {
-        return String.format("%02d:00", date.getHour());
-    }
+public record SearchResultForm(Long matchId,
+                               String matchHour,
+                               LocationEnum matchRegion,
+                               String matchTitle,
+                               GenderEnum matchGender,
+                               MatchEnum matchGrade,
+                               String matchMaxPerson,
+                               MatchStatus matchStatus) {
 }

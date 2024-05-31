@@ -7,6 +7,7 @@ import football.login.config.auth.PrincipalDetails;
 import football.start.allOfFootball.dto.CouponListForm;
 import football.start.allOfFootball.dto.OrderForm;
 import football.start.allOfFootball.dto.OrderPostForm;
+import football.start.allOfFootball.mapper.Mapper;
 import football.start.allOfFootball.service.OrderService;
 import football.start.allOfFootball.service.domainService.CashService;
 import football.start.allOfFootball.service.domainService.CouponListService;
@@ -45,7 +46,7 @@ public class OrderController {
 
         List<CouponListForm> couponList = couponListService.getCouponList(member);
 
-        OrderForm orderForm = new OrderForm(member, match, couponList);
+        OrderForm orderForm = Mapper.toOrderForm(member, match, couponList);
         model.addAttribute("orderForm", orderForm);
 
         return "order";

@@ -4,7 +4,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.common.consts.Constant;
 import football.common.domain.*;
 import football.common.jpaRepository.JpaOrderRepository;
-import football.start.allOfFootball.controller.mypage.MatchDataForm;
 import football.start.allOfFootball.dto.match.MatchData;
 import football.start.allOfFootball.dto.match.MatchDataCalculator;
 import football.start.allOfFootball.dto.match.TeamInfo;
@@ -16,7 +15,6 @@ import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -115,28 +113,6 @@ public class MatchRepository {
             .where(match.manager.eq(manager).and(match.matchStatus.notIn(종료,취소)))
             .orderBy(match.matchDate.asc())
             .fetch();
-    }
-
-    public MatchDataForm getMatchDataForm(Match match, List<Orders> ordersList) {
-        return MatchDataForm.builder()
-            .matchId(match.getMatchId())
-            .matchTime(getTime(match.getMatchDate()))
-            .maxPersonAndCount(getPersonAndCount(match))
-            .fieldTitle(match.getField().getFieldTitle())
-            .nowPerson(ordersList.size() + " / " + (match.getMaxPerson() * match.getMatchCount()))
-            .matchStatus(match.getMatchStatus())
-            .build();
-    }
-
-    private String getPersonAndCount(Match match) {
-        int person = match.getMaxPerson();
-        int count = match.getMatchCount();
-        return person + " vs " + person + " " + count + "파전";
-    }
-
-    private String getTime(LocalDateTime matchDate) {
-        int hour = matchDate.getHour();
-        return String.format("%02d:00", hour);
     }
 
     public boolean existsByMatchId(Long matchId) {

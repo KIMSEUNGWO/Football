@@ -1,17 +1,15 @@
 package football.start.allOfFootball.service;
 
 import football.common.domain.*;
-import football.redis.service.RankService;
-import football.common.consts.Constant;
 import football.start.allOfFootball.controller.mypage.ManagerDataForm;
 import football.start.allOfFootball.controller.mypage.MatchDataForm;
-import football.start.allOfFootball.controller.mypage.MyProfileDto;
 import football.start.allOfFootball.controller.mypage.MypageMainDto;
 import football.start.allOfFootball.dto.ChangePasswordForm;
 import football.start.allOfFootball.dto.match.TeamInfo;
 import football.common.enums.domainenum.TeamEnum;
 import football.common.enums.matchenum.MatchStatus;
 import football.common.formatter.DateFormatter;
+import football.start.allOfFootball.mapper.Mapper;
 import football.start.allOfFootball.repository.MypageRepository;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
 import football.common.repository.MemberRepository;
@@ -23,8 +21,6 @@ import org.springframework.validation.FieldError;
 
 import java.util.*;
 
-import static football.common.formatter.NumberFormatter.*;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -32,30 +28,7 @@ public class MypageServiceImpl implements MypageService{
 
     private final MypageRepository mypageRepository;
     private final MemberRepository memberRepository;
-    private final RankService rankService;
     private final MatchRepository matchRepository;
-
-
-    @Override
-    public MyProfileDto getMyProfile(Member findMember) {
-        MyProfileDto myProfileDto = MyProfileDto.builder()
-            .profileImage(getProfileImage(findMember.getProfile()))
-            .name(findMember.getMemberName())
-            .social(findMember.getSocial())
-            .email(findMember.getMemberEmail())
-            .score(format(findMember.getMemberScore()))
-            .rank(format(rankService.getRank(findMember.getMemberId(), findMember.getMemberScore())))
-            .grade(findMember.getGrade())
-            .cash(format(findMember.getMemberCash()))
-            .build();
-//        myProfileDto.setMatchScore();
-        return myProfileDto;
-    }
-
-    private String getProfileImage(Profile profile) {
-        if (profile == null) return Constant.BASE_IMG;
-        return profile.getStoreName();
-    }
 
     @Override
     public Map<String, String> changePassword(Member member, ChangePasswordForm form, BindingResult bindingResult) {
@@ -105,17 +78,7 @@ public class MypageServiceImpl implements MypageService{
 
     @Override
     public MypageMainDto getMypageMain(Member findMember) {
-        return MypageMainDto.builder()
-            .profileImage(getProfileImage(findMember.getProfile()))
-            .name(findMember.getMemberName())
-            .phone(findMember.getMemberPhone())
-            .changePasswordDate(getDate(memberRepository.findByBeforePassword(findMember)))
-            .build();
-    }
-
-    private String getDate(Optional<BeforePassword> findBeforePassword) {
-        if (findBeforePassword.isEmpty()) return "변경된 기록 없음";
-        return findBeforePassword.get().getConvertChangeDate();
+        return Mapper.getMyPageMain(findMember, memberRepository.findByBeforePassword(findMember));
     }
 
     @Override
@@ -128,7 +91,7 @@ public class MypageServiceImpl implements MypageService{
         for (Match match : matchList) {
             List<Orders> ordersList = match.getOrdersList();
 
-            MatchDataForm matchDataForm = matchRepository.getMatchDataForm(match, ordersList);
+            MatchDataForm matchDataForm = Mapper.getMatchDataForm(match, ordersList);
             Map<TeamEnum, List<TeamInfo>> teamInfo = matchRepository.getTeamInfo(match, ordersList);
             String date = DateFormatter.format("yyyy년 M월 d일 (E)", match.getMatchDate());
 
