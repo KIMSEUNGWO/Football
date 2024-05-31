@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -45,7 +44,6 @@ public class MainController {
 
     @GetMapping
     public String mainPage(Model model, @AuthenticationPrincipal PrincipalDetails user) {
-        System.out.println("user = " + user);
         if (user != null) {
             MainSideInfoForm form = mainService.getSideInfo(user.getMember());
             model.addAttribute("logined", user.getMember().getMemberId());
@@ -58,11 +56,8 @@ public class MainController {
     @PostMapping("/get")
     public List<SearchResultForm> search(@RequestBody SearchDto searchDto) {
         System.out.println("searchDto = " + searchDto);
-
         List<SearchResultForm> result = mainService.getSearchResult(searchDto);
-        for (SearchResultForm searchResultForm : result) {
-            System.out.println("searchResultForm = " + searchResultForm);
-        }
+        System.out.println("result = " + result);
         return result;
     }
 

@@ -1,9 +1,6 @@
 package football.start.allOfFootball.service;
 
-import football.common.domain.CouponList;
-import football.common.domain.Member;
-import football.common.domain.Orders;
-import football.common.domain.Payment;
+import football.common.domain.*;
 import football.payment.service.PaymentService;
 import football.start.allOfFootball.controller.mypage.OrderDateForm;
 import football.start.allOfFootball.controller.mypage.OrderListForm;
