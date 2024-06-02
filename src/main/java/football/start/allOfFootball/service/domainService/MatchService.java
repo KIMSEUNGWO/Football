@@ -3,7 +3,6 @@ package football.start.allOfFootball.service.domainService;
 import football.common.domain.*;
 import football.common.exception.match.NotExistsMatchException;
 import football.start.allOfFootball.dto.match.*;
-import football.common.enums.domainenum.TeamEnum;
 import football.start.allOfFootball.enums.matchEnums.RequestTeam;
 import football.start.allOfFootball.enums.matchEnums.TeamConfirm;
 import football.start.allOfFootball.repository.domainRepository.MatchRepository;
@@ -26,8 +25,8 @@ public class MatchService {
     private final ScoreService scoreService;
 
     public Match findByMatchOrRedirect(Long matchId, String redirectURI) throws NotExistsMatchException {
-        Optional<Match> findMatch = matchRepository.findByMatch(matchId);
-        return findMatch.orElseThrow(() -> new NotExistsMatchException(redirectURI));
+        return matchRepository.findByMatch(matchId)
+            .orElseThrow(() -> new NotExistsMatchException(redirectURI));
     }
 
     public boolean distinctCheck(Match match, Member member) {
@@ -40,7 +39,7 @@ public class MatchService {
         int nowPerson = match.getOrdersList().size() + 1; // + 1 인거 주의해서 사용할 것 (본인포함이기때문에 +1임)
 
         int line = (int) (max * 0.8);
-        if (nowPerson == max) {
+        if (nowPerson >= max) {
             match.setMatchStatus(마감);
         } else if (nowPerson >= line) {
             match.setMatchStatus(마감임박);
@@ -50,18 +49,14 @@ public class MatchService {
 
     public MatchCollection getMatchCollection(Match match, Member member) {
         List<Orders> ordersList = match.getOrdersList();
-        Optional<Orders> byOrders = matchRepository.isContainsMember(ordersList, member);
 
-        ScoreResult scoreList = byOrders.map(orders -> scoreService.getScore(match, orders)).orElse(null);
-        List<MatchData> data = matchRepository.getMatchData(match, ordersList); // 매치 데이터
-        Map<TeamEnum, List<TeamInfo>> teamInfo = matchRepository.getTeamInfo(match, ordersList); // 참가자
-
-        System.out.println("scoreList = " + scoreList);
-        return MatchCollection.builder()
-            .scoreResult(scoreList)
-            .matchData(data)
-            .teamInfo(teamInfo)
-            .build();
+        return new MatchCollection(
+            matchRepository.isContainsMember(ordersList, member)
+                .map(orders -> scoreService.getScore(match, orders))
+                .orElse(null), // 경기결과
+            matchRepository.getMatchData(match, ordersList), // 매치 데이터
+            matchRepository.getTeamInfo(match, ordersList) // 참가자
+        );
     }
 
     public void changeTeam(Match match, RequestTeam team) {
@@ -80,14 +75,6 @@ public class MatchService {
         match.setManager(manager);
     }
 
-
-    public void matchEnd(Match match) {
-        match.setMatchStatus(기록중);
-    }
-
-    public void matchFinal(Match match) {
-        match.setMatchStatus(종료);
-    }
 
     public boolean existsByMatchId(Long matchId) {
         return matchRepository.existsByMatchId(matchId);

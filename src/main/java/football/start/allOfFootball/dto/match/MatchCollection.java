@@ -1,19 +1,13 @@
 package football.start.allOfFootball.dto.match;
 
 import football.common.enums.domainenum.TeamEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 
 import java.util.List;
 import java.util.Map;
 
-@Getter
-@AllArgsConstructor
-@Builder
-public class MatchCollection {
+public record MatchCollection(
+                                ScoreResult scoreResult,
+                                List<MatchData> matchData,
+                                Map<TeamEnum, List<TeamInfo>> teamInfo) {
 
-    private ScoreResult scoreResult;
-    private List<MatchData> matchData;
-    private Map<TeamEnum, List<TeamInfo>> teamInfo;
 }

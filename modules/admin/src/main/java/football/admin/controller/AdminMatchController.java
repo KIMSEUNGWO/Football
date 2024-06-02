@@ -40,12 +40,11 @@ public class AdminMatchController {
     }
     @GetMapping
     public String match(Model model) {
-        LocationEnum[] locations = LocationEnum.values();
-        model.addAttribute("locations", locations);
+        model.addAttribute("locations", LocationEnum.values());
         return "/admin/admin_match";
     }
 
-    @GetMapping("/{fieldId}/add")
+    @GetMapping("/{fieldId:[0-9]}/add")
     public String matchAdd(@PathVariable Long fieldId, @ModelAttribute SaveMatchRequest saveMatchRequest, Model model, HttpServletResponse response) throws NotExistsFieldException {
         Field field = adminFieldService.findByField(fieldId);
         ViewMatchFieldForm fieldForm = new ViewMatchFieldForm(field);
@@ -54,15 +53,16 @@ public class AdminMatchController {
         return "/admin/admin_match_add";
     }
 
-    @PostMapping("/{fieldId}/add")
-    public String matchAddPost(@PathVariable Long fieldId, @ModelAttribute SaveMatchRequest saveMatchRequest, HttpServletResponse response) throws NotExistsFieldException {
+    @PostMapping("/{fieldId:[0-9]}/add")
+    public String matchAddPost(@PathVariable Long fieldId, @ModelAttribute SaveMatchRequest saveMatchRequest) throws NotExistsFieldException {
         Field field = adminFieldService.findByField(fieldId);
-        matchService.saveMatch(field, saveMatchRequest);
+        Match saveMatch = Match.build(field, saveMatchRequest);
+        matchService.saveMatch(saveMatch);
 
         return "redirect:/admin/match";
     }
 
-    @GetMapping("/{matchId}")
+    @GetMapping("/{matchId:[0-9]}")
     public String matchView(@PathVariable Long matchId, Model model) throws NotExistsMatchException {
         Match match = matchService.findByMatch(matchId, "/admin/ground");
         Field field = match.getField();
@@ -75,7 +75,7 @@ public class AdminMatchController {
     }
 
 
-    @GetMapping("/{matchId}/edit")
+    @GetMapping("/{matchId:[0-9]}/edit")
     public String matchEdit(@PathVariable Long matchId, HttpServletResponse response, Model model) throws NotExistsMatchException {
         Match match = matchService.findByMatch(matchId, "/admin/ground");
         Field field = match.getField();
@@ -91,7 +91,7 @@ public class AdminMatchController {
         return "/admin/admin_match_edit";
     }
 
-    @PostMapping("/{matchId}/edit")
+    @PostMapping("/{matchId:[0-9]}/edit")
     public String matchEditPost(@PathVariable Long matchId, @ModelAttribute EditMatchRequest editMatchForm, HttpServletResponse response) throws NotExistsMatchException {
         System.out.println("editMatchForm = " + editMatchForm);
         Match match = matchService.findByMatch(matchId, "/admin/ground");
@@ -99,17 +99,6 @@ public class AdminMatchController {
         matchService.editMatch(match, editMatchForm);
 
         return "redirect:/admin/match/" + matchId;
-    }
-
-    private Long getFieldId(String requestURI) {
-        // /match/{fieldId}/edit 형식 -> {fieldId} Long 타입으로 변환
-        String numStr = requestURI.replaceAll("[^0-9]", "");
-        try {
-            Long fieldId = Long.parseLong(numStr);
-            return fieldId;
-        } catch (NumberFormatException e) {
-            return null;
-        }
     }
 
 }

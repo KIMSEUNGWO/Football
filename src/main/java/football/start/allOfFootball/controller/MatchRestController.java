@@ -1,5 +1,6 @@
 package football.start.allOfFootball.controller;
 
+import football.common.enums.matchenum.MatchStatus;
 import football.login.config.auth.PrincipalDetails;
 import football.login.config.auth.UserRefreshProvider;
 import football.common.domain.Manager;
@@ -91,7 +92,7 @@ public class MatchRestController {
             return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "권한이 없습니다."));
         }
 
-        matchService.matchEnd(match);
+        match.setMatchStatus(MatchStatus.기록중);
         provider.refresh(user);
         return ResponseEntity.ok(new JsonDefault(OK, "종료신청이 완료되었습니다."));
     }
@@ -126,7 +127,7 @@ public class MatchRestController {
         if (!saveScore) return ResponseEntity.badRequest().body(new JsonDefault(FAIL, "점수 기록이 실패했습니다. 관리자에게 문의해주세요."));
 
         scoreService.applyScore(match, playList);
-        matchService.matchFinal(match);
+        match.setMatchStatus(MatchStatus.종료);
         provider.refresh(user);
         return ResponseEntity.ok(new JsonDefault(OK, "기록을 확정했습니다."));
     }

@@ -3,7 +3,6 @@ package football.start.allOfFootball.repository.domainRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.common.domain.CouponList;
 import football.common.domain.Member;
-import football.common.domain.QCouponList;
 import football.common.jpaRepository.JpaCouponListRepository;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +43,7 @@ public class CouponListRepository {
 
     @Transactional
     public List<CouponList> deleteByExpireDate(List<CouponList> couponList) {
-        List<CouponList> list = new ArrayList<>();
+        List<CouponList> list = new ArrayList<>(couponList.size());
 
         for (CouponList coupon : couponList) {
             if (coupon.isExpire()) {

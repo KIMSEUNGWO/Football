@@ -1,30 +1,23 @@
 package football.start.allOfFootball.repository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import football.common.domain.Coupon;
 import football.common.domain.CouponList;
 import football.common.domain.Member;
 import football.common.jpaRepository.JpaCouponListRepository;
 import football.common.jpaRepository.JpaCouponRepository;
-import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Slf4j
+@RequiredArgsConstructor
 @Transactional
 public class CouponRepositoryImpl implements CouponRepository {
 
     private final JpaCouponRepository jpaCouponRepository;
     private final JpaCouponListRepository jpaCouponListRepository;
-    private final JPAQueryFactory query;
-
-    public CouponRepositoryImpl(JpaCouponRepository jpaCouponRepository, JpaCouponListRepository jpaCouponListRepository, EntityManager em) {
-        this.jpaCouponRepository = jpaCouponRepository;
-        this.jpaCouponListRepository = jpaCouponListRepository;
-        this.query = new JPAQueryFactory(em);
-    }
 
     @Override
     public void createCoupon(Coupon coupon) {

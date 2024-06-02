@@ -78,7 +78,6 @@ public class ScoreService {
     }
 
     public ScoreResult getScore(Match match, Orders orders) {
-        List<MatchScoreForm> result = new ArrayList<>();
         TeamEnum myTeam = orders.getTeam();
         if (match.getMatchStatus() == MatchStatus.기록중) return ScoreResult.builder().myTeam(myTeam).scoreList(new ArrayList<>()).build();
         if (match.getMatchStatus() != MatchStatus.종료) return null;
@@ -87,6 +86,7 @@ public class ScoreService {
         System.out.println("scoreList = " + scoreList);
         if (scoreList.isEmpty()) return ScoreResult.builder().myTeam(myTeam).build();;
 
+        List<MatchScoreForm> result = new ArrayList<>(scoreList.size());
         for (Score score : scoreList) {
 
             TeamEnum leftTeam = score.getTeam1();

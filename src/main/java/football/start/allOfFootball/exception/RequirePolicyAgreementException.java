@@ -3,11 +3,10 @@ package football.start.allOfFootball.exception;
 import lombok.Getter;
 
 @Getter
-public class NotEnoughCashException extends OrderException {
-
+public class RequirePolicyAgreementException extends OrderException {
     private final String redirectURI;
 
-    public NotEnoughCashException(String redirectURI) {
+    public RequirePolicyAgreementException(String redirectURI) {
         this.redirectURI = redirectURI;
     }
 }
