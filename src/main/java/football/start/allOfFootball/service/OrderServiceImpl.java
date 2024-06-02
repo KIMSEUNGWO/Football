@@ -6,6 +6,8 @@ import football.start.allOfFootball.controller.mypage.OrderDateForm;
 import football.start.allOfFootball.controller.mypage.OrderListForm;
 import football.common.enums.domainenum.TeamEnum;
 import football.common.enums.paymentEnums.CashEnum;
+import football.start.allOfFootball.dto.OrderPostForm;
+import football.start.allOfFootball.exception.RequirePolicyAgreementException;
 import football.start.allOfFootball.repository.domainRepository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +28,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void save(Orders orders, Optional<CouponList> couponList) {
-        Payment payment = paymentService.buildPayment(orders.getMember(), -1 * orders.getAmountPayment(), CashEnum.사용, null);
+        Payment payment = paymentService.buildPayment(
+                                                        orders.getMember(),
+                                                        -1 * orders.getAmountPayment(),
+                                                        CashEnum.사용,
+                                                        null);
         paymentService.save(payment);
 
         couponList.ifPresent(couponList1 -> {
@@ -57,6 +63,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void setTeam(Map<TeamEnum, List<Orders>> result) {
         result.forEach((teamEnum, orders) -> orders.forEach(order -> order.setTeam(teamEnum)));
+    }
+
+    @Override
+    public void requestDataValid(OrderPostForm form, Long matchId) throws RequirePolicyAgreementException {
+        if (form.getPolicy() == null) throw new RequirePolicyAgreementException("/order/" + matchId);
     }
 
 }

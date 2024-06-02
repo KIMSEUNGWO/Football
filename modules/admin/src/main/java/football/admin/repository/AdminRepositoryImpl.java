@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static football.common.domain.QField.field;
@@ -42,9 +43,10 @@ public class AdminRepositoryImpl implements AdminRepository {
     public List<Field> findByAllField(SearchFieldRequest searchDto) {
         return query.select(field)
             .from(field)
-            .where(region(field.fieldLocation, searchDto.getRegion()), word(field.fieldTitle, searchDto.getWord()))
-            .orderBy(field.fieldLocation.asc())
-            .orderBy(field.fieldTitle.asc())
+            .where(
+                region(field.fieldLocation, searchDto.getRegion()),
+                word(field.fieldTitle, searchDto.getWord()))
+            .orderBy(field.fieldLocation.asc(), field.fieldTitle.asc())
             .fetch();
     }
 
@@ -61,9 +63,8 @@ public class AdminRepositoryImpl implements AdminRepository {
         LocalDate end = searchDto.getEndDate();
         return query.selectFrom(match)
             .join(match.field, field)
-            .where(match.matchDate.between(
-                    LocalDateTime.of(start.getYear(), start.getMonthValue(), start.getDayOfMonth(), 0, 0),
-                    LocalDateTime.of(end.getYear(), end.getMonthValue(), end.getDayOfMonth(), 23, 59))
+            .where(
+                match.matchDate.between(LocalDateTime.of(start, LocalTime.MIN),LocalDateTime.of(end, LocalTime.MAX))
                 ,word(match.field.fieldTitle, searchDto.getWord())
                 ,region(match.field.fieldLocation, searchDto.getRegion()))
             .orderBy(match.matchDate.desc())
@@ -82,9 +83,7 @@ public class AdminRepositoryImpl implements AdminRepository {
     }
 
     private BooleanExpression region(EnumPath<LocationEnum> enumPath, List<LocationEnum> region) {
-        if (region.contains(전체)) {
-            return null;
-        }
+        if (region.contains(전체)) return null;
         BooleanExpression be = null;
         for (LocationEnum location : region) {
             BooleanExpression locationBe = enumPath.eq(location);
@@ -93,6 +92,5 @@ public class AdminRepositoryImpl implements AdminRepository {
         }
         return be;
     }
-
 
 }

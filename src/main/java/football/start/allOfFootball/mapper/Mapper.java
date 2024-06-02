@@ -102,6 +102,16 @@ public class Mapper {
             );
     }
 
+    public static CouponListForm getCouponListForm(CouponList couponList) {
+        return new CouponListForm(
+            couponList.getCouponListId(),
+            couponList.getCoupon().getCouponName(),
+            couponList.getCoupon().getCouponDiscount(),
+            couponList.howToRemaining(),
+            DateFormatter.format("yyyy.MM.dd HH:mm 까지", couponList.getCouponListExpireDate())
+        );
+    }
+
     private static String getProfileImage(Profile profile) {
         if (profile == null) return Constant.BASE_IMG;
         return profile.getStoreName();

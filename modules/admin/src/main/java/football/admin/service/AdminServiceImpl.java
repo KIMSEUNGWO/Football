@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,31 +27,19 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<SearchFieldResponse> getSearchFieldResult(SearchFieldRequest searchDto) {
         List<Field> list = adminRepository.findByAllField(searchDto);
-
-        List<SearchFieldResponse> result = new ArrayList<>(list.size());
-        for (Field field : list) {
-            SearchFieldResponse form = new SearchFieldResponse(field);
-            result.add(form);
-        }
-        return result;
+        return list.stream().map(SearchFieldResponse::new).toList();
     }
 
     @Override
     public List<SearchMatchResponse> getSearchMatchResult(SearchMatchRequest searchDto) {
         List<Match> list = adminRepository.findByAllMatch(searchDto);
-
-        List<SearchMatchResponse> result = new ArrayList<>(list.size());
-        for (Match match : list) {
-            Integer orderPerson = adminRepository.findByMatchCount(match);
-            SearchMatchResponse form = new SearchMatchResponse(match, orderPerson);
-            result.add(form);
-        }
-        return result;
+        return list.stream()
+            .map(match -> new SearchMatchResponse(match, adminRepository.findByMatchCount(match)))
+            .toList();
     }
 
     @Override
     public boolean isAdmin(Member member) {
-        if (member == null) return false;
-        return adminRepository.isAdmin(member);
+        return (member != null && adminRepository.isAdmin(member));
     }
 }

@@ -20,6 +20,7 @@ public class ScoreRepository {
     private final JpaScoreRepository jpaScoreRepository;
 
     public ResultEnum getResultScore(TeamEnum myTeam, TeamEnum winTeam) {
+        if (myTeam == null) return null;
         // 내 팀과 무관한 경기일경우 null
         if (winTeam == null) return ResultEnum.무;
         return (myTeam == winTeam) ? ResultEnum.승 : ResultEnum.패;

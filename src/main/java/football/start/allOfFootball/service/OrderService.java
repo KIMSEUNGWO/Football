@@ -6,6 +6,8 @@ import football.common.domain.CouponList;
 import football.common.domain.Member;
 import football.common.domain.Orders;
 import football.common.enums.domainenum.TeamEnum;
+import football.start.allOfFootball.dto.OrderPostForm;
+import football.start.allOfFootball.exception.RequirePolicyAgreementException;
 
 import java.util.List;
 import java.util.Map;
@@ -18,4 +20,5 @@ public interface OrderService {
     List<Orders> findByMatchAll(Member member, OrderDateForm form);
     List<OrderListForm> getMatchResultForm(List<Orders> orderList);
     void setTeam(Map<TeamEnum, List<Orders>> result);
+    void requestDataValid(OrderPostForm form, Long matchId) throws RequirePolicyAgreementException;
 }
